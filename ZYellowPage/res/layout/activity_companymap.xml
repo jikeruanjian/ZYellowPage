@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/cc_bg640"
+    android:orientation="vertical" >
+
+<RelativeLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+   <LinearLayout
+		    android:id="@+id/layoutMap"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+        
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapsView"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:clickable="true" >
+
+        </com.baidu.mapapi.map.MapView>
+        </LinearLayout>
+
+   <LinearLayout
+       android:id="@+id/Layout_PioAllLife"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_alignParentTop="true"
+       android:layout_below="@+id/Layout_PioAllLife"
+       android:layout_weight="0"
+       android:background="#FFFFFF" >
+
+       <Button
+           android:id="@+id/btn_WalkTo"
+           android:layout_width="wrap_content"
+           android:layout_height="fill_parent"
+           android:layout_gravity="center_vertical"
+           android:layout_marginBottom="5px"
+           android:layout_marginTop="5px"
+           android:layout_weight="1"
+           android:background="@color/transparent"
+           android:text="步行"
+           android:onClick="mKPlanOnClick"
+           android:textColor="#000000" />
+
+       <Button
+           android:id="@+id/btn_BusTo"
+           android:layout_width="wrap_content"
+           android:layout_height="fill_parent"
+           android:layout_gravity="center_vertical"
+           android:layout_marginBottom="5px"
+           android:layout_marginTop="5px"
+           android:layout_weight="1"
+           android:background="@color/transparent"
+           android:text="公交"
+           android:onClick="mKPlanOnClick"
+           android:textColor="#000000" />
+
+       <Button
+           android:id="@+id/btn_DriveTo"
+           android:layout_width="wrap_content"
+           android:layout_height="fill_parent"
+           android:layout_gravity="center_vertical"
+           android:layout_marginBottom="5px"
+           android:layout_marginTop="5px"
+           android:layout_weight="1"
+           android:background="@color/transparent"
+           android:text="驾车"
+           android:onClick="mKPlanOnClick"
+           android:textColor="#000000" />
+
+       <Button
+           android:id="@+id/btn_BusStation"
+           android:layout_width="wrap_content"
+           android:layout_height="fill_parent"
+           android:layout_gravity="center_vertical"
+           android:layout_marginBottom="5px"
+           android:layout_marginTop="5px"
+           android:layout_weight="1"
+           android:background="@color/transparent"
+           android:text="车站"
+           android:onClick="mKPlanOnClick"
+           android:textColor="#000000" />
+   </LinearLayout>
+
+   <ImageButton
+       android:id="@+id/btnCompanyLocStart"
+       android:layout_width="40dp"
+       android:layout_height="40dp"
+       android:layout_alignRight="@+id/Layout_PioAllLife"
+       android:layout_below="@+id/Layout_PioAllLife"
+       android:layout_margin="10dp"
+       android:layout_weight="1"
+       android:background="@drawable/locmark"
+       android:text="Button" />
+
+</RelativeLayout>
+</LinearLayout>

@@ -144,6 +144,9 @@
         <activity android:name="com.zdt.zyellowpage.activity.login.ChangePwdActivity" />
 		<activity android:name="com.zdt.zyellowpage.activity.TypeBusinessListActivity" />
 		<activity android:name="com.zdt.zyellowpage.activity.ImagePagerActivity" />
+		<activity android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy"/>
+		<activity android:name="com.zdt.zyellowpage.activity.CompanyBuySellActivity"/>
+		<activity android:name="com.zdt.zyellowpage.activity.MyConcernActivity"/>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

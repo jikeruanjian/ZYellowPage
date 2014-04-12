@@ -200,6 +200,7 @@ public class UserBll {
 			ZzObjectHttpResponseListener<User> respListener) {
 		JSONObject jo = new JSONObject();
 		JSONObject joData = new JSONObject();
+		this.objectResponseListener = respListener;
 		mContext = context;
 		try {
 			jo.put("method", "query-following");

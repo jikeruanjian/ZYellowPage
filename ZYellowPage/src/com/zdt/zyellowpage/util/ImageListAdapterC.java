@@ -23,9 +23,7 @@ import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
-import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
-import com.zdt.zyellowpage.activity.PopPersonListActivity;
 
 /**
  * Copyright (c) 2011 All rights reserved
@@ -35,7 +33,7 @@ import com.zdt.zyellowpage.activity.PopPersonListActivity;
  * @date 2011-12-10
  * @version
  */
-public class ImageListAdapterP extends BaseAdapter{
+public class ImageListAdapterC extends BaseAdapter{
 	
 	private static String TAG = "ImageListAdapter";
 	private static final boolean D = true;
@@ -63,7 +61,7 @@ public class ImageListAdapterP extends BaseAdapter{
     * @param from Map中的key
     * @param to view的id
     */
-    public ImageListAdapterP(Context context, List data,
+    public ImageListAdapterC(Context context, List data,
             int resource, String[] from, int[] to){
     	this.mContext = context;
     	this.mData = data;
@@ -171,8 +169,8 @@ public class ImageListAdapterP extends BaseAdapter{
         public void onClick(View v) {  
             // TODO Auto-generated method stub   
             //Toast.makeText(mContext, mPosition+"", Toast.LENGTH_SHORT).show(); 
-			 Intent intent = new Intent(mContext,
-						PersonDetailActivity.class);
+            Intent intent = new Intent(mContext,
+					 BusinessDetailActivity.class);
 			 intent.putExtra("MEMBER_ID", mMember);
 			 mContext.startActivity(intent);
         }  

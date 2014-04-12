@@ -4,14 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
+import com.ab.bitmap.AbImageDownloader;
+import com.ab.task.AbTaskItem;
+import com.ab.task.AbTaskListener;
 import com.ab.task.AbTaskQueue;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
@@ -20,10 +33,11 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
+import com.zdt.zyellowpage.jsonEntity.PersonListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
-import com.zdt.zyellowpage.util.ImageListAdapter;
+import com.zdt.zyellowpage.util.ImageListAdapterC;
 
 public class PopBusinessListActivity extends AbActivity {
 
@@ -32,10 +46,7 @@ public class PopBusinessListActivity extends AbActivity {
 	private AbPullListView mAbPullListView = null;
 	private int currentPage = 0;
 	private boolean isRefresh = true;
-	private AbTaskQueue mAbTaskQueue = null;
-	private ArrayList<String> mPhotoList = new ArrayList<String>();
-	private AbTitleBar mAbTitleBar = null;
-	private ImageListAdapter myListViewAdapter = null;
+	private ImageListAdapterC myListViewAdapter = null;
 	DisplayUtil displayUtil;
 
 	private MyApplication application;
@@ -117,7 +128,7 @@ public class PopBusinessListActivity extends AbActivity {
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
-							User u = lis.get(i);
+							User u = (User) lis.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
 							map.put("itemsIcon", u.getLogo());
@@ -231,7 +242,7 @@ public class PopBusinessListActivity extends AbActivity {
 		// ListView数据
 
 		// 使用自定义的Adapter
-		myListViewAdapter = new ImageListAdapter(this, list,
+		myListViewAdapter = new ImageListAdapterC(this, list,
 				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
 						"itemsText" }, new int[] { R.id.itemsIcon,
 						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
@@ -283,7 +294,6 @@ public class PopBusinessListActivity extends AbActivity {
 		super.onResume();
 	}
 
-	@Override
 	public void onPause() {
 		super.onPause();
 	}

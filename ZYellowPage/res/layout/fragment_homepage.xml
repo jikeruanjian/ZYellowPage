@@ -59,7 +59,7 @@
                             android:background="@drawable/movie" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imageButtonMovie"
@@ -82,7 +82,7 @@
                             android:background="@drawable/happy" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imageButtonHappy"
@@ -105,7 +105,7 @@
                             android:background="@drawable/hotel" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imageButtonHotel"
@@ -134,7 +134,7 @@
                             android:background="@drawable/newinfo" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imageButtonNewInfo"
@@ -157,7 +157,7 @@
                             android:background="@drawable/cash" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imageButtonCash"
@@ -180,7 +180,7 @@
                             android:background="@drawable/people" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imageButtonPeople"
@@ -203,7 +203,7 @@
                             android:background="@drawable/all" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imageButtonAll"

@@ -1,9 +1,9 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_white" >
-
-    <LinearLayout
+ 
+ <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -68,7 +68,14 @@
                     android:src="@drawable/index_fh" />
             </RelativeLayout>
 
-            <RelativeLayout
+           
+
+            <LinearLayout
+                 android:id="@+id/layoutChangeUserInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                 <RelativeLayout
                 android:id="@+id/layoutChangePwd"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
@@ -152,9 +159,7 @@
                     android:paddingRight="10dp"
                     android:src="@drawable/index_fh" />
             </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
+            <LinearLayout
             android:id="@+id/layoutLogout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -166,7 +171,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_selector_green"
-                android:text="@string/register"
+                android:text="退出"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -176,6 +181,12 @@
             android:layout_height="60dip"
             android:focusable="true"
             android:focusableInTouchMode="true" />
-    </LinearLayout>
+            </LinearLayout>
 
+          
+        </LinearLayout>
+
+        
+    </LinearLayout>
 </ScrollView>
+

@@ -15,6 +15,8 @@ import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
 import com.ab.util.AbStrUtil;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.MyConcernActivity;
+import com.zdt.zyellowpage.activity.TypeBusinessListActivity;
 import com.zdt.zyellowpage.activity.login.ChangePwdActivity;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.customView.CircularImage;
@@ -30,11 +32,10 @@ public class FragmentUser extends Fragment {
 	Button btnChangePwd;
 	Button btnMyFellow;
 	Button btnMyResource;
-
-	@Override
+	View view;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_user, container, false);
+		view = inflater.inflate(R.layout.fragment_user, container, false);
 		mActivity = (AbActivity) getActivity();
 		DisplayUtil displayUtil = DisplayUtil.getInstance(mActivity);
 
@@ -76,7 +77,9 @@ public class FragmentUser extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				Intent intent = new Intent(mActivity,
+						MyConcernActivity.class);
+				 startActivity(intent);
 			}
 		});
 
@@ -93,6 +96,7 @@ public class FragmentUser extends Fragment {
 		int width = metric.widthPixels;
 		displayUtil.setViewLayoutParamsTextView(
 				view.findViewById(R.id.RelativeLayoutLogin), width);
+		view.findViewById(R.id.layoutChangeUserInfo).setVisibility(View.GONE);
 		return view;
 	}
 
@@ -106,6 +110,8 @@ public class FragmentUser extends Fragment {
 		}
 		if (application.mUser != null && application.mUser.getToken() != null) {
 			btnLogin.setVisibility(View.GONE);
+			view.findViewById(R.id.layoutChangeUserInfo).setVisibility(View.VISIBLE);
+
 		}
 	}
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -12,8 +14,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.ab.activity.AbActivity;
+import com.ab.bitmap.AbImageDownloader;
+import com.ab.task.AbTaskItem;
+import com.ab.task.AbTaskListener;
 import com.ab.task.AbTaskQueue;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
@@ -22,10 +30,11 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
+import com.zdt.zyellowpage.jsonEntity.PersonListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
-import com.zdt.zyellowpage.util.ImageListAdapter;
+import com.zdt.zyellowpage.util.ImageListAdapterC;
 
 public class TypeBusinessListActivity extends AbActivity {
 
@@ -37,7 +46,7 @@ public class TypeBusinessListActivity extends AbActivity {
 	private AbTaskQueue mAbTaskQueue = null;
 	private ArrayList<String> mPhotoList = new ArrayList<String>();
 	private AbTitleBar mAbTitleBar = null;
-	private ImageListAdapter myListViewAdapter = null;
+	private ImageListAdapterC myListViewAdapter = null;
 	DisplayUtil displayUtil;
 	String type="商家";
 	private MyApplication application;
@@ -121,7 +130,7 @@ public class TypeBusinessListActivity extends AbActivity {
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
-							User u = lis.get(i);
+							User u = (User) lis.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
 							map.put("itemsIcon", u.getLogo());
@@ -235,7 +244,7 @@ public class TypeBusinessListActivity extends AbActivity {
 		// ListView数据
 
 		// 使用自定义的Adapter
-		myListViewAdapter = new ImageListAdapter(this, list,
+		myListViewAdapter = new ImageListAdapterC(this, list,
 				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
 						"itemsText" }, new int[] { R.id.itemsIcon,
 						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
@@ -287,7 +296,6 @@ public class TypeBusinessListActivity extends AbActivity {
 		super.onResume();
 	}
 
-	@Override
 	public void onPause() {
 		super.onPause();
 	}

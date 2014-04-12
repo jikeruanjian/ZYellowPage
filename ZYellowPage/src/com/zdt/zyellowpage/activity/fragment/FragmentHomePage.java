@@ -15,11 +15,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
+import com.zdt.zyellowpage.activity.CompanyBuySellActivity;
+import com.zdt.zyellowpage.activity.CompanyMapActiviy;
 import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
 import com.zdt.zyellowpage.activity.PopPersonListActivity;
@@ -52,7 +55,6 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 	ImageView hotImage;
 	ImageView PersonImage;
 
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// 获取布局文件
@@ -87,64 +89,29 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 				.findViewById(R.id.imageButtonCash);
 		imgBCash.setOnClickListener(this);
 		
+		ImageButton imgBPeople = (ImageButton) view
+				.findViewById(R.id.imageButtonPeople);
+		imgBPeople.setOnClickListener(this);
 		
-		/*textBt.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Toast.makeText(mActivity, "测试", Toast.LENGTH_SHORT).show();
-			}
-		});*/
+		
 		// 热门商家列表
 		TextView hotbusiness  = (TextView) view
 				.findViewById(R.id.textViewhotbusiness);
 		hotbusiness.setOnClickListener(this);
-		/*hotbusiness.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(mActivity,
-						PopBusinessListActivity.class);
-				startActivity(intent);
-			}
-		});*/
+		
 		// 热门个人列表
 		TextView textPerson = (TextView) view
 				.findViewById(R.id.textViewhotperson);
 		textPerson.setOnClickListener(this);
-		/*textPerson.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(mActivity,
-						PopPersonListActivity.class);
-				startActivity(intent);
-			}
-		});*/
+		
 		// 首页热门商家
 		hotName = (TextView) view.findViewById(R.id.textViewBusinessHot);
 		hotName.setOnClickListener(this);
-		/*hotName.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(mActivity,
-						BusinessDetailActivity.class);
-				startActivity(intent);
-			}
-		});*/
+		
 		// 首页热门关注
 		PersonName = (TextView) view.findViewById(R.id.textViewPersonHot);
 		PersonName.setOnClickListener(this);
-		/*PersonName.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(mActivity,
-						PersonDetailActivity.class);
-				startActivity(intent);
-			}
-		});*/
+		
 		getData();
 		initType(view);
 		return view;
@@ -233,7 +200,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						hotUser = lis.get(0);
+						hotUser = (User) lis.get(0);
 						System.out.println("----"+hotUser.getFullname());
 						if (hotUser.getFullname() != null) {
 							hotName.setText(hotUser.getFullname());
@@ -265,7 +232,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (localList == null || localList.size() == 0) {
 							return;
 						}
-						hotUser = localList.get(0);
+						hotUser = (User) localList.get(0);
 						System.out.println("----"+hotUser.getFullname());
 						if (hotUser.getFullname() != null) {
 							hotName.setText(hotUser.getFullname());
@@ -295,57 +262,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						// TODO Auto-generated method stub
 						mActivity.removeProgressDialog();
 					}
-					/*@Override
-					public void onSuccess(int statusCode, List<User> lis) {
-						if (lis == null || lis.size() == 0) {
-							return;
-						}
-						hotUser = (User) lis.get(0);
-						System.out.println("----"+hotUser.getFullname());
-						if (hotUser.getFullname() != null) {
-							hotName.setText(hotUser.getFullname());
-						}
-						Log.e("xxxxSummary1","----------"+hotUser.getKeyword());
-						if (hotUser.getKeyword()!= null) {
-							hotConent = (TextView) view
-									.findViewById(R.id.textViewBusinessConetentHot);
-							hotConent.setText(hotUser.getKeyword());
-						}
-						Log.e("xxxxLogo","----------"+hotUser.getLogo());
-						if (hotUser.getLogo() != null) {
-							hotImage = (ImageView) view.findViewById(R.id.imageViewhot);
-							new AbImageDownloader(mActivity).display(hotImage,
-									hotUser.getLogo());
-						}
-					}
-
-					@Override
-					public void onStart() {
-						mActivity.showProgressDialog("同步信息...");
-					}
-
-					@Override
-					public void onFinish() {
-						mActivity.removeProgressDialog();
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-						mActivity.showToast(error.getMessage());
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-						mActivity.showToast(status_description);
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error, List localList) {
-						// TODO Auto-generated method stub
-						
-					}*/
+					
 				});
 		
 		PersonUser = new User();
@@ -360,7 +277,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						PersonUser = lis.get(0);
+						PersonUser = (User) lis.get(0);
 						if (PersonUser.getFullname() != null) {
 							PersonName.setText(PersonUser.getFullname());
 						}
@@ -402,49 +319,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						// TODO Auto-generated method stub
 						mActivity.removeProgressDialog();
 					}
-				/*	@Override
-					public void onSuccess(int statusCode, List<Object> lis) {
-						if (lis == null || lis.size() == 0) {
-							return;
-						}
-						PersonUser = (User) lis.get(0);
-						if (PersonUser.getFullname() != null) {
-							PersonName.setText(PersonUser.getFullname());
-						}
-						Log.e("xxxxSummary","----------"+PersonUser.getAddress());
-						if (PersonUser.getKeyword() != null) {
-							PersonConent = (TextView) view
-									.findViewById(R.id.textViewPersonContentHot);
-							PersonConent.setText(PersonUser.getKeyword());
-						}
-						
-						if (PersonUser.getLogo() != null) {
-							PersonImage = (ImageView) view.findViewById(R.id.imageViewPerson);
-							new AbImageDownloader(mActivity).display(PersonImage,
-									PersonUser.getLogo());
-						}
-					}
-
-					@Override
-					public void onStart() {
-						mActivity.showProgressDialog("同步信息...");
-					}
-
-					@Override
-					public void onFinish() {
-						mActivity.removeProgressDialog();
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-						mActivity.showToast(error.getMessage());
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-						mActivity.showToast(status_description);
-					}*/
+			
 				});
 	}
 
@@ -492,6 +367,16 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 intent = new Intent(mActivity,
 					 TypeBusinessListActivity.class);
 			 intent.putExtra("Type", "代金券");
+			 startActivity(intent);
+			break;
+		case R.id.imageButtonPeople:
+			
+			/* intent = new Intent(mActivity,
+					 CompanyMapActiviy.class);
+			 intent.putExtra("FUllNAME", "测试商家地图");
+			 intent.putExtra("LAT", "25.0348");
+			 intent.putExtra("LON", "102.7188");*/
+			intent = new Intent(mActivity,CompanyBuySellActivity.class);
 			 startActivity(intent);
 			break;
 			//热门商家

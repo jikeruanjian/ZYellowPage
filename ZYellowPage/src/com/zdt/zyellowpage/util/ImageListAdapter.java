@@ -7,21 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
 import com.zdt.zyellowpage.R;
-import com.zdt.zyellowpage.activity.BusinessDetailActivity;
+import com.zdt.zyellowpage.global.Constant;
 
 /**
  * Copyright (c) 2011 All rights reserved
@@ -34,7 +31,7 @@ import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 public class ImageListAdapter extends BaseAdapter{
 	
 	private static String TAG = "ImageListAdapter";
-	private static final boolean D = true;
+	private static final boolean D = Constant.DEBUG;
   
 	private Context mContext;
 	//xml转View对象
@@ -50,7 +47,6 @@ public class ImageListAdapter extends BaseAdapter{
     //图片下载器
     private AbImageDownloader mAbImageDownloader = null;
     
-
    /**
     * 构造方法
     * @param context
@@ -97,20 +93,15 @@ public class ImageListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
     	  final ViewHolder holder;
-    	   
           if(convertView == null){
 	           //使用自定义的list_items作为Layout
 	           convertView = mInflater.inflate(mResource, parent, false);
 	           //减少findView的次数
 			   holder = new ViewHolder();
-			   
-
 	           //初始化布局中的元素
 			   holder.itemsIcon = ((ImageView) convertView.findViewById(mTo[0])) ;
 			   holder.itemsTitle = ((TextView) convertView.findViewById(mTo[1]));
 			   holder.itemsText = ((TextView) convertView.findViewById(mTo[2]));
-			   holder.itemsBtn = ((Button) convertView.findViewById(mTo[3]));
-			   
 			   convertView.setTag(holder);
           }else{
         	   holder = (ViewHolder) convertView.getTag();
@@ -120,19 +111,14 @@ public class ImageListAdapter extends BaseAdapter{
           final Map<String, Object>  obj = (Map<String, Object>)mData.get(position);
           String imageUrl = (String)obj.get("itemsIcon");
           holder.itemsTitle.setText((String)obj.get("itemsTitle"));
-          holder.itemsText.setText((String)obj.get("itemsText")); 
+          holder.itemsText.setText((String)obj.get("itemsText"));
           //设置加载中的View
-          //mAbImageDownloader.setLoadingView(convertView.findViewById(R.id.progressBar));
+          mAbImageDownloader.setLoadingView(convertView.findViewById(R.id.progressBar));
           //图片的下载
           mAbImageDownloader.display(holder.itemsIcon,imageUrl);
-          holder.itemsBtn.setOnClickListener(new MyBtnListener((String)obj.get("Member_id")));
-          holder.itemsTitle.setOnClickListener(new MyTitileListener((String)obj.get("Member_id")) );
-         
+          
           return convertView;
     }
-    
-    
-    
     
     /**
 	 * View元素
@@ -141,38 +127,7 @@ public class ImageListAdapter extends BaseAdapter{
 		ImageView itemsIcon;
 		TextView itemsTitle;
 		TextView itemsText;
-		Button itemsBtn;
+		ImageButton itemsBtn;
 	}
-	  
-	private class MyBtnListener implements OnClickListener{  
-		String mMember;  
-        public MyBtnListener(String inPosition){  
-        	mMember= inPosition;  
-        }  
-        @Override  
-        public void onClick(View v) {  
-            // TODO Auto-generated method stub   
-            Toast.makeText(mContext, mMember+"已经关注！", Toast.LENGTH_SHORT).show();  
-        }  
-          
-    } 
-	
-	
-	private class MyTitileListener implements OnClickListener{  
-        String mMember;  
-        public MyTitileListener(String inPosition){  
-        	mMember= inPosition;  
-        }  
-        @Override  
-        public void onClick(View v) {  
-            // TODO Auto-generated method stub   
-            //Toast.makeText(mContext, mPosition+"", Toast.LENGTH_SHORT).show(); 
-            Intent intent = new Intent(mContext,
-					 BusinessDetailActivity.class);
-			 intent.putExtra("MEMBER_ID", mMember);
-			 mContext.startActivity(intent);
-        }  
-          
-    } 
-
+    
 }

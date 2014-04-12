@@ -55,40 +55,23 @@
             </EditText>
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/mapTitileLinearLayou"
-            android:layout_width="match_parent"
+             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/orange_background"
             android:visibility="gone" >
 
             <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="false"
-                android:layout_centerInParent="true"
-                android:background="@color/transparent"
+                android:id="@+id/TextView01"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:text="附近商家"
                 android:textColor="@color/white"
                 android:textSize="30dp" />
-
-            <Button
-                android:id="@+id/btn_LocStart"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="3dp"
-                android:layout_marginRight="20dp"
-                android:background="#FFB90F"
-                android:gravity="center"
-                android:text="定位"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/userTitileLinearLayout"

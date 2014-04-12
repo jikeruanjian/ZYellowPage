@@ -7,22 +7,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.ab.activity.AbActivity;
 import com.ab.task.AbTaskQueue;
 import com.ab.view.pullview.AbPullView;
 import com.baidu.mapapi.BMapManager;
+
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.fragment.FragmentHomePage;
 import com.zdt.zyellowpage.activity.fragment.FragmentMore;
@@ -30,6 +27,15 @@ import com.zdt.zyellowpage.activity.fragment.FragmentNearMap;
 import com.zdt.zyellowpage.activity.fragment.FragmentUser;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.util.DisplayUtil;
+
+
+
+
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView.OnEditorActionListener;
 
 
 
@@ -140,7 +146,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener{
 		 
 	}
 	
-	@Override
 	protected void onDestroy(){  
 		super.onDestroy();
         if(mBMapMan!=null){  
