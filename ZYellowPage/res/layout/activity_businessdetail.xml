@@ -4,7 +4,7 @@
     android:background="#FFFFFF"
     android:orientation="vertical" >
 
-    <ScrollView
+    <com.ab.view.sample.AbOuterScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,6 +88,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dip" >
 
                     <TextView
@@ -104,6 +105,13 @@
                         android:layout_height="wrap_content"
                         android:text="TextView"
                         android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="40dip"
+                        android:layout_height="40dip"
+                        android:layout_marginLeft="30dip"
+                        android:src="@drawable/business_detail_sjdt" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -190,213 +198,72 @@
                         android:text="TextView"
                         android:textSize="18sp" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip" >
-
-                    <TextView
-                        android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="企业介绍："
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/user_company_qyjs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip" >
-
-                    <TextView
-                        android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="经营范围："
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/user_company_jyfw"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip" >
-
-                    <TextView
-                        android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="更多电话："
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/user_company_gddh"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip" >
-
-                    <TextView
-                        android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="图片展示："
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/user_company_tpzs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip" >
-
-                    <TextView
-                        android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="企业视频："
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/user_company_qysp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip" >
-
-                    <TextView
-                        android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="商家二维码："
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/user_company_sjewm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip" >
-
-                    <TextView
-                        android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="商家经纬度："
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/user_company_sjjwd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView"
-                        android:textSize="18sp" />
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <RadioGroup
-                    android:id="@+id/user_company_radio"
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:background="#EEEEEE"
-                    android:orientation="horizontal" >
+                    android:layout_height="60.0dip"
+                    android:background="#EEEEEE" >
 
-                    <RadioButton
-                        android:id="@+id/user_company_info_btn"
-                        style="@style/main_tab_bottom"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="2.0dip"
-                        android:drawableTop="@null"
+                    <TextView
+                        android:id="@+id/text1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="简介"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
                         android:text="优惠"
-                        android:textColor="@color/black"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
 
-                    <RadioButton
-                        android:id="@+id/user_company_gongqiu_btn"
-                        style="@style/main_tab_bottom"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="2.0dip"
-                        android:background="#EEEEEE"
-                        android:drawableTop="@null"
+                    <TextView
+                        android:id="@+id/text3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
                         android:text="供求"
-                        android:textColor="@color/black"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
 
-                    <RadioButton
-                        android:id="@+id/user_company_other_btn"
-                        style="@style/main_tab_bottom"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginRight="10dip"
-                        android:layout_marginTop="2.0dip"
-                        android:drawableTop="@null"
-                        android:text="其他"
-                        android:textColor="@color/black"
+                    <TextView
+                        android:id="@+id/text4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="经营"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
-                </RadioGroup>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/user_company_info"
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vPager"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginRight="10dip"
-                    android:layout_marginTop="10dip"
-                    android:textSize="20sp"
-                    android:text="TextView" />
+                    android:layout_height="300dip"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.0"
+                    android:background="#000000"
+                    android:flipInterval="30"
+                    android:persistentDrawingCache="animation" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </com.ab.view.sample.AbOuterScrollView>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -414,6 +281,24 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
+        android:src="@drawable/business_detail_sjdt" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/business_detail_sjdt"
+        android:layout_marginRight="61dp"
+        android:layout_toLeftOf="@+id/business_detail_sjdt"
+        android:src="@drawable/business_detail_sjdt" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/business_detail_sjdt"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/business_detail_sjdt"
         android:src="@drawable/business_detail_sjdt" />
 
 </RelativeLayout>

@@ -398,18 +398,18 @@
                         android:orientation="horizontal" >
 
                         <RadioButton
-                            android:id="@+id/radio_buttonHome"
-                            style="@style/main_tab_bottom"
-                            android:layout_marginTop="2.0dip"
-                            android:text="资质"
-                            android:textColor="@color/black"
-                            android:textSize="20sp" />
-
-                        <RadioButton
                             android:id="@+id/radio_buttonNear"
                             style="@style/main_tab_bottom"
                             android:layout_marginTop="2.0dip"
                             android:text="简介"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <RadioButton
+                            android:id="@+id/radio_buttonHome"
+                            style="@style/main_tab_bottom"
+                            android:layout_marginTop="2.0dip"
+                            android:text="资质"
                             android:textColor="@color/black"
                             android:textSize="20sp" />
 
@@ -431,14 +431,14 @@
                     </RadioGroup>
 
                     <TextView
-                        android:id="@+id/TextView03"
+                        android:id="@+id/person_detail_INFO"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dip"
                         android:layout_marginRight="10dip"
                         android:layout_marginTop="10dip"
-                        android:textSize="20sp"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

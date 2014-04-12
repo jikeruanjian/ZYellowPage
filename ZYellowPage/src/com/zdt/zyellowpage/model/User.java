@@ -200,6 +200,20 @@ public class User {
 	@Column(name = "dataType")
 	private String dataType;
 
+	/**
+	 * 数据类型
+	 */
+	@Column(name = "category_name")
+	private String category_name;
+	
+	public String getCategory_name() {
+		return category_name;
+	}
+
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
+
 	public String getDataType() {
 		return dataType;
 	}
