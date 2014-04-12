@@ -140,6 +140,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener{
 		 
 	}
 	
+	@Override
 	protected void onDestroy(){  
 		super.onDestroy();
         if(mBMapMan!=null){  

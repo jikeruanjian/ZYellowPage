@@ -148,7 +148,7 @@ public class BusinessDetailActivity extends AbActivity implements OnClickListene
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						userCompany = (User) lis.get(0);
+						userCompany = lis.get(0);
 					}
 
 					@Override
@@ -164,7 +164,7 @@ public class BusinessDetailActivity extends AbActivity implements OnClickListene
 						if (localList == null || localList.size() == 0) {
 							return;
 						}
-						userCompany = (User) localList.get(0);
+						userCompany = localList.get(0);
 					}
 
 					@Override

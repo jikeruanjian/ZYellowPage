@@ -239,6 +239,7 @@ public class PopPersonListActivity extends AbActivity {
 			super.onResume();
 		}
 
+		@Override
 		public void onPause() {
 			super.onPause();
 		}

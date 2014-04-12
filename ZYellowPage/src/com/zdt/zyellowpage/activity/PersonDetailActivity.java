@@ -53,7 +53,7 @@ public class PersonDetailActivity extends AbActivity {
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						userPerson = (User)lis.get(0);
+						userPerson = lis.get(0);
 					}
 
 					@Override
@@ -69,7 +69,7 @@ public class PersonDetailActivity extends AbActivity {
 						if (localList == null || localList.size() == 0) {
 							return;
 						}
-						userPerson = (User)localList.get(0);
+						userPerson = localList.get(0);
 					}
 
 					@Override
