@@ -53,7 +53,7 @@ public class PersonDetailActivity extends AbActivity {
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						userPerson = lis.get(0);
+						userPerson = (User)lis.get(0);
 					}
 
 					@Override
@@ -69,7 +69,7 @@ public class PersonDetailActivity extends AbActivity {
 						if (localList == null || localList.size() == 0) {
 							return;
 						}
-						userPerson = localList.get(0);
+						userPerson = (User)localList.get(0);
 					}
 
 					@Override
@@ -83,20 +83,7 @@ public class PersonDetailActivity extends AbActivity {
 						// TODO Auto-generated method stub
 						removeProgressDialog();
 						//showToast(userPerson.getFullname());
-						ImageView imageUserLogo= (ImageView)PersonDetailActivity.this.findViewById(R.id.person_detail_photo);
-						new AbImageDownloader(PersonDetailActivity.this).display(imageUserLogo,
-								userPerson.getLogo());
-						
-						TextView name= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_name);
-						TextView num= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_num);
-						TextView tel= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_tel);
-						TextView adress= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_address);
-						TextView email= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_email);
-						name.setText(userPerson.getFullname());
-						num.setText(userPerson.getArea_id());
-						tel.setText(userPerson.getTelephone());
-						adress.setText(userPerson.getAddress());
-						email.setText(userPerson.getEmail());
+						getView();
 					}
 
 				/*	@Override
@@ -135,4 +122,50 @@ public class PersonDetailActivity extends AbActivity {
 			*/
 		});
 	}
+
+
+	protected void getView() {
+		ImageView imageUserLogo= (ImageView)PersonDetailActivity.this.findViewById(R.id.person_detail_photo);
+		new AbImageDownloader(PersonDetailActivity.this).display(imageUserLogo,
+				userPerson.getLogo());
+		
+		TextView name= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_name);
+		TextView sex= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_sex);
+		TextView age= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_age);
+		TextView adress= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_address);
+		TextView mz= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_mz);
+		TextView tel= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_tel);
+		TextView email= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_email);
+		TextView num= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_num);
+		TextView qq= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_qq);
+		TextView school= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_school);
+		TextView zy= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_zy);
+		TextView hy= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_hy);
+		TextView gjc= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_gjc);
+		TextView dz= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_dz);
+		TextView grewm= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_grewm);
+		TextView fjdz= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_fjdz);
+		TextView info= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_INFO);
+		
+		name.setText(userPerson.getFullname());
+		sex.setText(userPerson.getSex());
+		num.setText(userPerson.getArea_id());
+		tel.setText(userPerson.getTelephone());
+		adress.setText(userPerson.getCity());
+		email.setText(userPerson.getEmail());
+		age.setText(userPerson.getAge());
+		mz.setText(userPerson.getNation());
+		qq.setText(userPerson.getQq());
+		school.setText(userPerson.getSchool());
+		zy.setText(userPerson.getProfessional());
+		hy.setText(userPerson.getCategory_name());
+		gjc.setText(userPerson.getKeyword());
+		dz.setText(userPerson.getAddress());
+		grewm.setText(userPerson.getQr_code());
+		fjdz.setText(userPerson.getSchool());
+		
+		info.setText(userPerson.getSummary());
+	}
+	
+	
 }
