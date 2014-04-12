@@ -1,0 +1,410 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_white"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" >
+
+                        <ImageButton
+                            android:id="@+id/imageButtonFood"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/food" />
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imageButtonFood"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="美食"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" >
+
+                        <ImageButton
+                            android:id="@+id/imageButtonMovie"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/movie" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imageButtonMovie"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="电影"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" >
+
+                        <ImageButton
+                            android:id="@+id/imageButtonHappy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/happy" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imageButtonHappy"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="休闲娱乐"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" >
+
+                        <ImageButton
+                            android:id="@+id/imageButtonHotel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/hotel" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imageButtonHotel"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="酒店"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" >
+
+                        <ImageButton
+                            android:id="@+id/imageButtonNewInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/newinfo" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imageButtonNewInfo"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="今日新单"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" >
+
+                        <ImageButton
+                            android:id="@+id/imageButtonCash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/cash" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imageButtonCash"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="代金券"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" >
+
+                        <ImageButton
+                            android:id="@+id/imageButtonPeople"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/people" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imageButtonPeople"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="个人列表"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" >
+
+                        <ImageButton
+                            android:id="@+id/imageButtonAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/all" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imageButtonAll"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="5dp"
+                            android:text="全部分类"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--
+                 <ScrollView
+                android:id="@+id/scrollViewAllXX"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:fadingEdge="vertical"
+                android:scrollbars="vertical" >
+            -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FCFCFC"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/orange" />
+
+                    <TextView
+                        android:id="@+id/textViewhotbusiness"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="#EEEEEE"
+                        android:gravity="center_vertical"
+                        android:paddingTop="1dp"
+                        android:text="  热门商家"
+                        android:textColor="@color/gray_black"
+                        android:textColorHint="@color/black"
+                        android:textSize="24dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/LinearLayouthot"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dip"
+                        android:layout_marginLeft="8dip"
+                        android:layout_marginRight="8dip"
+                        android:layout_marginTop="5dip" >
+
+                        <ImageView
+                            android:id="@+id/imageViewhot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dip"
+                            android:layout_toRightOf="@id/imageViewhot"
+                            android:src="@drawable/icon_120" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dip"
+                            android:layout_toRightOf="@id/imageViewhot"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/textViewBusinessHot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:focusableInTouchMode="true"
+                                android:gravity="center_vertical"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:text="指点通传媒有限公司"
+                                android:textColor="@color/black"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/textViewBusinessConetentHot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:lines="2"
+                                android:text="二维码、超市、指点通、手机黄页…"
+                                android:textColor="@color/gray_black"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/button1"
+                            android:layout_width="60dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/orange"
+                            android:text="关注" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/orange" />
+
+                    <TextView
+                        android:id="@+id/textViewhotperson"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="#EEEEEE"
+                        android:gravity="center_vertical"
+                        android:text="  热门关注"
+                        android:textColor="@color/gray_black"
+                        android:textSize="24dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/LinearLayoutPerson"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginLeft="8dip"
+                        android:layout_marginRight="8dip"
+                        android:layout_marginTop="5dip" >
+
+                        <ImageView
+                            android:id="@+id/imageViewPerson"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dip"
+                            android:src="@drawable/icon_120" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="5dp"
+                            android:layout_toRightOf="@+id/imageViewPerson"
+                            android:background="#FFFFFF"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/textViewPersonHot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:focusableInTouchMode="true"
+                                android:gravity="center_vertical"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:text="指点通传媒有限公司"
+                                android:textColor="@color/black"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/textViewPersonContentHot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="二维码、超市、指点通、手机黄页…"
+                                android:textColor="@color/gray_black"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/button1"
+                            android:layout_width="60dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/orange"
+                            android:text="关注" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <!-- </ScrollView> -->
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

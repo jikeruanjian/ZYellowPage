@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:background="#000000">
+
+        <Button
+            android:id="@+id/btn_PioAllLife"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="5px"
+            android:layout_marginTop="5px"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:onClick="poiDistanceOnClick"
+            android:text="全部"
+            android:textColor="#FFFFFF" />
+	<Button
+            android:id="@+id/btn_Pio1Life"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="5px"
+            android:layout_marginTop="5px"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:onClick="poiDistanceOnClick"
+            android:text="0.5公里"
+            android:textColor="#FFFFFF" />
+        <Button
+            android:id="@+id/btn_Pio2Life"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="5px"
+            android:layout_marginTop="5px"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:onClick="poiDistanceOnClick"
+            android:text="1公里"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btn_Pio3Life"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="5px"
+            android:layout_marginTop="5px"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:onClick="poiDistanceOnClick"
+            android:text="1.5公里"
+            android:textColor="#FFFFFF" />
+	
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        >
+		<LinearLayout
+		    android:id="@+id/layoutMap"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+        
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapsView"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true" >
+        </com.baidu.mapapi.map.MapView>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+   
+    
+
+</LinearLayout>

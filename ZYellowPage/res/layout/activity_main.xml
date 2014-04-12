@@ -1,0 +1,220 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/titileLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@color/orange_background"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/homePageTitileLinearLayou"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/orange_background"
+            android:visibility="visible" >
+
+            <TextView
+                android:id="@+id/textViewarea"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="昆明"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_searchtext_search"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_n"
+                android:drawableLeft="@drawable/sslk_search"
+                android:hint="大家都在找，指点通"
+                android:imeOptions="actionSearch"
+                android:singleLine="true" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/mapTitileLinearLayou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange_background"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="false"
+                android:layout_centerInParent="true"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:text="附近商家"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
+
+            <Button
+                android:id="@+id/btn_LocStart"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="20dp"
+                android:background="#FFB90F"
+                android:gravity="center"
+                android:text="定位"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/userTitileLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange_background"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="个人中心"
+                android:textColor="@color/white"
+                android:textSize="30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/moreTitileLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange_background"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="更多"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutAllXX"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/main_radio"
+        android:layout_below="@+id/titileLinearLayout"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/fragmentViewNear"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:visibility="gone" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragmentViewUser"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:visibility="gone" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragmentViewMore"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:visibility="gone" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragmentViewHome"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:scrollbars="vertical" >
+        </LinearLayout>
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/main_radio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/main_menu_bg"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/radio_buttonHome"
+            style="@style/main_tab_bottom"
+            android:layout_gravity="center"
+            android:layout_marginTop="5.0dip"
+            android:drawableTop="@drawable/main_home_bg"
+            android:text="首页" />
+
+        <RadioButton
+            android:id="@+id/radio_buttonNear"
+            style="@style/main_tab_bottom"
+            android:layout_gravity="center"
+            android:layout_marginTop="5.0dip"
+            android:drawableTop="@drawable/main_near_bg"
+            android:text="附近" />
+
+        <RadioButton
+            android:id="@+id/radio_buttonUser"
+            style="@style/main_tab_bottom"
+            android:layout_gravity="center"
+            android:layout_marginTop="5.0dip"
+            android:drawableTop="@drawable/main_user_bg"
+            android:text="我的" />
+
+        <RadioButton
+            android:id="@+id/radio_buttonMore"
+            style="@style/main_tab_bottom"
+            android:layout_gravity="center"
+            android:layout_marginTop="5.0dip"
+            android:drawableTop="@drawable/main_more_bg"
+            android:text="更多" />
+    </RadioGroup>
+
+</RelativeLayout>

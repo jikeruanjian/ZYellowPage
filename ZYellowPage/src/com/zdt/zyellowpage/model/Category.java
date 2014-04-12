@@ -1,0 +1,78 @@
+package com.zdt.zyellowpage.model;
+
+import com.ab.db.orm.annotation.Column;
+import com.ab.db.orm.annotation.Id;
+import com.ab.db.orm.annotation.Table;
+
+@Table(name = "category")
+public class Category {
+
+	@Id
+	@Column(name = "_id")
+	private int _id;
+
+	/**
+	 * 分类编号
+	 */
+	@Column(name = "id")
+	private String id;
+
+	/**
+	 * 分类名称
+	 */
+	@Column(name = "name")
+	private String name;
+
+	/**
+	 * 商家/个人
+	 */
+	@Column(name = "type")
+	private String type;
+
+	/**
+	 * 父分类
+	 */
+	@Column(name = "parentId")
+	private String parentId = "0";
+
+	public int get_id() {
+		return _id;
+	}
+
+	public void set_id(int _id) {
+		this._id = _id;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+}
