@@ -348,27 +348,22 @@ public class LoginActivity extends AbActivity {
 
 											UserInsideDao userDao = new UserInsideDao(
 													LoginActivity.this);
-											userDao.startReadableDatabase(false);
-											List<User> lisUser = userDao
-													.queryList(
-															"member_id=?",
-															new String[] { user
-																	.getMember_id() });
-											userDao.closeDatabase(false);
-
 											userDao.startWritableDatabase(false);
-											if (lisUser != null
-													&& lisUser.size() > 0) {
-												user.set_id(lisUser.get(0)
-														.get_id());
-												userDao.update(user);
-											} else {
-												userDao.insert(user);
-											}
+											userDao.delete("member_id=?",
+													new String[] { user
+															.getMember_id() });
+
+											userDao.insert(user);
 											userDao.closeDatabase(false);
 
 											application.mUser = user;
 
+											userDao.startReadableDatabase(false);
+											List<User> lisUser = userDao.queryList(
+													"member_id=?",
+													new String[] { user.getMember_id() });
+											userDao.closeDatabase(false);
+											
 											isSuccess = true;
 
 											if (application.userPasswordRemember) {
@@ -444,7 +439,6 @@ public class LoginActivity extends AbActivity {
 		 */
 		public void updateUserInfo() {
 			if (!isSuccess) {
-
 				return;
 			}
 			new UserBll().getDetailPerson(LoginActivity.this,
@@ -473,23 +467,15 @@ public class LoginActivity extends AbActivity {
 								User localUser = lisUser.get(0);
 								tempUser.set_id(localUser.get_id());
 								tempUser.setUsername(localUser.getUsername());
-								tempUser.setArea_id(localUser.getArea_id());
-								tempUser.setPassword(localUser.getPassword());
-								tempUser.setPassword_question(localUser
-										.getPassword_question());
-								tempUser.setPassword_answer(localUser
-										.getPassword_answer());
 								tempUser.setToken(localUser.getToken());
 								userDao.update(tempUser);
-							} else {
-								userDao.insert(tempUser);
+								application.mUser = tempUser;
+								
+								if (!AbStrUtil.isEmpty(tempUser.getArea_id())) {
+									application.cityid = tempUser.getArea_id();
+								}
 							}
 							userDao.closeDatabase(false);
-
-							application.mUser = tempUser;
-							if (!AbStrUtil.isEmpty(tempUser.getArea_id())) {
-								application.cityid = tempUser.getArea_id();
-							}
 						}
 
 						@Override

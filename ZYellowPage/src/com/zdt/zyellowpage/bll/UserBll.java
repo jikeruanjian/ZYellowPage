@@ -356,11 +356,15 @@ public class UserBll {
 												.getDataType());
 									}
 
-									userDao.startWritableDatabase(false);
-									userDao.delete("member_id=?",
-											new String[] { mMember_id });
-									userDao.insert(tempUser);
-									userDao.closeDatabase(false);
+									if (localUser != null
+											&& localUser.size() > 0
+											&& !localUser.get(0).isLoginUser()) {
+										userDao.startWritableDatabase(false);
+										userDao.delete("member_id=?",
+												new String[] { mMember_id });
+										userDao.insert(tempUser);
+										userDao.closeDatabase(false);
+									}
 
 									List<User> lisUser = new ArrayList<User>();
 									lisUser.add(tempUser);
