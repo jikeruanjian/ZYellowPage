@@ -44,4 +44,5 @@
         <item name="android:textSize">@dimen/title_text_size</item>
         <item name="android:textColor">@color/gray_black</item>
     </style>
+
 </resources>
