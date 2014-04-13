@@ -1,5 +1,7 @@
 package com.zdt.zyellowpage.activity;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -232,7 +235,8 @@ public class BusinessDetailActivity extends AbActivity {
 
 		WebView webView = new WebView(this);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
-		webView.loadData(text, "text/plain", "gb2312");
+		Log.i("BusinessDetailActivity", text);
+		webView.loadDataWithBaseURL(null, text, "text/html", "utf-8", null);
 		return webView;
 	}
 
