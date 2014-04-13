@@ -45,6 +45,7 @@ public class MyApplication extends Application {
 
 		cityid = sp.getString(Constant.CITYID, Constant.DEFAULTCITYID);
 		cityName = sp.getString(Constant.CITYNAME, Constant.DEFAULTCITYNAME);
+		firstStart = sp.getBoolean(Constant.FIRSTSTART, true);
 
 		if (userName != null) {
 

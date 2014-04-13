@@ -1,6 +1,8 @@
 package com.zdt.zyellowpage.activity;
 
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.global.MyApplication;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +19,13 @@ public class SplashActivity extends Activity {
 
 			@Override
 			public void run() {
-				SplashActivity.this.startActivity(new Intent(
-						SplashActivity.this, MainActivity.class));
+				if (((MyApplication) SplashActivity.this.getApplication()).firstStart) {
+					SplashActivity.this.startActivity(new Intent(
+							SplashActivity.this, SelectAreaActivity.class));
+				} else {
+					SplashActivity.this.startActivity(new Intent(
+							SplashActivity.this, MainActivity.class));
+				}
 				SplashActivity.this.finish();
 			}
 		}, 2000);

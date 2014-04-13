@@ -1,14 +1,10 @@
 package com.zdt.zyellowpage.activity;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -30,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
+import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,7 +34,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zdt.zyellowpage.R;
-import com.zdt.zyellowpage.R.color;
 import com.zdt.zyellowpage.bll.AlbumBll;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
@@ -59,7 +55,7 @@ public class BusinessDetailActivity extends AbActivity {
 	private int offset = 0;// 动画图片偏移量
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
-	private String[] imageUrls = new String[] { };
+	private String[] imageUrls = new String[] {};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -171,122 +167,128 @@ public class BusinessDetailActivity extends AbActivity {
 				});
 	}
 
-	void getImgUrl(String m_id){
-		
+	void getImgUrl(String m_id) {
+
 		AlbumBll imgBll = new AlbumBll();
-		imgBll.getAlbumList(BusinessDetailActivity.this, 
-				new AlbumReqEntity(0,5,m_id), new ZzObjectHttpResponseListener<Album>(){
+		imgBll.getAlbumList(BusinessDetailActivity.this, new AlbumReqEntity(0,
+				5, m_id), new ZzObjectHttpResponseListener<Album>() {
 
+			@Override
+			public void onSuccess(int statusCode, List<Album> lis) {
+				// TODO Auto-generated method stub
+				if (lis == null || lis.size() == 0) {
+					return;
+				}
+				List<String> imgs = new ArrayList<String>();
+				for (Album a : lis) {
+					imgs.add(a.getUrl());
+				}
+				imageUrls = imgs.toArray(new String[] {});
+			}
+
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onFailure(int statusCode, String content,
+					Throwable error, List<Album> localList) {
+				// TODO Auto-generated method stub
+				if (localList == null || localList.size() == 0) {
+					return;
+				}
+				List<String> imgs = new ArrayList<String>();
+				for (Album a : localList) {
+					imgs.add(a.getUrl());
+				}
+				imageUrls = imgs.toArray(new String[] {});
+			}
+
+			@Override
+			public void onErrorData(String status_description) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onFinish() {
+				// TODO Auto-generated method stub
+				Gallery gallery = (Gallery) findViewById(R.id.user_company_gallery);
+				Log.e("xxxx", "-----图片张数为" + imageUrls.length);
+				gallery.setAdapter(new ImageGalleryAdapter());
+				gallery.setOnItemClickListener(new OnItemClickListener() {
 					@Override
-					public void onSuccess(int statusCode, List<Album> lis) {
-						// TODO Auto-generated method stub
-						if(lis == null || lis.size() == 0){
-							return;
-						}
-						List<String> imgs = new ArrayList<String>();
-						for(Album a:lis){
-							imgs.add(a.getUrl());
-						}
-						imageUrls = imgs.toArray( new String[] { });
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						startImagePagerActivity(position);
 					}
 
-					@Override
-					public void onStart() {
-						// TODO Auto-generated method stub
-						
+					private void startImagePagerActivity(int position) {
+						Intent intent = new Intent(BusinessDetailActivity.this,
+								ImagePagerActivity.class);
+						intent.putExtra("imageUrls", imageUrls);
+						startActivity(intent);
 					}
 
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error, List<Album> localList) {
-						// TODO Auto-generated method stub
-						if(localList == null || localList.size() == 0){
-							return;
-						}
-						List<String> imgs = new ArrayList<String>();
-						for(Album a:localList){
-							imgs.add(a.getUrl());
-						}
-						imageUrls = imgs.toArray( new String[] { });
-					}
+				});
+			}
 
-					@Override
-					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
-					}
-
-					@Override
-					public void onFinish() {
-						// TODO Auto-generated method stub
-						Gallery gallery = (Gallery) findViewById(R.id.user_company_gallery);
-						Log.e("xxxx", "-----图片张数为"+imageUrls.length);
-						gallery.setAdapter(new ImageGalleryAdapter());
-						gallery.setOnItemClickListener(new OnItemClickListener() {
-							@Override
-							public void onItemClick(AdapterView<?> parent,
-									View view, int position, long id) {
-								startImagePagerActivity(position);
-							}
-
-							private void startImagePagerActivity(int position) {
-								Intent intent = new Intent(
-										BusinessDetailActivity.this,
-										ImagePagerActivity.class);
-								intent.putExtra("imageUrls", imageUrls);
-								startActivity(intent);
-							}
-
-						});
-					}
-			
 		});
 	}
+
 	/**
 	 * 初始化头标
 	 */
 	private void InitTextView() {
 		t1 = (TextView) findViewById(R.id.text1);
 		t2 = (TextView) findViewById(R.id.text2);
-	
+
 		t4 = (TextView) findViewById(R.id.text4);
 
 		t1.setOnClickListener(new MyOnClickListener(0));
 		t2.setOnClickListener(new MyOnClickListener(1));
-		
+
 		t4.setOnClickListener(new MyOnClickListener(3));
-		
-		//点击了地图图标
-		this.findViewById(R.id.business_detail_sjdt).setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-		if(userCompany.getFullname() == null || "".equals(userCompany.getFullname())){
-			
-		}
-		else{
-			Intent intent = new Intent(BusinessDetailActivity.this,CompanyMapActiviy.class);
-			intent.putExtra("FUllNAME", userCompany.getFullname());
-			intent.putExtra("LAT", userCompany.getLatitude());
-			intent.putExtra("LON", userCompany.getLongitude());
-			startActivity(intent);
-		}
-			}
-			
-		});
-		//点击了供求信息
-		this.findViewById(R.id.imgCompanyBuySell).setOnClickListener(new OnClickListener(){
+
+		// 点击了地图图标
+		this.findViewById(R.id.business_detail_sjdt).setOnClickListener(
+				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-				
-						Intent intent = new Intent(BusinessDetailActivity.this,CompanyBuySellActivity.class);
+						if (userCompany.getFullname() == null
+								|| "".equals(userCompany.getFullname())) {
+
+						} else {
+							Intent intent = new Intent(
+									BusinessDetailActivity.this,
+									CompanyMapActiviy.class);
+							intent.putExtra("FUllNAME",
+									userCompany.getFullname());
+							intent.putExtra("LAT", userCompany.getLatitude());
+							intent.putExtra("LON", userCompany.getLongitude());
+							startActivity(intent);
+						}
+					}
+
+				});
+		// 点击了供求信息
+		this.findViewById(R.id.imgCompanyBuySell).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+
+						Intent intent = new Intent(BusinessDetailActivity.this,
+								CompanyBuySellActivity.class);
 						intent.putExtra("FUllNAME", userCompany.getFullname());
 						startActivity(intent);
 
 					}
-					
+
 				});
-		
+
 	}
 
 	/**
@@ -319,7 +321,10 @@ public class BusinessDetailActivity extends AbActivity {
 
 		WebView webView = new WebView(this);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
-		Log.i("BusinessDetailActivity", text);
+		// Log.i("BusinessDetailActivity", text);
+		if (AbStrUtil.isEmpty(text)) {
+			text = "用户暂时还未添加该项数据";
+		}
 		webView.loadDataWithBaseURL(null, text, "text/html", "utf-8", null);
 		return webView;
 	}
@@ -428,13 +433,13 @@ public class BusinessDetailActivity extends AbActivity {
 		@Override
 		public void onPageSelected(int arg0) {
 			Animation animation = null;
-			
+
 			t1.setTextColor(getResources().getColor(R.color.black));
 
 			t2.setTextColor(getResources().getColor(R.color.black));
 			t4.setTextColor(getResources().getColor(R.color.black));
 			switch (arg0) {
-			case 0:{
+			case 0: {
 				t1.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 1) {
 					animation = new TranslateAnimation(one, 0, 0, 0);
@@ -443,7 +448,7 @@ public class BusinessDetailActivity extends AbActivity {
 				}
 				break;
 			}
-			case 1:{
+			case 1: {
 				t2.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 0) {
 					animation = new TranslateAnimation(offset, one, 0, 0);
@@ -452,21 +457,23 @@ public class BusinessDetailActivity extends AbActivity {
 				}
 				break;
 			}
-			case 2:{
+			case 2: {
 				t4.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 0) {
 					animation = new TranslateAnimation(offset, two, 0, 0);
 				} else if (currIndex == 1) {
 					animation = new TranslateAnimation(one, two, 0, 0);
 				}
-				break;}
-			case 3:{
+				break;
+			}
+			case 3: {
 				if (currIndex == 0) {
 					animation = new TranslateAnimation(offset, two, 0, 0);
 				} else if (currIndex == 1) {
 					animation = new TranslateAnimation(one, two, 0, 0);
 				}
-				break;}
+				break;
+			}
 			}
 			currIndex = arg0;
 			// animation.setFillAfter(true);// True:图片停在动画结束位置

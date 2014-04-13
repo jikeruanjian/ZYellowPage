@@ -2,6 +2,7 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
@@ -102,6 +103,11 @@ public class SelectAreaActivity extends AbActivity {
 					}
 					application.cityid = selectedArea.getId();
 					application.cityName = selectedArea.getName();
+					if (application.firstStart) {
+						Editor editor = abSharedPreferences.edit();
+						editor.putBoolean(Constant.FIRSTSTART, false);
+						editor.commit();
+					}
 				}
 
 				// 保存到配置文件
@@ -111,9 +117,24 @@ public class SelectAreaActivity extends AbActivity {
 				// showToast(application.cityid + application.cityName);
 				editor.commit();
 				setResult(RESULT_OK, null);
+				if (application.firstStart) {
+					SelectAreaActivity.this.startActivity(new Intent(
+							SelectAreaActivity.this, MainActivity.class));
+				}
 				SelectAreaActivity.this.finish();
 			}
 		});
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (application.firstStart) {
+			this.startActivity(new Intent(SelectAreaActivity.this,
+					MainActivity.class));
+			this.finish();
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	/**

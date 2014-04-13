@@ -357,13 +357,6 @@ public class LoginActivity extends AbActivity {
 											userDao.closeDatabase(false);
 
 											application.mUser = user;
-
-											userDao.startReadableDatabase(false);
-											List<User> lisUser = userDao.queryList(
-													"member_id=?",
-													new String[] { user.getMember_id() });
-											userDao.closeDatabase(false);
-											
 											isSuccess = true;
 
 											if (application.userPasswordRemember) {
@@ -470,10 +463,6 @@ public class LoginActivity extends AbActivity {
 								tempUser.setToken(localUser.getToken());
 								userDao.update(tempUser);
 								application.mUser = tempUser;
-								
-								if (!AbStrUtil.isEmpty(tempUser.getArea_id())) {
-									application.cityid = tempUser.getArea_id();
-								}
 							}
 							userDao.closeDatabase(false);
 						}
