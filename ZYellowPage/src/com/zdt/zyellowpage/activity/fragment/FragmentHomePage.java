@@ -32,6 +32,7 @@ import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
 import com.zdt.zyellowpage.jsonEntity.PersonListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
@@ -112,6 +113,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		PersonName = (TextView) view.findViewById(R.id.textViewPersonHot);
 		PersonName.setOnClickListener(this);
 		
+		view.findViewById(R.id.btnConcernHotBussiness).setOnClickListener(this);
+		view.findViewById(R.id.btnConcernHotPerson).setOnClickListener(this);
 		getData();
 		initType(view);
 		return view;
@@ -397,9 +400,68 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			intent.putExtra("MEMBER_ID",  PersonUser.getMember_id());
 			startActivity(intent);
 			break;
+		case R.id.btnConcernHotBussiness:
+			if(hotUser.getMember_id()!=null|| "".equals(hotUser.getMember_id())!=true){
+				concernBussinessOrPerson(hotUser.getMember_id());
+			}
+			
+			break;
+		case R.id.btnConcernHotPerson:
+			if(PersonUser.getMember_id()!=null|| "".equals(PersonUser.getMember_id())!=true){
+				concernBussinessOrPerson(PersonUser.getMember_id());
+			}
+			break;
 		default:
 			break;
 		}
+	}
+	
+	void concernBussinessOrPerson(String id){
+		if (application.mUser != null && application.mUser.getToken() != null) {
+    		  
+    		UserBll bll = new UserBll();
+    		 bll.followUser(mActivity, application.mUser.getToken(), id,false,
+    				 new ZzStringHttpResponseListener(){
+
+						@Override
+						public void onSuccess(int statusCode, String content) {
+							// TODO Auto-generated method stub
+							Toast.makeText(mActivity,content, Toast.LENGTH_SHORT).show();
+						}
+
+						@Override
+						public void onStart() {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onFailure(int statusCode,
+								String content, Throwable error) {
+							// TODO Auto-generated method stub
+							Toast.makeText(mActivity, "关注失败！", Toast.LENGTH_SHORT).show();
+						}
+
+						@Override
+						public void onErrorData(String status_description) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onFinish() {
+							// TODO Auto-generated method stub
+							
+						}
+    			 
+    		 });
+    		
+    		
+    	}
+    	else
+    	{
+    		Toast.makeText(mActivity, "请先登陆！", Toast.LENGTH_SHORT).show();  
+    	}
 	}
 
 }

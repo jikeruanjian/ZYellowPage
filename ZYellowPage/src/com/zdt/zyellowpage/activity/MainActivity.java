@@ -73,7 +73,13 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentHome = new FragmentHomePage();
+		newFragmentUser = new FragmentUser();
+		newFragmentMore = new FragmentMore();
+
 		fragmentTransaction.add(R.id.fragmentViewHome, newFragmentHome, "home");
+		fragmentTransaction.add(R.id.fragmentViewUser, newFragmentUser, "user");
+		fragmentTransaction.add(R.id.fragmentViewMore, newFragmentMore, "more");
+		
 		fragmentTransaction.commit();
 		initChangeEvent();
 	}
@@ -82,14 +88,10 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentNearMap = new FragmentNearMap();
-		newFragmentUser = new FragmentUser();
-		newFragmentMore = new FragmentMore();
-
 		fragmentTransaction.add(R.id.fragmentViewNear, newFragmentNearMap,
 				"near");
-		fragmentTransaction.add(R.id.fragmentViewUser, newFragmentUser, "user");
-		fragmentTransaction.add(R.id.fragmentViewMore, newFragmentMore, "more");
 		fragmentTransaction.commit();
+		
 	}
 
 	protected void initView() {
@@ -182,13 +184,10 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if (isFirst) {
-			initOtherFragment();
-			isFirst = false;
-		}
+		
 		if (isChecked) {
 			switch (buttonView.getId()) {
-			case R.id.radio_buttonHome:
+			case R.id.radio_buttonHome:{
 				goneTitileView();
 				this.findViewById(R.id.radio_buttonHome).setSelected(true);
 				this.findViewById(R.id.radio_buttonNear).setSelected(false);
@@ -201,7 +200,12 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 				Log.e("xxxx", "-----------+1");
 				break;
-			case R.id.radio_buttonNear:
+			}
+			case R.id.radio_buttonNear:{
+				if (isFirst) {
+					initOtherFragment();
+					isFirst = false;
+				}
 				goneTitileView();
 				this.findViewById(R.id.radio_buttonHome).setSelected(false);
 				this.findViewById(R.id.radio_buttonNear).setSelected(true);
@@ -214,7 +218,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 				Log.e("xxxx", "-----------+2");
 				break;
-			case R.id.radio_buttonUser:
+			}
+			case R.id.radio_buttonUser:{
 				goneTitileView();
 				this.findViewById(R.id.radio_buttonHome).setSelected(false);
 				this.findViewById(R.id.radio_buttonNear).setSelected(false);
@@ -227,7 +232,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 				Log.e("xxxx", "-----------+3");
 				break;
-			case R.id.radio_buttonMore:
+			}
+			case R.id.radio_buttonMore:{
 				goneTitileView();
 				this.findViewById(R.id.radio_buttonHome).setSelected(false);
 				this.findViewById(R.id.radio_buttonNear).setSelected(false);
@@ -240,6 +246,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 				Log.e("xxxx", "-----------+4");
 				break;
+			}
 			default:
 				break;
 			}

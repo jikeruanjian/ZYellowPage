@@ -196,7 +196,7 @@ public class PopPersonListActivity extends AbActivity {
 			// ListView数据
 
 			// 使用自定义的Adapter
-			myListViewAdapter = new ImageListAdapterP(this, list,
+			myListViewAdapter = new ImageListAdapterP(this, application,list,
 					R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
 							"itemsText" }, new int[] { R.id.itemsIcon,
 							R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });

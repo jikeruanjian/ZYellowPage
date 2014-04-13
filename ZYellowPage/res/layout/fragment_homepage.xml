@@ -309,7 +309,7 @@
                         </LinearLayout>
 
                         <Button
-                            android:id="@+id/button1"
+                            android:id="@+id/btnConcernHotBussiness"
                             android:layout_width="60dp"
                             android:layout_height="35dp"
                             android:layout_alignParentBottom="true"
@@ -393,7 +393,7 @@
                         </LinearLayout>
 
                         <Button
-                            android:id="@+id/button1"
+                            android:id="@+id/btnConcernHotPerson"
                             android:layout_width="60dp"
                             android:layout_height="35dp"
                             android:layout_alignParentBottom="true"

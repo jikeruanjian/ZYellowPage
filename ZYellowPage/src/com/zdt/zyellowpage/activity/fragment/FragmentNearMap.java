@@ -49,6 +49,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 import com.zdt.zyellowpage.activity.MainActivity;
+import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.jsonEntity.BaseResponseEntity;
@@ -112,7 +113,8 @@ public class FragmentNearMap extends Fragment {
 	List<User> nearsearch;
 	List<User> tempUser;
 	MyPoiOverlayX poiOverlayx = null;// 自定义
-
+	String userMumber = null;
+	
 	//驾车线路 
 	MKPlanNode start = null;//起始点
 	MKPlanNode end = null;//结束点
@@ -145,7 +147,7 @@ public class FragmentNearMap extends Fragment {
 		initMKSearch();
 		
 		newList = new ArrayList<User>();
-		getNearEnterpriseList();
+		//getNearEnterpriseList();
 
 		return view;
 	}
@@ -507,14 +509,22 @@ public class FragmentNearMap extends Fragment {
 					popView.setVisibility(View.GONE);
 				}
 				CleanRouteOverlay();
-				/*start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
+				if(userMumber != null){
+					Intent intent = new Intent(mActivity,
+							BusinessDetailActivity.class);
+					intent.putExtra("MEMBER_ID",  userMumber);
+					startActivity(intent);
+				}
+				
+				/*公交
+				 * start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
 				MKPlanNode end = new MKPlanNode();
 				if(poiPoint != null){
 				end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
 				mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
 				mMKSearch.transitSearch("昆明", start, end);
 			}
-				
+				//驾车
 				start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
 				MKPlanNode end = new MKPlanNode();
 				if(poiPoint != null){
@@ -525,7 +535,7 @@ public class FragmentNearMap extends Fragment {
 				else{
 					Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
 				}
-				*/
+				//步行
 				start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
 				MKPlanNode end = new MKPlanNode();
 				if(poiPoint != null){
@@ -536,6 +546,7 @@ public class FragmentNearMap extends Fragment {
 				else{
 					Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
 				}
+				*/
 			}
 
 		});
@@ -595,6 +606,7 @@ public class FragmentNearMap extends Fragment {
 			geoLP.point = new GeoPoint(
 					(int) (Double.valueOf(info.getLatitude()) * 1e6),
 					(int) (Double.valueOf(info.getLongitude()) * 1e6));// 这行用于popView的定位
+			userMumber = info.getMember_id();
 			mMapController.animateTo(geoLP.point);
 			TextView title = (TextView) popView
 					.findViewById(R.id.map_bubbleTitle);

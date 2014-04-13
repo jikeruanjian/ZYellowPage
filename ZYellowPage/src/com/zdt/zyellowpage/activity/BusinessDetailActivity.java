@@ -175,7 +175,7 @@ public class BusinessDetailActivity extends AbActivity {
 		
 		AlbumBll imgBll = new AlbumBll();
 		imgBll.getAlbumList(BusinessDetailActivity.this, 
-				new AlbumReqEntity(0,3,m_id), new ZzObjectHttpResponseListener<Album>(){
+				new AlbumReqEntity(0,5,m_id), new ZzObjectHttpResponseListener<Album>(){
 
 					@Override
 					public void onSuccess(int statusCode, List<Album> lis) {

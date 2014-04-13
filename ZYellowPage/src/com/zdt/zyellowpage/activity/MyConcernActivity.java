@@ -20,6 +20,7 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 import com.zdt.zyellowpage.util.ImageListAdapterC;
+import com.zdt.zyellowpage.util.ImageListAdapterGZ;
 
 public class MyConcernActivity extends AbActivity {
 
@@ -28,7 +29,7 @@ public class MyConcernActivity extends AbActivity {
 	private AbPullListView mAbPullListView = null;
 	private int currentPage = 0;
 	private boolean isRefresh = true;
-	private ImageListAdapterC myListViewAdapter = null;
+	private ImageListAdapterGZ myListViewAdapter = null;
 	DisplayUtil displayUtil;
 
 	private MyApplication application;
@@ -66,7 +67,7 @@ public class MyConcernActivity extends AbActivity {
 		// ListView数据
 
 		// 使用自定义的Adapter
-		myListViewAdapter = new ImageListAdapterC(this, list,
+		myListViewAdapter = new ImageListAdapterGZ(this, application,list,
 				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
 						"itemsText" }, new int[] { R.id.itemsIcon,
 						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
@@ -175,13 +176,8 @@ public class MyConcernActivity extends AbActivity {
 	
 		};
 		
-		if(zzObject != null){
-		bll.getFollowList(MyConcernActivity.this, 0, 10, "0",
+		bll.getFollowList(MyConcernActivity.this, 0, 10, "2",
 				application.mUser.getToken(),zzObject);
-		}
-		else{
-			Log.e("xxx", "muyou-------空！");
-		}
 		
 		
 	}

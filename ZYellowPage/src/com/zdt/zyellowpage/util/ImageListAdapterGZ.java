@@ -6,6 +6,7 @@ package com.zdt.zyellowpage.util;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -23,9 +24,7 @@ import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
-import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
-import com.zdt.zyellowpage.activity.PopPersonListActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
@@ -38,7 +37,7 @@ import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
  * @date 2011-12-10
  * @version
  */
-public class ImageListAdapterP extends BaseAdapter{
+public class ImageListAdapterGZ extends BaseAdapter{
 	
 	private static String TAG = "ImageListAdapter";
 	private static final boolean D = true;
@@ -56,8 +55,8 @@ public class ImageListAdapterP extends BaseAdapter{
     private int[] mTo;
     //图片下载器
     private AbImageDownloader mAbImageDownloader = null;
-    
     MyApplication application;
+
    /**
     * 构造方法
     * @param context
@@ -66,7 +65,7 @@ public class ImageListAdapterP extends BaseAdapter{
     * @param from Map中的key
     * @param to view的id
     */
-    public ImageListAdapterP(Context context,MyApplication app, List data,
+    public ImageListAdapterGZ(Context context,MyApplication app, List data,
             int resource, String[] from, int[] to){
     	application = app;
     	this.mContext = context;
@@ -118,7 +117,7 @@ public class ImageListAdapterP extends BaseAdapter{
 			   holder.itemsTitle = ((TextView) convertView.findViewById(mTo[1]));
 			   holder.itemsText = ((TextView) convertView.findViewById(mTo[2]));
 			   holder.itemsBtn = ((Button) convertView.findViewById(mTo[3]));
-			   
+			   holder.itemsBtn.setText("-取消关注");
 			   convertView.setTag(holder);
           }else{
         	   holder = (ViewHolder) convertView.getTag();
@@ -161,14 +160,15 @@ public class ImageListAdapterP extends BaseAdapter{
         public void onClick(View v) {  
             // TODO Auto-generated method stub   
         	if (application.mUser != null && application.mUser.getToken() != null) {
-      		  
+        		  
         		UserBll bll = new UserBll();
-        		 bll.followUser(mContext, application.mUser.getToken(), mMember,false,
+        		 bll.followUser(mContext, application.mUser.getToken(), mMember,true,
         				 new ZzStringHttpResponseListener(){
 
 							@Override
 							public void onSuccess(int statusCode, String content) {
 								// TODO Auto-generated method stub
+								
 								Toast.makeText(mContext,content, Toast.LENGTH_SHORT).show();
 							}
 
@@ -182,7 +182,7 @@ public class ImageListAdapterP extends BaseAdapter{
 							public void onFailure(int statusCode,
 									String content, Throwable error) {
 								// TODO Auto-generated method stub
-								Toast.makeText(mContext, "取消失败！", Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext, "关注失败！", Toast.LENGTH_SHORT).show();
 							}
 
 							@Override
@@ -206,7 +206,6 @@ public class ImageListAdapterP extends BaseAdapter{
         		Toast.makeText(mContext, "请先登陆！", Toast.LENGTH_SHORT).show();  
         	}
         }  
-        
           
     } 
 	
@@ -220,10 +219,10 @@ public class ImageListAdapterP extends BaseAdapter{
         public void onClick(View v) {  
             // TODO Auto-generated method stub   
             //Toast.makeText(mContext, mPosition+"", Toast.LENGTH_SHORT).show(); 
-			 Intent intent = new Intent(mContext,
-						PersonDetailActivity.class);
+        /*    Intent intent = new Intent(mContext,
+					 BusinessDetailActivity.class);
 			 intent.putExtra("MEMBER_ID", mMember);
-			 mContext.startActivity(intent);
+			 mContext.startActivity(intent);*/
         }  
           
     } 

@@ -6,6 +6,7 @@ package com.zdt.zyellowpage.util;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -24,6 +25,9 @@ import com.ab.global.AbConstant;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
+import com.zdt.zyellowpage.bll.UserBll;
+import com.zdt.zyellowpage.global.MyApplication;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 
 /**
  * Copyright (c) 2011 All rights reserved
@@ -51,7 +55,7 @@ public class ImageListAdapterC extends BaseAdapter{
     private int[] mTo;
     //图片下载器
     private AbImageDownloader mAbImageDownloader = null;
-    
+    MyApplication application;
 
    /**
     * 构造方法
@@ -61,8 +65,9 @@ public class ImageListAdapterC extends BaseAdapter{
     * @param from Map中的key
     * @param to view的id
     */
-    public ImageListAdapterC(Context context, List data,
+    public ImageListAdapterC(Context context,MyApplication app, List data,
             int resource, String[] from, int[] to){
+    	application = app;
     	this.mContext = context;
     	this.mData = data;
     	this.mResource = resource;
@@ -154,7 +159,51 @@ public class ImageListAdapterC extends BaseAdapter{
         @Override  
         public void onClick(View v) {  
             // TODO Auto-generated method stub   
-            Toast.makeText(mContext, mMember+"已经关注！", Toast.LENGTH_SHORT).show();  
+        	if (application.mUser != null && application.mUser.getToken() != null) {
+        		  
+        		UserBll bll = new UserBll();
+        		 bll.followUser(mContext, application.mUser.getToken(), mMember,false,
+        				 new ZzStringHttpResponseListener(){
+
+							@Override
+							public void onSuccess(int statusCode, String content) {
+								// TODO Auto-generated method stub
+								Toast.makeText(mContext,content, Toast.LENGTH_SHORT).show();
+							}
+
+							@Override
+							public void onStart() {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void onFailure(int statusCode,
+									String content, Throwable error) {
+								// TODO Auto-generated method stub
+								Toast.makeText(mContext, "关注失败！", Toast.LENGTH_SHORT).show();
+							}
+
+							@Override
+							public void onErrorData(String status_description) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void onFinish() {
+								// TODO Auto-generated method stub
+								
+							}
+        			 
+        		 });
+        		
+        		
+        	}
+        	else
+        	{
+        		Toast.makeText(mContext, "请先登陆！", Toast.LENGTH_SHORT).show();  
+        	}
         }  
           
     } 

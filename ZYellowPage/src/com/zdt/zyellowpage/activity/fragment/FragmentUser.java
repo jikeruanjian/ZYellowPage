@@ -38,7 +38,6 @@ public class FragmentUser extends Fragment {
 		view = inflater.inflate(R.layout.fragment_user, container, false);
 		mActivity = (AbActivity) getActivity();
 		DisplayUtil displayUtil = DisplayUtil.getInstance(mActivity);
-
 		application = (MyApplication) mActivity.getApplication();
 		btnLogin = (TextView) view.findViewById(R.id.buttonlogin);
 		imageUserLogo = (CircularImage) view.findViewById(R.id.imageHead);
