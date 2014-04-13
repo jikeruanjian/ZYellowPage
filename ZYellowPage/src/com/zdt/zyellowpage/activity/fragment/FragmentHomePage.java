@@ -370,14 +370,9 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonPeople:
-			
-			/* intent = new Intent(mActivity,
-					 CompanyMapActiviy.class);
-			 intent.putExtra("FUllNAME", "测试商家地图");
-			 intent.putExtra("LAT", "25.0348");
-			 intent.putExtra("LON", "102.7188");*/
-			intent = new Intent(mActivity,CompanyBuySellActivity.class);
-			 startActivity(intent);
+			 intent = new Intent(mActivity,
+						PopPersonListActivity.class);
+				startActivity(intent);
 			break;
 			//热门商家
 		case R.id.textViewhotbusiness:

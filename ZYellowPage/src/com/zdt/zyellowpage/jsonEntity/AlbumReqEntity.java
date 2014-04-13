@@ -12,6 +12,11 @@ public class AlbumReqEntity {
 	private int max_size = 10; // 0～n 每页最大条目数
 	private String member_id;// 会员编号
 
+	public AlbumReqEntity(int page,int max,String id){
+		page_number = page;
+		max_size = max;
+		member_id = id;
+	}
 	public int getPage_number() {
 		return page_number;
 	}

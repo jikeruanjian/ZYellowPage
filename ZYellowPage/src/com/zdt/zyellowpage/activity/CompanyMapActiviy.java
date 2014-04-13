@@ -131,7 +131,7 @@ public class CompanyMapActiviy extends AbActivity {
 		// 设置启用内置的缩放控件
 		mMapController = mMapView.getController();
 		OverlayTest itemOverlay = new OverlayTest(getResources()
-				.getDrawable(R.drawable.icon_marka), mMapView);
+				.getDrawable(R.drawable.companymap_mark_min), mMapView);
 		itemOverlay.addItem(new OverlayItem(poiPoint,userCompanyFullName,userCompanyFullName));
 		mMapView.getOverlays().add(itemOverlay);
 		// 用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
