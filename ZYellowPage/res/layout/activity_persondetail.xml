@@ -57,7 +57,7 @@
                             android:id="@+id/person_detail_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -78,7 +78,7 @@
                             android:id="@+id/person_detail_sex"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -99,7 +99,7 @@
                             android:id="@+id/person_detail_age"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -120,7 +120,7 @@
                             android:id="@+id/person_detail_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -141,7 +141,7 @@
                             android:id="@+id/person_detail_mz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -162,7 +162,7 @@
                             android:id="@+id/person_detail_tel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -183,7 +183,7 @@
                             android:id="@+id/person_detail_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -204,7 +204,7 @@
                             android:id="@+id/person_detail_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -225,7 +225,7 @@
                             android:id="@+id/person_detail_qq"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -246,7 +246,7 @@
                             android:id="@+id/person_detail_school"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -267,7 +267,7 @@
                             android:id="@+id/person_detail_zy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -288,7 +288,7 @@
                             android:id="@+id/person_detail_hy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -296,21 +296,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip" >
-
-                        <TextView
-                            android:id="@+id/TextView05"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关键词："
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/person_detail_gjc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -330,7 +315,7 @@
                             android:id="@+id/person_detail_dz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -338,42 +323,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip" >
-
-                        <TextView
-                            android:id="@+id/TextView05"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="个人二维码："
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/person_detail_grewm"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip" >
-
-                        <TextView
-                            android:id="@+id/TextView05"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="附件地址："
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/person_detail_fjdz"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="TextView"
-                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -385,60 +340,67 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
 
-                    <RadioGroup
-                        android:id="@+id/main_radio"
+                    <LinearLayout
+                        android:id="@+id/linearLayout1"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:background="#EEEEEE"
-                        android:orientation="horizontal" >
+                        android:layout_height="60.0dip"
+                        android:background="#EEEEEE" >
 
-                        <RadioButton
-                            android:id="@+id/radio_buttonNear"
-                            style="@style/main_tab_bottom"
-                            android:layout_marginTop="2.0dip"
+                        <TextView
+                            android:id="@+id/textjianjie"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
                             android:text="简介"
-                            android:textColor="@color/black"
+                            android:textColor="#000000"
                             android:textSize="20sp" />
 
-                        <RadioButton
-                            android:id="@+id/radio_buttonHome"
-                            style="@style/main_tab_bottom"
-                            android:layout_marginTop="2.0dip"
+                        <TextView
+                            android:id="@+id/textzizhi"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
                             android:text="资质"
-                            android:textColor="@color/black"
+                            android:textColor="#000000"
                             android:textSize="20sp" />
-
-                        <RadioButton
-                            android:id="@+id/radio_buttonHome"
-                            style="@style/main_tab_bottom"
-                            android:layout_marginTop="2.0dip"
+						<TextView
+                            android:id="@+id/texttechang"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
                             android:text="特长"
-                            android:textColor="@color/black"
+                            android:textColor="#000000"
                             android:textSize="20sp" />
-
-                        <RadioButton
-                            android:id="@+id/radio_buttonNear"
-                            style="@style/main_tab_bottom"
-                            android:layout_marginTop="2.0dip"
+                        <TextView
+                            android:id="@+id/textanli"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center"
                             android:text="案例"
-                            android:textColor="@color/black"
+                            android:textColor="#000000"
                             android:textSize="20sp" />
-                    </RadioGroup>
+                        
+                        
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/person_detail_INFO"
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/vPager"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dip"
-                        android:layout_marginRight="10dip"
-                        android:layout_marginTop="10dip"
-                        android:text="TextView"
-                        android:textSize="20sp" />
+                        android:layout_height="300dip"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.0"
+                        android:background="#000000"
+                        android:flipInterval="30"
+                        android:persistentDrawingCache="animation" >
+                    </android.support.v4.view.ViewPager>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
