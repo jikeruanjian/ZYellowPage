@@ -44,6 +44,7 @@ public class AreaBll {
 				areaDao.delete("parentId=?", new String[] { parentId });
 				areaDao.insertList(mAreas, false);
 				areaDao.closeDatabase(false);
+				objectResponseListener.onSuccess(statusCode, mAreas);
 			}
 
 			@Override

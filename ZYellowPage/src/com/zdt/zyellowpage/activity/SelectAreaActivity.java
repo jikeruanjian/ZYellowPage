@@ -108,8 +108,9 @@ public class SelectAreaActivity extends AbActivity {
 				Editor editor = abSharedPreferences.edit();
 				editor.putString(Constant.CITYID, application.cityid);
 				editor.putString(Constant.CITYNAME, application.cityName);
-				showToast(application.cityid + application.cityName);
+				// showToast(application.cityid + application.cityName);
 				editor.commit();
+				setResult(RESULT_OK, null);
 				SelectAreaActivity.this.finish();
 			}
 		});
