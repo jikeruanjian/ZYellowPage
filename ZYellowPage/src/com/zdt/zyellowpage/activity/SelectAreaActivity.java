@@ -121,6 +121,8 @@ public class SelectAreaActivity extends AbActivity {
 					SelectAreaActivity.this.startActivity(new Intent(
 							SelectAreaActivity.this, MainActivity.class));
 				}
+
+				application.firstStart = false;
 				SelectAreaActivity.this.finish();
 			}
 		});
@@ -132,6 +134,7 @@ public class SelectAreaActivity extends AbActivity {
 			Editor editor = abSharedPreferences.edit();
 			editor.putBoolean(Constant.FIRSTSTART, false);
 			editor.commit();
+			application.firstStart = false;
 			this.startActivity(new Intent(SelectAreaActivity.this,
 					MainActivity.class));
 			this.finish();
