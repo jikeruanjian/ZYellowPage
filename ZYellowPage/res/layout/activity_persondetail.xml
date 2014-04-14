@@ -24,7 +24,7 @@
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
                 android:gravity="center_horizontal"
-                android:src="@drawable/persondetail" />
+                android:src="@drawable/nopic" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -416,12 +416,21 @@
         android:src="@drawable/orange" />
 
     <ImageView
-        android:id="@+id/business_detail_sjdt"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:id="@+id/person_detail_phone"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
-        android:src="@drawable/business_detail_sjdt" />
+        android:src="@drawable/phone" />
+    
+     <ImageView
+        android:id="@+id/person_detail_Code"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:layout_alignTop="@+id/person_detail_phone"
+        android:layout_marginRight="30dp"
+        android:layout_toLeftOf="@+id/person_detail_phone"
+        android:src="@drawable/companycode" />
 
 </RelativeLayout>

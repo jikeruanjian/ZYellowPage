@@ -60,7 +60,7 @@
                         android:id="@+id/user_company_nummber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text=" "
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -81,7 +81,7 @@
                         android:id="@+id/user_company_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text=" "
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -103,15 +103,15 @@
                         android:id="@+id/user_company_tel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text=" "
                         android:textSize="18sp" />
 
                     <ImageView
                         android:id="@+id/imageView4"
-                        android:layout_width="40dip"
-                        android:layout_height="40dip"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
                         android:layout_marginLeft="30dip"
-                        android:src="@drawable/phone" />
+                        android:src="@drawable/contacts" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -132,7 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
-                        android:text="TextView"
+                        android:text=" "
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -153,7 +153,7 @@
                         android:id="@+id/user_company_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text=" "
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -174,7 +174,7 @@
                         android:id="@+id/user_company_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text=" "
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -195,7 +195,7 @@
                         android:id="@+id/user_company_qq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text=" "
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -266,28 +266,46 @@
 
     <ImageView
         android:id="@+id/business_detail_sjdt"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/locmark1" />
+        android:src="@drawable/google_maps" />
 
     <ImageView
-        android:id="@+id/imgBussnissCode"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+        android:id="@+id/imgBussnissPhone"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
         android:layout_alignTop="@+id/business_detail_sjdt"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_toLeftOf="@+id/imgBussnissCode"
+        android:src="@drawable/phone" />
+    
+    <ImageView
+        android:id="@+id/imgBussnissCode"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:layout_alignTop="@+id/business_detail_sjdt"
+        android:layout_marginRight="30dp"
         android:layout_toLeftOf="@+id/business_detail_sjdt"
         android:src="@drawable/companycode" />
 
     <ImageView
         android:id="@+id/imgCompanyBuySell"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignTop="@+id/business_detail_sjdt"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/business_detail_sjdt"
-        android:src="@drawable/buysell" />
+        android:src="@drawable/tasks" />
+    
+    <ImageView
+        android:id="@+id/imgCompanyVideos"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/business_detail_sjdt"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/imgCompanyBuySell"
+        android:src="@drawable/videos" />
 
 </RelativeLayout>

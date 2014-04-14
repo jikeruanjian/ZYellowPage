@@ -176,7 +176,7 @@ public class FragmentNearMap extends Fragment {
 
 	void initPoiDistantsBtn() {
 		view.findViewById(R.id.Layout_PioAllLife).getBackground().setAlpha(150);
-		view.findViewById(R.id.btn_Pio1Life).setOnClickListener(
+		view.findViewById(R.id.btn_PioAllDistance).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -185,7 +185,7 @@ public class FragmentNearMap extends Fragment {
 					}
 
 				});
-		view.findViewById(R.id.btn_DriveTo).setOnClickListener(
+		view.findViewById(R.id.btn_Pio500).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -194,7 +194,7 @@ public class FragmentNearMap extends Fragment {
 					}
 
 				});
-		view.findViewById(R.id.btn_BusStation).setOnClickListener(
+		view.findViewById(R.id.btn_Pio1000).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -203,7 +203,7 @@ public class FragmentNearMap extends Fragment {
 					}
 
 				});
-		view.findViewById(R.id.btn_PioAllLife).setOnClickListener(
+		view.findViewById(R.id.btn_Pio1500).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -287,44 +287,43 @@ public class FragmentNearMap extends Fragment {
 	 * @param view
 	 */
 	public void poiDistanceOnClick(View v) {
-		view.findViewById(R.id.btn_Pio1Life).setBackgroundColor(
+		view.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
 				getResources().getColor(R.color.transparent));// 用于改变选中的背景颜色
-		view.findViewById(R.id.btn_DriveTo).setBackgroundColor(
+		view.findViewById(R.id.btn_Pio500).setBackgroundColor(
 				getResources().getColor(R.color.transparent));
-		view.findViewById(R.id.btn_BusStation).setBackgroundColor(
+		view.findViewById(R.id.btn_Pio1000).setBackgroundColor(
 				getResources().getColor(R.color.transparent));
-		view.findViewById(R.id.btn_PioAllLife).setBackgroundColor(
+		view.findViewById(R.id.btn_Pio1500).setBackgroundColor(
 				getResources().getColor(R.color.transparent));
 		switch (v.getId()) {
-		case R.id.btn_PioAllLife: {
-			poiDistance = 0; // 6km范围内
-			view.findViewById(R.id.btn_PioAllLife).setBackgroundColor(
+		case R.id.btn_PioAllDistance: {
+			poiDistance = 3000; // 6km范围内
+			view.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
 					Color.rgb(255, 127, 0));
 			break;
 		}
-		case R.id.btn_Pio1Life: {
+		case R.id.btn_Pio500: {
 			poiDistance = 500;// 1km范围内
-			view.findViewById(R.id.btn_Pio1Life).setBackgroundColor(
+			view.findViewById(R.id.btn_Pio500).setBackgroundColor(
 					Color.rgb(255, 127, 0));
 			break;
 		}
-		case R.id.btn_DriveTo: {
+		case R.id.btn_Pio1000: {
 			poiDistance = 1000;// 3km范围内
-			view.findViewById(R.id.btn_DriveTo).setBackgroundColor(
+			view.findViewById(R.id.btn_Pio1000).setBackgroundColor(
 					Color.rgb(255, 127, 0));
 			break;
 		}
-		case R.id.btn_BusStation: {
+		case R.id.btn_Pio1500: {
 			poiDistance = 1500; // 6km范围内
-			view.findViewById(R.id.btn_BusStation).setBackgroundColor(
+			view.findViewById(R.id.btn_Pio1500).setBackgroundColor(
 					Color.rgb(255, 127, 0));
 			break;
 		}
-
 		default:
 			break;
 		}
-
+		getNearCompanyData(20,poiDistance);
 	}
 
 	// 民生网点的定位牵涉到定位后选择范围，所以定位之后会根据所选择的范围来显示覆盖物（定位接口）
@@ -337,12 +336,12 @@ public class FragmentNearMap extends Fragment {
 				return;
 
 			// -------虚拟机测试时注释
-			/*
-			 * locData.latitude = location.getLatitude(); locData.longitude =
-			 * location.getLongitude(); //如果不显示定位精度圈，将accuracy赋值为0即可
-			 * locData.accuracy = location.getRadius(); locData.direction =
-			 * location.getDerect();
-			 */
+			
+			  locData.latitude = location.getLatitude(); locData.longitude =
+			  location.getLongitude(); //如果不显示定位精度圈，将accuracy赋值为0即可
+			  locData.accuracy = location.getRadius(); locData.direction =
+			 location.getDerect();
+			 
 			// 更新定位数据
 			myLocationOverlay.setData(locData);
 			// 更新图层数据执行刷新后生效
@@ -357,6 +356,7 @@ public class FragmentNearMap extends Fragment {
 				mMapController.animateTo(new GeoPoint(
 						(int) (locData.latitude * 1e6),
 						(int) (locData.longitude * 1e6)));
+				popView.setVisibility(View.GONE);
 				// 将搜索附近点放到定位里，定位根据现有经纬度和选择的范围值进行检索兴趣点，以下是百度接口
 				// mMKSearch.poiSearchNearBy("民生银行",new
 				// GeoPoint((int)(locData.latitude* 1e6),
@@ -366,7 +366,7 @@ public class FragmentNearMap extends Fragment {
 				mLocationClient.stop();
 			}
 			// 首次定位完成
-			getNearCompanyData();
+			getNearCompanyData(20,3000);
 			isFirstLoc = false;
 		}
 
@@ -382,11 +382,11 @@ public class FragmentNearMap extends Fragment {
 	 * 从接口获取信息
 	 */
 
-	void getNearCompanyData() {
+	void getNearCompanyData(int max,int distance) {
 		UserBll bll = new UserBll();
 
 		NearCompanyReqEntity nearCompanyReqEntity = new NearCompanyReqEntity(
-				10, locData.latitude, locData.longitude, 2000);
+				max, locData.latitude, locData.longitude, distance);
 		Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
 		bll.getNearCompany(mActivity, nearCompanyReqEntity,
 				new ZzObjectHttpResponseListener<User>() {
@@ -394,10 +394,11 @@ public class FragmentNearMap extends Fragment {
 					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
 						// TODO Auto-generated method stub
-						newList.clear();
+						
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
+						newList.clear();
 						Log.e("xxxx", "------" + lis.size());
 						for (int i = 0; i < lis.size(); i++) {
 							newList.add((User) lis.get(i));
@@ -426,7 +427,11 @@ public class FragmentNearMap extends Fragment {
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub
+						
 						mActivity.removeProgressDialog();
+						popView.setVisibility(View.GONE);
+						CleanRouteOverlay();
+						mMapView.getOverlays().remove(poiOverlayx);
 						poiOverlayx = new MyPoiOverlayX(getResources()
 								.getDrawable(R.drawable.icon_marka), mMapView,
 								newList);
@@ -479,7 +484,7 @@ public class FragmentNearMap extends Fragment {
 	 */
 	@SuppressLint("NewApi")
 	void initMKSearch() {
-		view.findViewById(R.id.btn_PioAllLife).setBackgroundColor(
+		view.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
 				Color.rgb(255, 127, 0));
 		mMKSearch = new MKSearch();  
     	mMKSearch.init(MainActivity.mBMapMan, new  MapMySearchListener());
@@ -499,9 +504,8 @@ public class FragmentNearMap extends Fragment {
 			}
 
 		});
-		//关闭泡泡
-		contenPop = (TextView) popView.findViewById(R.id.mapTextContect);
-		contenPop.setOnClickListener(new OnClickListener() {
+		//查看详细
+		popView.findViewById(R.id.mapPopTextCotent).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -515,7 +519,7 @@ public class FragmentNearMap extends Fragment {
 					intent.putExtra("MEMBER_ID",  userMumber);
 					startActivity(intent);
 				}
-				
+		//点击公交
 				/*公交
 				 * start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
 				MKPlanNode end = new MKPlanNode();
@@ -550,6 +554,67 @@ public class FragmentNearMap extends Fragment {
 			}
 
 		});
+		
+		//步行
+		popView.findViewById(R.id.mapPopTextWalk).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CleanRouteOverlay();
+				if(poiPoint != null){
+					start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
+					MKPlanNode end = new MKPlanNode();
+					if(poiPoint != null){
+					end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
+					mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
+					mMKSearch.walkingSearch("昆明", start, "昆明", end);  
+					}
+					else{
+						Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
+					}
+				}
+			}
+		});
+		
+		//公交
+		popView.findViewById(R.id.mapPopTextBus).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CleanRouteOverlay();
+				if(poiPoint != null){
+					 start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
+					MKPlanNode end = new MKPlanNode();
+					if(poiPoint != null){
+					end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
+					mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
+					mMKSearch.transitSearch("昆明", start, end);
+					}
+					else{
+						Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
+					}
+				}
+			}
+		});
+		
+		//驾车
+		popView.findViewById(R.id.mapPopTextDrive).setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						CleanRouteOverlay();
+						if(poiPoint != null){
+							start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
+							MKPlanNode end = new MKPlanNode();
+							if(poiPoint != null){
+							end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
+							mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
+							mMKSearch.walkingSearch("昆明", start, "昆明", end);  
+							}
+							else{
+								Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
+							}
+						}
+					}
+				});
+			
 		popView.getBackground().setAlpha(200);
 		mMapView.addView(popView, new MapView.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, null,
@@ -596,7 +661,7 @@ public class FragmentNearMap extends Fragment {
 		@Override
 		protected boolean onTap(int i) {
 			// super.onTap(i);
-			// CleanRouteOverlay();
+			CleanRouteOverlay();
 			User info = mSearch.get(i);
 			//初始化泡泡
 			popView.setVisibility(View.GONE);

@@ -3,6 +3,8 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
+import com.ab.global.AbConstant;
 import com.ab.view.titlebar.AbTitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -174,6 +177,26 @@ public class PersonDetailActivity extends AbActivity {
 		t2.setOnClickListener(new MyOnClickListener(1));
 		t3.setOnClickListener(new MyOnClickListener(2));
 		t4.setOnClickListener(new MyOnClickListener(3));
+		this.findViewById(R.id.person_detail_Code).setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Log.e("xxxx","---"+userPerson.getQr_code());
+				View mView = mInflater.inflate(R.layout.code_view, null);
+				ImageView imageUserLogo= (ImageView)PersonDetailActivity.this.findViewById(R.id.person_detail_photo);
+				new AbImageDownloader(PersonDetailActivity.this).display(imageUserLogo,
+						userPerson.getQr_code());
+				showDialog(AbConstant.DIALOGCENTER, mView);
+			}
+		});
+		this.findViewById(R.id.person_detail_phone).setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+		Intent intent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+userPerson.getTelephone()));
+		startActivity(intent);
+			}
+		});
 	}
 	
 	/**
@@ -185,9 +208,9 @@ public class PersonDetailActivity extends AbActivity {
 		LayoutInflater mInflater = getLayoutInflater();
 		
 		listViews.add(addTextByText(userPerson.getSummary()));
-		listViews.add(addTextByText(userPerson.getDiscount()));
-		listViews.add(addTextByText(userPerson.getScope()));
-		listViews.add(addTextByText(userPerson.getSummary()));
+		listViews.add(addTextByText(userPerson.getProfessional()));
+		listViews.add(addTextByText(userPerson.getSpecialty()));
+		listViews.add(addTextByText(userPerson.getExperience()));
 		mPager.setAdapter(new MyPagerAdapter(listViews));
 		mPager.setCurrentItem(0);
 		t1.setTextColor(getResources().getColor(R.color.orange));

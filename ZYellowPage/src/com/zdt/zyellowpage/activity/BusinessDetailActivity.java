@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -26,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
+import com.ab.bitmap.AbImageDownloader;
+import com.ab.global.AbConstant;
 import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -288,7 +291,28 @@ public class BusinessDetailActivity extends AbActivity {
 					}
 
 				});
+		
+		this.findViewById(R.id.imgBussnissCode).setOnClickListener(new View.OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				Log.e("xxxx","---"+userCompany.getQr_code());
+				View mView = mInflater.inflate(R.layout.code_view, null);
+				ImageView imageUserLogo= (ImageView)BusinessDetailActivity.this.findViewById(R.id.person_detail_photo);
+				new AbImageDownloader(BusinessDetailActivity.this).display(imageUserLogo,
+						userCompany.getQr_code());
+				showDialog(AbConstant.DIALOGCENTER, mView);
+			}
+		});
+
+		this.findViewById(R.id.imgBussnissPhone).setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+		Intent intent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+userCompany.getTelephone()));
+		startActivity(intent);
+			}
+		});
 	}
 
 	/**

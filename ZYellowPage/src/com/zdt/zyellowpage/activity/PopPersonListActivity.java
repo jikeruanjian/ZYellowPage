@@ -76,6 +76,7 @@ public class PopPersonListActivity extends AbActivity {
 					public void onSuccess(int statusCode, List<User> lis) {
 						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
+							showToast("没有更多数据！");
 							return;
 						}
 						

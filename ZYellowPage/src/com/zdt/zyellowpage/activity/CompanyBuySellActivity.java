@@ -73,6 +73,6 @@ public class CompanyBuySellActivity  extends AbActivity {
 
 
 	private void initTitleRightLayout() {
-
+		showToast("没有更多数据！");
 	}
 }

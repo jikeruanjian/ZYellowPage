@@ -32,7 +32,7 @@
 		    android:background="#FFFFFF" >
 
 		    <Button
-		        android:id="@+id/btn_PioAllLife"
+		        android:id="@+id/btn_PioAllDistance"
 		        android:layout_width="wrap_content"
 		        android:layout_height="fill_parent"
 		        android:layout_gravity="center_vertical"
@@ -44,7 +44,7 @@
 		        android:textColor="#000000" />
 
 		    <Button
-		        android:id="@+id/btn_Pio1Life"
+		        android:id="@+id/btn_Pio500"
 		        android:layout_width="wrap_content"
 		        android:layout_height="fill_parent"
 		        android:layout_gravity="center_vertical"
@@ -56,7 +56,7 @@
 		        android:textColor="#000000" />
 
 		    <Button
-		        android:id="@+id/btn_DriveTo"
+		        android:id="@+id/btn_Pio1000"
 		        android:layout_width="wrap_content"
 		        android:layout_height="fill_parent"
 		        android:layout_gravity="center_vertical"
@@ -68,7 +68,7 @@
 		        android:textColor="#000000" />
 
 		    <Button
-		        android:id="@+id/btn_BusStation"
+		        android:id="@+id/btn_Pio1500"
 		        android:layout_width="wrap_content"
 		        android:layout_height="fill_parent"
 		        android:layout_gravity="center_vertical"
