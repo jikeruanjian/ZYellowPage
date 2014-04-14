@@ -129,6 +129,9 @@ public class SelectAreaActivity extends AbActivity {
 	@Override
 	public void onBackPressed() {
 		if (application.firstStart) {
+			Editor editor = abSharedPreferences.edit();
+			editor.putBoolean(Constant.FIRSTSTART, false);
+			editor.commit();
 			this.startActivity(new Intent(SelectAreaActivity.this,
 					MainActivity.class));
 			this.finish();

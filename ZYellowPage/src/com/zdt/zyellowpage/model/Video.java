@@ -16,7 +16,7 @@ public class Video {
 	private String member_id;
 
 	/**
-	 * 相片编号
+	 * 视频名称
 	 */
 	@Column(name = "title")
 	private String title;

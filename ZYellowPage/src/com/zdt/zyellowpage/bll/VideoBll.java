@@ -37,7 +37,7 @@ public class VideoBll {
 
 	// 1、获取
 	// 如果从网络中获取到了数据，就删除本地的，并保存，如果没有获取到，则直接返回本地数据
-	public void getAlbumList(Context context, AlbumReqEntity videoParams,
+	public void getVideoList(Context context, AlbumReqEntity videoParams,
 			ZzObjectHttpResponseListener<Video> respListener) {
 		this.mVideoParams = videoParams;
 		this.mContext = context;
@@ -74,8 +74,8 @@ public class VideoBll {
 								bre.setResult(jo.getString("result"));
 								bre.setSuccess(jo.getBoolean("success"));
 								bre.setStatus(jo.getInt("status"));
-								// bre.setStatus_description(jo
-								// .getString("status_description"));
+								bre.setStatus_description(jo
+										.getString("status_description"));
 
 								if (bre.getSuccess()) {
 									JSONObject data = jo.getJSONObject("data");
