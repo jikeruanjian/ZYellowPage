@@ -227,7 +227,7 @@ public class PopPersonListActivity extends AbActivity {
 					//mAbTaskQueue.execute(item1);
 					isRefresh = true;
 					list.clear();
-					getData(currentPage);
+					getData(0);
 					
 				}
 
