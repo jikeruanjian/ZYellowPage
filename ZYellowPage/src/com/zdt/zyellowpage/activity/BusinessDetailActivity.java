@@ -2,7 +2,6 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -59,6 +58,7 @@ public class BusinessDetailActivity extends AbActivity {
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private String[] imageUrls = new String[] {};
+	private ImageView imgCompanyVideos;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -246,12 +246,11 @@ public class BusinessDetailActivity extends AbActivity {
 	private void InitTextView() {
 		t1 = (TextView) findViewById(R.id.text1);
 		t2 = (TextView) findViewById(R.id.text2);
-
 		t4 = (TextView) findViewById(R.id.text4);
+		imgCompanyVideos = (ImageView) findViewById(R.id.imgCompanyVideos);
 
 		t1.setOnClickListener(new MyOnClickListener(0));
 		t2.setOnClickListener(new MyOnClickListener(1));
-
 		t4.setOnClickListener(new MyOnClickListener(3));
 
 		// 点击了地图图标
@@ -291,26 +290,47 @@ public class BusinessDetailActivity extends AbActivity {
 					}
 
 				});
-		
-		this.findViewById(R.id.imgBussnissCode).setOnClickListener(new View.OnClickListener() {
+		// 商家二维码
+		this.findViewById(R.id.imgBussnissCode).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Log.e("xxxx", "---" + userCompany.getQr_code());
+						View mView = mInflater
+								.inflate(R.layout.code_view, null);
+						ImageView imageUserLogo = (ImageView) BusinessDetailActivity.this
+								.findViewById(R.id.person_detail_photo);
+						new AbImageDownloader(BusinessDetailActivity.this)
+								.display(imageUserLogo,
+										userCompany.getQr_code() + "&area="
+												+ application.cityid);
+						showDialog(AbConstant.DIALOGCENTER, mView);
+					}
+				});
+
+		this.findViewById(R.id.imgBussnissPhone).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(Intent.ACTION_CALL, Uri
+								.parse("tel:" + userCompany.getTelephone()));
+						startActivity(intent);
+					}
+				});
+
+		imgCompanyVideos.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Log.e("xxxx","---"+userCompany.getQr_code());
-				View mView = mInflater.inflate(R.layout.code_view, null);
-				ImageView imageUserLogo= (ImageView)BusinessDetailActivity.this.findViewById(R.id.person_detail_photo);
-				new AbImageDownloader(BusinessDetailActivity.this).display(imageUserLogo,
-						userCompany.getQr_code());
-				showDialog(AbConstant.DIALOGCENTER, mView);
-			}
-		});
-
-		this.findViewById(R.id.imgBussnissPhone).setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-		Intent intent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+userCompany.getTelephone()));
-		startActivity(intent);
+				if (AbStrUtil.isEmpty(member_id)) {
+					return;
+				}
+				Intent intent = new Intent(BusinessDetailActivity.this,
+						VideoListActivity.class);
+				intent.putExtra("member_id", member_id);
+				startActivity(intent);
 			}
 		});
 	}

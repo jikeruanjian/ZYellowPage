@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!--  -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
@@ -118,14 +118,19 @@
         android:theme="@style/myTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="RjlfVWfEcAecRGc5qG8xyLoX" />
- 	<service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
-	 </service>
+            android:value="mN8dmUdkZdjZ5lAIIZD8439E" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+
         <activity
             android:name="com.zdt.zyellowpage.activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
-             android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -142,16 +147,13 @@
         <activity android:name="com.zdt.zyellowpage.activity.PersonDetailActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.SelectAreaActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.login.ChangePwdActivity" />
-		<activity android:name="com.zdt.zyellowpage.activity.TypeBusinessListActivity" />
-		<activity android:name="com.zdt.zyellowpage.activity.ImagePagerActivity" />
-		<activity android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy"/>
-		<activity android:name="com.zdt.zyellowpage.activity.CompanyBuySellActivity"/>
-		<activity android:name="com.zdt.zyellowpage.activity.MyConcernActivity"/>
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" >
-        </service>
+        <activity android:name="com.zdt.zyellowpage.activity.TypeBusinessListActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.ImagePagerActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy" />
+        <activity android:name="com.zdt.zyellowpage.activity.CompanyBuySellActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.MyConcernActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.VideoListActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.webView.MyWebViewActivity" />
     </application>
 
     <supports-screens
