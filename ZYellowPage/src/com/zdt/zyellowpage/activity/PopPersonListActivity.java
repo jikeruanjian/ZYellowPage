@@ -115,16 +115,21 @@ public class PopPersonListActivity extends AbActivity {
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub
-						//list.clear();
 						list.addAll(newList);
 						myListViewAdapter.notifyDataSetChanged();
+						int len = newList.size();
 						newList.clear();
 						removeProgressDialog();
 						if(isRefresh){
 							mAbPullListView.stopRefresh();
 						}
 						else{
-							mAbPullListView.stopLoadMore(true);
+							if(len == 10){
+								mAbPullListView.stopLoadMore(true);
+							}
+							else{
+								mAbPullListView.stopLoadMore(false);
+							}
 						}
 					}
 					/*@Override

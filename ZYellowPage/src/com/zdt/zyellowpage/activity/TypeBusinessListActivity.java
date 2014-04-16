@@ -139,7 +139,6 @@ public class TypeBusinessListActivity extends AbActivity {
 							map.put("itemsText", u.getKeyword());
 							newList.add(map);
 						}
-						
 						Log.e("xxxx11", "-----" + newList.size());
 					}
 
@@ -167,13 +166,19 @@ public class TypeBusinessListActivity extends AbActivity {
 						// TODO Auto-generated method stub
 						list.addAll(newList);
 						myListViewAdapter.notifyDataSetChanged();
+						int len = newList.size();
 						newList.clear();
 						removeProgressDialog();
 						if(isRefresh){
 							mAbPullListView.stopRefresh();
 						}
 						else{
-							mAbPullListView.stopLoadMore(true);
+							if(len == 10){
+								mAbPullListView.stopLoadMore(true);
+							}
+							else{
+								mAbPullListView.stopLoadMore(false);
+							}
 						}
 					}
 			/*		@Override

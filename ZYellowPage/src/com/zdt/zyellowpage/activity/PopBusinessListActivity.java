@@ -165,13 +165,19 @@ public class PopBusinessListActivity extends AbActivity {
 						// TODO Auto-generated method stub
 						list.addAll(newList);
 						myListViewAdapter.notifyDataSetChanged();
+						int len = newList.size();
 						newList.clear();
 						removeProgressDialog();
 						if(isRefresh){
 							mAbPullListView.stopRefresh();
 						}
 						else{
-							mAbPullListView.stopLoadMore(true);
+							if(len == 10){
+								mAbPullListView.stopLoadMore(true);
+							}
+							else{
+								mAbPullListView.stopLoadMore(false);
+							}
 						}
 					}
 				/*	@Override
