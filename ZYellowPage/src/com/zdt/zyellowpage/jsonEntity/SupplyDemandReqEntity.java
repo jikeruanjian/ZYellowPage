@@ -12,11 +12,17 @@ public class SupplyDemandReqEntity {
 	private int max_size = 10; // 0～n 每页最大条目数
 	private String member_id;// 会员编号
 
+	
 	/**
 	 * 0为供应，1为求购，-1为所有,default=-1
 	 */
 	private String type = "-1";
-
+	public SupplyDemandReqEntity(int page,int size,String mid,String t){
+		page_number = page;
+		max_size = size;
+		member_id = mid;
+		type =t;
+	}
 	public String getType() {
 		return type;
 	}

@@ -290,6 +290,7 @@ public class BusinessDetailActivity extends AbActivity {
 						Intent intent = new Intent(BusinessDetailActivity.this,
 								CompanyBuySellActivity.class);
 						intent.putExtra("FUllNAME", userCompany.getFullname());
+						intent.putExtra("MEMBER_ID", userCompany.getMember_id());
 						startActivity(intent);
 
 					}
@@ -314,6 +315,7 @@ public class BusinessDetailActivity extends AbActivity {
 		            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
 		            	imageUserCode.setImageBitmap(bitmap);
 		            	showDialog(AbConstant.DIALOGCENTER, mView);
+		            	
 					}
 		        	
 		        	// 开始执行前

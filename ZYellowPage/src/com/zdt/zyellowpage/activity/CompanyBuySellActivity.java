@@ -19,16 +19,19 @@ import com.zdt.zyellowpage.global.MyApplication;
 public class CompanyBuySellActivity  extends AbActivity {
 	private MyApplication application;
 	private AbSlidingTabView mAbSlidingTabView;
-	
-
+	private String member_Id;
+	private String fullName;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.activity_companybuysell);
 		application = (MyApplication) abApplication;
-		
+		if (getIntent().getExtras() != null) {
+			member_Id = (String) getIntent().getExtras().get("MEMBER_ID");
+			fullName = (String) getIntent().getExtras().get("FUllNAME");
+		}
 		AbTitleBar mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText("供求信息");
+		mAbTitleBar.setTitleText(fullName+"供求信息");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
@@ -42,7 +45,14 @@ public class CompanyBuySellActivity  extends AbActivity {
 		
 	
 		FragmentSell page1 = new FragmentSell();
+		Bundle bundle=new Bundle();
+		bundle.putString("MEMBERID", member_Id);
+		//向detailFragment传入参数
+		page1.setArguments(bundle);
+
 		FragmentBuy page2 = new FragmentBuy();
+		//向detailFragment传入参数
+		page2.setArguments(bundle);
 		
 		List<Fragment> mFragments = new ArrayList<Fragment>();
 		mFragments.add(page1);
