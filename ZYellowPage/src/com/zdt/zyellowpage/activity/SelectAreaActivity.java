@@ -182,6 +182,13 @@ public class SelectAreaActivity extends AbActivity {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Area> localList) {
+
+						if (content.equals(Constant.NOCONNECT)
+								&& (localList == null || localList.size() == 0)) {
+							showToast(content);
+							return;
+						}
+
 						if (spinner.equals(spiCoutny)) {
 							Area area = new Area();
 							area.setId("-" + parentId);
@@ -202,7 +209,6 @@ public class SelectAreaActivity extends AbActivity {
 						showToast(status_description);
 					}
 				});
-
 	}
 
 }

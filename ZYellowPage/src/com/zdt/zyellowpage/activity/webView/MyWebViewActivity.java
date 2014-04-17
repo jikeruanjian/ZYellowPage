@@ -28,6 +28,11 @@ public class MyWebViewActivity extends Activity implements
 			this.finish();
 		}
 		contentView.setVideoPlayerClient(this);
+
+		// String data =
+		// "<embed width=\"290\" src=\"http:/\"+\"/player.youku.com/player.php/sid/XNTgxNTA5NjY4/v.swf\" type=\"application/x-shockwave-flash\" allowfullscreen=\"true\" loop=\"true\" play=\"true\" menu=\"false\" quality=\"high\" wmode=\"opaque\" classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-4445535400000\"></embed>";
+
+		// contentView.(data);
 		contentView.loadUrl(url);
 
 	}

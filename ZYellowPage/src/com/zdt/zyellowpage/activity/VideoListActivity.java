@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.SimpleAdapter;
 
 import com.ab.activity.AbActivity;
 import com.ab.util.AbStrUtil;
@@ -16,11 +18,12 @@ import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.webView.MyWebViewActivity;
 import com.zdt.zyellowpage.bll.VideoBll;
+import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.jsonEntity.AlbumReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Video;
-import com.zdt.zyellowpage.util.ImageListAdapter;
 
 public class VideoListActivity extends AbActivity {
 
@@ -28,9 +31,10 @@ public class VideoListActivity extends AbActivity {
 	private List<Map<String, Object>> newList = null;
 	private AbPullListView mAbPullListView = null;
 	private int currentPage = 0;
-	private ImageListAdapter myListViewAdapter = null;
+	private SimpleAdapter adapter = null;
 	private String member_id;
 	private boolean isRefresh = true;
+	private int page_size = 10;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ public class VideoListActivity extends AbActivity {
 		setAbContentView(R.layout.video_list);
 
 		AbTitleBar mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText(R.string.pull_list_name);
+		mAbTitleBar.setTitleText("视频列表");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
@@ -61,36 +65,53 @@ public class VideoListActivity extends AbActivity {
 		list = new ArrayList<Map<String, Object>>();
 
 		// 使用自定义的Adapter
-		myListViewAdapter = new ImageListAdapter(this, list,
-				R.layout.video_list_items, new String[] { "itemsTitle" },
-				new int[] { R.id.itemsTitle });
-		mAbPullListView.setAdapter(myListViewAdapter);
+		adapter = new SimpleAdapter(this, list, R.layout.video_list_items,
+				new String[] { "itemsTitle" }, new int[] { R.id.itemsTitle });
+		mAbPullListView.setAdapter(adapter);
 
 		// item被点击事件
 		mAbPullListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				String url = list.get((int) id).get("url").toString();
+				if (!AbStrUtil.isEmpty(url)) {
+					Intent intent = new Intent(VideoListActivity.this,
+							MyWebViewActivity.class);
+					if (url.equals("http://player.youku.com/player.php/sid/XNTgxNTA5NjY4/v.swf")) {
+						url = "http://static.youku.com/v1.0.0423/v/swf/loader.swf?VideoIDS=XNTgxNTA5NjY4&embedid=MTE2LjI0OS4yMjYuMTcwAjE0NTM3NzQxNwIC&wd=&vext=pid%3D%26emb%3DMTE2LjI0OS4yMjYuMTcwAjE0NTM3NzQxNwIC%26bc%3D%26type%3D0";
+					}
+					intent.putExtra("url", url);
+					startActivity(intent);
+				} else {
+					showToast("该视频地址有误，无法播放");
+				}
 			}
 		});
 
+		AbOnListViewListener lisListener = new MyListViewListerer();
 		// 列表上拉刷新，和下拉翻页的事件触发
-		mAbPullListView.setAbOnListViewListener(new AbOnListViewListener() {
-			@Override
-			public void onRefresh() {
-				isRefresh = true;
-				currentPage = 0;
-				getData();
-			}
+		mAbPullListView.setAbOnListViewListener(lisListener);
 
-			@Override
-			public void onLoadMore() {
-				isRefresh = false;
-				currentPage++;
-				getData();
-			}
+		// 默认的加载一页
+		// getData();
+		lisListener.onRefresh();
+	}
 
-		});
+	class MyListViewListerer implements AbOnListViewListener {
+		@Override
+		public void onRefresh() {
+			isRefresh = true;
+			currentPage = 0;
+			list.clear();
+			getData();
+		}
+
+		@Override
+		public void onLoadMore() {
+			isRefresh = false;
+			getData();
+		}
 	}
 
 	/**
@@ -119,12 +140,18 @@ public class VideoListActivity extends AbActivity {
 
 					@Override
 					public void onStart() {
-						showProgressDialog("请稍候...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Video> localList) {
+						//如果网络链接有问题，而且本地数据又没有，就需要提示出来
+						if (content.equals(Constant.NOCONNECT)
+								&& (localList == null || localList.size() == 0)) {
+							showToast(content);
+							return;
+						}
+
 						if (localList == null || localList.size() == 0) {
 							newList = null;
 							return;
@@ -146,15 +173,26 @@ public class VideoListActivity extends AbActivity {
 
 					@Override
 					public void onFinish() {
-						removeProgressDialog();
-						list.addAll(newList);
-						myListViewAdapter.notifyDataSetChanged();
-						newList.clear();
-						removeProgressDialog();
-						if (isRefresh) {
-							mAbPullListView.stopRefresh();
+						if (newList != null && newList.size() > 0) {
+							list.addAll(newList);
+							adapter.notifyDataSetChanged();
+							newList.clear();
+							if (isRefresh) {
+								mAbPullListView.stopRefresh();
+								if (list.size() < (currentPage + 1) * page_size) {
+									mAbPullListView.setPullLoadEnable(false);
+								} else {
+									mAbPullListView.setPullLoadEnable(true);
+								}
+							} else {
+								mAbPullListView.stopLoadMore(true);
+								currentPage++;
+							}
 						} else {
-							mAbPullListView.stopLoadMore(true);
+							mAbPullListView.stopLoadMore(false);
+							if (currentPage == 0) {
+								showToast("没有相关数据");
+							}
 						}
 					}
 				});

@@ -2,7 +2,9 @@ package com.zdt.zyellowpage.model;
 
 import com.ab.db.orm.annotation.Column;
 import com.ab.db.orm.annotation.Id;
+import com.ab.db.orm.annotation.Table;
 
+@Table(name = "video")
 public class Video {
 
 	@Id
