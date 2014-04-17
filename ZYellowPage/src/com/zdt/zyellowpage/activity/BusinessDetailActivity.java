@@ -2,6 +2,8 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -28,6 +30,9 @@ import android.widget.TextView;
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
+import com.ab.http.AbBinaryHttpResponseListener;
+import com.ab.http.AbHttpUtil;
+import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -291,23 +296,53 @@ public class BusinessDetailActivity extends AbActivity {
 
 				});
 		// 商家二维码
-		this.findViewById(R.id.imgBussnissCode).setOnClickListener(
-				new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						Log.e("xxxx", "---" + userCompany.getQr_code());
-						View mView = mInflater
-								.inflate(R.layout.code_view, null);
-						ImageView imageUserLogo = (ImageView) BusinessDetailActivity.this
-								.findViewById(R.id.person_detail_photo);
-						new AbImageDownloader(BusinessDetailActivity.this)
-								.display(imageUserLogo,
-										userCompany.getQr_code() + "&area="
-												+ application.cityid);
-						showDialog(AbConstant.DIALOGCENTER, mView);
+		this.findViewById(R.id.imgBussnissCode).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				String url = userCompany.getQr_code()+"&area="+ application.cityid;
+				Log.e("xxxxtp", "---" +url);
+				AbHttpUtil.getInstance(BusinessDetailActivity.this).get(url, new AbBinaryHttpResponseListener() {
+		        	
+					// 获取数据成功会调用这里
+		        	@Override
+					public void onSuccess(int statusCode, byte[] content) {
+		        		Log.d("xxxx", "onSuccess");
+		        		Bitmap bitmap = AbImageUtil.bytes2Bimap(content);
+		            	View mView = mInflater.inflate(R.layout.code_view, null);
+		            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
+		            	imageUserCode.setImageBitmap(bitmap);
+		            	showDialog(AbConstant.DIALOGCENTER, mView);
 					}
-				});
+		        	
+		        	// 开始执行前
+		            @Override
+					public void onStart() {
+		            	Log.d("xxxx", "onStart");
+		            	//显示进度框
+		            	showProgressDialog();
+					}
+
+		            // 失败，调用
+		            @Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+		            	showToast(error.getMessage());
+					}
+
+					// 完成后调用，失败，成功
+		            @Override
+		            public void onFinish() { 
+		            	Log.d("xxxx", "onFinish");
+		            	//移除进度框
+		            	removeProgressDialog();
+		            };
+		            
+		        });
+			}
+		});
+        
 
 		this.findViewById(R.id.imgBussnissPhone).setOnClickListener(
 				new View.OnClickListener() {
