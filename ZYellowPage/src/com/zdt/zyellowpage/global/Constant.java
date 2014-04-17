@@ -50,6 +50,8 @@ public class Constant {
 	// jfa97P4HIhjxrAgfUdq1NoKC
 	public final static String APIKEY = "jfa97P4HIhjxrAgfUdq1NoKC";
 
+	public static final String NOCONNECT = "无法连接到网络";
+
 	public class DataType {
 		/**
 		 * 我的关注
