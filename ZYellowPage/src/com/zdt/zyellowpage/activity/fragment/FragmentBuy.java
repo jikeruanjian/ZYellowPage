@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,11 +16,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.SimpleAdapter;
 
 import com.ab.activity.AbActivity;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.BusinessDetailActivity;
+import com.zdt.zyellowpage.activity.BuySellContentActivity;
+import com.zdt.zyellowpage.activity.ImagePagerActivity;
 import com.zdt.zyellowpage.bll.SupplyDemandBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.SupplyDemandReqEntity;
@@ -30,7 +35,7 @@ import com.zdt.zyellowpage.util.ImageListAdapter;
 public class FragmentBuy extends Fragment {
 	private MyApplication application;
 	private AbActivity mActivity = null;
-	private List<String> list = null;
+	private List<Map<String,Object>> list = null;
 	private List<SupplyDemand> SupplyDemandList = null;
 	private List<SupplyDemand> newList = null;
 	private AbPullListView mAbPullListView = null;
@@ -38,6 +43,7 @@ public class FragmentBuy extends Fragment {
 	private boolean isRefresh = true;
 	private   ListAdapter myListViewAdapter = null;
 	private String member_Id;
+	SimpleAdapter adapter;
 	
 	
 
@@ -60,20 +66,27 @@ public class FragmentBuy extends Fragment {
  		 mAbPullListView.setPullLoadEnable(true);
 
          //ListView数据
-    	 list = new ArrayList<String>();
+    	 list = new ArrayList<Map<String,Object>>();
     	 SupplyDemandList = new ArrayList<SupplyDemand>();
     	 newList = new ArrayList<SupplyDemand>();
     	// supplyDemandList = new ArrayList<SupplyDemand>();
     	
-    
-    	 mAbPullListView.setAdapter(new ArrayAdapter<String> (mActivity,android.R.layout.simple_expandable_list_item_1,list));
+    	adapter = new SimpleAdapter(mActivity,list,R.layout.text_item, 
+                 new String[]{"textViewSellBuyItemNames"}, 
+                 new int[]{R.id.textViewSellBuyItemName}); 
+    	 mAbPullListView.setAdapter(adapter);
+    	/* mAbPullListView.setAdapter(new ArrayAdapter<String> (mActivity,
+    			 android.R.layout.simple_expandable_list_item_1,list));*/
     	 //item被点击事件
     	 mAbPullListView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				
+				//mActivity.showToast(SupplyDemandList.get(position-1).getItem_id());
+				Intent intent = new Intent(mActivity,
+						BuySellContentActivity.class);
+				intent.putExtra("ITEMID", SupplyDemandList.get(position-1).getItem_id());
+				startActivity(intent);
 			}
     	 });
 
@@ -87,7 +100,7 @@ public class FragmentBuy extends Fragment {
  				//改写成执行查询
  				//mAbTaskQueue.execute(item1);
  				isRefresh = true;
- 				list.clear();
+ 				SupplyDemandList.clear();
  				getData(0);
  			}
 
@@ -112,7 +125,8 @@ public class FragmentBuy extends Fragment {
 	private void getData(int i){
 		SupplyDemandBll bll = new SupplyDemandBll();
 		SupplyDemandReqEntity supplyDemandParams = new SupplyDemandReqEntity(i,10,member_Id,"1");
-		bll.getSupplyDemandList(mActivity, supplyDemandParams, new ZzObjectHttpResponseListener<SupplyDemand>(){
+		bll.getSupplyDemandList(mActivity, supplyDemandParams, 
+				new ZzObjectHttpResponseListener<SupplyDemand>(){
 
 			@Override
 			public void onSuccess(int statusCode, List<SupplyDemand> lis) {
@@ -152,10 +166,11 @@ public class FragmentBuy extends Fragment {
 				newList.clear();
 				list.clear();
 				for(SupplyDemand s:SupplyDemandList ){
-					list.add(s.getTitle());
+					 Map<String, Object> map = new HashMap<String, Object>(); 
+					 map.put("textViewSellBuyItemNames", s.getTitle());
+					list.add(map);
 				}
-				 mAbPullListView.setAdapter(new ArrayAdapter<String> 
-				 (mActivity,android.R.layout.simple_expandable_list_item_1,list));
+				adapter. notifyDataSetChanged( );
 		    	 //item被点击事件
 		    	
 				mActivity.removeProgressDialog();

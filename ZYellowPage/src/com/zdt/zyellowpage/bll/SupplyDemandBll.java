@@ -67,6 +67,7 @@ public class SupplyDemandBll {
 	public void getDetailOfSupplyDemand(Context context, final String item_id,
 			ZzObjectHttpResponseListener<SupplyDemand> respListener) {
 		this.mContext = context;
+		objectResponseListener = respListener;
 		JSONObject jo = new JSONObject();
 		JSONObject joData = new JSONObject();
 		try {

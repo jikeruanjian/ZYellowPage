@@ -31,7 +31,7 @@ public class CompanyBuySellActivity  extends AbActivity {
 			fullName = (String) getIntent().getExtras().get("FUllNAME");
 		}
 		AbTitleBar mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText(fullName+"供求信息");
+		mAbTitleBar.setTitleText(fullName);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);

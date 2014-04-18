@@ -15,6 +15,7 @@ import com.ab.view.pullview.AbPullListView;
 
 
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.BuySellContentActivity;
 import com.zdt.zyellowpage.bll.SupplyDemandBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.SupplyDemandReqEntity;
@@ -25,6 +26,7 @@ import com.zdt.zyellowpage.util.ImageListAdapter;
 import com.zdt.zyellowpage.util.ImageListAdapterC;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
@@ -40,7 +43,7 @@ import android.widget.SimpleCursorAdapter;
 public class FragmentSell  extends Fragment {
 	private MyApplication application;
 	private AbActivity mActivity = null;
-	private List<String> list = null;
+	private List<Map<String,Object>> list = null;
 	private List<SupplyDemand> SupplyDemandList = null;
 	private List<SupplyDemand> newList = null;
 	private AbPullListView mAbPullListView = null;
@@ -48,8 +51,10 @@ public class FragmentSell  extends Fragment {
 	private boolean isRefresh = true;
 	private   ListAdapter myListViewAdapter = null;
 	private String member_Id;
+	SimpleAdapter adapter;
 	
 	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,20 +74,27 @@ public class FragmentSell  extends Fragment {
  		 mAbPullListView.setPullLoadEnable(true);
 
          //ListView数据
-    	 list = new ArrayList<String>();
+    	 list = new ArrayList<Map<String,Object>>();
     	 SupplyDemandList = new ArrayList<SupplyDemand>();
     	 newList = new ArrayList<SupplyDemand>();
     	// supplyDemandList = new ArrayList<SupplyDemand>();
     	
-    
-    	 mAbPullListView.setAdapter(new ArrayAdapter<String> (mActivity,android.R.layout.simple_expandable_list_item_1,list));
+    	adapter = new SimpleAdapter(mActivity,list,R.layout.text_item, 
+                 new String[]{"textViewSellBuyItemNames"}, 
+                 new int[]{R.id.textViewSellBuyItemName}); 
+    	 mAbPullListView.setAdapter(adapter);
+    	/* mAbPullListView.setAdapter(new ArrayAdapter<String> (mActivity,
+    			 android.R.layout.simple_expandable_list_item_1,list));*/
     	 //item被点击事件
     	 mAbPullListView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				
+				//mActivity.showToast(SupplyDemandList.get(position-1).getItem_id());
+				Intent intent = new Intent(mActivity,
+						BuySellContentActivity.class);
+				intent.putExtra("ITEMID", SupplyDemandList.get(position-1).getItem_id());
+				startActivity(intent);
 			}
     	 });
 
@@ -96,7 +108,7 @@ public class FragmentSell  extends Fragment {
  				//改写成执行查询
  				//mAbTaskQueue.execute(item1);
  				isRefresh = true;
- 				list.clear();
+ 				SupplyDemandList.clear();
  				getData(0);
  			}
 
@@ -157,14 +169,15 @@ public class FragmentSell  extends Fragment {
 				// TODO Auto-generated method stub
 				SupplyDemandList.addAll(newList);
 				int len = newList.size();
+			//	 mAbPullListView.removeAllViews();
 				newList.clear();
-				// mAbPullListView.removeAllViews();
 				list.clear();
 				for(SupplyDemand s:SupplyDemandList ){
-					list.add(s.getTitle());
+					 Map<String, Object> map = new HashMap<String, Object>(); 
+					 map.put("textViewSellBuyItemNames", s.getTitle());
+					list.add(map);
 				}
-				 mAbPullListView.setAdapter(new ArrayAdapter<String> 
-				 (mActivity,android.R.layout.simple_expandable_list_item_1,list));
+				adapter. notifyDataSetChanged( );
 		    	 //item被点击事件
 		    	
 				mActivity.removeProgressDialog();
