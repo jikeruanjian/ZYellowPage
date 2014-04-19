@@ -5,10 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
+import com.ab.bitmap.AbImageDownloader;
+import com.ab.global.AbConstant;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.ab.view.titlebar.AbTitleBar;
@@ -17,6 +31,7 @@ import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 import com.zdt.zyellowpage.util.ImageListAdapterC;
@@ -31,9 +46,8 @@ public class MyConcernActivity extends AbActivity {
 	private boolean isRefresh = true;
 	private ImageListAdapterGZ myListViewAdapter = null;
 	DisplayUtil displayUtil;
-
 	private MyApplication application;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -189,4 +203,12 @@ public class MyConcernActivity extends AbActivity {
 	public void onPause() {
 		super.onPause();
 	}
+	
+	
+	
+	
+	
+	
+	
+
 }

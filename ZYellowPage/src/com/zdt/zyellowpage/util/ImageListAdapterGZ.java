@@ -132,7 +132,7 @@ public class ImageListAdapterGZ extends BaseAdapter{
           //mAbImageDownloader.setLoadingView(convertView.findViewById(R.id.progressBar));
           //图片的下载
           mAbImageDownloader.display(holder.itemsIcon,imageUrl);
-          holder.itemsBtn.setOnClickListener(new MyBtnListener((String)obj.get("Member_id")));
+          holder.itemsBtn.setOnClickListener(new MyBtnListener(obj));
           holder.itemsTitle.setOnClickListener(new MyTitileListener((String)obj.get("Member_id")) );
          
           return convertView;
@@ -152,8 +152,8 @@ public class ImageListAdapterGZ extends BaseAdapter{
 	}
 	  
 	private class MyBtnListener implements OnClickListener{  
-		String mMember;  
-        public MyBtnListener(String inPosition){  
+		Map<String,Object> mMember;  
+        public MyBtnListener(Map<String,Object> inPosition){  
         	mMember= inPosition;  
         }  
         @Override  
@@ -162,7 +162,7 @@ public class ImageListAdapterGZ extends BaseAdapter{
         	if (application.mUser != null && application.mUser.getToken() != null) {
         		  
         		UserBll bll = new UserBll();
-        		 bll.followUser(mContext, application.mUser.getToken(), mMember,true,
+        		 bll.followUser(mContext, application.mUser.getToken(), (String)mMember.get("Member_id"),true,
         				 new ZzStringHttpResponseListener(){
 
 							@Override
@@ -170,6 +170,8 @@ public class ImageListAdapterGZ extends BaseAdapter{
 								// TODO Auto-generated method stub
 								
 								Toast.makeText(mContext,content, Toast.LENGTH_SHORT).show();
+								mData.remove(mMember);
+								ImageListAdapterGZ.this.notifyDataSetChanged();
 							}
 
 							@Override
@@ -182,7 +184,7 @@ public class ImageListAdapterGZ extends BaseAdapter{
 							public void onFailure(int statusCode,
 									String content, Throwable error) {
 								// TODO Auto-generated method stub
-								Toast.makeText(mContext, "关注失败！", Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext, "取消关注失败！", Toast.LENGTH_SHORT).show();
 							}
 
 							@Override

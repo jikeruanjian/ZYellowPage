@@ -665,7 +665,11 @@ public class FragmentNearMap extends Fragment {
 			User info = mSearch.get(i);
 			//初始化泡泡
 			popView.setVisibility(View.GONE);
-			popImage.setImageResource(R.drawable.ic_launcher);
+			if (info.getLogo() != null) {
+				new AbImageDownloader(mActivity).display(popImage,
+						info.getLogo());
+			}
+			//popImage.setImageResource(R.drawable.ic_launcher);
 			MapView.LayoutParams geoLP = (MapView.LayoutParams) popView
 					.getLayoutParams();
 			geoLP.point = new GeoPoint(
@@ -677,14 +681,14 @@ public class FragmentNearMap extends Fragment {
 					.findViewById(R.id.map_bubbleTitle);
 			poiPoint = geoLP.point;
 			title.setText(info.getFullname());
-			TextView desc = (TextView) popView
+			/*TextView desc = (TextView) popView
 					.findViewById(R.id.map_bubbleText);
 			if (info.getAddress() == null) {
 				desc.setVisibility(View.GONE);
 			} else {
 				desc.setVisibility(View.VISIBLE);
 				desc.setText(info.getAddress());
-			}
+			}*/
 			TextView phone = (TextView) popView
 					.findViewById(R.id.map_bubblePhone);
 			phone.setText(info.getAddress());
