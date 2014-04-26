@@ -47,16 +47,21 @@ public class TypeBusinessListActivity extends AbActivity {
 	private ArrayList<String> mPhotoList = new ArrayList<String>();
 	private AbTitleBar mAbTitleBar = null;
 	private ImageListAdapterC myListViewAdapter = null;
-	DisplayUtil displayUtil;
-	String type="商家";
+	private DisplayUtil displayUtil;
+	private String type="商家";
+	private String typeId="商家";
 	private MyApplication application;
-
+	private TextView typeTextView;
+	private TextView areaTextView;
+	private TextView newOrPoTextView;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.popbusinesspull_list);
 		if (getIntent().getExtras() != null) {
 			type = (String) getIntent().getExtras().get("Type");
+			typeId = (String) getIntent().getExtras().get("TypeId");
 		}
 		// 初始化标题栏
 		AbTitleBar mAbTitleBar = this.getTitleBar();
@@ -81,7 +86,10 @@ public class TypeBusinessListActivity extends AbActivity {
 		String[] KeyWords = { "美食", "电影", "休闲娱乐", "酒店", "其他" };
 		String[] Areas = { "五华区", "官渡区", "西山区", "盘龙区", "呈贡新区" };
 		String[] NewOrPops = { "热门", "最新" };
-		ArrayAdapter<String> adapter;
+		typeTextView = (TextView)this.findViewById(R.id.spinnerKeyWord);
+		areaTextView = (TextView)this.findViewById(R.id.spinnerArea);
+		newOrPoTextView = (TextView)this.findViewById(R.id.spinnerNewOrPop);
+		/*ArrayAdapter<String> adapter;
 		Spinner spinnerKeyWord = (Spinner) this
 				.findViewById(R.id.spinnerKeyWord);
 		adapter = new ArrayAdapter<String>(this,
@@ -101,14 +109,14 @@ public class TypeBusinessListActivity extends AbActivity {
 				android.R.layout.simple_spinner_item, NewOrPops);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerNewOrPop.setAdapter(adapter);
-
+      */
 		displayUtil = DisplayUtil.getInstance(this);
 		DisplayMetrics metric = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(metric);
 		int width = metric.widthPixels;
-		displayUtil.setViewLayoutParamsByX(spinnerKeyWord, 3, width);
-		displayUtil.setViewLayoutParamsByX(spinnerKeyArea, 3, width);
-		displayUtil.setViewLayoutParamsByX(spinnerNewOrPop, 3, width);
+		displayUtil.setViewLayoutParamsByX(typeTextView, 3, width);
+		displayUtil.setViewLayoutParamsByX(areaTextView, 3, width);
+		displayUtil.setViewLayoutParamsByX(newOrPoTextView, 3, width);
 	}
 
 	

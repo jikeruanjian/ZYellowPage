@@ -1,16 +1,29 @@
 package com.zdt.zyellowpage.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -18,13 +31,18 @@ import com.ab.activity.AbActivity;
 import com.ab.task.AbTaskQueue;
 import com.ab.view.pullview.AbPullView;
 import com.baidu.mapapi.BMapManager;
-
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.fragment.FragmentHomePage;
 import com.zdt.zyellowpage.activity.fragment.FragmentMore;
 import com.zdt.zyellowpage.activity.fragment.FragmentNearMap;
 import com.zdt.zyellowpage.activity.fragment.FragmentUser;
+import com.zdt.zyellowpage.bll.AreaBll;
+import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.global.MyApplication;
+import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.model.Area;
+import com.zdt.zyellowpage.model.Category;
+import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
 import android.view.KeyEvent;
@@ -35,20 +53,34 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class MainActivity extends AbActivity implements OnCheckedChangeListener {
 
-	FragmentManager fragmentManager;
-	FragmentTransaction fragmentTransaction;
-	FragmentHomePage newFragmentHome = null;
-	FragmentNearMap newFragmentNearMap = null;
-	FragmentUser newFragmentUser = null;
-	FragmentMore newFragmentMore = null;
+	private FragmentManager fragmentManager;
+	private FragmentTransaction fragmentTransaction;
+	private FragmentHomePage newFragmentHome = null;
+	private FragmentNearMap newFragmentNearMap = null;
+	private FragmentUser newFragmentUser = null;
+	private FragmentMore newFragmentMore = null;
 	public static BMapManager mBMapMan = null;
 	private AbPullView mAbPullView = null;
 	private AbTaskQueue mAbTaskQueue = null;
-	TextView textViewArea;
+	private TextView textViewArea;
 	private MyApplication application;
-	EditText editRearch;
+	private EditText editRearch;
+	private TextView textVSearch;
+	private PopupWindow popupWindow;
+	private LinearLayout layout;
+	private ListView listView;
+	private String types[] = { "全部", "商家", "个人"};
 	boolean isFirst = false;
-
+	//区域列表
+	public static List<Area> listArea;
+	public static List<String> listAreaName;
+	//商家分类列表
+	public  static List<Category> listCategory;
+	public static List<String> listCategoryName;
+	//个人分类列表
+	public  static List<Category> listCategoryP;
+	public static List<String> listCategoryNameP;
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
@@ -56,6 +88,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		if (requestCode == 10000) {
 			if (resultCode == RESULT_OK) {
 				textViewArea.setText(application.cityName);
+				MainActivity.getAreaList(MainActivity.this, application.cityid);
 			}
 		}
 	}
@@ -81,7 +114,28 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		fragmentTransaction.add(R.id.fragmentViewMore, newFragmentMore, "more");
 		
 		fragmentTransaction.commit();
+		listArea = new ArrayList<Area>();
+		listCategory = new ArrayList<Category>();
+		listAreaName = new ArrayList<String>();
+		listCategoryName = new ArrayList<String>();
+		listCategoryP = new ArrayList<Category>();
+		listCategoryNameP = new ArrayList<String>();
 		initChangeEvent();
+		
+		MainActivity.getAreaList(MainActivity.this, application.cityid);
+		MainActivity.getCategoryList(MainActivity.this, "0100");
+		MainActivity.getCategoryListP(MainActivity.this, "5100");
+		textVSearch = (TextView) findViewById(R.id.textViewSearchType);
+		textVSearch.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//button.getTop();
+				int y = textVSearch.getBottom() * 3 / 2;
+				//int x = getWindowManager().getDefaultDisplay().getWidth() / 2;
+				int x = textVSearch.getRight()+10;
+				showPopupWindow(x, y);
+			}
+		});
 	}
 
 	protected void initOtherFragment() {
@@ -251,5 +305,198 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				break;
 			}
 		}
+		
 	}
+	
+	/**
+	 * 获取市级下属的区县
+	 * @param context
+	 * @param id ---城市id
+	 */
+	public static void getAreaList(Context context,String id){
+		AreaBll areaBll = new AreaBll();
+		areaBll.getAreaList( context, id, new ZzObjectHttpResponseListener<Area>(){
+
+			@Override
+			public void onSuccess(int statusCode, List<Area> lis) {
+				// TODO Auto-generated method stub
+				if (lis == null || lis.size() == 0) {
+					return;
+				}
+				
+				listArea.clear();
+				listArea.addAll(lis);
+				listArea.add(new Area(lis.get(0).getParentId(),"全部区域","0"));
+				for(Area area:listArea){
+					listAreaName.add(area.getName());
+				}
+				Log.e("xxxx", "包含的县区个数为-----"+listArea.size());
+			}
+
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onFailure(int statusCode, String content,
+					Throwable error, List<Area> localList) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onErrorData(String status_description) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onFinish() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @param id 主分类id，为0时获取第一级分类
+	 * @param type 0 为商家 1为个人
+	 */
+	public static void getCategoryList(Context context,String id){
+		CategoryBll categoryBll = new CategoryBll();
+		categoryBll.getCategoryist(context,id, "0", new ZzObjectHttpResponseListener<Category>(){
+
+			@Override
+			public void onSuccess(int statusCode, List<Category> lis) {
+				// TODO Auto-generated method stub
+				// TODO Auto-generated method stub
+				if (lis == null || lis.size() == 0) {
+					return;
+				}
+				listCategory.clear();
+				listCategory.addAll(lis);
+				Log.e("xxxx", "包含的分类个数为-----"+listCategory.size());
+				for(Category category:listCategory){
+						listCategoryName.add(category.getName());
+				}
+				
+			}
+
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onFailure(int statusCode, String content,
+					Throwable error, List<Category> localList) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onErrorData(String status_description) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onFinish() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
+	/**
+	 * 
+	 * @param context
+	 * @param id 主分类id，为0时获取第一级分类
+	 * @param type 0 为商家 1为个人
+	 */
+	public static void getCategoryListP(Context context,String id){
+		CategoryBll categoryBll = new CategoryBll();
+		categoryBll.getCategoryist(context,id, "1", new ZzObjectHttpResponseListener<Category>(){
+
+			@Override
+			public void onSuccess(int statusCode, List<Category> lis) {
+				// TODO Auto-generated method stub
+				// TODO Auto-generated method stub
+				if (lis == null || lis.size() == 0) {
+					return;
+				}
+				listCategoryP.clear();
+				listCategoryP.addAll(lis);
+				Log.e("xxxx", "包含的分类个数为-----"+listCategoryP.size());
+				for(Category category:listCategory){
+						listCategoryNameP.add(category.getName());
+				}
+				
+			}
+
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onFailure(int statusCode, String content,
+					Throwable error, List<Category> localList) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onErrorData(String status_description) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onFinish() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	}
+	public void showPopupWindow(int x, int y) {
+		layout = (LinearLayout) LayoutInflater.from(MainActivity.this).inflate(
+				R.layout.popdialog, null);
+		listView = (ListView) layout.findViewById(R.id.listViewPopW);
+		listView.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+				R.layout.text_itemselect, R.id.textViewSelectItemName,  types));
+
+		popupWindow = new PopupWindow(MainActivity.this);
+		
+		//popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		popupWindow
+				.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
+		popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);;
+		popupWindow.setOutsideTouchable(true);
+		popupWindow.setFocusable(true);
+		popupWindow.setContentView(layout);
+		// showAsDropDown会把里面的view作为参照物，所以要那满屏幕parent
+		popupWindow.showAsDropDown(textVSearch, x, 10);
+		//popupWindow.showAtLocation(findViewById(R.id.LinearLayoutpopwindows), Gravity.LEFT
+			//	| Gravity.TOP, x, y);//需要指定Gravity，默认情况是center.
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				textVSearch.setText(types[arg2]);
+				popupWindow.dismiss();
+				popupWindow = null;
+			}
+		});
+	}
+
 }

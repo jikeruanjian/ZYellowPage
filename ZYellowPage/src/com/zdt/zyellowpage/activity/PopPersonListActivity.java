@@ -8,10 +8,18 @@ import java.util.Random;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -30,6 +38,7 @@ import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
 import com.zdt.zyellowpage.jsonEntity.PersonListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
+import com.zdt.zyellowpage.util.DisplayUtil;
 import com.zdt.zyellowpage.util.ImageListAdapterC;
 import com.zdt.zyellowpage.util.ImageListAdapterP;
 
@@ -41,21 +50,44 @@ public class PopPersonListActivity extends AbActivity {
 	private AbPullListView mAbPullListView = null;
 	private int currentPage = 0;
 	private boolean isRefresh = true;
+	private DisplayUtil displayUtil;
+	private TextView typeTextView;
+	private TextView areaTextView;
+	private TextView newOrPoTextView;
+	private TextView wordsTextView;
+	private PopupWindow popupWindow;
+	private LinearLayout layout;
+	private ListView listView;
 	private ImageListAdapterP myListViewAdapter = null;
 	private MyApplication application;
+	private String type="热门关注";
+	private String typeId="list-hot";
+	private String[] KeyWords;
+	private String[] Areas;
+	private String[] NewOrPops;
+	private String[] words;
+	private String cityId;
+	private String keyId;
+	private String condition;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setAbContentView(R.layout.personpull_list);
+        if (getIntent().getExtras() != null) {
+			type = (String) getIntent().getExtras().get("Type");
+			typeId = (String) getIntent().getExtras().get("TypeId");
+		}
         AbTitleBar mAbTitleBar = this.getTitleBar();
-        mAbTitleBar.setTitleText("热门关注");
+        mAbTitleBar.setTitleText(type);
         mAbTitleBar.setLogo(R.drawable.button_selector_back);
         mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
         mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
         mAbTitleBar.setLogoLine(R.drawable.line);
         application = (MyApplication) abApplication;
-        
-        
+        cityId = application.cityid;
+		keyId = typeId;//"list-hot";
+		initSpinner();
+
         list = new ArrayList<Map<String, Object>>();
         newList = new ArrayList<Map<String, Object>>();
         initPopBusinessView();
@@ -63,12 +95,70 @@ public class PopPersonListActivity extends AbActivity {
     }
     
 
+	/**
+	 * 初始化三个下拉框
+	 */
+	void initSpinner() {
+		
+		NewOrPops = new String[]{ "热门", "最新" };
+		typeTextView = (TextView)this.findViewById(R.id.spinnerKeyWordP);
+		typeTextView.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				int y = typeTextView.getBottom() * 3 / 2;
+				int x = typeTextView.getLeft()+10;
+				words =  MainActivity.listCategoryNameP.toArray(new String[0]);
+				wordsTextView = typeTextView;
+				condition = "1";
+				showPopupWindow(x, y);
+			
+			}
+			
+		});
+		areaTextView = (TextView)this.findViewById(R.id.spinnerAreaP);
+		areaTextView.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				int y = typeTextView.getBottom() * 3 / 2;
+				int x = typeTextView.getLeft()-10;
+				words =  MainActivity.listAreaName.toArray(new String[0]);
+				wordsTextView = areaTextView;
+				condition = "2";
+				showPopupWindow(x, y);
+			}
+			
+		});
+		
+		newOrPoTextView = (TextView)this.findViewById(R.id.spinnerNewOrPopP);
+		newOrPoTextView.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				int y = typeTextView.getBottom() * 3 / 2;
+				int x = typeTextView.getLeft()-10;
+				words = NewOrPops;
+				wordsTextView = newOrPoTextView;
+				condition = "3";
+				showPopupWindow(x, y);
+			}
+		});
+		
+		displayUtil = DisplayUtil.getInstance(this);
+		DisplayMetrics metric = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(metric);
+		int width = metric.widthPixels;
+		displayUtil.setViewLayoutParamsByX(typeTextView, 3, width);
+		displayUtil.setViewLayoutParamsByX(areaTextView, 3, width);
+		displayUtil.setViewLayoutParamsByX(newOrPoTextView, 3, width);
+	}
 
 	void getData(int i) {
 		UserBll bll = new UserBll();
 		
 		PersonListReqEntity personParams = new PersonListReqEntity(i, 10,
-				application.cityid, "list-hot");
+				cityId,keyId);
 		bll.getListPerson(PopPersonListActivity.this, personParams,
 				new ZzObjectHttpResponseListener<User>() {
 
@@ -132,58 +222,6 @@ public class PopPersonListActivity extends AbActivity {
 							}
 						}
 					}
-					/*@Override
-						public void onSuccess(int statusCode, List<Object> lis) {
-							if (lis == null || lis.size() == 0) {
-								return;
-							}
-							
-							Map<String, Object> map;
-							for (int i = 0; i < lis.size(); i++) {
-
-								User u = (User) lis.get(i);
-								map = new HashMap<String, Object>();
-								map.put("Member_id", u.getMember_id());
-								map.put("itemsIcon", u.getLogo());
-								map.put("itemsTitle", u.getFullname());
-								map.put("itemsText", u.getKeyword());
-								newList.add(map);
-							}
-							
-							Log.e("xxxx11", "-----" + newList.size());
-						}
-
-						@Override
-						public void onStart() {
-							showProgressDialog("同步信息...");
-						}
-
-						@Override
-						public void onFinish() {
-							//list.clear();
-							list.addAll(newList);
-							myListViewAdapter.notifyDataSetChanged();
-							newList.clear();
-							removeProgressDialog();
-							if(isRefresh){
-								mAbPullListView.stopRefresh();
-							}
-							else{
-								mAbPullListView.stopLoadMore(true);
-							}
-							
-						}
-
-						@Override
-						public void onFailure(int statusCode, String content,
-								Throwable error) {
-							showToast(error.getMessage());
-						}
-
-						@Override
-						public void onErrorData(String status_description) {
-							showToast(status_description);
-						}*/
 					});
 
 		}
@@ -257,5 +295,46 @@ public class PopPersonListActivity extends AbActivity {
 		public void onPause() {
 			super.onPause();
 		}
+		public void showPopupWindow(int x, int y) {
+			layout = (LinearLayout) LayoutInflater.from(PopPersonListActivity.this).inflate(
+					R.layout.popdialog, null);
+			listView = (ListView) layout.findViewById(R.id.listViewPopW);
+			listView.setAdapter(new ArrayAdapter<String>(PopPersonListActivity.this,
+					R.layout.text_itemselect, R.id.textViewSelectItemName,  words));
 
+			popupWindow = new PopupWindow(PopPersonListActivity.this);
+			//popupWindow.setBackgroundDrawable(new BitmapDrawable());
+			popupWindow
+					.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
+			popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);;
+			popupWindow.setOutsideTouchable(true);
+			popupWindow.setFocusable(true);
+			popupWindow.setContentView(layout);
+			// showAsDropDown会把里面的view作为参照物，所以要那满屏幕parent
+			popupWindow.showAsDropDown(wordsTextView, x, 10);
+			//popupWindow.showAtLocation(findViewById(R.id.LinearLayoutpopwindows), Gravity.LEFT
+				//	| Gravity.TOP, x, y);//需要指定Gravity，默认情况是center.
+
+			listView.setOnItemClickListener(new OnItemClickListener() {
+
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+						long arg3) {
+					wordsTextView .setText(words[arg2]);
+					if("1".equals(condition)){
+						keyId= "list-"+MainActivity.listCategoryP.get(arg2).getId();
+						Log.e("xxx", "-----分类----"+keyId);
+					}
+					else if("2".equals(condition)){
+						cityId = MainActivity.listArea.get(arg2).getId();
+						Log.e("xxx", "-----城市 ----"+cityId);
+					}
+					
+					
+					list.clear();
+					getData(0);
+					popupWindow.dismiss();
+					popupWindow = null;
+				}
+			});
+		}
 	}

@@ -38,9 +38,9 @@ public class CategoryBll {
 			final String type,
 			ZzObjectHttpResponseListener<Category> respListener) {
 		this.mContext = context;
-
+		objectResponseListener =respListener;
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
-		String url = Constant.CATEGORYURL + "?category=" + category_id
+		String url = Constant.CATEGORYURL + "?category_id=" + category_id
 				+ "&type=" + type;
 
 		mAbHttpUtil.get(url, new AbStringHttpResponseListener() {

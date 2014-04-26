@@ -3,6 +3,7 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
@@ -68,12 +70,23 @@ public class PersonDetailActivity extends AbActivity {
 		userPerson =new User();
 		if (getIntent().getExtras() != null) {
 			member_id = (String) getIntent().getExtras().get("MEMBER_ID");
+			if(member_id == null){
+				this.showDialog("错误", "数据获取失败", new android.content.DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface arg0, int arg1) {
+						finish();
+					}
+
+				});
+			}
+			else{
+				getData();
+//				姓名、性别、年龄、所在地、民族、电话、电子邮箱、编号、QQ、学校、专业、行业、
+//				关键词、地址、个人资质、个人特长、个人简介、成功案例、个人二维码、附件地址
+				imageLoader.init(ImageLoaderConfiguration
+						.createDefault(PersonDetailActivity.this));
+			}
 		}
-		getData();
-//		姓名、性别、年龄、所在地、民族、电话、电子邮箱、编号、QQ、学校、专业、行业、
-//		关键词、地址、个人资质、个人特长、个人简介、成功案例、个人二维码、附件地址
-		imageLoader.init(ImageLoaderConfiguration
-				.createDefault(PersonDetailActivity.this));
+		
 	}
 	
 	
@@ -86,6 +99,7 @@ public class PersonDetailActivity extends AbActivity {
 					public void onSuccess(int statusCode, List<User> lis) {
 						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
+							PersonDetailActivity.this.showToast("获取详细信息失败！");
 							return;
 						}
 						userPerson = (User)lis.get(0);
@@ -102,6 +116,13 @@ public class PersonDetailActivity extends AbActivity {
 							Throwable error, List<User> localList) {
 						// TODO Auto-generated method stub
 						if (localList == null || localList.size() == 0) {
+							PersonDetailActivity.this.showDialog("错误", "数据获取失败",
+									new android.content.DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface arg0, int arg1) {
+									//showToast("点击了确认");
+									finish();
+								}
+							});
 							return;
 						}
 						userPerson = (User)localList.get(0);
@@ -196,7 +217,18 @@ public class PersonDetailActivity extends AbActivity {
 	        		Bitmap bitmap = AbImageUtil.bytes2Bimap(content);
 	            	View mView = mInflater.inflate(R.layout.code_view, null);
 	            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
+
 	            	imageUserCode.setImageBitmap(bitmap);
+	            	imageUserCode.setOnClickListener(new OnClickListener(){
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							removeDialog(AbConstant.DIALOGCENTER);
+						}
+					
+					
+					});
 	            	showDialog(AbConstant.DIALOGCENTER, mView);
 				}
 	        	

@@ -29,7 +29,6 @@ import com.zdt.zyellowpage.activity.PopPersonListActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
-
 /**
  * Copyright (c) 2011 All rights reserved
  * 名称：MyListViewAdapter
@@ -135,7 +134,8 @@ public class ImageListAdapterP extends BaseAdapter{
           mAbImageDownloader.display(holder.itemsIcon,imageUrl);
           holder.itemsBtn.setOnClickListener(new MyBtnListener((String)obj.get("Member_id")));
           holder.itemsTitle.setOnClickListener(new MyTitileListener((String)obj.get("Member_id")) );
-         
+          holder.itemsText.setOnClickListener(new MyTitileListener((String)obj.get("Member_id")) );
+          holder.itemsIcon.setOnClickListener(new MyTitileListener((String)obj.get("Member_id")) );
           return convertView;
     }
     

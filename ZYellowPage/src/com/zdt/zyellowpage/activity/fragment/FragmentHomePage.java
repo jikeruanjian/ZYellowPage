@@ -43,18 +43,18 @@ import com.zdt.zyellowpage.util.DisplayUtil;
  * 
  */
 public class FragmentHomePage extends Fragment implements OnClickListener{
-	View view;
+	private View view;
 	private AbActivity mActivity;
 	private DisplayUtil displayUtil;
 	private MyApplication application;
 	private User hotUser;
 	private User PersonUser;
-	TextView hotName;
-	TextView PersonName;
-	TextView hotConent;
-	TextView PersonConent;
-	ImageView hotImage;
-	ImageView PersonImage;
+	private TextView hotName;
+	private TextView PersonName;
+	private TextView hotConent;
+	private TextView PersonConent;
+	private ImageView hotImage;
+	private ImageView PersonImage;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -335,70 +335,92 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		case R.id.imageButtonFood:
 			
 			 intent = new Intent(mActivity,
-					 TypeBusinessListActivity.class);
+					 PopBusinessListActivity.class);
 			 intent.putExtra("Type", "美食");
+			 intent.putExtra("TypeId", "美食");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonMovie:
 			
 			 intent = new Intent(mActivity,
-					 TypeBusinessListActivity.class);
+					 PopBusinessListActivity.class);
 			 intent.putExtra("Type", "电影");
+			 intent.putExtra("TypeId", "电影");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonHappy:
 			 intent = new Intent(mActivity,
-					 TypeBusinessListActivity.class);
-			 intent.putExtra("Type", "休闲");
+					 PopBusinessListActivity.class);
+			 intent.putExtra("Type", "休闲娱乐");
+			 intent.putExtra("TypeId", "休闲娱乐");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonHotel:
 			
 			 intent = new Intent(mActivity,
-					 TypeBusinessListActivity.class);
+					 PopBusinessListActivity.class);
 			 intent.putExtra("Type", "酒店");
+			 intent.putExtra("TypeId", "酒店");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonNewInfo:
 			
 			 intent = new Intent(mActivity,
-					 TypeBusinessListActivity.class);
-			 intent.putExtra("Type", "新增");
+					 PopBusinessListActivity.class);
+			 intent.putExtra("Type", "今日新单");
+			 intent.putExtra("TypeId", "今日新单");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonCash:
 			 intent = new Intent(mActivity,
-					 TypeBusinessListActivity.class);
+					 PopBusinessListActivity.class);
 			 intent.putExtra("Type", "代金券");
+			 intent.putExtra("TypeId","代金券");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonPeople:
 			 intent = new Intent(mActivity,
 						PopPersonListActivity.class);
+			 intent.putExtra("Type", "热门关注");
+			 intent.putExtra("TypeId", "list-hot");
 				startActivity(intent);
 			break;
 			//热门商家
 		case R.id.textViewhotbusiness:
 			 intent = new Intent(mActivity,
 					PopBusinessListActivity.class);
+			 intent.putExtra("Type", "热门商家");
+			 intent.putExtra("TypeId", "list-hot");
 			startActivity(intent);
 			break;
 		case R.id.textViewhotperson:
 			 intent = new Intent(mActivity,
 					PopPersonListActivity.class);
+			 intent.putExtra("Type", "热门关注");
+			 intent.putExtra("TypeId", "list-hot");
 			startActivity(intent);
 			break;
 		case R.id.textViewBusinessHot:
+			if(hotUser.getMember_id()!=null|| "".equals(hotUser.getMember_id())!=true){
 			intent = new Intent(mActivity,
 					BusinessDetailActivity.class);
 			intent.putExtra("MEMBER_ID", hotUser.getMember_id());
 			startActivity(intent);
+			}
+			else{
+				mActivity.showToast("请检查网络情况！");
+			}
 			break;
 		case R.id.textViewPersonHot:
+			if(hotUser.getMember_id()!=null|| "".equals(hotUser.getMember_id())!=true){
 			intent = new Intent(mActivity,
 					PersonDetailActivity.class);
 			intent.putExtra("MEMBER_ID",  PersonUser.getMember_id());
 			startActivity(intent);
+			}
+			else{
+				mActivity.showToast("请检查网络情况！");
+			}
 			break;
 		case R.id.btnConcernHotBussiness:
 			if(hotUser.getMember_id()!=null|| "".equals(hotUser.getMember_id())!=true){

@@ -23,6 +23,14 @@ public class Area {
 	@Column(name = "parentId", length = 20)
 	private String parentId;
 
+	public Area(String i,String n,String pi){
+		id = i;
+		name = n;
+		parentId = pi;
+	}
+	public Area() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getId() {
 		return id;
 	}

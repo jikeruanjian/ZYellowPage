@@ -118,7 +118,7 @@
         android:theme="@style/myTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="mN8dmUdkZdjZ5lAIIZD8439E" />
+            android:value="RjlfVWfEcAecRGc5qG8xyLoX" />
 
         <service
             android:name="com.baidu.location.f"
@@ -154,6 +154,7 @@
         <activity android:name="com.zdt.zyellowpage.activity.MyConcernActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.VideoListActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.webView.MyWebViewActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.BuySellContentActivity"/>
     </application>
 
     <supports-screens

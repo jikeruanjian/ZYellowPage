@@ -8,25 +8,37 @@
     <LinearLayout
         android:layout_width="match_parent" 
         android:layout_height="wrap_content"
-        android:visibility="gone" >
+         >
 
-        <Spinner
-            android:id="@+id/spinnerKeyWord"     
+        <TextView
+            android:id="@+id/spinnerKeyWord"
             android:layout_width="100dp"
-            android:layout_height="50dp"
-             />
+            android:layout_height="30dp"
+            android:background="@drawable/abs__spinner_ab_default_holo_light"
+            android:gravity="center"
+            android:text="全部分类"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
-        <Spinner
+        <TextView
             android:id="@+id/spinnerArea"
             android:layout_width="100dp"
-            android:layout_height="50dp"
-            />
+            android:layout_height="30dp"
+            android:background="@drawable/abs__spinner_ab_default_holo_light"
+            android:gravity="center"
+            android:text="全部区域"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
-        <Spinner
+        <TextView
             android:id="@+id/spinnerNewOrPop"
             android:layout_width="100dp"
-            android:layout_height="50dp"
-             />
+            android:layout_height="30dp"
+            android:background="@drawable/abs__spinner_ab_default_holo_light"
+            android:gravity="center"
+            android:text="默认"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
         
     </LinearLayout>
 

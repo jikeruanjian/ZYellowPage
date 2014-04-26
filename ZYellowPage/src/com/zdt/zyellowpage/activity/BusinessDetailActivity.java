@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.DialogInterface;
+//import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -28,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
-import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
 import com.ab.http.AbBinaryHttpResponseListener;
 import com.ab.http.AbHttpUtil;
@@ -64,7 +64,7 @@ public class BusinessDetailActivity extends AbActivity {
 	private int bmpW;// 动画图片宽度
 	private String[] imageUrls = new String[] {};
 	private ImageView imgCompanyVideos;
-
+	private  View mView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,26 +72,46 @@ public class BusinessDetailActivity extends AbActivity {
 
 		if (getIntent().getExtras() != null) {
 			member_id = (String) getIntent().getExtras().get("MEMBER_ID");
-		}
-		application = (MyApplication) abApplication;
-		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText(R.string.business_detail);
-		mAbTitleBar.setLogo(R.drawable.button_selector_back);
-		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
-		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
-		userCompany = new User();
-		getData();
+			if(member_id == null){
+				this.showDialog("错误", "数据获取失败", new android.content.DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface arg0, int arg1) {
+						finish();
+					}
+				});
+				/*View mView = mInflater.inflate(R.layout.getdatafailed, null);
+				mView.setOnClickListener(new OnClickListener(){
 
-		options = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.businessdetail)
-				.showImageOnFail(R.drawable.businessdetail)
-				.resetViewBeforeLoading(true).cacheOnDisc(true)
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
-				.displayer(new FadeInBitmapDisplayer(300)).build();
-		imageLoader.init(ImageLoaderConfiguration
-				.createDefault(BusinessDetailActivity.this));
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						finish();
+					}
+				});
+				showDialog(AbConstant.DIALOGBOTTOM, mView);*/
+			}
+			else{ 
+				application = (MyApplication) abApplication;
+				mAbTitleBar = this.getTitleBar();
+				mAbTitleBar.setTitleText(R.string.business_detail);
+				mAbTitleBar.setLogo(R.drawable.button_selector_back);
+				mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
+				mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
+				mAbTitleBar.setLogoLine(R.drawable.line);
+				userCompany = new User();
+				getData();
+
+				options = new DisplayImageOptions.Builder()
+						.showImageForEmptyUri(R.drawable.businessdetail)
+						.showImageOnFail(R.drawable.businessdetail)
+						.resetViewBeforeLoading(true).cacheOnDisc(true)
+						.imageScaleType(ImageScaleType.EXACTLY)
+						.bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
+						.displayer(new FadeInBitmapDisplayer(300)).build();
+				imageLoader.init(ImageLoaderConfiguration
+						.createDefault(BusinessDetailActivity.this));
+			}
+		}
+		
 	}
 
 	private void getView() {
@@ -153,6 +173,12 @@ public class BusinessDetailActivity extends AbActivity {
 							Throwable error, List<User> localList) {
 						// TODO Auto-generated method stub
 						if (localList == null || localList.size() == 0) {
+							BusinessDetailActivity.this.showDialog("错误", "数据获取失败",
+									new android.content.DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface arg0, int arg1) {
+									finish();
+								}
+							});
 							return;
 						}
 						userCompany = (User) localList.get(0);
@@ -311,9 +337,15 @@ public class BusinessDetailActivity extends AbActivity {
 					public void onSuccess(int statusCode, byte[] content) {
 		        		Log.d("xxxx", "onSuccess");
 		        		Bitmap bitmap = AbImageUtil.bytes2Bimap(content);
-		            	View mView = mInflater.inflate(R.layout.code_view, null);
+		            	mView = mInflater.inflate(R.layout.code_view, null);
 		            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
 		            	imageUserCode.setImageBitmap(bitmap);
+		            	imageUserCode.setOnClickListener(new OnClickListener(){
+							@Override
+							public void onClick(View v) {
+								removeDialog(AbConstant.DIALOGCENTER);
+							}
+						});
 		            	showDialog(AbConstant.DIALOGCENTER, mView);
 		            	
 					}
