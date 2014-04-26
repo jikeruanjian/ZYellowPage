@@ -188,7 +188,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 	}
 
 	
-	void getData() {
+	public void getData() {
 		UserBll bll = new UserBll();
 		hotUser = new User();
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(0, 10,

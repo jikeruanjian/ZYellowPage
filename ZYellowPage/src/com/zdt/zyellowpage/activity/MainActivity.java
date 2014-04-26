@@ -89,6 +89,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 			if (resultCode == RESULT_OK) {
 				textViewArea.setText(application.cityName);
 				MainActivity.getAreaList(MainActivity.this, application.cityid);
+				newFragmentHome.getData();
 			}
 		}
 	}
@@ -97,9 +98,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		application = (MyApplication) abApplication;
 		initView();
 		// initHomePagePullView();
-		application = (MyApplication) abApplication;
 		mBMapMan = new BMapManager(getApplication());
 		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
 		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
@@ -167,6 +168,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				high / 2);
 
 		textViewArea = (TextView) this.findViewById(R.id.textViewarea);
+		textViewArea.setText(application.cityName);
 		textViewArea.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -327,6 +329,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				listArea.clear();
 				listArea.addAll(lis);
 				listArea.add(new Area(lis.get(0).getParentId(),"全部区域","0"));
+				listAreaName.clear();
 				for(Area area:listArea){
 					listAreaName.add(area.getName());
 				}
@@ -380,6 +383,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				}
 				listCategory.clear();
 				listCategory.addAll(lis);
+				listCategoryNameP.clear();
 				Log.e("xxxx", "包含的分类个数为-----"+listCategory.size());
 				for(Category category:listCategory){
 						listCategoryName.add(category.getName());
@@ -433,6 +437,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				}
 				listCategoryP.clear();
 				listCategoryP.addAll(lis);
+				listCategoryNameP.clear();
 				Log.e("xxxx", "包含的分类个数为-----"+listCategoryP.size());
 				for(Category category:listCategory){
 						listCategoryNameP.add(category.getName());
