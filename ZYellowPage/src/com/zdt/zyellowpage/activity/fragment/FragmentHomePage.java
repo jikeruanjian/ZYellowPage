@@ -392,7 +392,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		case R.id.imageButtonPeople:
 			 intent = new Intent(mActivity,
 						PopPersonListActivity.class);
-			 intent.putExtra("Type", "热门关注");
+			 intent.putExtra("Type", "个人列表");
 			 intent.putExtra("TypeId", "list-hot");
 				startActivity(intent);
 			break;

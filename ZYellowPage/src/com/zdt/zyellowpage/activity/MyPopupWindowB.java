@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.zdt.zyellowpage.R;
+
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Category;
@@ -144,8 +145,10 @@ public class MyPopupWindowB {
                 holder = (ViewHolder)convertView.getTag(); 
             } 
             holder.title.setText((String)MainActivity.listCategory.get(position).getName());  
+            holder.title.setOnClickListener(new 
+            		LeftClassBtnListenerB(MainActivity.listCategory.get(position).getId())); 
             holder.viewBtn.setOnClickListener(new 
-            		LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
+            		LeftClassBtnListenerB(MainActivity.listCategory.get(position).getId())); 
             return convertView; 
         } 
           
@@ -193,16 +196,18 @@ public class MyPopupWindowB {
                 holder = (ViewHolder)convertView.getTag(); 
             } 
             holder.title.setText(MainActivity.listCategoryP.get(position).getName());  
+            holder.title.setOnClickListener(new 
+            		LeftClassBtnListenerB(MainActivity.listCategoryP.get(position).getId()));
             holder.viewBtn.setOnClickListener(new 
-            		LeftClassBtnListener(MainActivity.listCategoryP.get(position).getId()));  
+            		LeftClassBtnListenerB(MainActivity.listCategoryP.get(position).getId()));  
             return convertView; 
         } 
           
     } 
     
-    private class LeftClassBtnListener implements OnClickListener{  
+    private class LeftClassBtnListenerB implements OnClickListener{  
 		String oId;  
-        public LeftClassBtnListener(String id){  
+        public LeftClassBtnListenerB(String id){  
         	oId= id;  
         }  
         @Override  

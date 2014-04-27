@@ -194,7 +194,9 @@ public class MyPopupWindow {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
-            holder.title.setText((String)MainActivity.listCategory.get(position).getName());  
+            holder.title.setText((String)MainActivity.listCategory.get(position).getName()); 
+            holder.title.setOnClickListener(new 
+            		LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
             holder.viewBtn.setOnClickListener(new 
             		LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
             return convertView; 
@@ -243,7 +245,9 @@ public class MyPopupWindow {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
-            holder.title.setText(MainActivity.listCategoryP.get(position).getName());  
+            holder.title.setText(MainActivity.listCategoryP.get(position).getName());
+            holder.title.setOnClickListener(new 
+            		LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
             holder.viewBtn.setOnClickListener(new 
             		LeftClassBtnListener(MainActivity.listCategoryP.get(position).getId()));  
             return convertView; 

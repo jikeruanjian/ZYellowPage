@@ -299,8 +299,8 @@ public class BusinessDetailActivity extends AbActivity {
 									CompanyMapActiviy.class);
 							intent.putExtra("FUllNAME",
 									userCompany.getFullname());
-							intent.putExtra("LAT", userCompany.getLatitude());
-							intent.putExtra("LON", userCompany.getLongitude());
+							intent.putExtra("LAT", Double.toString(userCompany.getLatitude()));
+							intent.putExtra("LON", Double.toString(userCompany.getLongitude()));
 							startActivity(intent);
 						}
 					}
