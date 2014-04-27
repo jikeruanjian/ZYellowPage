@@ -45,8 +45,8 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View wbContainer = inflater.inflate(R.layout.wb, null);
 		this.addView(wbContainer, new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.FILL_PARENT));
+				android.view.ViewGroup.LayoutParams.FILL_PARENT,
+				android.view.ViewGroup.LayoutParams.FILL_PARENT));
 		wb = (WebView) this.findViewById(R.id.inner_webview);
 		wb.getSettings().setJavaScriptEnabled(true);
 		this.pb = (ProgressBar) this.findViewById(R.id.webview_progressbar);
@@ -84,6 +84,7 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 		wb.setWebChromeClient(chromeClient);
 	}
 
+	@Override
 	@SuppressLint("NewApi")
 	public void onDownloadStart(String url, String userAgent,
 			String contentDisposition, String mimetype, long contentLength) {
@@ -186,8 +187,8 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 					IntegratedWebView.this.removeAllViews();
 					IntegratedWebView.this.addView(this.videoViewContainer,
 							new LinearLayout.LayoutParams(
-									LinearLayout.LayoutParams.FILL_PARENT,
-									LinearLayout.LayoutParams.FILL_PARENT));
+									android.view.ViewGroup.LayoutParams.FILL_PARENT,
+									android.view.ViewGroup.LayoutParams.FILL_PARENT));
 					this.videoViewContainer
 							.setOnKeyListener(new OnKeyListener() {
 								@Override

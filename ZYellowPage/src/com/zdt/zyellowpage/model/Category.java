@@ -1,11 +1,18 @@
 package com.zdt.zyellowpage.model;
 
+import java.io.Serializable;
+
 import com.ab.db.orm.annotation.Column;
 import com.ab.db.orm.annotation.Id;
 import com.ab.db.orm.annotation.Table;
 
 @Table(name = "category")
-public class Category {
+public class Category implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 418987853355818158L;
 
 	@Id
 	@Column(name = "_id")
@@ -75,4 +82,8 @@ public class Category {
 		this.parentId = parentId;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }

@@ -31,6 +31,7 @@ import com.ab.bitmap.AbImageDownloader;
 import com.ab.util.AbStrUtil;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.MyConcernActivity;
+import com.zdt.zyellowpage.activity.MyResourceActivity;
 import com.zdt.zyellowpage.activity.login.ChangePwdActivity;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.VersionBll;
@@ -50,6 +51,7 @@ public class FragmentUser extends Fragment {
 	Button btnMyFellow;
 	Button btnMyResource;
 	View view;
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_user, container, false);
@@ -133,7 +135,8 @@ public class FragmentUser extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-
+				Intent intent = new Intent(mActivity, MyResourceActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -141,10 +144,8 @@ public class FragmentUser extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(mActivity,
-						MyConcernActivity.class);
-				 startActivity(intent);
+				Intent intent = new Intent(mActivity, MyConcernActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -175,11 +176,11 @@ public class FragmentUser extends Fragment {
 		}
 		if (application.mUser != null && application.mUser.getToken() != null) {
 			btnLogin.setVisibility(View.GONE);
-			view.findViewById(R.id.layoutChangeUserInfo).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.layoutChangeUserInfo).setVisibility(
+					View.VISIBLE);
 
 		}
 	}
-	
 
 	private void getVersion() {
 		PackageManager packageManager = mActivity.getPackageManager();
@@ -197,7 +198,7 @@ public class FragmentUser extends Fragment {
 	}
 
 	public void downApk(Version version) {
-		String serviceString = mActivity.DOWNLOAD_SERVICE;
+		String serviceString = Context.DOWNLOAD_SERVICE;
 		final DownloadManager downloadManager = (DownloadManager) mActivity
 				.getSystemService(serviceString);
 		File file = new File(Environment.DIRECTORY_DOWNLOADS

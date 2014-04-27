@@ -15,7 +15,7 @@
         <attr name="progressBar" format="reference|color" />
         <attr name="progressBg" format="reference|color" />
         <attr name="offsetTop" format="integer" />
-        <attr name="background" format="reference|color" />
+ 
     </declare-styleable>
     
     <declare-styleable name="com.baidu.mobads.AdView">

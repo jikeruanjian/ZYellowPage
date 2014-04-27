@@ -443,42 +443,7 @@ public class FragmentNearMap extends Fragment {
 
 	}
 
-	/**
-	 * 覆盖物数据初始化,并显示
-	 */
-	void getNearEnterpriseList() {
-
-		nearsearch = new ArrayList<User>();
-		User u1 = new User();
-		u1.setMember_id("1");
-		u1.setFullname("name1");
-		u1.setAddress("地址1");
-		u1.setLatitude("25.0415");
-		u1.setLongitude("102.7098");
-		u1.setLogo("");
-		User u2 = new User();
-		u2.setMember_id("1");
-		u2.setFullname("name1");
-		u2.setAddress("地址1");
-		u2.setLatitude("25.0457");
-		u2.setLongitude("102.7099");
-		u2.setLogo("");
-		User u3 = new User();
-		u3.setMember_id("1");
-		u3.setFullname("name1");
-		u3.setAddress("地址1");
-		u3.setLatitude("25.0348");
-		u3.setLongitude("102.7188");
-		u3.setLogo("");
-		nearsearch.add(u1);
-		nearsearch.add(u2);
-		nearsearch.add(u3);
-		poiOverlayx = new MyPoiOverlayX(getResources().getDrawable(
-				R.drawable.icon_marka), mMapView, nearsearch);
-		mMapView.getOverlays().add(poiOverlayx);
-		mMapView.refresh();
-	}
-
+	
 	/**
 	 * 范围内搜索显示
 	 */

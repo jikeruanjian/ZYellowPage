@@ -34,7 +34,6 @@ public class VideoListActivity extends AbActivity {
 	private SimpleAdapter adapter = null;
 	private String member_id;
 	private boolean isRefresh = true;
-	private int page_size = 10;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,7 @@ public class VideoListActivity extends AbActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				String url = list.get((int) id).get("url").toString();
+				String url = list.get(position - 1).get("url").toString();
 				if (!AbStrUtil.isEmpty(url)) {
 					Intent intent = new Intent(VideoListActivity.this,
 							MyWebViewActivity.class);
@@ -145,7 +144,7 @@ public class VideoListActivity extends AbActivity {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Video> localList) {
-						//如果网络链接有问题，而且本地数据又没有，就需要提示出来
+						// 如果网络链接有问题，而且本地数据又没有，就需要提示出来
 						if (content.equals(Constant.NOCONNECT)
 								&& (localList == null || localList.size() == 0)) {
 							showToast(content);
@@ -179,7 +178,8 @@ public class VideoListActivity extends AbActivity {
 							newList.clear();
 							if (isRefresh) {
 								mAbPullListView.stopRefresh();
-								if (list.size() < (currentPage + 1) * page_size) {
+								if (list.size() < (currentPage + 1)
+										* Constant.PAGE_SIZE) {
 									mAbPullListView.setPullLoadEnable(false);
 								} else {
 									mAbPullListView.setPullLoadEnable(true);
@@ -203,6 +203,7 @@ public class VideoListActivity extends AbActivity {
 		super.onResume();
 	}
 
+	@Override
 	public void onPause() {
 		super.onPause();
 	}

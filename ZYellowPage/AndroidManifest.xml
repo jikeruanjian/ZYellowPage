@@ -155,6 +155,13 @@
         <activity android:name="com.zdt.zyellowpage.activity.VideoListActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.webView.MyWebViewActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.BuySellContentActivity"/>
+        <activity android:name="com.zdt.zyellowpage.activity.MyResourceActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.EditCompanyBaseResourceActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.SelectCategoryActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.RichTextEditorActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.EditCoordinateAcitivity" />
+        
     </application>
 
     <supports-screens

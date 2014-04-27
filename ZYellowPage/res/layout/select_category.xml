@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_white" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/layout01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip" >
+
+            <TextView
+                android:id="@+id/tvCur"
+                style="@style/h2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前行业" />
+
+            <TextView
+                android:id="@+id/tvCurrentCategory"
+                style="@style/mainText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout06"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip" >
+
+            <Spinner
+                android:id="@+id/spiMainCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:prompt="@string/selectCagegory" >
+            </Spinner>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout07"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip" >
+
+            <Spinner
+                android:id="@+id/spiChildCagetory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:prompt="@string/selectCagegory" >
+            </Spinner>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout08"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip" >
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/btnLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dip"
+                android:background="@drawable/button_selector_green"
+                android:text="@string/selectConfirm"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

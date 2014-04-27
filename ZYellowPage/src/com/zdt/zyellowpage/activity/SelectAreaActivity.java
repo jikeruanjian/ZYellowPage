@@ -59,6 +59,7 @@ public class SelectAreaActivity extends AbActivity {
 
 		spiProvince.setOnItemSelectedListener(new OnItemSelectedListener() {
 
+			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				// 获取键的方法：mySpinner.getSelectedItem().toString()或((Dict)mySpinner.getSelectedItem()).getId()
@@ -68,6 +69,7 @@ public class SelectAreaActivity extends AbActivity {
 						spiCity, adapterCity);
 			}
 
+			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
 
 			}
@@ -75,6 +77,7 @@ public class SelectAreaActivity extends AbActivity {
 
 		spiCity.setOnItemSelectedListener(new OnItemSelectedListener() {
 
+			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				// 获取键的方法：mySpinner.getSelectedItem().toString()或((Dict)mySpinner.getSelectedItem()).getId()
@@ -84,6 +87,7 @@ public class SelectAreaActivity extends AbActivity {
 						adapterCounty);
 			}
 
+			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
 
 			}

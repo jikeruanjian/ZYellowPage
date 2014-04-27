@@ -266,13 +266,13 @@ public class LoginActivity extends AbActivity {
 					return;
 				}
 
-				if (!AbStrUtil.isEmail(mStr_name)
-						&& !AbStrUtil.isMobileNo(mStr_name)) {
-					showToast(R.string.error_name_expr);
-					userName.setFocusable(true);
-					userName.requestFocus();
-					return;
-				}
+				// if (!AbStrUtil.isEmail(mStr_name)
+				// && !AbStrUtil.isMobileNo(mStr_name)) {
+				// showToast(R.string.error_name_expr);
+				// userName.setFocusable(true);
+				// userName.requestFocus();
+				// return;
+				// }
 
 				if (AbStrUtil.strLength(mStr_name) < 5) {
 					showToast(R.string.error_name_length1);
@@ -434,8 +434,9 @@ public class LoginActivity extends AbActivity {
 			if (!isSuccess) {
 				return;
 			}
-			new UserBll().getDetailPerson(LoginActivity.this,
+			new UserBll().getDetailOfUser(LoginActivity.this,
 					application.mUser.getMember_id(),
+					application.mUser.getType(),
 					new ZzObjectHttpResponseListener<User>() {
 
 						@Override
@@ -461,6 +462,10 @@ public class LoginActivity extends AbActivity {
 								tempUser.set_id(localUser.get_id());
 								tempUser.setUsername(localUser.getUsername());
 								tempUser.setToken(localUser.getToken());
+								tempUser.setType(localUser.getType());
+								tempUser.setFullname(localUser.getFullname());
+								tempUser.setAddress(localUser.getAddress());
+								tempUser.setMember_id(localUser.getMember_id());
 								userDao.update(tempUser);
 								application.mUser = tempUser;
 							}

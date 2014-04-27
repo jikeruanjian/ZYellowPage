@@ -54,6 +54,7 @@
     <string name="selectCity">请选择城市</string>
     <string name="selectCoutny">请选择区县</string>
     <string name="selectArea">选择区域</string>
+    <string name="selectCagegory">选择行业</string>
     <string name="selectConfirm">确定</string>
     <string name="selectSex">性别</string>
     <string name="selectPwdQuestion">请选择密保问题</string>
@@ -62,10 +63,19 @@
     <string name="error_pwdanswer_isempty">密保答案不能为空</string>
     <string name="error_fullName_isempty">姓名不能为空</string>
     <string name="infoClear">清空</string>
-    <string name="titleCurrentArea">当前区域：</string> 
+    <string name="titleCurrentArea">当前区域：</string>
     <string name="oldPassword">旧密码</string>
     <string name="newPassword">新密码</string>
     <string name="confirmNewPassword">确认新密码</string>
+    <string name="keyword">关键字</string>
+    <string name="nation">民族</string>
+    <string name="telphone">电话</string>
+    <string name="professional">专业</string>
+    <string name="school">毕业学校</string>
+    <string name="address">地址</string>
+    <string name="website">个人主页</string>
+    <string name="qq">QQ</string>
+    <string name="contact">联系人</string>
     <!-- end Kevin -->
 
     <string name="register_name">新用户注册</string>
@@ -173,5 +183,4 @@
     <string name="read_desc">请仔细阅读如下条款</string>
     <string name="register_protocol">同意注册协议</string>
     <string name="clear_cache">清空缓存</string>
-
 </resources>

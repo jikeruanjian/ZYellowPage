@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
@@ -154,6 +155,15 @@ public class UserBll {
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
 		getBasicUser(context, params, respListener);
+	}
+
+	public void getDetailOfUser(Context context, String member_id, int type,
+			ZzObjectHttpResponseListener<User> respListener) {
+		if (type == 0) {
+			getDetailCompany(context, member_id, respListener);
+		} else {
+			getDetailPerson(context, member_id, respListener);
+		}
 	}
 
 	/**
@@ -316,6 +326,33 @@ public class UserBll {
 				});
 	}
 
+	/**
+	 * 更新用户资料，有哪些值，就更新哪些
+	 * 
+	 * @param context
+	 * @param user
+	 * @param resListener
+	 */
+	public void updateUser(Context context, User user, String token,
+			ZzStringHttpResponseListener resListener) {
+		JSONObject jo = new JSONObject();
+		mContext = context;
+		user.setCategory_name(null);
+		user.setArea_name(null);
+		
+		try {
+			jo.put("method", "update-user-Info");
+			jo.put("token", token);
+			jo.put("data", new Gson().toJson(user));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		AbRequestParams params = new AbRequestParams();
+		Log.i("UserBll", jo.toString());
+		params.put("id", jo.toString());
+		basicExcute(context, params, resListener);
+	}
+
 	private void getBasicUser(Context context, AbRequestParams params,
 			ZzObjectHttpResponseListener<User> respListener) {
 		this.objectResponseListener = respListener;
@@ -372,6 +409,8 @@ public class UserBll {
 									objectResponseListener.onSuccess(
 											statusCode, lisUser);
 								} else {
+									Log.i("UserBll",
+											bre.getStatus_description());
 									objectResponseListener.onErrorData(bre
 											.getStatus_description());
 								}
@@ -520,6 +559,8 @@ public class UserBll {
 											statusCode,
 											bre.getStatus_description());
 								} else {
+									Log.i("UserBll",
+											bre.getStatus_description());
 									stringResponseListener.onErrorData(bre
 											.getStatus_description());
 								}
@@ -541,6 +582,7 @@ public class UserBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
+						Log.i("UserBll", content);
 						stringResponseListener.onFailure(statusCode, content,
 								error);
 					}

@@ -52,6 +52,8 @@ public class Constant {
 
 	public static final String NOCONNECT = "无法连接到网络";
 
+	public static final int PAGE_SIZE = 10;
+
 	public class DataType {
 		/**
 		 * 我的关注

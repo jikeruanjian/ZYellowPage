@@ -1,16 +1,23 @@
 package com.zdt.zyellowpage.model;
 
+import java.io.Serializable;
+
 import com.ab.db.orm.annotation.Column;
 import com.ab.db.orm.annotation.Id;
 import com.ab.db.orm.annotation.Table;
 
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4072847311848975287L;
 
 	// ID @Id主键,int类型,数据库建表时此字段会设为自增长
 	@Id
 	@Column(name = "_id")
-	private int _id;
+	private Integer _id;
 
 	/**
 	 * 会员编号
@@ -34,7 +41,7 @@ public class User {
 
 	// 用户性别
 	@Column(name = "sex")
-	private String sex;
+	private Integer sex;
 	// 邮箱
 	@Column(name = "email")
 	private String email;
@@ -55,7 +62,7 @@ public class User {
 	 * 0为商家，1为个人
 	 */
 	@Column(name = "type")
-	private int type;
+	private Integer type;
 
 	// 用户问题
 	@Column(name = "password_question")
@@ -78,7 +85,7 @@ public class User {
 
 	// 是否为当前登录
 	@Column(name = "is_login_user")
-	private boolean isLoginUser;
+	private Boolean isLoginUser;
 
 	/**
 	 * 网址
@@ -126,13 +133,13 @@ public class User {
 	 * 经度
 	 */
 	@Column(name = "latitude")
-	private String latitude;
+	private Double latitude;
 
 	/**
 	 * 纬度
 	 */
 	@Column(name = "longitude")
-	private String longitude;
+	private Double longitude;
 
 	/**
 	 * 网络名称
@@ -205,7 +212,53 @@ public class User {
 	 */
 	@Column(name = "category_name")
 	private String category_name;
-	
+
+	/**
+	 * 联系人
+	 */
+	@Column(name = "contact")
+	private String contact;
+
+	/**
+	 * 区域名称
+	 */
+	@Column(name = "area_name")
+	private String area_name;
+
+	/**
+	 * 性别
+	 */
+	@Column(name = "sex_name")
+	private String sex_name;
+
+	public String getSex_name() {
+		return sex_name;
+	}
+
+	public void setSex_name(String sex_name) {
+		this.sex_name = sex_name;
+	}
+
+	public String getArea_name() {
+		return area_name;
+	}
+
+	public void setArea_name(String area_name) {
+		this.area_name = area_name;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
 	public String getCategory_name() {
 		return category_name;
 	}
@@ -230,11 +283,11 @@ public class User {
 		this.logo = logo;
 	}
 
-	public int get_id() {
+	public Integer get_id() {
 		return _id;
 	}
 
-	public void set_id(int _id) {
+	public void set_id(Integer _id) {
 		this._id = _id;
 	}
 
@@ -270,11 +323,11 @@ public class User {
 		this.telephone = telephone;
 	}
 
-	public String getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
@@ -294,12 +347,8 @@ public class User {
 		this.city = city;
 	}
 
-	public int getType() {
+	public Integer getType() {
 		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
 	}
 
 	public String getPassword_question() {
@@ -342,11 +391,11 @@ public class User {
 		this.token = token;
 	}
 
-	public boolean isLoginUser() {
+	public Boolean isLoginUser() {
 		return isLoginUser;
 	}
 
-	public void setLoginUser(boolean isLoginUser) {
+	public void setLoginUser(Boolean isLoginUser) {
 		this.isLoginUser = isLoginUser;
 	}
 
@@ -422,19 +471,19 @@ public class User {
 		this.scope = scope;
 	}
 
-	public String getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 

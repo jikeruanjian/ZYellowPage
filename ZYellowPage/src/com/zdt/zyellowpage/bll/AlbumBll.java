@@ -100,8 +100,8 @@ public class AlbumBll {
 								bre.setResult(jo.getString("result"));
 								bre.setSuccess(jo.getBoolean("success"));
 								bre.setStatus(jo.getInt("status"));
-								// bre.setStatus_description(jo
-								// .getString("status_description"));
+								 bre.setStatus_description(jo
+								 .getString("status_description"));
 
 								if (bre.getSuccess()) {
 									JSONObject data = jo.getJSONObject("data");
@@ -198,8 +198,8 @@ public class AlbumBll {
 								bre.setResult(jo.getString("result"));
 								bre.setSuccess(jo.getBoolean("success"));
 								bre.setStatus(jo.getInt("status"));
-								// bre.setStatus_description(jo
-								// .getString("status_description"));
+								bre.setStatus_description(jo
+										.getString("status_description"));
 
 								if (bre.getSuccess()) {
 									stringResponseListener.onSuccess(

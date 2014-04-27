@@ -51,7 +51,7 @@ public class MyConcernActivity extends AbActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setAbContentView(R.layout.popbusinesspull_list);
+		setAbContentView(R.layout.pull_list);
 
 		// 初始化标题栏
 		AbTitleBar mAbTitleBar = this.getTitleBar();
