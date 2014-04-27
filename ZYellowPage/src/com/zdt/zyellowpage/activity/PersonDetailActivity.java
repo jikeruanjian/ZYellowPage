@@ -169,7 +169,7 @@ public class PersonDetailActivity extends AbActivity {
 		//TextView info= (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_INFO);
 		
 		name.setText(userPerson.getFullname());
-		sex.setText(userPerson.getSex());
+		sex.setText(userPerson.getSex_name());
 		num.setText(userPerson.getArea_id());
 		tel.setText(userPerson.getTelephone());
 		adress.setText(userPerson.getCity());
