@@ -69,6 +69,8 @@ public class PopPersonListActivity extends AbActivity {
 	private String cityId;
 	private String keyId;
 	private String condition;
+	MyPopupWindowB myPopupWindow;
+	AbTitleBar mAbTitleBar;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +79,7 @@ public class PopPersonListActivity extends AbActivity {
 			type = (String) getIntent().getExtras().get("Type");
 			typeId = (String) getIntent().getExtras().get("TypeId");
 		}
-        AbTitleBar mAbTitleBar = this.getTitleBar();
+        mAbTitleBar = this.getTitleBar();
         mAbTitleBar.setTitleText(type);
         mAbTitleBar.setLogo(R.drawable.button_selector_back);
         mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
@@ -87,7 +89,7 @@ public class PopPersonListActivity extends AbActivity {
         cityId = application.cityid;
 		keyId = typeId;//"list-hot";
 		initSpinner();
-
+		myPopupWindow = new MyPopupWindowB(PopPersonListActivity.this,"1");
         list = new ArrayList<Map<String, Object>>();
         newList = new ArrayList<Map<String, Object>>();
         initPopBusinessView();
@@ -111,7 +113,7 @@ public class PopPersonListActivity extends AbActivity {
 				words =  MainActivity.listCategoryNameP.toArray(new String[0]);
 				wordsTextView = typeTextView;
 				condition = "1";
-				showPopupWindow(x, y);
+				showPopupWindowT(x, y);
 			
 			}
 			
@@ -336,5 +338,34 @@ public class PopPersonListActivity extends AbActivity {
 					popupWindow = null;
 				}
 			});
+		}
+		public void showPopupWindowT(int x, int y){
+			Log.e("fragment", "-----点击了全部分类");
+			
+			myPopupWindow.popupWindow.
+			setWidth(PopPersonListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/4*3);
+			displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft,
+					PopPersonListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/16*7,0);
+			displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
+					0,PopPersonListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+			displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassP,
+					0,PopPersonListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+			myPopupWindow.popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+			myPopupWindow.popupWindow.showAsDropDown(wordsTextView, x, 10);
+			myPopupWindow.listViewClassLower.setOnItemClickListener(new OnItemClickListener(){
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+						long arg3) {
+					// TODO Auto-generated method stub
+					keyId= "list-"+myPopupWindow.listLowerCategory.get(arg2).getId();
+					mAbTitleBar.setTitleText(myPopupWindow.listLowerCategory.get(arg2).getName());
+					wordsTextView.setText(myPopupWindow.listLowerCategory.get(arg2).getName());
+					list.clear();
+					getData(0);
+					myPopupWindow.popupWindow.dismiss();
+				}
+				
+			});
+			//myPopupWindow.popupWindow.
 		}
 	}

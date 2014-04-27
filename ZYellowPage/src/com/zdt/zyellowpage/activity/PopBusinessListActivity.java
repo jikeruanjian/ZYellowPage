@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,6 +72,8 @@ public class PopBusinessListActivity extends AbActivity {
 	private String cityId;
 	private String keyId;
 	private String condition;
+	MyPopupWindowB myPopupWindow;
+	AbTitleBar mAbTitleBar;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,7 +83,7 @@ public class PopBusinessListActivity extends AbActivity {
 			typeId = (String) getIntent().getExtras().get("TypeId");
 		}
 		// 初始化标题栏
-		AbTitleBar mAbTitleBar = this.getTitleBar();
+		mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText(type);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
@@ -89,6 +92,7 @@ public class PopBusinessListActivity extends AbActivity {
 		application = (MyApplication) abApplication;
 		cityId = application.cityid;
 		keyId = typeId;//"list-hot";
+		myPopupWindow = new MyPopupWindowB(PopBusinessListActivity.this,"0");
 		initSpinner();
 
 		list = new ArrayList<Map<String, Object>>();
@@ -113,7 +117,7 @@ public class PopBusinessListActivity extends AbActivity {
 				words =  MainActivity.listCategoryName.toArray(new String[0]);
 				wordsTextView = typeTextView;
 				condition = "1";
-				showPopupWindow(x, y);
+				showPopupWindowT(x, y);
 			
 			}
 			
@@ -312,7 +316,7 @@ public class PopBusinessListActivity extends AbActivity {
 		//popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		popupWindow
 				.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
-		popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);;
+		popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setFocusable(true);
 		popupWindow.setContentView(layout);
@@ -326,14 +330,10 @@ public class PopBusinessListActivity extends AbActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				wordsTextView .setText(words[arg2]);
-				if("1".equals(condition)){
-					keyId= MainActivity.listCategory.get(arg2).getId();
-					Log.e("xxx", "-----分类----"+keyId);
-				}
-				else if("2".equals(condition)){
+				
 					cityId = MainActivity.listArea.get(arg2).getId();
 					Log.e("xxx", "-----城市 ----"+cityId);
-				}
+				
 				
 				
 				list.clear();
@@ -343,4 +343,34 @@ public class PopBusinessListActivity extends AbActivity {
 			}
 		});
 	}
+	public void showPopupWindowT(int x, int y){
+		Log.e("fragment", "-----点击了全部分类");
+		
+		myPopupWindow.popupWindow.
+		setWidth(PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/4*3);
+		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft,
+				PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/16*7,0);
+		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
+				0,PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassP,
+				0,PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+		myPopupWindow.popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+		myPopupWindow.popupWindow.showAsDropDown(wordsTextView, x, 10);
+		myPopupWindow.listViewClassLower.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				keyId= "list-"+myPopupWindow.listLowerCategory.get(arg2).getId();
+				mAbTitleBar.setTitleText(myPopupWindow.listLowerCategory.get(arg2).getName());
+				wordsTextView.setText(myPopupWindow.listLowerCategory.get(arg2).getName());
+				list.clear();
+				getData(0);
+				myPopupWindow.popupWindow.dismiss();
+			}
+			
+		});
+		//myPopupWindow.popupWindow.
+	}
+	
 }

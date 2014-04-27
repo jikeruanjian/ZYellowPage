@@ -69,7 +69,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	private PopupWindow popupWindow;
 	private LinearLayout layout;
 	private ListView listView;
-	private String types[] = { "全部", "商家", "个人"};
+	private String types[] = {"商家", "个人"};
 	boolean isFirst = false;
 	//区域列表
 	public static List<Area> listArea;
@@ -124,8 +124,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		initChangeEvent();
 		
 		MainActivity.getAreaList(MainActivity.this, application.cityid);
-		MainActivity.getCategoryList(MainActivity.this, "0100");
-		MainActivity.getCategoryListP(MainActivity.this, "5100");
+		MainActivity.getCategoryList(MainActivity.this, "0");
+		MainActivity.getCategoryListP(MainActivity.this, "0");
 		textVSearch = (TextView) findViewById(R.id.textViewSearchType);
 		textVSearch.setOnClickListener(new OnClickListener() {
 			@Override
@@ -139,6 +139,11 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		});
 	}
 
+	@Override
+	public void onResume(){
+		super.onResume();
+		editRearch.setText("");
+	}
 	protected void initOtherFragment() {
 
 		fragmentTransaction = fragmentManager.beginTransaction();
@@ -190,10 +195,21 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 							.hideSoftInputFromWindow(MainActivity.this
 									.getCurrentFocus().getWindowToken(),
 									InputMethodManager.HIDE_NOT_ALWAYS);
-					Intent intent = new Intent(MainActivity.this,
-							TypeBusinessListActivity.class);
-					intent.putExtra("Type", editRearch.getText().toString());
-					startActivity(intent);
+					Intent in;
+					if(textVSearch.getText().toString().equals("商家")){
+						 in = new Intent(MainActivity.this,
+								 PopBusinessListActivity.class);
+						 in.putExtra("Type",editRearch.getText().toString());
+						 in.putExtra("TypeId",editRearch.getText().toString());
+						 startActivity(in);
+					}
+					else{
+						in = new Intent(MainActivity.this,
+								PopPersonListActivity.class);
+					    in.putExtra("Type", editRearch.getText().toString());
+					    in.putExtra("TypeId", editRearch.getText().toString());
+						startActivity(in);
+					}
 				}
 				return false;
 			}
@@ -254,7 +270,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				this.findViewById(R.id.homePageTitileLinearLayou)
 						.setVisibility(View.VISIBLE);
 
-				Log.e("xxxx", "-----------+1");
+				//Log.e("xxxx", "-----------+1");
 				break;
 			}
 			case R.id.radio_buttonNear:{
@@ -272,7 +288,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				this.findViewById(R.id.mapTitileLinearLayou).setVisibility(
 						View.VISIBLE);
 
-				Log.e("xxxx", "-----------+2");
+				//Log.e("xxxx", "-----------+2");
 				break;
 			}
 			case R.id.radio_buttonUser:{
@@ -286,7 +302,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				this.findViewById(R.id.userTitileLinearLayout).setVisibility(
 						View.VISIBLE);
 
-				Log.e("xxxx", "-----------+3");
+				//Log.e("xxxx", "-----------+3");
 				break;
 			}
 			case R.id.radio_buttonMore:{
@@ -300,7 +316,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				this.findViewById(R.id.moreTitileLinearLayout).setVisibility(
 						View.VISIBLE);
 
-				Log.e("xxxx", "-----------+4");
+				//Log.e("xxxx", "-----------+4");
 				break;
 			}
 			default:
@@ -333,7 +349,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				for(Area area:listArea){
 					listAreaName.add(area.getName());
 				}
-				Log.e("xxxx", "包含的县区个数为-----"+listArea.size());
+				//Log.e("xxxx", "包含的县区个数为-----"+listArea.size());
 			}
 
 			@Override
@@ -383,8 +399,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				}
 				listCategory.clear();
 				listCategory.addAll(lis);
-				listCategoryNameP.clear();
-				Log.e("xxxx", "包含的分类个数为-----"+listCategory.size());
+				listCategoryName.clear();
+				//Log.e("xxxx", "包含的分类个数为-----"+listCategory.size());
 				for(Category category:listCategory){
 						listCategoryName.add(category.getName());
 				}
@@ -438,8 +454,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				listCategoryP.clear();
 				listCategoryP.addAll(lis);
 				listCategoryNameP.clear();
-				Log.e("xxxx", "包含的分类个数为-----"+listCategoryP.size());
-				for(Category category:listCategory){
+				//Log.e("xxxx", "包含的个人分类个数为-----"+listCategoryP.size());
+				for(Category category:listCategoryP){
 						listCategoryNameP.add(category.getName());
 				}
 				

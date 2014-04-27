@@ -60,7 +60,7 @@
                 
                 android:background="@drawable/abs__spinner_ab_default_holo_light"
                 android:gravity="center"
-                android:text="全部"
+                android:text="商家"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 

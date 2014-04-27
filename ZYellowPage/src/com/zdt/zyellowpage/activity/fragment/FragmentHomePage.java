@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 import com.zdt.zyellowpage.activity.CompanyBuySellActivity;
 import com.zdt.zyellowpage.activity.CompanyMapActiviy;
+import com.zdt.zyellowpage.activity.MyPopupWindow;
 import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
 import com.zdt.zyellowpage.activity.PopPersonListActivity;
@@ -55,7 +59,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 	private TextView PersonConent;
 	private ImageView hotImage;
 	private ImageView PersonImage;
-
+	MyPopupWindow myPopupWindow;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// 获取布局文件
@@ -93,6 +97,10 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		ImageButton imgBPeople = (ImageButton) view
 				.findViewById(R.id.imageButtonPeople);
 		imgBPeople.setOnClickListener(this);
+		
+		ImageButton imgBAllClass= (ImageButton) view
+				.findViewById(R.id.imageButtonAll);
+		imgBAllClass.setOnClickListener(this);
 		
 		
 		// 热门商家列表
@@ -135,7 +143,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		mActivity.getWindowManager().getDefaultDisplay().getMetrics(metric);
 		int width = metric.widthPixels / 4;
 		int high = metric.heightPixels / 6;
-		Log.e("xxxxxxxxxxxxxxx", "width=" + width);
+		
 		// displayUtil.setViewLayoutParamsX(view.findViewById(R.id.imageViewNews),
 		// resouce.getDrawable(R.drawable.news), width*4);
 		displayUtil.setViewLayoutParamsW(
@@ -208,13 +216,13 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (hotUser.getFullname() != null) {
 							hotName.setText(hotUser.getFullname());
 						}
-						Log.e("xxxxSummary1","----------"+hotUser.getKeyword());
+						
 						if (hotUser.getKeyword()!= null) {
 							hotConent = (TextView) view
 									.findViewById(R.id.textViewBusinessConetentHot);
 							hotConent.setText(hotUser.getKeyword());
 						}
-						Log.e("xxxxLogo","----------"+hotUser.getLogo());
+						
 						if (hotUser.getLogo() != null) {
 							hotImage = (ImageView) view.findViewById(R.id.imageViewhot);
 							new AbImageDownloader(mActivity).display(hotImage,
@@ -240,13 +248,13 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (hotUser.getFullname() != null) {
 							hotName.setText(hotUser.getFullname());
 						}
-						Log.e("xxxxSummary1","----------"+hotUser.getKeyword());
+						
 						if (hotUser.getKeyword()!= null) {
 							hotConent = (TextView) view
 									.findViewById(R.id.textViewBusinessConetentHot);
 							hotConent.setText(hotUser.getKeyword());
 						}
-						Log.e("xxxxLogo","----------"+hotUser.getLogo());
+						
 						if (hotUser.getLogo() != null) {
 							hotImage = (ImageView) view.findViewById(R.id.imageViewhot);
 							new AbImageDownloader(mActivity).display(hotImage,
@@ -284,7 +292,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (PersonUser.getFullname() != null) {
 							PersonName.setText(PersonUser.getFullname());
 						}
-						Log.e("xxxxSummary","----------"+PersonUser.getAddress());
+						
 						if (PersonUser.getKeyword() != null) {
 							PersonConent = (TextView) view
 									.findViewById(R.id.textViewPersonContentHot);
@@ -377,6 +385,9 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 intent.putExtra("Type", "代金券");
 			 intent.putExtra("TypeId","代金券");
 			 startActivity(intent);
+			break;
+		case R.id.imageButtonAll:
+			 showPopWindows();
 			break;
 		case R.id.imageButtonPeople:
 			 intent = new Intent(mActivity,
@@ -484,6 +495,22 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
     	{
     		Toast.makeText(mActivity, "请先登陆！", Toast.LENGTH_SHORT).show();  
     	}
+	}
+	
+	
+	void  showPopWindows(){
+		//Log.e("fragment", "-----点击了全部分类");
+		myPopupWindow = new MyPopupWindow(mActivity);
+		myPopupWindow.popupWindow.setWidth(mActivity.getWindowManager().getDefaultDisplay().getWidth()/4*3);
+		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft,
+				mActivity.getWindowManager().getDefaultDisplay().getWidth()/16*7,0);
+		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
+				0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassP,
+				0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+		myPopupWindow.popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+		myPopupWindow.popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+		
 	}
 
 }

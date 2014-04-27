@@ -189,57 +189,6 @@ public class TypeBusinessListActivity extends AbActivity {
 							}
 						}
 					}
-			/*		@Override
-					public void onSuccess(int statusCode, List<Object> lis) {
-						if (lis == null || lis.size() == 0) {
-							return;
-						}
-						
-						Map<String, Object> map;
-						for (int i = 0; i < lis.size(); i++) {
-
-							User u = (User) lis.get(i);
-							map = new HashMap<String, Object>();
-							map.put("Member_id", u.getMember_id());
-							map.put("itemsIcon", u.getLogo());
-							map.put("itemsTitle", u.getFullname());
-							map.put("itemsText", u.getKeyword());
-							newList.add(map);
-						}
-						
-						Log.e("xxxx11", "-----" + newList.size());
-					}
-
-					@Override
-					public void onStart() {
-						showProgressDialog("同步信息...");
-					}
-
-					@Override
-					public void onFinish() {
-						
-						list.addAll(newList);
-						myListViewAdapter.notifyDataSetChanged();
-						newList.clear();
-						removeProgressDialog();
-						if(isRefresh){
-							mAbPullListView.stopRefresh();
-						}
-						else{
-							mAbPullListView.stopLoadMore(true);
-						}
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-						showToast(error.getMessage());
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-						showToast(status_description);
-					}*/
 				});
 
 	}
