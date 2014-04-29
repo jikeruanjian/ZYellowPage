@@ -63,7 +63,7 @@ public class CompanyBuySellActivity  extends AbActivity {
 		tabTexts.add("求购信息");
 		
 		mAbSlidingTabView.setTabColor(Color.BLACK);
-		mAbSlidingTabView.setTabSelectColor(Color.rgb(86, 186, 70));
+		mAbSlidingTabView.setTabSelectColor(getResources().getColor(R.color.orange));
 		
 		mAbSlidingTabView.addItemViews(tabTexts, mFragments);
 		

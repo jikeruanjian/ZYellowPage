@@ -161,7 +161,7 @@
         <activity android:name="com.zdt.zyellowpage.activity.SelectCategoryActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.RichTextEditorActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditCoordinateAcitivity" />
-        
+        <activity android:name="com.zdt.zyellowpage.activity.MorePhoneActivity" />
     </application>
 
     <supports-screens

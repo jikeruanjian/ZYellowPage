@@ -3,30 +3,32 @@
     android:layout_height="fill_parent" >
 
     <TextView
-        android:id="@+id/MorePhoneNametextView"
+        android:id="@+id/morePhoneNametextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="TextView"
+        android:textColor="@color/black"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/MorePhoneNumbertextView"
+        android:id="@+id/morePhoneNumbertextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/MorePhoneNametextView"
+        android:layout_below="@+id/morePhoneNametextView"
         android:text="TextView"
+        android:textColor="@color/crop_background"
         android:textSize="15sp" />
 
     <ImageView
-        android:id="@+id/MorePhoneimageViewMorePhone"
+        android:id="@+id/morePhoneimageViewMorePhone"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_alignTop="@id/MorePhoneNametextView"
+        android:layout_alignTop="@id/morePhoneNametextView"
         android:layout_marginRight="20dp"
         android:src="@drawable/phone" />
 

@@ -107,7 +107,7 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/imageViewMoewPhone"
                         android:layout_width="30dip"
                         android:layout_height="30dip"
                         android:layout_marginLeft="30dip"

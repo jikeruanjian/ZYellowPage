@@ -383,9 +383,10 @@ public class BusinessDetailActivity extends AbActivity {
 
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(Intent.ACTION_CALL, Uri
-								.parse("tel:" + userCompany.getTelephone()));
-						startActivity(intent);
+						Intent intent=new Intent(); 
+			        	intent.setAction(Intent.ACTION_DIAL);   //android.intent.action.DIAL 
+			        	intent.setData(Uri.parse("tel:" + userCompany.getTelephone())); 
+			        	startActivity(intent);  
 					}
 				});
 
@@ -399,6 +400,20 @@ public class BusinessDetailActivity extends AbActivity {
 				Intent intent = new Intent(BusinessDetailActivity.this,
 						VideoListActivity.class);
 				intent.putExtra("member_id", member_id);
+				startActivity(intent);
+			}
+		});
+		
+		
+		this.findViewById(R.id.imageViewMoewPhone).setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if (AbStrUtil.isEmpty(member_id)) {
+					return;
+				}
+				Intent intent = new Intent(BusinessDetailActivity.this,
+						MorePhoneActivity.class);
+				intent.putExtra("MEMBER_ID", member_id);
 				startActivity(intent);
 			}
 		});

@@ -104,9 +104,8 @@ public class ContactBll {
 										.getString("status_description"));
 
 								if (bre.getSuccess()) {
-									JSONObject data = jo.getJSONObject("data");
 									JSONArray dataContact;
-									dataContact = data.getJSONArray("contact");
+									dataContact = jo.getJSONArray("data");
 
 									List<Contact> tempContact = new Gson().fromJson(
 											dataContact.toString(),

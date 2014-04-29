@@ -294,7 +294,7 @@ public class MyPopupWindow {
 					 map.put("textViewSellBuyItemNames", c.getName());
 					 nameList.add(map);
 				}
-				adapter. notifyDataSetChanged( );	
+				adapter. notifyDataSetChanged();	
 			}
 
 			@Override

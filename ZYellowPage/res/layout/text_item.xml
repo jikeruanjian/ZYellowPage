@@ -1,15 +1,28 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
 
     <TextView
         android:id="@+id/textViewSellBuyItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/textViewSellBuyItemBtn"
         android:text="TextView"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="15sp" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textViewSellBuyItemBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewSellBuyItemName"
+        android:layout_alignBottom="@+id/textViewSellBuyItemName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:text="详细"
+        android:textColor="@color/orange" />
+
+</RelativeLayout>
