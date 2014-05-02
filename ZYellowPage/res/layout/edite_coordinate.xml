@@ -35,12 +35,12 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/latitude"
+                android:id="@+id/longitude"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tvKeyword"
                 android:gravity="center_vertical"
-                android:hint="@string/keyword"
+                android:hint="@string/fullName"
                 android:inputType="numberDecimal"
                 android:maxLength="28"
                 android:singleLine="true"
@@ -48,7 +48,7 @@
                 android:textSize="18sp" />
 
             <ImageButton
-                android:id="@+id/clearLatitude"
+                android:id="@+id/clearLongitude"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
@@ -77,13 +77,15 @@
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
+            
+            
             <EditText
-                android:id="@+id/longitude"
+                android:id="@+id/latitude"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tvFullName"
                 android:gravity="center_vertical"
-                android:hint="@string/fullName"
+                android:hint="@string/keyword"
                 android:inputType="numberDecimal"
                 android:maxLength="28"
                 android:singleLine="true"
@@ -91,7 +93,7 @@
                 android:textSize="18sp" />
 
             <ImageButton
-                android:id="@+id/clearLongitude"
+                android:id="@+id/clearLatitude"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"

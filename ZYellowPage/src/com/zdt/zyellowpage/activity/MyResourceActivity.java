@@ -82,11 +82,13 @@ public class MyResourceActivity extends AbActivity {
 								EditPersonBaseResourceActivity.class);
 					}
 					startActivity(intent);
-				} else if (selectedItem.equals("设置头像")) {
-
 				} else if (selectedItem.equals("设置头像")
 						|| selectedItem.equals("设置Logo")) {
-
+					Intent intent = null;
+					intent = new Intent(MyResourceActivity.this,
+							AddPhotoActivity.class);
+					intent.putExtra("title", selectedItem);
+					startActivity(intent);
 				} else if (selectedItem.equals("个人简介")) {
 					Intent intent = null;
 					intent = new Intent(MyResourceActivity.this,
@@ -143,6 +145,11 @@ public class MyResourceActivity extends AbActivity {
 					// TODO 供求列表
 				} else if (selectedItem.equals("图片展示")) {
 					// TODO 图片瀑布流
+					Intent intent = null;
+					intent = new Intent(MyResourceActivity.this,
+							EditAlbumActivity.class);
+					// intent.putExtra("title", selectedItem);
+					startActivity(intent);
 				} else if (selectedItem.equals("更多电话")) {
 					// TODO 更多电话
 				} else if (selectedItem.equals("地图坐标")) {

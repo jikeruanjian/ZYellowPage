@@ -18,17 +18,17 @@ import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.jsonEntity.BaseResponseEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
-import com.zdt.zyellowpage.model.Contact;
+import com.zdt.zyellowpage.model.Certificate;
 
 /**
- * 更多联系人，相关业务逻辑,不会保存到本地
+ * 资质证书，相关业务逻辑,不会保存到本地
  * 
  * @author Kevin
  * 
  */
-public class ContactBll {
+public class CertificateBll {
 
-	ZzObjectHttpResponseListener<Contact> objectResponseListener;
+	ZzObjectHttpResponseListener<Certificate> objectResponseListener;
 	ZzStringHttpResponseListener stringResponseListener;
 	Context mContext;
 
@@ -36,16 +36,15 @@ public class ContactBll {
 	 * 获取,如果从网络中获取到了数据，不会保存到本地，不会缓存
 	 * 
 	 * @param context
-	 * @param albumParams
 	 * @param respListener
 	 */
-	public void getContactList(Context context, String member_id,
-			ZzObjectHttpResponseListener<Contact> respListener) {
+	public void getCertificateList(Context context, String member_id,
+			ZzObjectHttpResponseListener<Certificate> respListener) {
 		this.mContext = context;
 		JSONObject jo = new JSONObject();
 		JSONObject joData = new JSONObject();
 		try {
-			jo.put("method", "query-contact");
+			jo.put("method", "query-certificate");
 			joData.put("member_id", member_id);
 			jo.put("data", joData.toString());
 		} catch (Exception e) {
@@ -63,20 +62,20 @@ public class ContactBll {
 	 * 
 	 * @param context
 	 * @param token
-	 * @param contact
+	 * @param certificate
 	 * @param respListener
 	 */
-	public void updateContact(Context context, String token, Contact contact,
+	public void updateCertificate(Context context, String token, Certificate certificate,
 			ZzStringHttpResponseListener respListener) {
 
 		JSONObject jo = new JSONObject();
 		// JSONObject joData = new JSONObject();
 		try {
-			jo.put("method", "update-contact");
+			jo.put("method", "update-certificate");
 			jo.put("token", token);
 			// joData.put("item_id", item_id);
 			// joData.put("url", url);
-			jo.put("data", new Gson().toJson(contact));
+			jo.put("data", new Gson().toJson(certificate));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,7 +86,7 @@ public class ContactBll {
 	}
 
 	private void getBasicContactList(Context context, AbRequestParams params,
-			ZzObjectHttpResponseListener<Contact> respListener) {
+			ZzObjectHttpResponseListener<Certificate> respListener) {
 		this.objectResponseListener = respListener;
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
 		mAbHttpUtil.post(Constant.BASEURL, params,
@@ -96,7 +95,7 @@ public class ContactBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 						if (content != null && !content.equals("")) {
-							Log.i("ContactBll", content);
+							Log.i("CertificateBll", content);
 							JSONObject jo = null;
 							BaseResponseEntity bre = new BaseResponseEntity();
 							// 转换数据
@@ -112,9 +111,9 @@ public class ContactBll {
 									JSONArray dataContact;
 									dataContact = jo.getJSONArray("data");
 
-									List<Contact> tempContact = new Gson().fromJson(
+									List<Certificate> tempContact = new Gson().fromJson(
 											dataContact.toString(),
-											new TypeToken<List<Contact>>() {
+											new TypeToken<List<Certificate>>() {
 											}.getType());
 
 									objectResponseListener.onSuccess(
@@ -164,7 +163,7 @@ public class ContactBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 						if (content != null && !content.equals("")) {
-							Log.i("ContactBll", content);
+							Log.i("CertificateBll", content);
 							JSONObject jo = null;
 							BaseResponseEntity bre = new BaseResponseEntity();
 							// 转换数据

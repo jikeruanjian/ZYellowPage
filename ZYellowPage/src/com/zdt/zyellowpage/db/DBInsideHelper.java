@@ -7,6 +7,7 @@ import com.zdt.zyellowpage.model.Album;
 import com.zdt.zyellowpage.model.Area;
 import com.zdt.zyellowpage.model.Category;
 import com.zdt.zyellowpage.model.SupplyDemand;
+import com.zdt.zyellowpage.model.Tie;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.model.Video;
 
@@ -28,7 +29,8 @@ public class DBInsideHelper extends AbDBHelper {
 
 	// 要初始化的表
 	private static final Class<?>[] clazz = { User.class, Area.class,
-			Album.class, Video.class, SupplyDemand.class, Category.class };
+			Album.class, Video.class, SupplyDemand.class, Category.class,
+			Tie.class };
 
 	public DBInsideHelper(Context context) {
 		super(context, DBNAME, null, DBVERSION, clazz);

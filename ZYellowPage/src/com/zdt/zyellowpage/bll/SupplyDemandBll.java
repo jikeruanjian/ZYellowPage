@@ -97,8 +97,8 @@ public class SupplyDemandBll {
 								bre.setResult(jo.getString("result"));
 								bre.setSuccess(jo.getBoolean("success"));
 								bre.setStatus(jo.getInt("status"));
-								// bre.setStatus_description(jo
-								// .getString("status_description"));
+								bre.setStatus_description(jo
+										.getString("status_description"));
 
 								if (bre.getSuccess()) {
 									JSONObject data = jo.getJSONObject("data");
@@ -207,8 +207,8 @@ public class SupplyDemandBll {
 								bre.setResult(jo.getString("result"));
 								bre.setSuccess(jo.getBoolean("success"));
 								bre.setStatus(jo.getInt("status"));
-								// bre.setStatus_description(jo
-								// .getString("status_description"));
+								bre.setStatus_description(jo
+										.getString("status_description"));
 
 								if (bre.getSuccess()) {
 									JSONObject data = jo.getJSONObject("data");
@@ -272,6 +272,7 @@ public class SupplyDemandBll {
 						System.out.println("数据请求异常" + content);
 						SupplyDemandDao supplyDemandDao = new SupplyDemandDao(
 								mContext);
+						supplyDemandDao.startReadableDatabase(false);
 						List<SupplyDemand> lis = supplyDemandDao
 								.rawQuery(
 										"select * from supplyDemand order by _id desc limit ? offset ?*?",
@@ -281,6 +282,7 @@ public class SupplyDemandBll {
 												String.valueOf(mSupplyDemandParams
 														.getPage_number()) },
 										SupplyDemand.class);
+						supplyDemandDao.closeDatabase(false);
 						objectResponseListener.onFailure(statusCode, content,
 								error, lis);
 					}

@@ -1,5 +1,6 @@
 package com.zdt.zyellowpage.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -14,39 +15,46 @@ import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.zdt.zyellowpage.dao.TieDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.jsonEntity.BaseResponseEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
-import com.zdt.zyellowpage.model.Contact;
+import com.zdt.zyellowpage.model.Tie;
 
 /**
- * 更多联系人，相关业务逻辑,不会保存到本地
+ * 电子请帖，相关业务，缓存
  * 
  * @author Kevin
  * 
  */
-public class ContactBll {
+public class TieBll {
 
-	ZzObjectHttpResponseListener<Contact> objectResponseListener;
+	ZzObjectHttpResponseListener<Tie> objectResponseListener;
 	ZzStringHttpResponseListener stringResponseListener;
 	Context mContext;
+	int page_number;
+	int max_size;
 
 	/**
-	 * 获取,如果从网络中获取到了数据，不会保存到本地，不会缓存
+	 * 获取,如果从网络中获取到了数据，缓存
 	 * 
 	 * @param context
-	 * @param albumParams
 	 * @param respListener
 	 */
-	public void getContactList(Context context, String member_id,
-			ZzObjectHttpResponseListener<Contact> respListener) {
+	public void getCertificateList(Context context, int page_number,
+			int max_size, String area_id,
+			ZzObjectHttpResponseListener<Tie> respListener) {
+		this.page_number = page_number;
+		this.max_size = max_size;
 		this.mContext = context;
 		JSONObject jo = new JSONObject();
 		JSONObject joData = new JSONObject();
 		try {
-			jo.put("method", "query-contact");
-			joData.put("member_id", member_id);
+			jo.put("method", "query-tie");
+			joData.put("page_number", page_number);
+			joData.put("max_size", max_size);
+			joData.put("area_id", area_id);
 			jo.put("data", joData.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,40 +63,33 @@ public class ContactBll {
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
 
-		getBasicContactList(context, params, respListener);
+		getBasicTieList(context, params, respListener);
 	}
 
 	/**
-	 * 更新联系人
+	 * 获取供求信息的详情
 	 * 
 	 * @param context
-	 * @param token
-	 * @param contact
+	 * @param item_id
 	 * @param respListener
 	 */
-	public void updateContact(Context context, String token, Contact contact,
-			ZzStringHttpResponseListener respListener) {
-
+	public void getDetailOfSupplyDemand(Context context, final String item_id,
+			ZzObjectHttpResponseListener<Tie> respListener) {
+		this.mContext = context;
+		objectResponseListener = respListener;
 		JSONObject jo = new JSONObject();
-		// JSONObject joData = new JSONObject();
+		JSONObject joData = new JSONObject();
 		try {
-			jo.put("method", "update-contact");
-			jo.put("token", token);
-			// joData.put("item_id", item_id);
-			// joData.put("url", url);
-			jo.put("data", new Gson().toJson(contact));
+			jo.put("method", "query-supply-demand-content");
+			joData.put("item_id", item_id);
+			jo.put("data", joData.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
 
-		basicExcute(context, params, respListener);
-	}
-
-	private void getBasicContactList(Context context, AbRequestParams params,
-			ZzObjectHttpResponseListener<Contact> respListener) {
-		this.objectResponseListener = respListener;
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
 		mAbHttpUtil.post(Constant.BASEURL, params,
 				new AbStringHttpResponseListener() {
@@ -96,7 +97,7 @@ public class ContactBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 						if (content != null && !content.equals("")) {
-							Log.i("ContactBll", content);
+							Log.i("TieBll", content);
 							JSONObject jo = null;
 							BaseResponseEntity bre = new BaseResponseEntity();
 							// 转换数据
@@ -109,16 +110,24 @@ public class ContactBll {
 										.getString("status_description"));
 
 								if (bre.getSuccess()) {
-									JSONArray dataContact;
-									dataContact = jo.getJSONArray("data");
+									JSONObject data = jo.getJSONObject("data");
 
-									List<Contact> tempContact = new Gson().fromJson(
-											dataContact.toString(),
-											new TypeToken<List<Contact>>() {
-											}.getType());
+									Tie tempTie = new Gson().fromJson(
+											data.toString(), Tie.class);
+
+									TieDao tieDao = new TieDao(mContext);
+									tieDao.startWritableDatabase(false);
+
+									tieDao.delete("item_id=?",
+											new String[] { item_id });
+
+									tieDao.insert(tempTie);
+									tieDao.closeDatabase(false);
+									List<Tie> lis = new ArrayList<Tie>();
+									lis.add(tempTie);
 
 									objectResponseListener.onSuccess(
-											statusCode, tempContact);
+											statusCode, lis);
 								} else {
 									objectResponseListener.onErrorData(bre
 											.getStatus_description());
@@ -141,8 +150,12 @@ public class ContactBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
+						System.out.println("数据请求异常" + content);
+						TieDao tieDao = new TieDao(mContext);
+						List<Tie> tie = tieDao.queryList("item_id=?",
+								new String[] { item_id });
 						objectResponseListener.onFailure(statusCode, content,
-								error, null);
+								error, tie);
 					}
 
 					// 完成后调用，失败，成功
@@ -153,10 +166,9 @@ public class ContactBll {
 				});
 	}
 
-	private void basicExcute(Context context, AbRequestParams params,
-			ZzStringHttpResponseListener respListener) {
-
-		this.stringResponseListener = respListener;
+	private void getBasicTieList(Context context, AbRequestParams params,
+			ZzObjectHttpResponseListener<Tie> respListener) {
+		this.objectResponseListener = respListener;
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
 		mAbHttpUtil.post(Constant.BASEURL, params,
 				new AbStringHttpResponseListener() {
@@ -164,7 +176,7 @@ public class ContactBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 						if (content != null && !content.equals("")) {
-							Log.i("ContactBll", content);
+							Log.i("TieBll", content);
 							JSONObject jo = null;
 							BaseResponseEntity bre = new BaseResponseEntity();
 							// 转换数据
@@ -177,11 +189,28 @@ public class ContactBll {
 										.getString("status_description"));
 
 								if (bre.getSuccess()) {
-									stringResponseListener.onSuccess(
-											statusCode,
-											bre.getStatus_description());
+									JSONObject data = jo.getJSONObject("data");
+									JSONArray dataTie;
+									dataTie = data.getJSONArray("list");
+
+									List<Tie> tempTie = new Gson().fromJson(
+											dataTie.toString(),
+											new TypeToken<List<Tie>>() {
+											}.getType());
+
+									TieDao tieDao = new TieDao(mContext);
+									tieDao.startWritableDatabase(false);
+
+									tieDao.deleteAll(); // 只缓存一页就够了
+
+									if (tempTie != null) {
+										tieDao.insertList(tempTie);
+									}
+									tieDao.closeDatabase(false);
+									objectResponseListener.onSuccess(
+											statusCode, tempTie);
 								} else {
-									stringResponseListener.onErrorData(bre
+									objectResponseListener.onErrorData(bre
 											.getStatus_description());
 								}
 
@@ -195,22 +224,32 @@ public class ContactBll {
 					// 开始执行前
 					@Override
 					public void onStart() {
-						stringResponseListener.onStart();
+						objectResponseListener.onStart();
 					}
 
 					// 失败，调用
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						stringResponseListener.onFailure(statusCode, content,
-								error);
+						System.out.println("数据请求异常" + content);
+						TieDao tieDao = new TieDao(mContext);
+						List<Tie> lis = tieDao
+								.rawQuery(
+										"select * from tie order by _id desc limit ? offset ?*?",
+										new String[] {
+												String.valueOf(max_size),
+												String.valueOf(page_number) },
+										Tie.class);
+						objectResponseListener.onFailure(statusCode, content,
+								error, lis);
 					}
 
 					// 完成后调用，失败，成功
 					@Override
 					public void onFinish() {
-						stringResponseListener.onFinish();
+						objectResponseListener.onFinish();
 					};
 				});
 	}
+
 }
