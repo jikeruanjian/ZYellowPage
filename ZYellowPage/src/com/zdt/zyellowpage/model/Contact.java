@@ -1,5 +1,7 @@
 package com.zdt.zyellowpage.model;
 
+import java.io.Serializable;
+
 
 /**
  * 更多联系人
@@ -7,7 +9,8 @@ package com.zdt.zyellowpage.model;
  * @author Kevin
  * 
  */
-public class Contact {
+public class Contact implements Serializable 
+{
 
 	/**
 	 * 记录编号

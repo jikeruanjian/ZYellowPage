@@ -12,6 +12,7 @@
         android:layout_marginLeft="14dp"
         android:layout_toLeftOf="@+id/imageButtonLowerClass"
         android:text="TextView"
+        android:textColor="@color/white"
         android:textSize="15sp" />
 
     <TextView
@@ -22,6 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignTop="@id/textViewTopClass"
         android:gravity="center"
+        android:textColor="@color/white"
         android:text=">"
         android:textSize="20sp" />
 

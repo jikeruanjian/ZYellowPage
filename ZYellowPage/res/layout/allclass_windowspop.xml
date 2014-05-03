@@ -29,8 +29,7 @@
             	android:layout_height="wrap_content"
             	android:cacheColorHint="@android:color/transparent"
             	android:drawSelectorOnTop="false"  
-            	 
-            	android:listSelector="@drawable/item_color" >  
+>  
             </ListView>
         </LinearLayout>
 		

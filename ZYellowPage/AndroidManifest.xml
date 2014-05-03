@@ -137,7 +137,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.zdt.zyellowpage.activity.MainActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.MainActivity"
+             android:screenOrientation="portrait"/>
         <activity android:name="com.zdt.zyellowpage.activity.login.LoginActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.login.FindPwdActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.login.RegisterActivity" />
@@ -165,6 +166,10 @@
         <activity android:name="com.zdt.zyellowpage.activity.AddPhotoActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.CropImageActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditAlbumActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.EditSupplyDemandActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.EditMorePhoneAcitivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.CertificateListActivity"/>
+        <activity android:name="com.zdt.zyellowpage.activity.EditCertificateActivity" />
     </application>
 
     <supports-screens

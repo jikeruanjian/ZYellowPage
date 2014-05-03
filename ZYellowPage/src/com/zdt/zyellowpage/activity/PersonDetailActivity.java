@@ -314,8 +314,10 @@ public class PersonDetailActivity extends AbActivity {
 
 			@Override
 			public void onClick(View v) {
-		Intent intent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+userPerson.getTelephone()));
-		startActivity(intent);
+				Intent intent=new Intent(); 
+	        	intent.setAction(Intent.ACTION_DIAL);   //android.intent.action.DIAL 
+	        	intent.setData(Uri.parse("tel:"+userPerson.getTelephone())); 
+	        	startActivity(intent);
 			}
 		});
 	}

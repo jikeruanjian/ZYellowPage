@@ -1,5 +1,7 @@
 package com.zdt.zyellowpage.model;
 
+import java.io.Serializable;
+
 import com.ab.db.orm.annotation.Table;
 
 /**
@@ -9,7 +11,7 @@ import com.ab.db.orm.annotation.Table;
  * 
  */
 @Table(name = "certificate")
-public class Certificate {
+public class Certificate implements Serializable {
 
 	/**
 	 * 项目编号，服务端的主键

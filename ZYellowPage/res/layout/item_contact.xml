@@ -33,6 +33,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignTop="@id/morePhoneNametextView"
         android:layout_marginRight="20dp"
-        android:src="@drawable/phone" />
+        android:background="@drawable/phone" />
 
 </RelativeLayout>

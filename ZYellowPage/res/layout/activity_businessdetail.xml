@@ -247,10 +247,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="300dip"
                     android:layout_gravity="center"
+                    android:layout_margin="5dp"
                     android:layout_weight="1.0"
-                    android:background="#000000"
+                    android:background="#FFFFFF"
                     android:flipInterval="30"
                     android:persistentDrawingCache="animation" />
+
             </LinearLayout>
         </LinearLayout>
     </com.ab.view.sample.AbOuterScrollView>

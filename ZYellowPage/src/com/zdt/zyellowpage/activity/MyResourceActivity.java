@@ -117,6 +117,12 @@ public class MyResourceActivity extends AbActivity {
 					startActivity(intent);
 				} else if (selectedItem.equals("资质管理")) {
 					// TODO 还没有资质管理的接口
+					Intent intent = null;
+					intent = new Intent(MyResourceActivity.this,
+							CertificateListActivity.class);
+					intent.putExtra("MEMBER_ID",
+							application.mUser.getMember_id());
+					startActivity(intent);
 				} else if (selectedItem.equals("详细介绍")) {
 					Intent intent = null;
 					intent = new Intent(MyResourceActivity.this,
@@ -160,6 +166,13 @@ public class MyResourceActivity extends AbActivity {
 					startActivity(intent);
 				} else if (selectedItem.equals("更多电话")) {
 					// TODO 更多电话
+					Intent intent = null;
+					intent = new Intent(MyResourceActivity.this,
+							MorePhoneActivity.class);
+					intent.putExtra("MEMBER_ID",
+							application.mUser.getMember_id());
+					intent.putExtra("isEdit", true);
+					startActivity(intent);
 				} else if (selectedItem.equals("地图坐标")) {
 					// TODO 还要建一个activity
 					startActivity(new Intent(MyResourceActivity.this,

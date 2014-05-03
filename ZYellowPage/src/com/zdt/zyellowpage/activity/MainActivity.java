@@ -3,7 +3,9 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -80,7 +82,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	//个人分类列表
 	public  static List<Category> listCategoryP;
 	public static List<String> listCategoryNameP;
-	
+	private long mExitTime;
+
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
@@ -144,6 +148,26 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		super.onResume();
 		editRearch.setText("");
 	}
+	@Override  
+    public boolean onKeyDown(int keyCode, KeyEvent event) {  
+		   if (keyCode == KeyEvent.KEYCODE_BACK) {
+               if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            	   showToast("再按一次退出程序");
+                   mExitTime = System.currentTimeMillis();
+               } else {
+            	   Intent intent = new Intent(Intent.ACTION_MAIN);   
+                   intent.addCategory(Intent.CATEGORY_HOME);   
+                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   
+                   startActivity(intent);   
+                   android.os.Process.killProcess(android.os.Process.myPid());  
+
+                //   finish();
+               }
+               return true;
+       }
+       return super.onKeyDown(keyCode, event);
+    }  
+
 	protected void initOtherFragment() {
 
 		fragmentTransaction = fragmentManager.beginTransaction();
@@ -156,7 +180,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 	protected void initView() {
 		DisplayUtil displayUtil = DisplayUtil.getInstance(this);
-		;
+		
 
 		/**
 		 * 获取当前屏幕的像素值
@@ -165,12 +189,12 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		getWindowManager().getDefaultDisplay().getMetrics(metric);
 
 		int high = metric.heightPixels / 6;
-		//displayUtil.setViewLayoutParamsR(this.findViewById(R.id.titileLinearLayout), 0, high / 2);
-		displayUtil.setViewLayoutParamsR(this.findViewById(R.id.titileLinearLayout), 0, 150);
+		displayUtil.setViewLayoutParamsR(this.findViewById(R.id.titileLinearLayout), 0, high / 2);
+		//displayUtil.setViewLayoutParamsR(this.findViewById(R.id.titileLinearLayout), 0, 150);
 		// displayUtil.setViewLayoutParamsR(this.findViewById(R.id.LinearLayoutAllXX),0,
 		// 5*high);
-		//displayUtil.setViewLayoutParamsR(this.findViewById(R.id.main_radio), 0,high / 2);
-		displayUtil.setViewLayoutParamsR(this.findViewById(R.id.main_radio), 0,160);
+		displayUtil.setViewLayoutParamsR(this.findViewById(R.id.main_radio), 0,high / 2);
+		//displayUtil.setViewLayoutParamsR(this.findViewById(R.id.main_radio), 0,160);
 		textViewArea = (TextView) this.findViewById(R.id.textViewarea);
 		textViewArea.setText(application.cityName);
 		textViewArea.setOnClickListener(new OnClickListener() {

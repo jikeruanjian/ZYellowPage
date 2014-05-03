@@ -10,12 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
@@ -23,54 +22,46 @@ import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
-import com.zdt.zyellowpage.bll.ContactBll;
+import com.zdt.zyellowpage.activity.MorePhoneActivity.MyAdapterPhoneEdit;
+import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
-import com.zdt.zyellowpage.model.Contact;
+import com.zdt.zyellowpage.model.Certificate;
 
-public class MorePhoneActivity extends AbActivity{
+
+public class CertificateListActivity extends AbActivity{
 
 	//private MyApplication application;
 	//private List<Map<String, Object>> list = null;
-	private List<Contact> listContact = null;
+	private List<Certificate> listCertificate = null;
 	private AbPullListView  mAbPullListView = null;
 	private AbTitleBar mAbTitleBar;
-	private MyAdapterPhone adapter;
+	private MyAdapterCertificateEdit adapter;
 	private MyAdapterPhoneEdit adapterEdit;
 	private String member_Id;
-	private boolean isEdit = false;
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.activity_morephone);
 		if (getIntent().getExtras() != null) {
 			member_Id = (String) getIntent().getExtras().get("MEMBER_ID");	
-			Log.e("MorePhoneActivity", "----用户"+member_Id );
-			isEdit = getIntent().getBooleanExtra("isEdit", false);
 		}
 		// 初始化标题栏
 		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText("更多电话");
+		mAbTitleBar.setTitleText("资质列表");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		mAbTitleBar.setLogoLine(R.drawable.line);
 		//application = (MyApplication) abApplication;
-		listContact = new ArrayList<Contact>();
+		listCertificate = new ArrayList<Certificate>();
 		// 获取ListView对象
 		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListViewPhone);
 		// 打开关闭下拉刷新加载更多功能
 		mAbPullListView.setPullRefreshEnable(true);
 		mAbPullListView.setPullLoadEnable(false);
 		//如果是编辑
-		if(isEdit){
-			initTitleRightLayout();
-			adapterEdit = new MyAdapterPhoneEdit(MorePhoneActivity.this);
-			mAbPullListView.setAdapter(adapterEdit);
-		}
-		else{
-			adapter = new MyAdapterPhone(MorePhoneActivity.this);
-			mAbPullListView.setAdapter(adapter);
-		}
+		initTitleRightLayout();
+		adapter = new MyAdapterCertificateEdit(CertificateListActivity.this);
+		mAbPullListView.setAdapter(adapter);
 		
 		mAbPullListView.setAbOnListViewListener(new AbOnListViewListener() {
 
@@ -88,24 +79,21 @@ public class MorePhoneActivity extends AbActivity{
 
 		});
 		getData();
-		
 	}
-	
 	void getData() {
-		ContactBll contactBll = new ContactBll();
-		contactBll.getContactList(MorePhoneActivity.this, member_Id, 
-				new ZzObjectHttpResponseListener<Contact>(){
+		CertificateBll  certificateBll = new  CertificateBll();
+		 certificateBll.getCertificateList(CertificateListActivity.this, member_Id,
+				 new ZzObjectHttpResponseListener<Certificate>(){
 
 					@Override
-					public void onSuccess(int statusCode, List<Contact> lis) {
+					public void onSuccess(int statusCode, List<Certificate> lis) {
 						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
-							showToast("没有更多数据！");
+							//PersonDetailActivity.this.showToast("获取资质信息失败！");
 							return;
 						}
-						listContact.clear();
-						listContact.addAll(lis);
-						
+						listCertificate.clear();
+						listCertificate.addAll(lis);		
 					}
 
 					@Override
@@ -114,12 +102,6 @@ public class MorePhoneActivity extends AbActivity{
 						showProgressDialog("同步信息...");
 					}
 
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error, List<Contact> localList) {
-						// TODO Auto-generated method stub
-						showToast(content);
-					}
 
 					@Override
 					public void onErrorData(String status_description) {
@@ -130,108 +112,43 @@ public class MorePhoneActivity extends AbActivity{
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub
-						if(isEdit){
-							adapterEdit.notifyDataSetChanged();
-						}
-						else{
-							adapter.notifyDataSetChanged();
-						}
+						adapter.notifyDataSetChanged();
 						mAbPullListView.stopRefresh();
 						removeProgressDialog();
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error, List<Certificate> localList) {
+						// TODO Auto-generated method stub
+						showToast(content);
 					}
 			
 		});
 	}
-	
 	public final class ViewHolder{ 
         public TextView name;
         public TextView number; 
         public ImageView viewBtn; 
     } 
       
-      
-    public class MyAdapterPhone extends BaseAdapter{ 
-  
-        private LayoutInflater mInflater; 
-          
-          
-        public MyAdapterPhone(Context context){ 
-            this.mInflater = LayoutInflater.from(context); 
-        } 
-        @Override
-        public int getCount() { 
-            // TODO Auto-generated method stub 
-            return listContact.size(); 
-        } 
-  
-        @Override
-        public Object getItem(int arg0) { 
-            // TODO Auto-generated method stub 
-            return null; 
-        } 
-  
-        @Override
-        public long getItemId(int arg0) { 
-            // TODO Auto-generated method stub 
-            return 0; 
-        } 
-  
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) { 
-              
-            ViewHolder holder = null; 
-            if (convertView == null) { 
-                holder=new ViewHolder();   
-                convertView = mInflater.inflate(R.layout.item_contact, null); 
-                holder.name = (TextView)convertView.findViewById(R.id.morePhoneNametextView); 
-                holder.number = (TextView)convertView.findViewById(R.id.morePhoneNumbertextView); 
-                holder.viewBtn = (ImageView)convertView.findViewById(R.id.morePhoneimageViewMorePhone); 
-                convertView.setTag(holder); 
-                  
-            }else { 
-                  
-                holder = (ViewHolder)convertView.getTag(); 
-            } 
-            holder.name.setText(listContact.get(position)
-            		.getDepartment()+":"+listContact.get(position).getContacter()); 
-            holder.number.setText(listContact.get(position).getTelephone()); 
-            holder.viewBtn.setOnClickListener(new CallBtnListener(listContact.get(position).getTelephone()));
-            return convertView; 
-        }
-    } 
-    
-    private class CallBtnListener implements OnClickListener{  
-		String phoneNumber;  
-        public CallBtnListener(String phone){  
-        	phoneNumber= phone;  
-        }  
-        @Override  
-        public void onClick(View v) {  
-        	//打电话
-        	Intent intent=new Intent(); 
-        	intent.setAction(Intent.ACTION_DIAL);   //android.intent.action.DIAL 
-        	intent.setData(Uri.parse("tel:" + phoneNumber)); 
-        	startActivity(intent);  
-        }
-    }
-    
-    /**
+	/**
      * 编辑更多电话按钮
      * @author Administrator
      *
      */
-    public class MyAdapterPhoneEdit extends BaseAdapter{ 
+    public class MyAdapterCertificateEdit extends BaseAdapter{ 
     	  
         private LayoutInflater mInflater; 
           
           
-        public MyAdapterPhoneEdit(Context context){ 
+        public MyAdapterCertificateEdit(Context context){ 
             this.mInflater = LayoutInflater.from(context); 
         } 
         @Override
         public int getCount() { 
             // TODO Auto-generated method stub 
-            return listContact.size(); 
+            return listCertificate.size(); 
         } 
   
         @Override
@@ -262,11 +179,11 @@ public class MorePhoneActivity extends AbActivity{
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
-            holder.name.setText(listContact.get(position)
-            		.getDepartment()+":"+listContact.get(position).getContacter()); 
-            holder.number.setText(listContact.get(position).getTelephone()); 
+            holder.name.setText(listCertificate.get(position)
+            		.getCertificate_name()); 
+            holder.number.setText(listCertificate.get(position).getCertificate_no()); 
             holder.viewBtn.setBackgroundResource(R.drawable.document_edit);
-            holder.viewBtn.setOnClickListener(new EditPhoneBtnListener(listContact.get(position)));
+            holder.viewBtn.setOnClickListener(new EditCertificateBtnListener(listCertificate.get(position)));
             return convertView; 
         }
     } 
@@ -275,18 +192,18 @@ public class MorePhoneActivity extends AbActivity{
      * @author Administrator
      *
      */
-    private class EditPhoneBtnListener implements OnClickListener{  
-    	Contact contactInfo;  
-        public EditPhoneBtnListener(Contact phone){  
-        	contactInfo= phone;  
+    private class EditCertificateBtnListener implements OnClickListener{  
+    	Certificate certificateInfo;  
+        public EditCertificateBtnListener(Certificate info){  
+        	certificateInfo= info;  
         }  
         @Override  
         public void onClick(View v) {  
         	//编辑
-        	Intent intent= new Intent(MorePhoneActivity.this,
-					EditMorePhoneAcitivity.class);
+        	Intent intent= new Intent(CertificateListActivity.this,
+        			EditCertificateActivity.class);
         	Bundle mBundle = new Bundle(); 
-        	mBundle.putSerializable("Contact",contactInfo); 
+        	mBundle.putSerializable("Certificate",certificateInfo); 
         	intent.putExtras(mBundle);
         	startActivity(intent);  
         }
@@ -305,8 +222,8 @@ public class MorePhoneActivity extends AbActivity{
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(MorePhoneActivity.this,
-							EditMorePhoneAcitivity.class);
+					Intent intent = new Intent(CertificateListActivity.this,
+							EditCertificateActivity.class);
 					startActivity(intent);
 				}
 			});
