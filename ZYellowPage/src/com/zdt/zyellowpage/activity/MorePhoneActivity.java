@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,24 +13,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.ab.activity.AbActivity;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.bll.ContactBll;
+import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Contact;
 
 public class MorePhoneActivity extends AbActivity{
 
-	//private MyApplication application;
+	private MyApplication application;
 	//private List<Map<String, Object>> list = null;
 	private List<Contact> listContact = null;
 	private AbPullListView  mAbPullListView = null;
@@ -54,7 +61,7 @@ public class MorePhoneActivity extends AbActivity{
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		mAbTitleBar.setLogoLine(R.drawable.line);
-		//application = (MyApplication) abApplication;
+		application = (MyApplication) abApplication;
 		listContact = new ArrayList<Contact>();
 		// 获取ListView对象
 		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListViewPhone);
@@ -66,6 +73,78 @@ public class MorePhoneActivity extends AbActivity{
 			initTitleRightLayout();
 			adapterEdit = new MyAdapterPhoneEdit(MorePhoneActivity.this);
 			mAbPullListView.setAdapter(adapterEdit);
+			mAbPullListView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					//编
+					Intent intent= new Intent(MorePhoneActivity.this,
+					EditMorePhoneAcitivity.class);
+					Bundle mBundle = new Bundle(); 
+					mBundle.putSerializable("Contact",listContact.get(position-1)); 
+					intent.putExtras(mBundle);
+					startActivity(intent);
+				}});
+			mAbPullListView
+			.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+				@Override
+				public boolean onItemLongClick(AdapterView<?> arg0,
+						View arg1, final int position, long arg3) {
+					Log.e("MorePhoneActivity","------"+position);
+					MorePhoneActivity.this.showDialog("确认", "确认删除？",
+							new  android.content.DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									dialog.dismiss();
+									Contact xcontact = new Contact();
+									xcontact.setItem_id("-"+listContact.get(position-1).getItem_id());
+									new ContactBll().updateContact(MorePhoneActivity.this, application.mUser.getToken(),
+											xcontact, new ZzStringHttpResponseListener(){
+
+												@Override
+												public void onSuccess(int statusCode, String content) {
+													// TODO Auto-generated method stub
+													listContact.remove(position-1);
+													adapterEdit.notifyDataSetChanged();
+													showToast(content);
+													//EditMorePhoneAcitivity.this.finish();
+												}
+
+												@Override
+												public void onStart() {
+													// TODO Auto-generated method stub
+													showProgressDialog("请稍候...");
+												}
+
+												@Override
+												public void onFailure(int statusCode,
+														String content, Throwable error) {
+													// TODO Auto-generated method stub
+													showToast(content);
+												}
+
+												@Override
+												public void onErrorData(String status_description) {
+													// TODO Auto-generated method stub
+													showToast(status_description);
+												}
+
+												@Override
+												public void onFinish() {
+													// TODO Auto-generated method stub
+													removeProgressDialog();
+												}
+										
+									});
+								}
+								
+										});
+							return  false;
+					
+				}});
 		}
 		else{
 			adapter = new MyAdapterPhone(MorePhoneActivity.this);
@@ -266,7 +345,7 @@ public class MorePhoneActivity extends AbActivity{
             		.getDepartment()+":"+listContact.get(position).getContacter()); 
             holder.number.setText(listContact.get(position).getTelephone()); 
             holder.viewBtn.setBackgroundResource(R.drawable.document_edit);
-            holder.viewBtn.setOnClickListener(new EditPhoneBtnListener(listContact.get(position)));
+           // holder.viewBtn.setOnClickListener(new EditPhoneBtnListener(listContact.get(position)));
             return convertView; 
         }
     } 

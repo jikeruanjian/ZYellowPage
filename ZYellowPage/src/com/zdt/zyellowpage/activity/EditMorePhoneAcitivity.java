@@ -16,14 +16,9 @@ import com.ab.view.ioc.AbIocView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.ContactBll;
-import com.zdt.zyellowpage.bll.UserBll;
-import com.zdt.zyellowpage.dao.UserInsideDao;
 import com.zdt.zyellowpage.global.MyApplication;
-import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Contact;
-import com.zdt.zyellowpage.model.SupplyDemand;
-import com.zdt.zyellowpage.model.User;
 
 /**
  * 更改坐标

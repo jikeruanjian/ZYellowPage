@@ -23,16 +23,17 @@
         android:layout_marginLeft="10dp"
         android:text="TextView"
         android:textColor="@color/crop_background"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/morePhoneimageViewMorePhone"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignTop="@id/morePhoneNametextView"
-        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:scaleType="fitXY"
         android:background="@drawable/phone" />
 
 </RelativeLayout>

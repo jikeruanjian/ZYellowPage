@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.ab.activity.AbActivity;
 import com.ab.view.listener.AbOnListViewListener;
@@ -24,13 +28,15 @@ import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.MorePhoneActivity.MyAdapterPhoneEdit;
 import com.zdt.zyellowpage.bll.CertificateBll;
+import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Certificate;
 
 
 public class CertificateListActivity extends AbActivity{
 
-	//private MyApplication application;
+	private MyApplication application;
 	//private List<Map<String, Object>> list = null;
 	private List<Certificate> listCertificate = null;
 	private AbPullListView  mAbPullListView = null;
@@ -51,7 +57,7 @@ public class CertificateListActivity extends AbActivity{
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		mAbTitleBar.setLogoLine(R.drawable.line);
-		//application = (MyApplication) abApplication;
+		application = (MyApplication) abApplication;
 		listCertificate = new ArrayList<Certificate>();
 		// 获取ListView对象
 		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListViewPhone);
@@ -62,7 +68,80 @@ public class CertificateListActivity extends AbActivity{
 		initTitleRightLayout();
 		adapter = new MyAdapterCertificateEdit(CertificateListActivity.this);
 		mAbPullListView.setAdapter(adapter);
-		
+		mAbPullListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				//编辑
+	        	Intent intent= new Intent(CertificateListActivity.this,
+	        			EditCertificateActivity.class);
+	        	Bundle mBundle = new Bundle(); 
+	        	mBundle.putSerializable("Certificate",listCertificate.get(position-1)); 
+	        	intent.putExtras(mBundle);
+	        	startActivity(intent);  
+			}});
+		mAbPullListView
+		.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0,
+					View arg1, final int position, long arg3) {
+				
+				CertificateListActivity.this.showDialog("确认", "确认删除？",
+						new  android.content.DialogInterface.OnClickListener() {
+							public void onClick(
+									DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+								Certificate cer = new Certificate();
+								cer.setItem_id("-"+listCertificate.get(position-1).getItem_id());
+								new CertificateBll().updateCertificate(CertificateListActivity.this, 
+										application.mUser.getToken(), cer, 
+										new ZzStringHttpResponseListener(){
+
+									@Override
+									public void onSuccess(int statusCode, String content) {
+										// TODO Auto-generated method stub
+										listCertificate.remove(position - 1);
+										adapter.notifyDataSetChanged();
+										showToast(content);
+										//EditMorePhoneAcitivity.this.finish();
+									}
+
+									@Override
+									public void onStart() {
+										// TODO Auto-generated method stub
+										//showProgressDialog("请稍候...");
+									}
+
+									@Override
+									public void onFailure(int statusCode,
+											String content, Throwable error) {
+										// TODO Auto-generated method stub
+										showToast(content);
+									}
+
+									@Override
+									public void onErrorData(String status_description) {
+										// TODO Auto-generated method stub
+										showToast(status_description);
+									}
+
+									@Override
+									public void onFinish() {
+										// TODO Auto-generated method stub
+										//removeProgressDialog();
+									}
+									
+								});
+								}
+							});
+				return  false;	
+				}});
+
+							
+						
+
 		mAbPullListView.setAbOnListViewListener(new AbOnListViewListener() {
 
 			@Override
@@ -181,9 +260,9 @@ public class CertificateListActivity extends AbActivity{
             } 
             holder.name.setText(listCertificate.get(position)
             		.getCertificate_name()); 
-            holder.number.setText(listCertificate.get(position).getCertificate_no()); 
+            holder.number.setText("编号:"+listCertificate.get(position).getCertificate_no()); 
             holder.viewBtn.setBackgroundResource(R.drawable.document_edit);
-            holder.viewBtn.setOnClickListener(new EditCertificateBtnListener(listCertificate.get(position)));
+           // holder.viewBtn.setOnClickListener(new EditCertificateBtnListener(listCertificate.get(position)));
             return convertView; 
         }
     } 
