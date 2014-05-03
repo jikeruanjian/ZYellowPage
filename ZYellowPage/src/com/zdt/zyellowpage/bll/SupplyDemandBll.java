@@ -100,7 +100,7 @@ public class SupplyDemandBll {
 								bre.setStatus_description(jo
 										.getString("status_description"));
 
-								if (bre.getSuccess()) {
+								if (bre.getSuccess() && bre.getStatus() == 200) {
 									JSONObject data = jo.getJSONObject("data");
 
 									SupplyDemand tempSupplyDemand = new Gson()
@@ -210,7 +210,7 @@ public class SupplyDemandBll {
 								bre.setStatus_description(jo
 										.getString("status_description"));
 
-								if (bre.getSuccess()) {
+								if (bre.getSuccess() && bre.getStatus() == 200) {
 									JSONObject data = jo.getJSONObject("data");
 									JSONArray dataSupplyDemand;
 									dataSupplyDemand = data
@@ -314,10 +314,10 @@ public class SupplyDemandBll {
 								bre.setResult(jo.getString("result"));
 								bre.setSuccess(jo.getBoolean("success"));
 								bre.setStatus(jo.getInt("status"));
-								// bre.setStatus_description(jo
-								// .getString("status_description"));
+								bre.setStatus_description(jo
+										.getString("status_description"));
 
-								if (bre.getSuccess()) {
+								if (bre.getSuccess() && bre.getStatus() == 200) {
 									stringResponseListener.onSuccess(
 											statusCode,
 											bre.getStatus_description());

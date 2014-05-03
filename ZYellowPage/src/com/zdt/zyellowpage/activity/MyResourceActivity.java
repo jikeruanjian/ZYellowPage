@@ -143,12 +143,20 @@ public class MyResourceActivity extends AbActivity {
 					startActivity(intent);
 				} else if (selectedItem.equals("供求信息")) {
 					// TODO 供求列表
+					Intent intent = null;
+					intent = new Intent(MyResourceActivity.this,
+							CompanyBuySellActivity.class);
+					intent.putExtra("FUllNAME", selectedItem);
+					intent.putExtra("MEMBER_ID",
+							application.mUser.getMember_id());
+					intent.putExtra("isEdit", true);
+					startActivity(intent);
 				} else if (selectedItem.equals("图片展示")) {
 					// TODO 图片瀑布流
 					Intent intent = null;
 					intent = new Intent(MyResourceActivity.this,
 							EditAlbumActivity.class);
-					// intent.putExtra("title", selectedItem);
+					intent.putExtra("title", selectedItem);
 					startActivity(intent);
 				} else if (selectedItem.equals("更多电话")) {
 					// TODO 更多电话

@@ -231,6 +231,20 @@ public class User implements Serializable {
 	@Column(name = "sex_name")
 	private String sex_name;
 
+	/**
+	 * ”从事计算机方面的工作”//求职意向
+	 */
+	@Column(name = "job")
+	private String job;
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
 	public String getSex_name() {
 		return sex_name;
 	}

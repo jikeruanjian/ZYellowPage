@@ -65,8 +65,8 @@ public class CertificateBll {
 	 * @param certificate
 	 * @param respListener
 	 */
-	public void updateCertificate(Context context, String token, Certificate certificate,
-			ZzStringHttpResponseListener respListener) {
+	public void updateCertificate(Context context, String token,
+			Certificate certificate, ZzStringHttpResponseListener respListener) {
 
 		JSONObject jo = new JSONObject();
 		// JSONObject joData = new JSONObject();
@@ -108,8 +108,9 @@ public class CertificateBll {
 										.getString("status_description"));
 
 								if (bre.getSuccess()) {
+									JSONObject data = jo.getJSONObject("data");
 									JSONArray dataContact;
-									dataContact = jo.getJSONArray("data");
+									dataContact = data.getJSONArray("list");
 
 									List<Certificate> tempContact = new Gson().fromJson(
 											dataContact.toString(),

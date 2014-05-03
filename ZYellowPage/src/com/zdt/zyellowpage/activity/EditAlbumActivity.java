@@ -51,7 +51,7 @@ public class EditAlbumActivity extends AbActivity {
 		setAbContentView(R.layout.ac_image_pager);
 
 		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText("修改资料");
+		mAbTitleBar.setTitleText(getIntent().getStringExtra("title"));
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);

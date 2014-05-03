@@ -154,7 +154,7 @@
         <activity android:name="com.zdt.zyellowpage.activity.MyConcernActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.VideoListActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.webView.MyWebViewActivity" />
-        <activity android:name="com.zdt.zyellowpage.activity.BuySellContentActivity"/>
+        <activity android:name="com.zdt.zyellowpage.activity.BuySellContentActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.MyResourceActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditCompanyBaseResourceActivity" />
@@ -162,6 +162,9 @@
         <activity android:name="com.zdt.zyellowpage.activity.RichTextEditorActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditCoordinateAcitivity" />
         <activity android:name="com.zdt.zyellowpage.activity.MorePhoneActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.AddPhotoActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.CropImageActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.EditAlbumActivity" />
     </application>
 
     <supports-screens
