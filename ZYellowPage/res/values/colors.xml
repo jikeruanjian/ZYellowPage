@@ -20,5 +20,10 @@
     <color name="orange_background">#FF7F00</color>
     <color name="splash_bg">#FFFC01</color>
     <color name="main_menu_bg">#3C3C3C</color>
-
+	<color name="white">#ffffffff</color>  
+	<color name="unfocused">#cccccccc</color>  
+	<color name="pressed">#fff22fff</color>  
+	<color name="selected">#fff33fff</color>  
+	<color name="focused">#ffff44ff</color>  
+    
 </resources>

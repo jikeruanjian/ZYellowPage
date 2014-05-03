@@ -112,7 +112,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		TextView textPerson = (TextView) view
 				.findViewById(R.id.textViewhotperson);
 		textPerson.setOnClickListener(this);
-		
+		view.findViewById(R.id.LinearLayouthot).setOnClickListener(this);
+		view.findViewById(R.id.LinearLayoutPerson).setOnClickListener(this);
 		// 首页热门商家
 		hotName = (TextView) view.findViewById(R.id.textViewBusinessHot);
 		hotName.setOnClickListener(this);
@@ -345,7 +346,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 intent = new Intent(mActivity,
 					 PopBusinessListActivity.class);
 			 intent.putExtra("Type", "美食");
-			 intent.putExtra("TypeId", "美食");
+			 intent.putExtra("TypeId", "list-0102");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonMovie:
@@ -353,14 +354,14 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 intent = new Intent(mActivity,
 					 PopBusinessListActivity.class);
 			 intent.putExtra("Type", "电影");
-			 intent.putExtra("TypeId", "电影");
+			 intent.putExtra("TypeId", "list-电影");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonHappy:
 			 intent = new Intent(mActivity,
 					 PopBusinessListActivity.class);
 			 intent.putExtra("Type", "休闲娱乐");
-			 intent.putExtra("TypeId", "休闲娱乐");
+			 intent.putExtra("TypeId", "list-0103");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonHotel:
@@ -368,7 +369,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 intent = new Intent(mActivity,
 					 PopBusinessListActivity.class);
 			 intent.putExtra("Type", "酒店");
-			 intent.putExtra("TypeId", "酒店");
+			 intent.putExtra("TypeId", "list-0110");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonNewInfo:
@@ -411,8 +412,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 intent.putExtra("TypeId", "list-hot");
 			startActivity(intent);
 			break;
-		case R.id.textViewBusinessHot:
-			if(hotUser.getMember_id()!=null|| "".equals(hotUser.getMember_id())!=true){
+		case R.id.LinearLayouthot:
+			if(hotUser.getMember_id()!=null){
 			intent = new Intent(mActivity,
 					BusinessDetailActivity.class);
 			intent.putExtra("MEMBER_ID", hotUser.getMember_id());
@@ -422,8 +423,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 				mActivity.showToast("请检查网络情况！");
 			}
 			break;
-		case R.id.textViewPersonHot:
-			if(hotUser.getMember_id()!=null|| "".equals(hotUser.getMember_id())!=true){
+		case R.id.LinearLayoutPerson:
+			if(hotUser.getMember_id()!=null){
 			intent = new Intent(mActivity,
 					PersonDetailActivity.class);
 			intent.putExtra("MEMBER_ID",  PersonUser.getMember_id());
@@ -434,13 +435,13 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			}
 			break;
 		case R.id.btnConcernHotBussiness:
-			if(hotUser.getMember_id()!=null|| "".equals(hotUser.getMember_id())!=true){
+			if(hotUser.getMember_id()!=null){
 				concernBussinessOrPerson(hotUser.getMember_id());
 			}
 			
 			break;
 		case R.id.btnConcernHotPerson:
-			if(PersonUser.getMember_id()!=null|| "".equals(PersonUser.getMember_id())!=true){
+			if(PersonUser.getMember_id()!=null){
 				concernBussinessOrPerson(PersonUser.getMember_id());
 			}
 			break;

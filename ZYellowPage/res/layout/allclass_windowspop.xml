@@ -26,7 +26,11 @@
             <ListView
                 android:id="@+id/ListViewBussniessClass"
                 android:layout_width="match_parent"
-            	android:layout_height="wrap_content">  
+            	android:layout_height="wrap_content"
+            	android:cacheColorHint="@android:color/transparent"
+            	android:drawSelectorOnTop="false"  
+            	 
+            	android:listSelector="@drawable/item_color" >  
             </ListView>
         </LinearLayout>
 		
@@ -47,7 +51,12 @@
             <ListView
                 android:id="@+id/ListViewPersonClass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content" 
+                android:cacheColorHint="@android:color/transparent"  
+                android:drawSelectorOnTop="false"  
+                
+                android:listSelector="@drawable/item_color"
+                >
             </ListView>
 
         </LinearLayout>
@@ -65,7 +74,12 @@
         <ListView
             android:id="@+id/listViewLowerClass"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            android:cacheColorHint="@android:color/transparent"
+            android:drawSelectorOnTop="false"  
+            
+             android:listSelector="@drawable/item_color"
+              >
         </ListView>
 
     </LinearLayout>

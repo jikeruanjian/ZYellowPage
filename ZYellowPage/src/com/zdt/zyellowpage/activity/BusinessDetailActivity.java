@@ -251,6 +251,8 @@ public class BusinessDetailActivity extends AbActivity {
 				Gallery gallery = (Gallery) findViewById(R.id.user_company_gallery);
 				Log.e("xxxx", "-----图片张数为" + imageUrls.length);
 				gallery.setAdapter(new ImageGalleryAdapter());
+				gallery.setSelection(1);
+				//gallery.
 				gallery.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
@@ -271,6 +273,7 @@ public class BusinessDetailActivity extends AbActivity {
 		});
 	}
 
+	
 	/**
 	 * 初始化头标
 	 */

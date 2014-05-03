@@ -36,9 +36,11 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity.MyOnClickListener;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity.MyOnPageChangeListener;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity.MyPagerAdapter;
+import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.model.Certificate;
 import com.zdt.zyellowpage.model.User;
 
 public class PersonDetailActivity extends AbActivity {
@@ -54,6 +56,7 @@ public class PersonDetailActivity extends AbActivity {
 	private int offset = 0;// 动画图片偏移量
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
+	private String certificateStr ="";
 	//private String[] imageUrls = new String[] { };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +106,7 @@ public class PersonDetailActivity extends AbActivity {
 							return;
 						}
 						userPerson = (User)lis.get(0);
+						getDataCertificate();
 					}
 
 					@Override
@@ -143,8 +147,56 @@ public class PersonDetailActivity extends AbActivity {
 					}
 		});
 	}
+  /**
+  * 获取资质
+  */
+	void getDataCertificate(){
+		 CertificateBll  certificateBll = new  CertificateBll();
+		 certificateBll.getCertificateList(PersonDetailActivity.this, member_id,
+				 new ZzObjectHttpResponseListener<Certificate>(){
 
+					@Override
+					public void onSuccess(int statusCode, List<Certificate> lis) {
+						// TODO Auto-generated method stub
+						if (lis == null || lis.size() == 0) {
+							//PersonDetailActivity.this.showToast("获取资质信息失败！");
+							return;
+						}
+						StringBuffer strCertificate = new StringBuffer();
+						for(Certificate cer:lis){
+							strCertificate.append(cer.getCertificate_name()+":"+cer.getCertificate_no()+"<br/>");
+						}
+						certificateStr = strCertificate.toString();
+					}
 
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error, List<Certificate> localList) {
+						// TODO Auto-generated method stub
+						PersonDetailActivity.this.showToast(content);
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+						// TODO Auto-generated method stub
+						PersonDetailActivity.this.showToast(status_description);
+					}
+
+					@Override
+					public void onFinish() {
+						// TODO Auto-generated method stub
+						InitViewPager();
+					}
+			 
+			 
+		 });
+	}
 	protected void getView() {
 		ImageView imageUserLogo= (ImageView)PersonDetailActivity.this.findViewById(R.id.person_detail_photo);
 		new AbImageDownloader(PersonDetailActivity.this).display(imageUserLogo,
@@ -187,7 +239,7 @@ public class PersonDetailActivity extends AbActivity {
 		
 		//info.setText(userPerson.getSummary());
 		InitTextView();
-		InitViewPager();
+		//InitViewPager();
 	}
 	
 	/**
@@ -275,9 +327,9 @@ public class PersonDetailActivity extends AbActivity {
 		mPager = (ViewPager) findViewById(R.id.vPager);
 		listViews = new ArrayList<View>();
 		LayoutInflater mInflater = getLayoutInflater();
-		
 		listViews.add(addTextByText(userPerson.getSummary()));
-		listViews.add(addTextByText(userPerson.getProfessional()));
+		listViews.add(addTextByText(certificateStr));
+		//listViews.add(addTextByText(userPerson.getProfessional()));
 		listViews.add(addTextByText(userPerson.getSpecialty()));
 		listViews.add(addTextByText(userPerson.getExperience()));
 		mPager.setAdapter(new MyPagerAdapter(listViews));

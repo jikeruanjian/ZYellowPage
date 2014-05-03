@@ -5,7 +5,7 @@
     android:background="@color/gray_white"
     android:orientation="vertical" >
 
-    <ListView
+      <com.ab.view.pullview.AbPullListView 
         android:id="@+id/mListViewPhone"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -13,6 +13,5 @@
         android:divider="@drawable/list_divider"
         android:dividerHeight="1dip" 
         android:fastScrollEnabled="true">
-    </ListView>
-
+    </com.ab.view.pullview.AbPullListView>
 </LinearLayout>

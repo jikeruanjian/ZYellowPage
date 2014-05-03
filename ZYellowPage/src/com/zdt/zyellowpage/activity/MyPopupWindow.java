@@ -44,15 +44,16 @@ public class MyPopupWindow {
 	List<Category> listLowerCategory;
 	public TextView tVBussniess;
 	public TextView tVPerson;
-	Context mContext;
+	private Context mContext;
 	private RelativeLayout layout;
 	public LinearLayout layoutLeft;
 	public LinearLayout layoutRight;
-
+	MyAdapterB myAdapterB;
+	MyAdapterP myAdapterP;
+	private View changeView ;
+	private View changeViewP ;
 	public LinearLayout layoutBClass;
 	public LinearLayout layoutPClass;
-	
-	private String title[] = { "全部", "我的微博", "周边", "智能排版", "同学" };
 
 	public MyPopupWindow( Context context){
 		
@@ -69,7 +70,7 @@ public class MyPopupWindow {
 		tVBussniess = (TextView) layout.findViewById(R.id.textViewBussniessClass);
 		tVPerson = (TextView) layout.findViewById(R.id.textViewPersonClass);
 		tVBussniess.setOnClickListener(new OnClickListener(){
-
+		
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -79,7 +80,7 @@ public class MyPopupWindow {
 				tVBussniess.setText("商家分类-");
 				layout.findViewById(R.id.leftLayoutPersonClass).setVisibility(View.GONE);
 				layout.findViewById(R.id.leftLayoutBussniessClass).setVisibility(View.VISIBLE);
-				getRightData("0100");
+				getRightData("0100",changeView);
 			}
 			
 		});
@@ -95,19 +96,46 @@ public class MyPopupWindow {
 				tVBussniess.setText("商家分类+");
 				layout.findViewById(R.id.leftLayoutPersonClass).setVisibility(View.VISIBLE);
 				layout.findViewById(R.id.leftLayoutBussniessClass).setVisibility(View.GONE);
-				getRightData("5000");
+				getRightData("5000",changeViewP);
+			}
+			
+		});
+		changeView = new View(mContext);
+		changeViewP = new View(mContext);
+		 myAdapterB = new MyAdapterB(mContext);
+		listViewClassB.setAdapter(myAdapterB);
+		
+		changeView.setBackgroundResource(R.color.window_bg);
+		listViewClassB.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				getRightData(MainActivity.listCategory.get(arg2).getId(),arg1);
+			}
+			
+		});
+		 myAdapterP = new MyAdapterP(mContext);
+		listViewClassP.setAdapter(myAdapterP);
+		
+		changeViewP.setBackgroundResource(R.color.window_bg);
+		listViewClassP.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				getRightData(MainActivity.listCategoryP.get(arg2).getId(),arg1);
+				
 			}
 			
 		});
 		
-		listViewClassB.setAdapter(new MyAdapterB(context));
-		listViewClassP.setAdapter(new MyAdapterP(context));
-		
-		
 		listLowerCategory = new ArrayList<Category>();
 		nameList = new ArrayList<Map<String,Object>>();
-		getRightData("0100");
-		adapter = new SimpleAdapter(mContext,nameList,R.layout.text_item, 
+		getRightData("0100",changeView);
+		adapter = new SimpleAdapter(mContext,nameList,R.layout.text_item2, 
                 new String[]{"textViewSellBuyItemNames"}, 
                 new int[]{R.id.textViewSellBuyItemName});
 		listViewClassLower.setAdapter(adapter);
@@ -145,6 +173,7 @@ public class MyPopupWindow {
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setFocusable(true);
 		popupWindow.setContentView(layout);
+
 	}
 	
 	public final class ViewHolder{ 
@@ -152,14 +181,15 @@ public class MyPopupWindow {
         public TextView viewBtn; 
     } 
       
-      
+	
     public class MyAdapterB extends BaseAdapter{ 
   
         private LayoutInflater mInflater; 
-          
+       
           
         public MyAdapterB(Context context){ 
             this.mInflater = LayoutInflater.from(context); 
+            
         } 
         @Override
         public int getCount() { 
@@ -194,23 +224,27 @@ public class MyPopupWindow {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
+            if(position == 0){
+				changeView = convertView;
+            }
             holder.title.setText((String)MainActivity.listCategory.get(position).getName()); 
-            holder.title.setOnClickListener(new 
-            		LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
-            holder.viewBtn.setOnClickListener(new 
-            		LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
+            //holder.title.setOnClickListener(new LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
+            //holder.viewBtn.setOnClickListener(new LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
+            
             return convertView; 
         } 
+      
           
     } 
     
     public class MyAdapterP extends BaseAdapter{ 
     	  
         private LayoutInflater mInflater; 
-          
+           
           
         public MyAdapterP(Context context){ 
             this.mInflater = LayoutInflater.from(context); 
+            
         } 
         @Override
         public int getCount() { 
@@ -245,17 +279,20 @@ public class MyPopupWindow {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
+            if(position == 0){
+            
+            	changeViewP = convertView;
+            }
             holder.title.setText(MainActivity.listCategoryP.get(position).getName());
-            holder.title.setOnClickListener(new 
-            		LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
-            holder.viewBtn.setOnClickListener(new 
-            		LeftClassBtnListener(MainActivity.listCategoryP.get(position).getId()));  
+         //   holder.title.setOnClickListener(new LeftClassBtnListener(MainActivity.listCategoryP.get(position).getId())); 
+         //   holder.viewBtn.setOnClickListener(new LeftClassBtnListener(MainActivity.listCategoryP.get(position).getId()));  
+            
             return convertView; 
         } 
-          
+        
     } 
     
-    private class LeftClassBtnListener implements OnClickListener{  
+    /*private class LeftClassBtnListener implements OnClickListener{  
 		String oId;  
         public LeftClassBtnListener(String id){  
         	oId= id;  
@@ -263,19 +300,25 @@ public class MyPopupWindow {
         @Override  
         public void onClick(View v) {  
         	//((TextView)v).setTextColor(mContext.getResources().getColor(R.color.orange));
-        	getRightData(oId);
+        	getRightData(oId,changeView);
         }
-    }
+    }*/
 
-    void getRightData(String oId){
+    void getRightData(String oId,View v){
     	String type = "0";
+    	
+    	//myAdapterB.g
     	if(layout.findViewById(R.id.leftLayoutPersonClass).getVisibility() == View.GONE){
     		 type = "0";
-    		 
+    		 changeView.setBackgroundResource(R.color.transparent);
+			 v.setBackgroundResource(R.color.window_bg);
+			 changeView = v;
     	}
     	else{
     		 type = "1";
-    		
+    		 changeViewP.setBackgroundResource(R.color.transparent);
+			 v.setBackgroundResource(R.color.window_bg);
+			 changeViewP = v;
     	}
     	CategoryBll categoryBll = new CategoryBll();
 		categoryBll.getCategoryist(mContext,oId, type, new ZzObjectHttpResponseListener<Category>(){

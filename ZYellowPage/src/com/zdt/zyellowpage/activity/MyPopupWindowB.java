@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.zdt.zyellowpage.R;
-
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Category;
@@ -49,7 +48,7 @@ public class MyPopupWindowB {
 	private RelativeLayout layout;
 	public LinearLayout layoutLeft;
 	public LinearLayout layoutRight;
-
+	private View changeView ;
 	public LinearLayout layoutBClass;
 	public LinearLayout layoutPClass;
 	String typeBorP;
@@ -71,19 +70,45 @@ public class MyPopupWindowB {
 		tVPerson.setVisibility(View.GONE);
 		listLowerCategory = new ArrayList<Category>();
 		nameList = new ArrayList<Map<String,Object>>();
-		
+		changeView = new View(mContext);
 		if(typeBorP.equals("0")){
 			listViewClassB.setAdapter(new MyAdapterB(context));
+			listViewClassB.setOnItemClickListener(new OnItemClickListener(){
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+						long arg3) {
+					// TODO Auto-generated method stub
+					changeView.setBackgroundResource(R.color.transparent);
+					arg1.setBackgroundResource(R.color.window_bg);
+					changeView = arg1;
+					getRightData(MainActivity.listCategoryP.get(arg2).getId());
+				}
+				
+			});
 			getRightData("0100");
 		}
 		else{
 			layoutBClass.setVisibility(View.GONE);
 			layoutPClass.setVisibility(View.VISIBLE);
 			listViewClassP.setAdapter(new MyAdapterP(context));
+			listViewClassP.setOnItemClickListener(new OnItemClickListener(){
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+						long arg3) {
+					// TODO Auto-generated method stub
+					changeView.setBackgroundResource(R.color.transparent);
+					arg1.setBackgroundResource(R.color.window_bg);
+					changeView = arg1;
+					getRightData(MainActivity.listCategoryP.get(arg2).getId());
+				}
+				
+			});
 			getRightData("5000");
 		}
 		
-		adapter = new SimpleAdapter(mContext,nameList,R.layout.text_item, 
+		adapter = new SimpleAdapter(mContext,nameList,R.layout.text_item2, 
                 new String[]{"textViewSellBuyItemNames"}, 
                 new int[]{R.id.textViewSellBuyItemName});
 		listViewClassLower.setAdapter(adapter);
@@ -144,11 +169,14 @@ public class MyPopupWindowB {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
+            if(position == 0){
+            	//convertView.setBackgroundResource(R.color.window_bg);
+				changeView = convertView;
+            }
+           
             holder.title.setText((String)MainActivity.listCategory.get(position).getName());  
-            holder.title.setOnClickListener(new 
-            		LeftClassBtnListenerB(MainActivity.listCategory.get(position).getId())); 
-            holder.viewBtn.setOnClickListener(new 
-            		LeftClassBtnListenerB(MainActivity.listCategory.get(position).getId())); 
+         //  holder.title.setOnClickListener(new LeftClassBtnListenerB(MainActivity.listCategory.get(position).getId())); 
+         //   holder.viewBtn.setOnClickListener(new LeftClassBtnListenerB(MainActivity.listCategory.get(position).getId())); 
             return convertView; 
         } 
           
@@ -195,11 +223,13 @@ public class MyPopupWindowB {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
-            holder.title.setText(MainActivity.listCategoryP.get(position).getName());  
-            holder.title.setOnClickListener(new 
-            		LeftClassBtnListenerB(MainActivity.listCategoryP.get(position).getId()));
-            holder.viewBtn.setOnClickListener(new 
-            		LeftClassBtnListenerB(MainActivity.listCategoryP.get(position).getId()));  
+            holder.title.setText(MainActivity.listCategoryP.get(position).getName());
+            if(position == 0){
+            	//convertView.setBackgroundResource(R.color.window_bg);
+				changeView = convertView;
+            }
+           // holder.title.setOnClickListener(new LeftClassBtnListenerB(MainActivity.listCategoryP.get(position).getId()));
+            //holder.viewBtn.setOnClickListener(new  LeftClassBtnListenerB(MainActivity.listCategoryP.get(position).getId()));  
             return convertView; 
         } 
           

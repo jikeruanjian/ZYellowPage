@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
+import com.ab.view.listener.AbOnListViewListener;
+import com.ab.view.pullview.AbPullListView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.ContactBll;
@@ -29,7 +31,7 @@ public class MorePhoneActivity extends AbActivity{
 	//private MyApplication application;
 	//private List<Map<String, Object>> list = null;
 	private List<Contact> listContact = null;
-	private ListView  mAbPullListView = null;
+	private AbPullListView  mAbPullListView = null;
 	private MyAdapterPhone adapter;
 	private String member_Id;
 	@Override
@@ -50,7 +52,27 @@ public class MorePhoneActivity extends AbActivity{
 		//application = (MyApplication) abApplication;
 		listContact = new ArrayList<Contact>();
 		// 获取ListView对象
-		mAbPullListView = (ListView) this.findViewById(R.id.mListViewPhone);
+		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListViewPhone);
+		// 打开关闭下拉刷新加载更多功能
+		mAbPullListView.setPullRefreshEnable(true);
+		mAbPullListView.setPullLoadEnable(false);
+		adapter = new MyAdapterPhone(MorePhoneActivity.this);
+		mAbPullListView.setAdapter(adapter);
+		mAbPullListView.setAbOnListViewListener(new AbOnListViewListener() {
+
+			@Override
+			public void onRefresh() {
+				//改写成执行查询
+				//mAbTaskQueue.execute(item1);
+				getData();
+			}
+
+			@Override
+			public void onLoadMore() {
+			
+			}
+
+		});
 		getData();
 		
 	}
@@ -67,6 +89,7 @@ public class MorePhoneActivity extends AbActivity{
 							showToast("没有更多数据！");
 							return;
 						}
+						listContact.clear();
 						listContact.addAll(lis);
 						
 					}
@@ -74,7 +97,7 @@ public class MorePhoneActivity extends AbActivity{
 					@Override
 					public void onStart() {
 						// TODO Auto-generated method stub
-						
+						showProgressDialog("同步信息...");
 					}
 
 					@Override
@@ -93,8 +116,9 @@ public class MorePhoneActivity extends AbActivity{
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub
-						adapter = new MyAdapterPhone(MorePhoneActivity.this);
-						mAbPullListView.setAdapter(adapter);
+						adapter.notifyDataSetChanged();
+						mAbPullListView.stopRefresh();
+						removeProgressDialog();
 					}
 			
 		});

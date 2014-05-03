@@ -170,9 +170,6 @@ public class FragmentNearMap extends Fragment {
 		super.onDestroy();
 	}
 
-	/**
-	 * 点地图空白点时泡泡消失
-	 */
 
 	void initPoiDistantsBtn() {
 		view.findViewById(R.id.Layout_PioAllLife).getBackground().setAlpha(150);
@@ -181,6 +178,7 @@ public class FragmentNearMap extends Fragment {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
+						
 						poiDistanceOnClick(v);
 					}
 
@@ -524,6 +522,7 @@ public class FragmentNearMap extends Fragment {
 		popView.findViewById(R.id.mapPopTextWalk).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.i("FragementNearMap", "-----步行");
 				CleanRouteOverlay();
 				if(poiPoint != null){
 					start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
@@ -544,6 +543,7 @@ public class FragmentNearMap extends Fragment {
 		popView.findViewById(R.id.mapPopTextBus).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.i("FragementNearMap", "-----公交");
 				CleanRouteOverlay();
 				if(poiPoint != null){
 					 start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
@@ -564,6 +564,7 @@ public class FragmentNearMap extends Fragment {
 		popView.findViewById(R.id.mapPopTextDrive).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						Log.i("FragementNearMap", "-----驾车");
 						CleanRouteOverlay();
 						if(poiPoint != null){
 							start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
@@ -719,6 +720,9 @@ public class FragmentNearMap extends Fragment {
         routeOverlay = new RouteOverlay(mActivity, mMapView);
         routeOverlay.setData(result.getPlan(0).getRoute(0));  
         mMapView.getOverlays().add(routeOverlay);  
+        if(popView.getVisibility() == View.VISIBLE){
+        	  popView.setVisibility(View.GONE);
+        	}
         mMapView.refresh();  
     	}
 
@@ -801,6 +805,9 @@ public class FragmentNearMap extends Fragment {
          routeOverlay = new RouteOverlay(mActivity, mMapView);
          routeOverlay.setData(result.getPlan(0).getRoute(0));  
          mMapView.getOverlays().add(routeOverlay);  
+         if(popView.getVisibility() == View.VISIBLE){
+         	  popView.setVisibility(View.GONE);
+         	}
          mMapView.refresh();  
     	}
 

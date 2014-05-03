@@ -420,17 +420,24 @@
         android:layout_width="35dip"
         android:layout_height="35dip"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
+        android:layout_toLeftOf="@+id/person_detail_textView"
         android:src="@drawable/phone" />
+
+    <TextView
+        android:id="@+id/person_detail_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/person_detail_phone"
+        android:layout_centerHorizontal="true"
+        android:text="              " />
     
      <ImageView
-        android:id="@+id/person_detail_Code"
-        android:layout_width="35dip"
-        android:layout_height="35dip"
-        android:layout_alignTop="@+id/person_detail_phone"
-        android:layout_marginRight="30dp"
-        android:layout_toLeftOf="@+id/person_detail_phone"
-        android:src="@drawable/companycode" />
+         android:id="@+id/person_detail_Code"
+         android:layout_width="35dip"
+         android:layout_height="35dip"
+         android:layout_alignTop="@+id/person_detail_phone"
+         android:layout_toRightOf="@id/person_detail_textView"
+         android:src="@drawable/companycode" />
 
 </RelativeLayout>

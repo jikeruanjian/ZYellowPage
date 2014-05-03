@@ -102,7 +102,7 @@ public class PopPersonListActivity extends AbActivity {
 	 */
 	void initSpinner() {
 		
-		NewOrPops = new String[]{ "热门", "最新" };
+		NewOrPops = new String[]{ "有资质", "无资质" };
 		typeTextView = (TextView)this.findViewById(R.id.spinnerKeyWordP);
 		typeTextView.setOnClickListener(new OnClickListener(){
 			@Override
