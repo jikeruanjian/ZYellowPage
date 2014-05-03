@@ -3,6 +3,7 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,10 +17,8 @@ import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.fragment.FragmentBuy;
 import com.zdt.zyellowpage.activity.fragment.FragmentSell;
-import com.zdt.zyellowpage.global.MyApplication;
 
 public class CompanyBuySellActivity extends AbActivity {
-	private MyApplication application;
 	private AbSlidingTabView mAbSlidingTabView;
 	private String member_Id;
 	private String fullName;
@@ -30,7 +29,7 @@ public class CompanyBuySellActivity extends AbActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.activity_companybuysell);
-		application = (MyApplication) abApplication;
+		// application = (MyApplication) abApplication;
 		if (getIntent().getExtras() != null) {
 			member_Id = (String) getIntent().getExtras().get("MEMBER_ID");
 			fullName = (String) getIntent().getExtras().get("FUllNAME");
@@ -93,8 +92,9 @@ public class CompanyBuySellActivity extends AbActivity {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-
+					Intent intent = new Intent(CompanyBuySellActivity.this,
+							EditSupplyDemandActivity.class);
+					startActivity(intent);
 				}
 			});
 		}

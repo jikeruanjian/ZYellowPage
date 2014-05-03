@@ -40,4 +40,8 @@
         <item>女</item>
     </string-array>
 
+    <string-array name="type">
+        <item>供应信息</item>
+        <item>求购信息</item>
+    </string-array>
 </resources>

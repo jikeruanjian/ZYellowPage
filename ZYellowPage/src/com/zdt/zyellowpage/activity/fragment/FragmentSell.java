@@ -23,6 +23,7 @@ import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BuySellContentActivity;
+import com.zdt.zyellowpage.activity.EditSupplyDemandActivity;
 import com.zdt.zyellowpage.bll.SupplyDemandBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.SupplyDemandReqEntity;
@@ -83,8 +84,13 @@ public class FragmentSell extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent = new Intent(mActivity,
-						BuySellContentActivity.class);
+				Intent intent = null;
+				if (isEdit) {
+					intent = new Intent(mActivity,
+							EditSupplyDemandActivity.class);
+				} else {
+					intent = new Intent(mActivity, BuySellContentActivity.class);
+				}
 				intent.putExtra("ITEMID", SupplyDemandList.get(position - 1)
 						.getItem_id());
 				startActivity(intent);
