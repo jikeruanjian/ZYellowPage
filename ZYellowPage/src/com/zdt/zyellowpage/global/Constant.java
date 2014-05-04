@@ -42,7 +42,7 @@ public class Constant {
 
 	public static final String CATEGORYURL = "http://service.321hy.cn/generic/category";
 
-	public static final String HANGYEURL = "http://service.321hy.cn/ generic/categpry";
+	public static final String PICTUREUPLOADURL = "http://service.321hy.cn/api/upload";
 	// 应用的key
 	// 1512528
 	public final static String APPID = "1512528";

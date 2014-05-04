@@ -54,7 +54,6 @@ public class ContactBll {
 
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
-
 		getBasicContactList(context, params, respListener);
 	}
 

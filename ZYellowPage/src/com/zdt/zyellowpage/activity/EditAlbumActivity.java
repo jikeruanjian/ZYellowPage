@@ -9,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -59,6 +60,15 @@ public class EditAlbumActivity extends AbActivity {
 		application = (MyApplication) abApplication;
 		initTitleRightLayout();
 
+		pager.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
+		
 		// TODO 先获取相册数据，判断是否有相册
 		AlbumReqEntity are = new AlbumReqEntity(0, 50,
 				application.mUser.getMember_id());

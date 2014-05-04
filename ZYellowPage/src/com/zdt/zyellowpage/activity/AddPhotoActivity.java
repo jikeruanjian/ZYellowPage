@@ -1,12 +1,19 @@
 package com.zdt.zyellowpage.activity;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,23 +21,35 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
+import com.ab.bitmap.AbImageCache;
+import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
+import com.ab.http.AbHttpUtil;
+import com.ab.http.AbRequestParams;
+import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbFileUtil;
 import com.ab.util.AbStrUtil;
 import com.ab.util.AbViewUtil;
+import com.ab.view.ioc.AbIocView;
+import com.ab.view.progress.AbHorizontalProgressBar;
 import com.ab.view.titlebar.AbTitleBar;
+import com.google.gson.Gson;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
+import com.zdt.zyellowpage.jsonEntity.BaseResponseEntity;
+import com.zdt.zyellowpage.model.Picture;
 import com.zdt.zyellowpage.util.ImageShowAdapter;
 
 public class AddPhotoActivity extends AbActivity {
@@ -57,6 +76,19 @@ public class AddPhotoActivity extends AbActivity {
 	// 照相机拍照得到的图片
 	private File mCurrentPhotoFile;
 	private String mFileName;
+	private AlertDialog mAlertDialog = null;
+	private AbHttpUtil mAbHttpUtil = null;
+	// ProgressBar进度控制
+	private AbHorizontalProgressBar mAbProgressBar;
+	// 最大100
+	private int max = 100;
+	private int progress = 0;
+	private TextView numberText, maxText;
+
+	private String selectedPath;
+
+	@AbIocView(id = R.id.currentImage)
+	ImageView currentImage; // 经度
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +102,8 @@ public class AddPhotoActivity extends AbActivity {
 		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		mAbTitleBar.setLogoLine(R.drawable.line);
+		// 获取Http工具类
+		mAbHttpUtil = AbHttpUtil.getInstance(this);
 
 		initTitleRightLayout();
 		mPhotoList.add(String.valueOf(R.drawable.cam_photo));
@@ -78,6 +112,10 @@ public class AddPhotoActivity extends AbActivity {
 		mImagePathAdapter = new ImageShowAdapter(this, mPhotoList, 116, 116);
 		mGridView.setAdapter(mImagePathAdapter);
 		mAvatarView = mInflater.inflate(R.layout.choose_avatar, null);
+
+		if (!AbStrUtil.isEmpty(application.mUser.getLogo()))
+			new AbImageDownloader(this).display(currentImage,
+					application.mUser.getLogo());
 
 		// 初始化图片保存路径
 		String photo_dir = AbFileUtil.getFullImageDownPathDir();
@@ -150,6 +188,10 @@ public class AddPhotoActivity extends AbActivity {
 							.getTag();
 					mViewHolder.mImageView2
 							.setBackgroundResource(R.drawable.photo_select);
+					selectedPath = mImagePathAdapter.getItem(position)
+							.toString();
+					currentImage.setImageDrawable(Drawable
+							.createFromPath(selectedPath));
 				}
 			}
 
@@ -164,6 +206,128 @@ public class AddPhotoActivity extends AbActivity {
 		tvSave.setTextColor(Color.WHITE);
 		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		mAbTitleBar.addRightView(tvSave);
+
+		// 文件上传
+		tvSave.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// 已经在后台上传
+				if (mAlertDialog != null) {
+					mAlertDialog.show();
+					return;
+				}
+				if (AbStrUtil.isEmpty(selectedPath)) {
+					showToast("请先选中图片");
+					return;
+				}
+				AbRequestParams params = new AbRequestParams();
+
+				try {
+					// File pathRoot =
+					// Environment.getExternalStorageDirectory();
+					// String path = pathRoot.getAbsolutePath();
+					File file = new File(selectedPath);
+					params.put("fileName",
+							URLEncoder.encode(file.getName(), HTTP.UTF_8));
+					params.put("type", "1");
+					params.put("token", application.mUser.getToken());
+
+					params.put("file", file);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				mAbHttpUtil.post(Constant.PICTUREUPLOADURL, params,
+						new AbStringHttpResponseListener() {
+
+							@Override
+							public void onSuccess(int statusCode, String content) {
+								Log.i(TAG, content);
+								JSONObject jo = null;
+								BaseResponseEntity bre = new BaseResponseEntity();
+								// 转换数据
+								try {
+									jo = new JSONObject(content);
+									bre.setResult(jo.getString("result"));
+									bre.setSuccess(jo.getBoolean("success"));
+									bre.setStatus(jo.getInt("status"));
+									bre.setStatus_description(jo
+											.getString("status_description"));
+
+									if (bre.getSuccess()
+											&& bre.getStatus() == 200) {
+										JSONObject data = jo
+												.getJSONObject("data");
+
+										Picture tempPicture = new Gson()
+												.fromJson(data.toString(),
+														Picture.class);
+										AbFileUtil.removeAllFileCache();
+										AbImageCache.removeAllBitmapFromCache(); // 先要清空缓存
+										application.mUser.setLogo(tempPicture
+												.getUrl());
+									}
+									showToast(bre.getStatus_description());
+
+								} catch (JSONException e) {
+									e.printStackTrace();
+									return;
+								}
+							}
+
+							// 开始执行前
+							@Override
+							public void onStart() {
+								Log.d(TAG, "onStart");
+								// 打开进度框
+								View v = LayoutInflater.from(
+										AddPhotoActivity.this).inflate(
+										R.layout.progress_bar_horizontal, null,
+										false);
+								mAbProgressBar = (AbHorizontalProgressBar) v
+										.findViewById(R.id.horizontalProgressBar);
+								numberText = (TextView) v
+										.findViewById(R.id.numberText);
+								maxText = (TextView) v
+										.findViewById(R.id.maxText);
+
+								maxText.setText(progress + "/"
+										+ String.valueOf(max));
+								mAbProgressBar.setMax(max);
+								mAbProgressBar.setProgress(progress);
+
+								mAlertDialog = showDialog("正在上传", v);
+							}
+
+							@Override
+							public void onFailure(int statusCode,
+									String content, Throwable error) {
+								showToast(error.getMessage());
+							}
+
+							// 进度
+							@Override
+							public void onProgress(int bytesWritten,
+									int totalSize) {
+								maxText.setText(bytesWritten
+										/ (totalSize / max) + "/" + max);
+								mAbProgressBar.setProgress(bytesWritten
+										/ (totalSize / max));
+							}
+
+							// 完成后调用，失败，成功，都要调用
+							@Override
+							public void onFinish() {
+								Log.d(TAG, "onFinish");
+								// 下载完成取消进度框
+								mAlertDialog.cancel();
+								mAlertDialog = null;
+							};
+
+						});
+			}
+		});
 	}
 
 	/**

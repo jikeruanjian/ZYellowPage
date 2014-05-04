@@ -12,8 +12,17 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="60dip"
+            android:layout_weight="1"
             android:focusable="true"
             android:focusableInTouchMode="true" />
+
+        <ImageView
+            android:id="@+id/currentImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/btn_person_normal" />
 
         <LinearLayout
             android:id="@+id/layout03"
@@ -23,6 +32,7 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:layout_marginTop="10dip"
+            android:layout_weight="1"
             android:orientation="horizontal" >
 
             <GridView
@@ -30,7 +40,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/photo_rect_bg"
-                android:columnWidth="75dp"
+                android:columnWidth="100dp"
                 android:gravity="center"
                 android:horizontalSpacing="0dp"
                 android:numColumns="auto_fit"

@@ -10,12 +10,12 @@ import com.ab.db.orm.annotation.Table;
  * @author Kevin
  * 
  */
-@Table(name="supplyDemand")
+@Table(name = "supplyDemand")
 public class SupplyDemand {
 
 	@Id
 	@Column(name = "_id")
-	private int _id;
+	private Integer _id;
 
 	/**
 	 * 会员编号
@@ -53,11 +53,11 @@ public class SupplyDemand {
 	@Column(name = "time")
 	private String time;
 
-	public int get_id() {
+	public Integer get_id() {
 		return _id;
 	}
 
-	public void set_id(int _id) {
+	public void set_id(Integer _id) {
 		this._id = _id;
 	}
 

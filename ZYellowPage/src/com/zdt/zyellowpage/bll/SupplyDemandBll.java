@@ -177,6 +177,7 @@ public class SupplyDemandBll {
 		JSONObject jo = new JSONObject();
 		try {
 			jo.put("method", "update-supply-demand");
+			jo.put("token", token);
 			jo.put("data", new Gson().toJson(entity));
 		} catch (Exception e) {
 			e.printStackTrace();

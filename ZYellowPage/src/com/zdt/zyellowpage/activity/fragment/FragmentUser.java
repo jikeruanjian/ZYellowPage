@@ -8,6 +8,7 @@ import android.app.DownloadManager.Query;
 import android.app.DownloadManager.Request;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
@@ -35,7 +37,6 @@ import com.zdt.zyellowpage.activity.MyResourceActivity;
 import com.zdt.zyellowpage.activity.login.ChangePwdActivity;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.VersionBll;
-import com.zdt.zyellowpage.customView.CircularImage;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
@@ -45,7 +46,7 @@ public class FragmentUser extends Fragment {
 	AbActivity mActivity;
 	MyApplication application;
 	TextView btnLogin;
-	CircularImage imageUserLogo;
+	ImageView imageUserLogo;
 	Button btnVersionCode;
 	Button btnChangePwd;
 	Button btnMyFellow;
@@ -59,7 +60,7 @@ public class FragmentUser extends Fragment {
 		DisplayUtil displayUtil = DisplayUtil.getInstance(mActivity);
 		application = (MyApplication) mActivity.getApplication();
 		btnLogin = (TextView) view.findViewById(R.id.buttonlogin);
-		imageUserLogo = (CircularImage) view.findViewById(R.id.imageHead);
+		imageUserLogo = (ImageView) view.findViewById(R.id.imageHead);
 		btnVersionCode = (Button) view.findViewById(R.id.tvVersionCode);
 		btnChangePwd = (Button) view.findViewById(R.id.changePwd);
 		btnMyFellow = (Button) view.findViewById(R.id.myFellow);
@@ -78,13 +79,33 @@ public class FragmentUser extends Fragment {
 								Version version = lis.get(0);
 								// 模拟一个
 								version = new Version();
+								version.setVersion("1.0.2");
+								version.setVersion_description("普通升级");
 								version.setApp_url("http://music.baidu.com/cms/mobile/static/apk/BaiduMusic_musicsybutton.apk");
+
+								final Version tempVersion = version;
 								if (version != null
 										&& !AbStrUtil.isEmpty(version
 												.getApp_url())) {
-									Intent i = new Intent(Intent.ACTION_VIEW,
-											Uri.parse(version.getApp_url()));
-									mActivity.startActivity(i);
+									mActivity.showDialog(
+											"发现新版本" + version.getVersion(),
+											"是否更新？\r\n"
+													+ version
+															.getVersion_description(),
+											new android.content.DialogInterface.OnClickListener() {
+
+												@Override
+												public void onClick(
+														DialogInterface dialog,
+														int which) {
+													dialog.dismiss();
+													Intent i = new Intent(
+															Intent.ACTION_VIEW,
+															Uri.parse(tempVersion
+																	.getApp_url()));
+													mActivity.startActivity(i);
+												}
+											});
 								}
 							}
 

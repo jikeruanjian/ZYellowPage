@@ -80,7 +80,7 @@ public class UserBll {
 			e.printStackTrace();
 		}
 		AbRequestParams params = new AbRequestParams();
-		params.put("id", jo.toString().replaceAll("////", ""));
+		params.put("id", jo.toString());
 		getBasicUserList(context, params, respListener);
 	}
 
@@ -339,7 +339,7 @@ public class UserBll {
 		mContext = context;
 		user.setCategory_name(null);
 		user.setArea_name(null);
-		
+
 		try {
 			jo.put("method", "update-user-Info");
 			jo.put("token", token);
