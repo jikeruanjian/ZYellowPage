@@ -8,11 +8,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="false"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="14dp"
         android:layout_toLeftOf="@+id/imageButtonLowerClass"
         android:text="TextView"
-        android:textColor="@color/white"
+        android:textColor="@color/gray_black"
         android:textSize="15sp" />
 
     <TextView
@@ -20,11 +21,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:layout_alignTop="@id/textViewTopClass"
         android:gravity="center"
-        android:textColor="@color/white"
         android:text=">"
+        android:textColor="@color/gray_black"
         android:textSize="20sp" />
 
 </RelativeLayout>

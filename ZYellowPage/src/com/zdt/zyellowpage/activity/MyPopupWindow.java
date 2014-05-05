@@ -75,7 +75,7 @@ public class MyPopupWindow {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				tVBussniess.setTextColor(mContext.getResources().getColor(R.color.orange));
-				tVPerson.setTextColor(mContext.getResources().getColor(R.color.white));
+				tVPerson.setTextColor(mContext.getResources().getColor(R.color.gray_black));
 				tVPerson.setText("个人分类+");
 				tVBussniess.setText("商家分类-");
 				layout.findViewById(R.id.leftLayoutPersonClass).setVisibility(View.GONE);
@@ -90,7 +90,7 @@ public class MyPopupWindow {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				tVBussniess.setTextColor(mContext.getResources().getColor(R.color.white));
+				tVBussniess.setTextColor(mContext.getResources().getColor(R.color.gray_black));
 				tVPerson.setTextColor(mContext.getResources().getColor(R.color.orange));
 				tVPerson.setText("个人分类-");
 				tVBussniess.setText("商家分类+");
@@ -224,9 +224,7 @@ public class MyPopupWindow {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
-            if(position == 0){
-				changeView = convertView;
-            }
+            
             holder.title.setText((String)MainActivity.listCategory.get(position).getName()); 
             //holder.title.setOnClickListener(new LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
             //holder.viewBtn.setOnClickListener(new LeftClassBtnListener(MainActivity.listCategory.get(position).getId())); 
@@ -279,10 +277,6 @@ public class MyPopupWindow {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
-            if(position == 0){
-            
-            	changeViewP = convertView;
-            }
             holder.title.setText(MainActivity.listCategoryP.get(position).getName());
          //   holder.title.setOnClickListener(new LeftClassBtnListener(MainActivity.listCategoryP.get(position).getId())); 
          //   holder.viewBtn.setOnClickListener(new LeftClassBtnListener(MainActivity.listCategoryP.get(position).getId()));  
@@ -310,15 +304,15 @@ public class MyPopupWindow {
     	//myAdapterB.g
     	if(layout.findViewById(R.id.leftLayoutPersonClass).getVisibility() == View.GONE){
     		 type = "0";
-    		 changeView.setBackgroundResource(R.color.transparent);
-			 v.setBackgroundResource(R.color.window_bg);
-			 changeView = v;
+    		// changeView.setBackgroundResource(R.color.transparent);
+			 //v.setBackgroundResource(R.color.window_bg);
+			// changeView = v;
     	}
     	else{
     		 type = "1";
-    		 changeViewP.setBackgroundResource(R.color.transparent);
-			 v.setBackgroundResource(R.color.window_bg);
-			 changeViewP = v;
+    		// changeViewP.setBackgroundResource(R.color.transparent);
+			// v.setBackgroundResource(R.color.window_bg);
+			// changeViewP = v;
     	}
     	CategoryBll categoryBll = new CategoryBll();
 		categoryBll.getCategoryist(mContext,oId, type, new ZzObjectHttpResponseListener<Category>(){
