@@ -60,15 +60,14 @@ public class EditAlbumActivity extends AbActivity {
 		application = (MyApplication) abApplication;
 		initTitleRightLayout();
 
+		pager = (ViewPager) findViewById(R.id.pager);
 		pager.setOnLongClickListener(new OnLongClickListener() {
 
 			@Override
 			public boolean onLongClick(View v) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 		});
-		
 		// TODO 先获取相册数据，判断是否有相册
 		AlbumReqEntity are = new AlbumReqEntity(0, 50,
 				application.mUser.getMember_id());
@@ -93,7 +92,6 @@ public class EditAlbumActivity extends AbActivity {
 						// imageLoader.init(ImageLoaderConfiguration
 						// .createDefault(EditAlbumActivity.this));
 
-						pager = (ViewPager) findViewById(R.id.pager);
 						pager.setAdapter(new ImagePagerAdapter(lis));
 					}
 

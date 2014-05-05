@@ -2,15 +2,18 @@ package com.zdt.zyellowpage.model;
 
 import java.io.Serializable;
 
-
 /**
  * 更多联系人
  * 
  * @author Kevin
  * 
  */
-public class Contact implements Serializable 
-{
+public class Contact implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3860343766407018266L;
 
 	/**
 	 * 记录编号

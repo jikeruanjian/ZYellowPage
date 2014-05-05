@@ -112,7 +112,6 @@ public class EditSupplyDemandActivity extends AbActivity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO 保存
 				SupplyDemand entity = new SupplyDemand();
 				entity.setItem_id(item_id);
 				entity.setTitle(tvTitle.getText().toString());

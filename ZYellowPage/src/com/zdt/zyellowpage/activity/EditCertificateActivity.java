@@ -2,8 +2,6 @@ package com.zdt.zyellowpage.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,9 +17,8 @@ import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Certificate;
-import com.zdt.zyellowpage.model.Contact;
 
-public class EditCertificateActivity  extends AbActivity {
+public class EditCertificateActivity extends AbActivity {
 	private MyApplication application;
 	AbTitleBar mAbTitleBar;
 
@@ -29,23 +26,22 @@ public class EditCertificateActivity  extends AbActivity {
 	EditText etCertificateName; // 证书
 	@AbIocView(id = R.id.CertificateNoEditText)
 	EditText etCertificateNo;// 编号
-	
-	
+
 	@AbIocView(id = R.id.clearCertificateName)
 	ImageButton clearCertificateName;
 	@AbIocView(id = R.id.clearCertificateNo)
 	ImageButton clearCertificateNo;
-
 	Certificate certificate;
 	String item_id = "0";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.edite_certificate);
 		if (getIntent().getExtras() != null) {
-			certificate = (Certificate)getIntent().getSerializableExtra("Certificate");
-		}
-		else{
+			certificate = (Certificate) getIntent().getSerializableExtra(
+					"Certificate");
+		} else {
 			certificate = null;
 		}
 		mAbTitleBar = this.getTitleBar();
@@ -77,47 +73,45 @@ public class EditCertificateActivity  extends AbActivity {
 				// 开始保存
 				certificate = new Certificate();
 				certificate.setItem_id(item_id);
-				certificate.setCertificate_name(etCertificateName.getText().toString());
-				certificate.setCertificate_no(etCertificateNo.getText().toString());
-				new CertificateBll().updateCertificate(EditCertificateActivity.this, 
-						application.mUser.getToken(), certificate, 
-						new ZzStringHttpResponseListener(){
+				certificate.setCertificate_name(etCertificateName.getText()
+						.toString());
+				certificate.setCertificate_no(etCertificateNo.getText()
+						.toString());
+				new CertificateBll().updateCertificate(
+						EditCertificateActivity.this,
+						application.mUser.getToken(), certificate,
+						new ZzStringHttpResponseListener() {
 
-					@Override
-					public void onSuccess(int statusCode, String content) {
-						// TODO Auto-generated method stub
-						showToast(content);
-						//EditMorePhoneAcitivity.this.finish();
-					}
+							@Override
+							public void onSuccess(int statusCode, String content) {
+								showToast(content);
+								EditCertificateActivity.this.finish();
+							}
 
-					@Override
-					public void onStart() {
-						// TODO Auto-generated method stub
-						//showProgressDialog("请稍候...");
-					}
+							@Override
+							public void onStart() {
+								showProgressDialog("正在保存...");
+							}
 
-					@Override
-					public void onFailure(int statusCode,
-							String content, Throwable error) {
-						// TODO Auto-generated method stub
-						showToast(content);
-					}
+							@Override
+							public void onFailure(int statusCode,
+									String content, Throwable error) {
+								showToast(content);
+							}
 
-					@Override
-					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
-						showToast(status_description);
-					}
+							@Override
+							public void onErrorData(String status_description) {
+								showToast(status_description);
+							}
 
-					@Override
-					public void onFinish() {
-						// TODO Auto-generated method stub
-						//removeProgressDialog();
-					}
-					
-				});
-				}
-			});
+							@Override
+							public void onFinish() {
+								removeProgressDialog();
+							}
+
+						});
+			}
+		});
 	}
 
 	/**
@@ -143,8 +137,6 @@ public class EditCertificateActivity  extends AbActivity {
 			}
 		});
 
-		
-
 		clearCertificateNo.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -152,8 +144,6 @@ public class EditCertificateActivity  extends AbActivity {
 				etCertificateNo.setText("");
 			}
 		});
-		
-		
-		
+
 	}
 }

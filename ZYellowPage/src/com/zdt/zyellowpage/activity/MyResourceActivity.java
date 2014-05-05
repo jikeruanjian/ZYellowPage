@@ -148,7 +148,6 @@ public class MyResourceActivity extends AbActivity {
 					intent.putExtra("type", "scope");
 					startActivity(intent);
 				} else if (selectedItem.equals("供求信息")) {
-					// TODO 供求列表
 					Intent intent = null;
 					intent = new Intent(MyResourceActivity.this,
 							CompanyBuySellActivity.class);
@@ -165,7 +164,6 @@ public class MyResourceActivity extends AbActivity {
 					intent.putExtra("title", selectedItem);
 					startActivity(intent);
 				} else if (selectedItem.equals("更多电话")) {
-					// TODO 更多电话
 					Intent intent = null;
 					intent = new Intent(MyResourceActivity.this,
 							MorePhoneActivity.class);
@@ -174,7 +172,6 @@ public class MyResourceActivity extends AbActivity {
 					intent.putExtra("isEdit", true);
 					startActivity(intent);
 				} else if (selectedItem.equals("地图坐标")) {
-					// TODO 还要建一个activity
 					startActivity(new Intent(MyResourceActivity.this,
 							EditCoordinateAcitivity.class));
 				}

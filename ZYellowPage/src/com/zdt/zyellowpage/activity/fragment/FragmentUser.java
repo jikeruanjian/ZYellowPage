@@ -51,6 +51,7 @@ public class FragmentUser extends Fragment {
 	Button btnChangePwd;
 	Button btnMyFellow;
 	Button btnMyResource;
+	Button btnLogout;
 	View view;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +66,7 @@ public class FragmentUser extends Fragment {
 		btnChangePwd = (Button) view.findViewById(R.id.changePwd);
 		btnMyFellow = (Button) view.findViewById(R.id.myFellow);
 		btnMyResource = (Button) view.findViewById(R.id.myResource);
+		btnLogout = (Button) view.findViewById(R.id.btnLogout);
 
 		btnVersionCode.setOnClickListener(new OnClickListener() {
 
@@ -116,7 +118,6 @@ public class FragmentUser extends Fragment {
 
 							@Override
 							public void onFinish() {
-								// TODO Auto-generated method stub
 								mActivity.removeProgressDialog();
 							}
 
@@ -124,13 +125,11 @@ public class FragmentUser extends Fragment {
 							public void onFailure(int statusCode,
 									String content, Throwable error,
 									List<Version> localList) {
-								// TODO Auto-generated method stub
 								mActivity.showToast(content);
 							}
 
 							@Override
 							public void onErrorData(String status_description) {
-								// TODO Auto-generated method stub
 								Version version = new Version();
 								version.setApp_url("http://music.baidu.com/cms/mobile/static/apk/BaiduMusic_musicsybutton.apk");
 								if (version != null
@@ -178,6 +177,14 @@ public class FragmentUser extends Fragment {
 			}
 		});
 
+		btnLogout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				System.exit(0);
+			}
+		});
+
 		DisplayMetrics metric = new DisplayMetrics();
 		mActivity.getWindowManager().getDefaultDisplay().getMetrics(metric);
 		int width = metric.widthPixels;
@@ -211,7 +218,6 @@ public class FragmentUser extends Fragment {
 			packInfo = packageManager.getPackageInfo(
 					mActivity.getPackageName(), 0);
 		} catch (NameNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String version = "code" + packInfo.versionCode + packInfo.versionName;

@@ -169,7 +169,7 @@
                     android:layout_marginBottom="60dp" >
 
                     <Button
-                        android:id="@+id/registerBtn"
+                        android:id="@+id/btnLogout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_selector_green"

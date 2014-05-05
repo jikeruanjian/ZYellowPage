@@ -31,12 +31,12 @@ public class EditMorePhoneAcitivity extends AbActivity {
 	AbTitleBar mAbTitleBar;
 
 	@AbIocView(id = R.id.departmentEditText)
-	EditText etDepartment; // 经度
+	EditText etDepartment; // 部门
 	@AbIocView(id = R.id.phoneNameEditText)
-	EditText etPhoneName;// 纬度
+	EditText etPhoneName;// 姓名
 	@AbIocView(id = R.id.phoneNumberEditText)
-	EditText etPhoneNumber;// 纬度
-	
+	EditText etPhoneNumber;// 电话
+
 	@AbIocView(id = R.id.clearDepartment)
 	ImageButton clearDepartment;
 	@AbIocView(id = R.id.clearPhoneName)
@@ -45,14 +45,14 @@ public class EditMorePhoneAcitivity extends AbActivity {
 	ImageButton clearPhoneNumber;
 	Contact newContact;
 	String item_id = "0";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.edit_more_phone);
 		if (getIntent().getExtras() != null) {
-			newContact = (Contact)getIntent().getSerializableExtra("Contact");
-		}
-		else{
+			newContact = (Contact) getIntent().getSerializableExtra("Contact");
+		} else {
 			newContact = null;
 		}
 		mAbTitleBar = this.getTitleBar();
@@ -88,42 +88,38 @@ public class EditMorePhoneAcitivity extends AbActivity {
 				newContact.setContacter(etPhoneName.getText().toString());
 				newContact.setTelephone(etPhoneNumber.getText().toString());
 				newContact.setItem_id(item_id);
-				new ContactBll().updateContact(EditMorePhoneAcitivity.this, application.mUser.getToken(),
-						newContact, new ZzStringHttpResponseListener(){
+				new ContactBll().updateContact(EditMorePhoneAcitivity.this,
+						application.mUser.getToken(), newContact,
+						new ZzStringHttpResponseListener() {
 
 							@Override
 							public void onSuccess(int statusCode, String content) {
-								// TODO Auto-generated method stub
 								showToast(content);
-								//EditMorePhoneAcitivity.this.finish();
+								EditMorePhoneAcitivity.this.finish();
 							}
 
 							@Override
 							public void onStart() {
-								// TODO Auto-generated method stub
-								showProgressDialog("请稍候...");
+								showProgressDialog("正在保存...");
 							}
 
 							@Override
 							public void onFailure(int statusCode,
 									String content, Throwable error) {
-								// TODO Auto-generated method stub
 								showToast(content);
 							}
 
 							@Override
 							public void onErrorData(String status_description) {
-								// TODO Auto-generated method stub
 								showToast(status_description);
 							}
 
 							@Override
 							public void onFinish() {
-								// TODO Auto-generated method stub
 								removeProgressDialog();
 							}
-					
-				});
+
+						});
 			}
 		});
 
@@ -153,8 +149,6 @@ public class EditMorePhoneAcitivity extends AbActivity {
 			}
 		});
 
-		
-
 		clearPhoneName.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -162,7 +156,7 @@ public class EditMorePhoneAcitivity extends AbActivity {
 				etPhoneName.setText("");
 			}
 		});
-		
+
 		clearPhoneNumber.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -170,7 +164,7 @@ public class EditMorePhoneAcitivity extends AbActivity {
 				etPhoneNumber.setText("");
 			}
 		});
-		
+
 		etPhoneNumber.addTextChangedListener(new TextWatcher() {
 
 			@Override
