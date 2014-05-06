@@ -61,17 +61,14 @@ public class AlbumBll {
 	}
 
 	// 2、添加/删除相片
-	public void updateAlbum(Context context, String token, String item_id,
-			String url, ZzStringHttpResponseListener respListener) {
+	public void updateAlbum(Context context, String token, Album album,
+			ZzStringHttpResponseListener respListener) {
 
 		JSONObject jo = new JSONObject();
-		JSONObject joData = new JSONObject();
 		try {
-			jo.put("method", "update-aublm");
+			jo.put("method", "update-album");
 			jo.put("token", token);
-			joData.put("item_id", item_id);
-			joData.put("url", url);
-			jo.put("data", joData.toString());
+			jo.put("data", new Gson().toJson(album));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -100,8 +97,8 @@ public class AlbumBll {
 								bre.setResult(jo.getString("result"));
 								bre.setSuccess(jo.getBoolean("success"));
 								bre.setStatus(jo.getInt("status"));
-								 bre.setStatus_description(jo
-								 .getString("status_description"));
+								bre.setStatus_description(jo
+										.getString("status_description"));
 
 								if (bre.getSuccess()) {
 									JSONObject data = jo.getJSONObject("data");

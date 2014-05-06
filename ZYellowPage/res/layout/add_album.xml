@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_white" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <RelativeLayout
+            android:id="@+id/layout01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip" >
+
+            <TextView
+                android:id="@+id/tvAlbum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="图片"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/album"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvAlbum"
+                android:gravity="center_vertical"
+                android:hint="选择图片"
+                android:singleLine="true"
+                android:textColor="@color/gray"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/clearAlbum"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dip"
+                android:layout_marginTop="12dip"
+                android:background="@drawable/clear_icon"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip" >
+
+            <TextView
+                android:id="@+id/tvWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="权重"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+            
+            <EditText
+                android:id="@+id/weight"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvWeight"
+                android:gravity="center_vertical"
+                android:hint="权重"
+                android:inputType="numberSigned"
+                android:singleLine="true"
+                android:textColor="@color/gray"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/clearWeight"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dip"
+                android:layout_marginTop="12dip"
+                android:background="@drawable/clear_icon"
+                android:visibility="invisible" />
+        </RelativeLayout>
+        
+         <RelativeLayout
+            android:id="@+id/layout03"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip" >
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="描述"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvDescription"
+                android:gravity="center_vertical"
+                android:hint="描述"
+                android:singleLine="true"
+                android:textColor="@color/gray"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/clearDescription"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dip"
+                android:layout_marginTop="12dip"
+                android:background="@drawable/clear_icon"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

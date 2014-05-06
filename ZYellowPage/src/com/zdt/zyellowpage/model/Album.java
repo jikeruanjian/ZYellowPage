@@ -6,8 +6,9 @@ import com.ab.db.orm.annotation.Table;
 
 /**
  * 相片,该类数据已经缓存
+ * 
  * @author Kevin
- *
+ * 
  */
 @Table(name = "album")
 public class Album {
@@ -33,6 +34,34 @@ public class Album {
 	 */
 	@Column(name = "url")
 	private String url;
+
+	/**
+	 * 链接地址
+	 */
+	@Column(name = "description")
+	private String description;
+
+	/**
+	 * 链接地址
+	 */
+	@Column(name = "sort")
+	private String sort;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 
 	public int get_id() {
 		return _id;

@@ -363,7 +363,7 @@ public class UserBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 						if (content != null && !content.equals("")) {
-							System.out.println("-----------" + content);
+							Log.i("UserBll", content);
 							JSONObject jo = null;
 							BaseResponseEntity bre = new BaseResponseEntity();
 							// 转换数据
