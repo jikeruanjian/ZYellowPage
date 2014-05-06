@@ -193,7 +193,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		//displayUtil.setViewLayoutParamsR(this.findViewById(R.id.titileLinearLayout), 0, 150);
 		// displayUtil.setViewLayoutParamsR(this.findViewById(R.id.LinearLayoutAllXX),0,
 		// 5*high);
-		displayUtil.setViewLayoutParamsR(this.findViewById(R.id.main_radio), 0,high / 2);
+		//displayUtil.setViewLayoutParamsR(this.findViewById(R.id.main_radio), 0,high / 2);
 		//displayUtil.setViewLayoutParamsR(this.findViewById(R.id.main_radio), 0,160);
 		textViewArea = (TextView) this.findViewById(R.id.textViewarea);
 		textViewArea.setText(application.cityName);

@@ -177,14 +177,13 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		displayUtil.setViewLayoutParamsTextView(
 				view.findViewById(R.id.textViewhotperson), high);
 		displayUtil.setViewLayoutParamsTextView(
-				view.findViewById(R.id.textViewBusinessHot), high);
+				view.findViewById(R.id.textViewBusinessHot), high-15);
 		displayUtil.setViewLayoutParamsTextViewC(
-				view.findViewById(R.id.textViewBusinessConetentHot), width,
-				high);
+				view.findViewById(R.id.textViewBusinessConetentHot), width,high+15);
 		displayUtil.setViewLayoutParamsTextView(
-				view.findViewById(R.id.textViewPersonHot), high);
+				view.findViewById(R.id.textViewPersonHot), high-15);
 		displayUtil.setViewLayoutParamsTextViewC(
-				view.findViewById(R.id.textViewPersonContentHot), width, high);
+				view.findViewById(R.id.textViewPersonContentHot), width, high+15);
 		displayUtil.setViewLayoutParamsLayout(
 				view.findViewById(R.id.LinearLayouthot), high);
 		displayUtil.setViewLayoutParamsLayout(
@@ -502,10 +501,12 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 	void  showPopWindows(){
 		//Log.e("fragment", "-----点击了全部分类");
 		myPopupWindow = new MyPopupWindow(mActivity);
-		myPopupWindow.popupWindow.setWidth(mActivity.getWindowManager().getDefaultDisplay().getWidth()/4*3);
+		myPopupWindow.popupWindow.setWidth(mActivity.getWindowManager().getDefaultDisplay().getWidth()/7*6);
 		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft,
-				mActivity.getWindowManager().getDefaultDisplay().getWidth()/16*7,0);
+				mActivity.getWindowManager().getDefaultDisplay().getWidth()/2,0);
 		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
+				0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,
 				0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
 		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassP,
 				0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);

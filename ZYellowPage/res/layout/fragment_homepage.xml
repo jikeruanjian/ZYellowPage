@@ -302,7 +302,7 @@
                                 android:id="@+id/textViewBusinessConetentHot"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
+                                android:gravity="top"
                                 android:lines="2"
                                 android:text="二维码、超市、指点通、手机黄页…"
                                 android:textColor="@color/gray_black"
@@ -387,7 +387,7 @@
                                 android:id="@+id/textViewPersonContentHot"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
+                                android:gravity="top"
                                 android:text="二维码、超市、指点通、手机黄页…"
                                 android:textColor="@color/gray_black"
                                 android:textSize="16sp" />

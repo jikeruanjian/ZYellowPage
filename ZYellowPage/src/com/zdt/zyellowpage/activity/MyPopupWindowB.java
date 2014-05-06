@@ -79,10 +79,10 @@ public class MyPopupWindowB {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 						long arg3) {
 					// TODO Auto-generated method stub
-					changeView.setBackgroundResource(R.color.transparent);
-					arg1.setBackgroundResource(R.color.window_bg);
-					changeView = arg1;
-					getRightData(MainActivity.listCategoryP.get(arg2).getId());
+					//changeView.setBackgroundResource(R.color.transparent);
+					//arg1.setBackgroundResource(R.color.window_bg);
+					//changeView = arg1;
+					getRightData(MainActivity.listCategory.get(arg2).getId());
 				}
 				
 			});
@@ -98,9 +98,9 @@ public class MyPopupWindowB {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 						long arg3) {
 					// TODO Auto-generated method stub
-					changeView.setBackgroundResource(R.color.transparent);
-					arg1.setBackgroundResource(R.color.window_bg);
-					changeView = arg1;
+					//changeView.setBackgroundResource(R.color.transparent);
+					//arg1.setBackgroundResource(R.color.window_bg);
+					//changeView = arg1;
 					getRightData(MainActivity.listCategoryP.get(arg2).getId());
 				}
 				
@@ -169,10 +169,7 @@ public class MyPopupWindowB {
                   
                 holder = (ViewHolder)convertView.getTag(); 
             } 
-            if(position == 0){
-            	//convertView.setBackgroundResource(R.color.window_bg);
-				changeView = convertView;
-            }
+          
            
             holder.title.setText((String)MainActivity.listCategory.get(position).getName());  
          //  holder.title.setOnClickListener(new LeftClassBtnListenerB(MainActivity.listCategory.get(position).getId())); 
@@ -224,10 +221,7 @@ public class MyPopupWindowB {
                 holder = (ViewHolder)convertView.getTag(); 
             } 
             holder.title.setText(MainActivity.listCategoryP.get(position).getName());
-            if(position == 0){
-            	//convertView.setBackgroundResource(R.color.window_bg);
-				changeView = convertView;
-            }
+            
            // holder.title.setOnClickListener(new LeftClassBtnListenerB(MainActivity.listCategoryP.get(position).getId()));
             //holder.viewBtn.setOnClickListener(new  LeftClassBtnListenerB(MainActivity.listCategoryP.get(position).getId()));  
             return convertView; 

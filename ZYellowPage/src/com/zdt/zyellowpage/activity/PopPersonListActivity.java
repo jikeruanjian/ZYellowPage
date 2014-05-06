@@ -348,6 +348,8 @@ public class PopPersonListActivity extends AbActivity {
 					PopPersonListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/16*7,0);
 			displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
 					0,PopPersonListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+			displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,
+					0,PopPersonListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
 			displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassP,
 					0,PopPersonListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
 			myPopupWindow.popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);

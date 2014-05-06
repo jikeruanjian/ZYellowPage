@@ -1,19 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="@color/selectclass" >
 
     <LinearLayout
-       android:id="@+id/LeftLinearLayoutClass"
+        android:id="@+id/LeftLinearLayoutClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:background="@color/gray_white"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/textViewBussniessClass"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gray_light"
             android:text="商家分类+"
             android:textColor="@color/window_bg"
             android:textSize="20sp" />
@@ -23,21 +26,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
             android:orientation="vertical" >
+
             <ListView
                 android:id="@+id/ListViewBussniessClass"
                 android:layout_width="match_parent"
-            	android:layout_height="wrap_content"
-            	android:cacheColorHint="@android:color/transparent"
-            	android:drawSelectorOnTop="false"  
->  
+                android:layout_height="wrap_content"
+                android:cacheColorHint="@android:color/transparent"
+                android:listSelector="@color/selectclass" >
+  
             </ListView>
         </LinearLayout>
 		
         <TextView
             android:id="@+id/textViewPersonClass"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gray_light"
             android:text="个人分类-"
+            android:textColor="@color/gray_black"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -50,12 +56,10 @@
             <ListView
                 android:id="@+id/ListViewPersonClass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
-                android:cacheColorHint="@android:color/transparent"  
-                android:drawSelectorOnTop="false"  
-                
-                android:listSelector="@drawable/item_color"
-                >
+                android:layout_height="wrap_content"
+                android:cacheColorHint="@android:color/transparent"
+                android:listSelector="@color/selectclass" >
+
             </ListView>
 
         </LinearLayout>
@@ -65,20 +69,19 @@
     <LinearLayout
         android:id="@+id/rightLinearLayoutClass"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/LeftLinearLayoutClass"
         android:orientation="vertical" >
 
         <ListView
             android:id="@+id/listViewLowerClass"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
+            android:layout_height="match_parent"
             android:cacheColorHint="@android:color/transparent"
-            android:drawSelectorOnTop="false"  
-            
-             android:listSelector="@drawable/item_color"
-              >
+            android:drawSelectorOnTop="false"
+            android:listSelector="@drawable/item_color" >
+
         </ListView>
 
     </LinearLayout>

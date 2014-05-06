@@ -25,5 +25,5 @@
 	<color name="pressed">#fff22fff</color>  
 	<color name="selected">#fff33fff</color>  
 	<color name="focused">#ffff44ff</color>  
-    
+    <color name="selectclass">#cccccc</color>  
 </resources>
