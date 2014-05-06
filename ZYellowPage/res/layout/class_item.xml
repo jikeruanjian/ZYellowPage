@@ -1,29 +1,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" 
-    >
+    android:layout_height="fill_parent"
+    android:background="@color/transparent" >
 
     <TextView
         android:id="@+id/textViewTopClass"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="false"
         android:layout_centerInParent="true"
         android:layout_marginLeft="14dp"
         android:layout_toLeftOf="@+id/imageButtonLowerClass"
+        android:gravity="center"
         android:text="TextView"
         android:textColor="@color/gray_black"
         android:textSize="15sp" />
 
     <TextView
         android:id="@+id/imageButtonLowerClass"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/textViewTopClass"
+        android:layout_centerVertical="true"
         android:gravity="center"
-        android:text=">"
+        android:text="☞"
         android:textColor="@color/gray_black"
         android:textSize="20sp" />
 

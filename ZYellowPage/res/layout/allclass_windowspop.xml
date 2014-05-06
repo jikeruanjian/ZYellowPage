@@ -16,8 +16,10 @@
             android:id="@+id/textViewBussniessClass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:background="@color/gray_light"
-            android:text="商家分类+"
+            android:gravity="center_horizontal"
+            android:text="商家分类▲"
             android:textColor="@color/window_bg"
             android:textSize="20sp" />
 
@@ -41,8 +43,10 @@
             android:id="@+id/textViewPersonClass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:background="@color/gray_light"
-            android:text="个人分类-"
+            android:gravity="center_horizontal"
+            android:text="个人分类▼"
             android:textColor="@color/gray_black"
             android:textSize="20sp" />
 

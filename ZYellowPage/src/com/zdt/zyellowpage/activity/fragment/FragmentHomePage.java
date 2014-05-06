@@ -503,7 +503,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		myPopupWindow = new MyPopupWindow(mActivity);
 		myPopupWindow.popupWindow.setWidth(mActivity.getWindowManager().getDefaultDisplay().getWidth()/7*6);
 		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft,
-				mActivity.getWindowManager().getDefaultDisplay().getWidth()/2,0);
+				mActivity.getWindowManager().getDefaultDisplay().getWidth()/7*3,0);
 		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
 				0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
 		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,

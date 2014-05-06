@@ -1,5 +1,9 @@
 package com.zdt.zyellowpage.activity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -65,6 +70,7 @@ public class BusinessDetailActivity extends AbActivity {
 	private String[] imageUrls = new String[] {};
 	private ImageView imgCompanyVideos;
 	private  View mView;
+	Bitmap codeBitmap;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,16 +84,6 @@ public class BusinessDetailActivity extends AbActivity {
 						finish();
 					}
 				});
-				/*View mView = mInflater.inflate(R.layout.getdatafailed, null);
-				mView.setOnClickListener(new OnClickListener(){
-
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						finish();
-					}
-				});
-				showDialog(AbConstant.DIALOGBOTTOM, mView);*/
 			}
 			else{ 
 				application = (MyApplication) abApplication;
@@ -339,16 +335,43 @@ public class BusinessDetailActivity extends AbActivity {
 		        	@Override
 					public void onSuccess(int statusCode, byte[] content) {
 		        		Log.d("xxxx", "onSuccess");
-		        		Bitmap bitmap = AbImageUtil.bytes2Bimap(content);
+		        		codeBitmap = AbImageUtil.bytes2Bimap(content);
 		            	mView = mInflater.inflate(R.layout.code_view, null);
 		            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
-		            	imageUserCode.setImageBitmap(bitmap);
+		            	imageUserCode.setImageBitmap(codeBitmap);
 		            	imageUserCode.setOnClickListener(new OnClickListener(){
 							@Override
 							public void onClick(View v) {
+								//点击结束弹出框
 								removeDialog(AbConstant.DIALOGCENTER);
 							}
 						});
+		            	imageUserCode.setLongClickable(true);
+		            	imageUserCode.setOnLongClickListener(new OnLongClickListener(){
+
+							@Override
+							public boolean onLongClick(View v) {
+								// TODO长按保存图片
+								  /*File f = new File("/sdcard/zdtimgcard/", member_id+"code");
+								  if (f.exists()) {
+								   f.delete();
+								  }
+								  try {
+								   FileOutputStream out = new FileOutputStream(f);
+								   codeBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+								   out.flush();
+								   out.close();
+								  } catch (FileNotFoundException e) {
+								   // TODO Auto-generated catch block
+								   e.printStackTrace();
+								  } catch (IOException e) {
+								   // TODO Auto-generated catch block
+								   e.printStackTrace();
+								  }*/
+								return false;
+							}
+		            		
+		            	});
 		            	showDialog(AbConstant.DIALOGCENTER, mView);
 		            	
 					}

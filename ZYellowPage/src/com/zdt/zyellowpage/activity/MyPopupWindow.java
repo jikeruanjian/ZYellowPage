@@ -73,14 +73,7 @@ public class MyPopupWindow {
 		
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				tVBussniess.setTextColor(mContext.getResources().getColor(R.color.orange));
-				tVPerson.setTextColor(mContext.getResources().getColor(R.color.gray_black));
-				tVPerson.setText("个人分类+");
-				tVBussniess.setText("商家分类-");
-				layout.findViewById(R.id.leftLayoutPersonClass).setVisibility(View.GONE);
-				layout.findViewById(R.id.leftLayoutBussniessClass).setVisibility(View.VISIBLE);
-				getRightData("0100",changeView);
+				changeClassType();
 			}
 			
 		});
@@ -90,13 +83,7 @@ public class MyPopupWindow {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				tVBussniess.setTextColor(mContext.getResources().getColor(R.color.gray_black));
-				tVPerson.setTextColor(mContext.getResources().getColor(R.color.orange));
-				tVPerson.setText("个人分类-");
-				tVBussniess.setText("商家分类+");
-				layout.findViewById(R.id.leftLayoutPersonClass).setVisibility(View.VISIBLE);
-				layout.findViewById(R.id.leftLayoutBussniessClass).setVisibility(View.GONE);
-				getRightData("5000",changeViewP);
+				changeClassType();
 			}
 			
 		});
@@ -135,6 +122,9 @@ public class MyPopupWindow {
 		listLowerCategory = new ArrayList<Category>();
 		nameList = new ArrayList<Map<String,Object>>();
 		getRightData("0100",changeView);
+	//	listViewClassB.setSelection(0);
+	//	listViewClassB.setItemChecked(0, true);
+
 		adapter = new SimpleAdapter(mContext,nameList,R.layout.text_item2, 
                 new String[]{"textViewSellBuyItemNames"}, 
                 new int[]{R.id.textViewSellBuyItemName});
@@ -174,6 +164,33 @@ public class MyPopupWindow {
 		popupWindow.setFocusable(true);
 		popupWindow.setContentView(layout);
 
+	}
+	
+	/**
+	 * 切换分类显示内容
+	 */
+	private void changeClassType(){
+		// TODO Auto-generated method stub
+		if(layout.findViewById(R.id.leftLayoutPersonClass).getVisibility() == View.VISIBLE){
+			tVBussniess.setTextColor(mContext.getResources().getColor(R.color.orange));
+			tVPerson.setTextColor(mContext.getResources().getColor(R.color.gray_black));
+			tVPerson.setText("个人分类▼");
+			tVBussniess.setText("商家分类▲");
+			layout.findViewById(R.id.leftLayoutPersonClass).setVisibility(View.GONE);
+			layout.findViewById(R.id.leftLayoutBussniessClass).setVisibility(View.VISIBLE);
+			getRightData("0100",changeView);
+			//listViewClassB.setSelection(0);
+		}
+		else{
+			tVBussniess.setTextColor(mContext.getResources().getColor(R.color.gray_black));
+			tVPerson.setTextColor(mContext.getResources().getColor(R.color.orange));
+			tVPerson.setText("个人分类▲");
+			tVBussniess.setText("商家分类▼");
+			layout.findViewById(R.id.leftLayoutPersonClass).setVisibility(View.VISIBLE);
+			layout.findViewById(R.id.leftLayoutBussniessClass).setVisibility(View.GONE);
+			getRightData("5000",changeViewP);
+			//listViewClassP.setse
+		}
 	}
 	
 	public final class ViewHolder{ 

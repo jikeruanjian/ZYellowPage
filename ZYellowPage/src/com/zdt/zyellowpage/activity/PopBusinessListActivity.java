@@ -347,9 +347,9 @@ public class PopBusinessListActivity extends AbActivity {
 		Log.e("fragment", "-----点击了全部分类");
 		
 		myPopupWindow.popupWindow.
-		setWidth(PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/4*3);
+		setWidth(PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/7*6);
 		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft,
-				PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/16*7,0);
+				PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/7*3,0);
 		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
 				0,PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
 		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,

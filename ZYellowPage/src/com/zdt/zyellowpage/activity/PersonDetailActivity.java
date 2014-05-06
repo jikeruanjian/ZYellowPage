@@ -1,5 +1,9 @@
 package com.zdt.zyellowpage.activity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
@@ -57,6 +62,7 @@ public class PersonDetailActivity extends AbActivity {
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private String certificateStr ="";
+	Bitmap codeBitmap;
 	//private String[] imageUrls = new String[] { };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -266,21 +272,45 @@ public class PersonDetailActivity extends AbActivity {
 	        	@Override
 				public void onSuccess(int statusCode, byte[] content) {
 	        		Log.d("xxxx", "onSuccess");
-	        		Bitmap bitmap = AbImageUtil.bytes2Bimap(content);
+	        		codeBitmap = AbImageUtil.bytes2Bimap(content);
 	            	View mView = mInflater.inflate(R.layout.code_view, null);
 	            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
 
-	            	imageUserCode.setImageBitmap(bitmap);
+	            	imageUserCode.setImageBitmap(codeBitmap);
 	            	imageUserCode.setOnClickListener(new OnClickListener(){
-
 						@Override
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
 							removeDialog(AbConstant.DIALOGCENTER);
 						}
-					
-					
 					});
+	            	
+	            	imageUserCode.setLongClickable(true);
+	            	imageUserCode.setOnLongClickListener(new OnLongClickListener(){
+
+						@Override
+						public boolean onLongClick(View v) {
+							// TODO长按保存图片
+							 /* File f = new File("/sdcard/zdtimgcard/", member_id+"code");
+							  if (f.exists()) {
+							   f.delete();
+							  }
+							  try {
+							   FileOutputStream out = new FileOutputStream(f);
+							   codeBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+							   out.flush();
+							   out.close();
+							  } catch (FileNotFoundException e) {
+							   // TODO Auto-generated catch block
+							   e.printStackTrace();
+							  } catch (IOException e) {
+							   // TODO Auto-generated catch block
+							   e.printStackTrace();
+							  }*/
+							return false;
+						}
+	            		
+	            	});
 	            	showDialog(AbConstant.DIALOGCENTER, mView);
 				}
 	        	
