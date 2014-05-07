@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 //import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -18,6 +19,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +34,7 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.global.AbConstant;
@@ -51,6 +54,7 @@ import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.AlbumReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Album;
 import com.zdt.zyellowpage.model.User;
 
@@ -142,8 +146,68 @@ public class BusinessDetailActivity extends AbActivity {
 
 		InitTextView();
 		InitViewPager();
+		InitTitleView();
 	}
+	
+	
+	private void InitTitleView(){
+		mAbTitleBar.clearRightView();
+		TextView tvSave = new TextView(this);
+		tvSave.setText("+关注  ");
+		tvSave.setTextColor(Color.WHITE);
+		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+		mAbTitleBar.addRightView(tvSave);
+		tvSave.setOnClickListener(new View.OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				if (application.mUser != null && application.mUser.getToken() != null) {  
+	        		UserBll bll = new UserBll();
+	        		 bll.followUser(BusinessDetailActivity.this, application.mUser.getToken(), 
+	        				 userCompany.getMember_id(),false,
+	        				 new ZzStringHttpResponseListener(){
+								@Override
+								public void onSuccess(int statusCode, String content) {
+									// TODO Auto-generated method stub
+									Toast.makeText(BusinessDetailActivity.this,content, Toast.LENGTH_SHORT).show();
+								}
+
+								@Override
+								public void onStart() {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onFailure(int statusCode,
+										String content, Throwable error) {
+									// TODO Auto-generated method stub
+									Toast.makeText(BusinessDetailActivity.this, "关注失败！", Toast.LENGTH_SHORT).show();
+								}
+
+								@Override
+								public void onErrorData(String status_description) {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onFinish() {
+									// TODO Auto-generated method stub
+									
+								}
+	        			 
+	        		 });
+	        		
+	        		
+	        	}
+	        	else
+	        	{
+	        		Toast.makeText(BusinessDetailActivity.this, "请先登陆！", Toast.LENGTH_SHORT).show();  
+	        	}
+				
+			}});
+	}
 	protected void getData() {
 		UserBll bll = new UserBll();
 		bll.getDetailCompany(BusinessDetailActivity.this, member_id,

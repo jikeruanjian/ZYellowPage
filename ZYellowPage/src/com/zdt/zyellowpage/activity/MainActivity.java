@@ -521,9 +521,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		popupWindow = new PopupWindow(MainActivity.this);
 		
 		//popupWindow.setBackgroundDrawable(new BitmapDrawable());
-		popupWindow
-				.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
-		popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);;
+		popupWindow.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 3);
+		//popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+		popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setFocusable(true);
 		popupWindow.setContentView(layout);

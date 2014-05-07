@@ -313,11 +313,11 @@
                         <Button
                             android:id="@+id/btnConcernHotBussiness"
                             android:layout_width="60dp"
-                            android:layout_height="35dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
-                            android:background="@color/orange"
-                            android:text="关注" />
+                            android:background="@color/window_bg"
+                            android:text="+关注" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -397,11 +397,11 @@
                         <Button
                             android:id="@+id/btnConcernHotPerson"
                             android:layout_width="60dp"
-                            android:layout_height="35dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
-                            android:background="@color/orange"
-                            android:text="关注" />
+                            android:background="@color/window_bg"
+                            android:text="+关注" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

@@ -182,7 +182,7 @@ public class ImageListAdapterP extends BaseAdapter{
 							public void onFailure(int statusCode,
 									String content, Throwable error) {
 								// TODO Auto-generated method stub
-								Toast.makeText(mContext, "取消失败！", Toast.LENGTH_SHORT).show();
+								Toast.makeText(mContext, "关注失败！", Toast.LENGTH_SHORT).show();
 							}
 
 							@Override

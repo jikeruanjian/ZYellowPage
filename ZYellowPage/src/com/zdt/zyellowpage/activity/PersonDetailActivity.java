@@ -10,6 +10,7 @@ import java.util.List;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -17,6 +18,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +28,7 @@ import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
@@ -45,6 +48,7 @@ import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Certificate;
 import com.zdt.zyellowpage.model.User;
 
@@ -246,8 +250,69 @@ public class PersonDetailActivity extends AbActivity {
 		//info.setText(userPerson.getSummary());
 		InitTextView();
 		//InitViewPager();
+		InitTitleView();
 	}
 	
+	
+	private void InitTitleView(){
+		mAbTitleBar.clearRightView();
+		TextView tvSave = new TextView(this);
+		tvSave.setText("+关注  ");
+		tvSave.setTextColor(Color.WHITE);
+		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+		mAbTitleBar.addRightView(tvSave);
+		tvSave.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				
+				if (application.mUser != null && application.mUser.getToken() != null) {
+		      		  
+				UserBll bll = new UserBll();
+       		 	bll.followUser(PersonDetailActivity.this, application.mUser.getToken(), userPerson.getMember_id(),false,
+       				 new ZzStringHttpResponseListener(){
+
+							@Override
+							public void onSuccess(int statusCode, String content) {
+								// TODO Auto-generated method stub
+								Toast.makeText(PersonDetailActivity.this,content, Toast.LENGTH_SHORT).show();
+							}
+
+							@Override
+							public void onStart() {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void onFailure(int statusCode,
+									String content, Throwable error) {
+								// TODO Auto-generated method stub
+								Toast.makeText(PersonDetailActivity.this, "关注失败！", Toast.LENGTH_SHORT).show();
+							}
+
+							@Override
+							public void onErrorData(String status_description) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void onFinish() {
+								// TODO Auto-generated method stub
+								
+							}
+       			 
+       		    });
+				}
+	        	else
+	        	{
+	        		Toast.makeText(PersonDetailActivity.this, "请先登陆！", Toast.LENGTH_SHORT).show();  
+	        	}
+				
+			}
+		});
+	}
 	/**
 	 * 初始化头标
 	 */

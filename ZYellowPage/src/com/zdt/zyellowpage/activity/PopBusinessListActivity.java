@@ -315,7 +315,7 @@ public class PopBusinessListActivity extends AbActivity {
 		popupWindow = new PopupWindow(PopBusinessListActivity.this);
 		//popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		popupWindow
-				.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
+				.setWidth(getWindowManager().getDefaultDisplay().getWidth() /5*2);
 		popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setFocusable(true);
