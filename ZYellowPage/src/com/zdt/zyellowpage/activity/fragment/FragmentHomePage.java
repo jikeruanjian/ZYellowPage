@@ -116,11 +116,11 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		view.findViewById(R.id.LinearLayoutPerson).setOnClickListener(this);
 		// 首页热门商家
 		hotName = (TextView) view.findViewById(R.id.textViewBusinessHot);
-		hotName.setOnClickListener(this);
+		//hotName.setOnClickListener(this);
 		
 		// 首页热门关注
 		PersonName = (TextView) view.findViewById(R.id.textViewPersonHot);
-		PersonName.setOnClickListener(this);
+		//PersonName.setOnClickListener(this);
 		
 		view.findViewById(R.id.btnConcernHotBussiness).setOnClickListener(this);
 		view.findViewById(R.id.btnConcernHotPerson).setOnClickListener(this);
