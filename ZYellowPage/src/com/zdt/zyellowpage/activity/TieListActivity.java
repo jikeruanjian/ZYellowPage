@@ -190,11 +190,11 @@ public class TieListActivity extends AbActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// PopPersonListActivity.this.showToast(list.get(position).get("Member_id").toString());
+				TieListActivity.this.showToast(list.get(position-1).get("item_id").toString());
 				Intent intent = new Intent(TieListActivity.this,
-						PersonDetailActivity.class);
-				intent.putExtra("MEMBER_ID",
-						list.get(position - 1).get("Member_id").toString());
+						TieDetailActivity.class);
+				intent.putExtra("ITEM_ID",
+						list.get(position - 1).get("item_id").toString());
 				startActivity(intent);
 			}
 		});
