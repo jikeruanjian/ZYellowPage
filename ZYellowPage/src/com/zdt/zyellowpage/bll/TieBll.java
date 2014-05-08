@@ -38,12 +38,15 @@ public class TieBll {
 
 	/**
 	 * 获取,如果从网络中获取到了数据，缓存
-	 * 
 	 * @param context
+	 * @param page_number
+	 * @param max_size
+	 * @param area_id
+	 * @param type 1为婚庆2乔迁3聚会4开业5庆典
 	 * @param respListener
 	 */
-	public void getCertificateList(Context context, int page_number,
-			int max_size, String area_id,
+	public void getTieList(Context context, int page_number,
+			int max_size, String area_id, String type,
 			ZzObjectHttpResponseListener<Tie> respListener) {
 		this.page_number = page_number;
 		this.max_size = max_size;
@@ -55,6 +58,7 @@ public class TieBll {
 			joData.put("page_number", page_number);
 			joData.put("max_size", max_size);
 			joData.put("area_id", area_id);
+			joData.put("type", type);
 			jo.put("data", joData.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,20 +71,20 @@ public class TieBll {
 	}
 
 	/**
-	 * 获取供求信息的详情
+	 * 获取请帖信息的详情
 	 * 
 	 * @param context
 	 * @param item_id
 	 * @param respListener
 	 */
-	public void getDetailOfSupplyDemand(Context context, final String item_id,
+	public void getDetailOfTie(Context context, final String item_id,
 			ZzObjectHttpResponseListener<Tie> respListener) {
 		this.mContext = context;
 		objectResponseListener = respListener;
 		JSONObject jo = new JSONObject();
 		JSONObject joData = new JSONObject();
 		try {
-			jo.put("method", "query-supply-demand-content");
+			jo.put("method", "query-tie-content");
 			joData.put("item_id", item_id);
 			jo.put("data", joData.toString());
 		} catch (Exception e) {

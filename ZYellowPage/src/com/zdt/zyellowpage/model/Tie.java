@@ -41,6 +41,12 @@ public class Tie implements Serializable {
 	private String area_id;
 
 	/**
+	 * 区域编号
+	 */
+	@Column(name = "logo")
+	private String logo;
+
+	/**
 	 * 　　多张图片，多图片地址，使用“,”号分割
 	 */
 	@Column(name = "album")
@@ -89,13 +95,13 @@ public class Tie implements Serializable {
 	private String address;
 
 	/**
-	 * 标题
+	 * 经度
 	 */
 	@Column(name = "latitude")
 	private String latitude;
 
 	/**
-	 * 详细信息
+	 * 纬度
 	 */
 	@Column(name = "longitude")
 	private String longitude;
@@ -111,4 +117,146 @@ public class Tie implements Serializable {
 	 */
 	@Column(name = "password")
 	private String password;
+
+	/**
+	 * 　发布时间
+	 */
+	@Column(name = "time")
+	private String time;
+
+	public int get_id() {
+		return _id;
+	}
+
+	public void set_id(int _id) {
+		this._id = _id;
+	}
+
+	public String getItem_id() {
+		return item_id;
+	}
+
+	public void setItem_id(String item_id) {
+		this.item_id = item_id;
+	}
+
+	public String getArea_id() {
+		return area_id;
+	}
+
+	public void setArea_id(String area_id) {
+		this.area_id = area_id;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(String album) {
+		this.album = album;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getOther() {
+		return other;
+	}
+
+	public void setOther(String other) {
+		this.other = other;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getMore() {
+		return more;
+	}
+
+	public void setMore(String more) {
+		this.more = more;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
 }

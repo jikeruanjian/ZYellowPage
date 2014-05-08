@@ -86,7 +86,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="类别"
+                android:text="类别:"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
