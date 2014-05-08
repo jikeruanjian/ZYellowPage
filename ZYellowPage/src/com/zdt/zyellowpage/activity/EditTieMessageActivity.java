@@ -80,7 +80,7 @@ public class EditTieMessageActivity extends AbActivity {
 		setAbContentView(R.layout.edit_tie_message);
 		application = (MyApplication) abApplication;
 		if (getIntent().getExtras() != null) {
-			item_id = getIntent().getStringExtra("ITEMID");
+			item_id = getIntent().getStringExtra("ITEM_ID");
 			tie_type = getIntent().getStringExtra("TYPE");
 			tie_code = getIntent().getStringExtra("PASSWORD");
 		}

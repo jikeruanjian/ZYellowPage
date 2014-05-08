@@ -172,6 +172,7 @@
         <activity android:name="com.zdt.zyellowpage.activity.EditCertificateActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.TieListActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.TieDetailActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.EditTieMessageActivity"/>
     </application>
 
     <supports-screens

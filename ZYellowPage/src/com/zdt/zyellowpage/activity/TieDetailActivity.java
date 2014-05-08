@@ -178,6 +178,7 @@ public class TieDetailActivity extends AbActivity {
 		TextView address= (TextView)this.findViewById(R.id.tie_detail_address);
 		address.setText(mTie.getAddress()); 
 		initImageView();
+		initEvent();
 	}
 	private void initImageView() {
 		mSlidingPlayView =  (AbSlidingPlayView)this.findViewById(R.id.mAbSlidingPlayView);
@@ -198,6 +199,52 @@ public class TieDetailActivity extends AbActivity {
 			mPlayText.setText(i+"");		
 			mSlidingPlayView.addView(mPlayView);
 		}
+	}
+	
+	private void initEvent(){
+		this.findViewById(R.id.tie_image_join).setOnClickListener(
+				new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(TieDetailActivity.this,
+								EditTieMessageActivity.class);
+						intent.putExtra("ITEM_ID",mTie.getItem_id());
+						intent.putExtra("TYPE",mTie.getType());
+						intent.putExtra("PASSWORD",mTie.getPassword());
+						startActivity(intent);
+					}
+					
+				});
+		this.findViewById(R.id.tie_image_phone).setOnClickListener(
+				new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent=new Intent(); 
+			        	intent.setAction(Intent.ACTION_DIAL);   //android.intent.action.DIAL 
+			        	intent.setData(Uri.parse("tel:" + mTie.getTelephone())); 
+			        	startActivity(intent);  
+					}
+					
+				});
+		
+		this.findViewById(R.id.tie_image_loc).setOnClickListener(
+				new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(TieDetailActivity.this,CompanyMapActiviy.class);
+						intent.putExtra("FUllNAME",mTie.getAddress());
+						intent.putExtra("LAT", mTie.getLatitude());
+						intent.putExtra("LON",  mTie.getLongitude());
+						startActivity(intent);
+					}
+					
+				});
 	}
 }
 	
