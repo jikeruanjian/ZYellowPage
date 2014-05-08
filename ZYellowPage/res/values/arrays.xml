@@ -39,9 +39,17 @@
         <item>男</item>
         <item>女</item>
     </string-array>
-
     <string-array name="type">
         <item>供应信息</item>
         <item>求购信息</item>
     </string-array>
+    <string-array name="tieFriend">
+        <item>新郎嘉宾</item>
+        <item>新娘嘉宾</item>
+    </string-array>
+    <string-array name="tieAttend">
+        <item>参加</item>
+        <item>不参加</item>
+    </string-array>
+
 </resources>
