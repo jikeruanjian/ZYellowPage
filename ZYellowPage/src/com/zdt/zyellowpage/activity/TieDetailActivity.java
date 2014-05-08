@@ -75,7 +75,7 @@ public class TieDetailActivity extends AbActivity {
 		setAbContentView(R.layout.activity_tiedetail);
 		application = (MyApplication) abApplication;
 		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText(R.string.tie_detail);
+		mAbTitleBar.setTitleText("婚庆详细");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);

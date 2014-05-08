@@ -58,6 +58,8 @@
     <string name="selectConfirm">确定</string>
     <string name="selectSex">性别</string>
     <string name="selectType">请选择类别</string>
+    <string name="selectAttend">参加</string>
+    <string name="selectFriend">请选择嘉宾类型</string>
     <string name="selectPwdQuestion">请选择密保问题</string>
     <string name="selectPwdAnswer">请输入密保答案</string>
     <string name="error_pwdquestion_isempty">密保问题不能为空</string>
@@ -184,4 +186,5 @@
     <string name="read_desc">请仔细阅读如下条款</string>
     <string name="register_protocol">同意注册协议</string>
     <string name="clear_cache">清空缓存</string>
-	<string name="tie_detail">婚庆详细信息</string></resources>
+
+</resources>
