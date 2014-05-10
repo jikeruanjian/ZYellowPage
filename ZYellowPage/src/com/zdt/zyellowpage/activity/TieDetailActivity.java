@@ -48,6 +48,7 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity.MyOnClickListener;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity.MyOnPageChangeListener;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity.MyPagerAdapter;
+import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.bll.TieBll;
 import com.zdt.zyellowpage.bll.UserBll;
@@ -69,7 +70,7 @@ public class TieDetailActivity extends AbActivity {
 	private DisplayUtil displayUtil;
 	private String type;
 	private TextView moreTextView;
-	//private String[] imageUrls = new String[] { };
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -210,7 +211,8 @@ public class TieDetailActivity extends AbActivity {
 		
 		WebView more= (WebView)this.findViewById(R.id.tie_more_WebView);
 		if (AbStrUtil.isEmpty(mTie.getMore())) {
-			more.loadDataWithBaseURL(null, "用户暂时还未添加该项数据", "text/html","utf-8", null);
+		//	more.loadDataWithBaseURL(null, "用户暂时还未添加该项数据", "text/html","utf-8", null);
+			this.findViewById(R.id.tie_more_LinearLayout).setVisibility(View.GONE);
 		}
 		else{
 			more.loadDataWithBaseURL(null, mTie.getMore(), "text/html","utf-8", null);
@@ -236,13 +238,13 @@ public class TieDetailActivity extends AbActivity {
 		mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
 		imageUrl = mTie.getAlbum().split(",");
 		for(int i = 0;i < imageUrl.length;i++){
-			Log.e("tie", "------"+imageUrl[i]);
+			//Log.e("tie", "------"+imageUrl[i]);
 			View mPlayView = new View(TieDetailActivity.this);
 			mPlayView = mInflater.inflate(R.layout.play_view_item, null);
 			ImageView mPlayImage = (ImageView) mPlayView.findViewById(R.id.mPlayImage);
 			TextView mPlayText = (TextView) mPlayView.findViewById(R.id.mPlayText);
 			new AbImageDownloader(TieDetailActivity.this).display(mPlayImage,imageUrl[i]);
-			mPlayText.setText(i+"");		
+			mPlayText.setText("");		
 			mSlidingPlayView.addView(mPlayView);
 		}
 	}
@@ -254,12 +256,21 @@ public class TieDetailActivity extends AbActivity {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						Intent intent = new Intent(TieDetailActivity.this,
+						Intent intent;
+						if (application.mUser == null|| application.mUser.getToken() == null) {
+							TieDetailActivity.this.showToast("请先登录");
+							intent = new Intent(TieDetailActivity.this, LoginActivity.class);
+							startActivity(intent);
+						}
+						else{
+						
+							intent = new Intent(TieDetailActivity.this,
 								EditTieMessageActivity.class);
-						intent.putExtra("ITEM_ID",mTie.getItem_id());
-						intent.putExtra("TYPE",mTie.getType());
-						intent.putExtra("PASSWORD",mTie.getPassword());
-						startActivity(intent);
+							intent.putExtra("ITEM_ID",mTie.getItem_id());
+							intent.putExtra("TYPE",mTie.getType());
+							intent.putExtra("PASSWORD",mTie.getPassword());
+							startActivity(intent);
+						}
 					}
 					
 				});
@@ -288,6 +299,26 @@ public class TieDetailActivity extends AbActivity {
 						intent.putExtra("LAT", mTie.getLatitude());
 						intent.putExtra("LON",  mTie.getLongitude());
 						startActivity(intent);
+					}
+					
+				});
+		this.findViewById(R.id.tie_image_code).setOnClickListener(
+				new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						View mView = mInflater.inflate(R.layout.code_view, null);
+		            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
+		            	new AbImageDownloader(TieDetailActivity.this).display(imageUserCode,mTie.getQr_code());
+		            	imageUserCode.setOnClickListener(new OnClickListener(){
+							@Override
+							public void onClick(View v) {
+								//点击结束弹出框
+								removeDialog(AbConstant.DIALOGCENTER);
+							}
+						});
+		            	showDialog(AbConstant.DIALOGCENTER, mView);
 					}
 					
 				});
