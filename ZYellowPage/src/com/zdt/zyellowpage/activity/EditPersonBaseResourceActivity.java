@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
+import com.ab.util.AbStrUtil;
 import com.ab.view.ioc.AbIocView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
@@ -36,6 +37,8 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 	EditText tvKeyword;
 	@AbIocView(id = R.id.fullName)
 	EditText tvFullName;
+	@AbIocView(id = R.id.age)
+	EditText tvAge;
 	@AbIocView(id = R.id.nation)
 	EditText tvNation;
 	@AbIocView(id = R.id.telphone)
@@ -63,6 +66,8 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 	ImageButton clearKeyWord;
 	@AbIocView(id = R.id.clearFullName)
 	ImageButton clearFullName;
+	@AbIocView(id = R.id.clearAge)
+	ImageButton clearAge;
 	@AbIocView(id = R.id.clearNation)
 	ImageButton clearNation;
 	@AbIocView(id = R.id.cleartelphone)
@@ -120,6 +125,14 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 
 			@Override
 			public void onClick(View v) {
+				String tempAge = tvAge.getText().toString();
+				if (!AbStrUtil.isEmpty(tempAge)) {
+					if (Integer.valueOf(tempAge) < 10) {
+						showToast("年龄不能小于10岁");
+						return;
+					}
+				}
+
 				// 开始保存
 				newUser = new User();
 				newUser.setKeyword(tvKeyword.getText().toString());
@@ -234,6 +247,7 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 			this.tvSchool.setText(user.getSchool());
 			this.tvTelphone.setText(user.getTelephone());
 			this.tvWebsite.setText(user.getWebsite());
+			this.tvAge.setText(user.getAge());
 			// 绑定区域
 			btnArea.setText(user.getArea_name());
 
@@ -319,6 +333,49 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 			@Override
 			public void onClick(View v) {
 				tvFullName.setText("");
+			}
+		});
+
+		tvAge.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				String str = tvAge.getText().toString().trim();
+				int length = str.length();
+				if (length > 0) {
+					clearAge.setVisibility(View.VISIBLE);
+					clearAge.postDelayed(new Runnable() {
+
+						@Override
+						public void run() {
+							clearFullName.setVisibility(View.INVISIBLE);
+						}
+
+					}, 5000);
+				} else {
+					clearFullName.setVisibility(View.INVISIBLE);
+				}
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
+
+		clearAge.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				tvAge.setText("");
 			}
 		});
 

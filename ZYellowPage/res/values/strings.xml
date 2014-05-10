@@ -72,6 +72,7 @@
     <string name="confirmNewPassword">确认新密码</string>
     <string name="keyword">关键字</string>
     <string name="nation">民族</string>
+    <string name="age">年龄必须大于10岁</string>
     <string name="telphone">电话</string>
     <string name="professional">专业</string>
     <string name="school">毕业学校</string>
@@ -124,7 +125,7 @@
     <string name="data1_unit">单位</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
-    <string name="userName">用户名</string>
+    <string name="userName">请输入手机号码</string>
     <string name="userPwd">密码</string>
     <string name="rem_pwd">记住密码</string>
     <string name="firm_pwd">确认密码</string>
@@ -144,7 +145,7 @@
     <string name="error_name">请输入用户名！</string>
     <string name="error_name_length1">用户名长度不能少于5个字符</string>
     <string name="error_name_length2">用户名长度不能超过28个字符</string>
-    <string name="error_name_expr">用户名只能是邮箱或者手机号</string>
+    <string name="error_name_expr">请输入争取的手机号码</string>
     <string name="error_pwd">请输入密码！</string>
     <string name="error_pwd_match">两次密码输入不一致！</string>
     <string name="error_pwd_length1">密码长度不能少于6个字符</string>

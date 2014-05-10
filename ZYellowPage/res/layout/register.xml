@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:hint="@string/userName"
-                android:inputType="text"
+                android:inputType="phone"
                 android:maxLength="20"
                 android:singleLine="true"
                 android:textColor="@color/gray"
@@ -120,14 +120,6 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:layout_marginTop="10dip" >
-
-            <Spinner
-                android:id="@+id/pwdQuestion"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:prompt="@string/selectPwdQuestion" >
-            </Spinner>
         </RelativeLayout>
 
         <RelativeLayout
@@ -139,11 +131,11 @@
             android:layout_marginTop="10dip" >
 
             <EditText
-                android:id="@+id/pwdAnswer"
+                android:id="@+id/code"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:hint="@string/selectPwdAnswer"
+                android:hint="请输入验证码"
                 android:maxLength="20"
                 android:singleLine="true"
                 android:textColor="@color/gray"
@@ -151,7 +143,7 @@
             </EditText>
 
             <ImageButton
-                android:id="@+id/clearPwdAnswer"
+                android:id="@+id/clearCode"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
@@ -161,38 +153,27 @@
                 android:contentDescription="@string/infoClear"
                 android:visibility="invisible" />
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout04"
+        
+        <LinearLayout
+            android:id="@+id/llLoadCode"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal" >
 
-            <EditText
-                android:id="@+id/fullName"
-                android:layout_width="fill_parent"
+            <Button
+                android:id="@+id/loadCode"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:hint="@string/fullName"
-                android:maxLength="20"
-                android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" >
-            </EditText>
-
-            <ImageButton
-                android:id="@+id/clearFullName"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dip"
-                android:layout_marginTop="12dip"
-                android:background="@drawable/clear_icon"
-                android:contentDescription="@string/infoClear"
-                android:visibility="invisible" />
-        </RelativeLayout>
+                android:background="@drawable/button_selector_blue_light"
+                android:paddingLeft="5dip"
+                android:paddingRight="5dip"
+                android:text="获取验证码"
+                android:textColor="@color/gray_light"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout09"
@@ -211,14 +192,6 @@
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
             android:layout_marginTop="10dip" >
-
-            <Spinner
-                android:id="@+id/sex"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:prompt="@string/selectSex" >
-            </Spinner>
         </RelativeLayout>
 
         <LinearLayout

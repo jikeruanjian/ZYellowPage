@@ -30,7 +30,6 @@ import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
  */
 public class EditTieMessageActivity extends AbActivity {
 	private MyApplication application;
-	private String fullName;
 	AbTitleBar mAbTitleBar;
 	/**
 	 * 请帖ID
@@ -116,23 +115,23 @@ public class EditTieMessageActivity extends AbActivity {
 	}
 
 	private boolean checkInput() {
-		if (etFullname.getText().toString().length() < 0) {
+		if (etFullname.getText().toString().length() <= 0) {
 			showToast("请输入姓名");
 			etFullname.setFocusable(true);
 			etFullname.requestFocus();
 			return false;
-		} else if (etTelephone.getText().toString().length() < 0) {
+		} else if (etTelephone.getText().toString().length() <= 0) {
 			showToast("请输入手机号码，以方便联系");
 			etTelephone.setFocusable(true);
 			etTelephone.requestFocus();
 			return false;
-		} else if (etAmount.getText().toString().length() < 0) {
+		} else if (etAmount.getText().toString().length() <= 0) {
 			showToast("请输入参加人数");
 			etAmount.setFocusable(true);
 			etAmount.requestFocus();
 			return false;
 		} else if (!AbStrUtil.isEmpty(tie_code)
-				&& etCode.getText().toString().length() < 0) {
+				&& etCode.getText().toString().length() <= 0) {
 			showToast("请输入验证码");
 			etCode.setFocusable(true);
 			etCode.requestFocus();

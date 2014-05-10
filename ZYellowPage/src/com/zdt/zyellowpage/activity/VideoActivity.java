@@ -55,6 +55,7 @@ public class VideoActivity extends Activity implements
 		holder = mPreview.getHolder();
 		holder.addCallback(this);
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		path = getIntent().getStringExtra("url");
 	}
 
 	private void playVideo() {
@@ -67,8 +68,10 @@ public class VideoActivity extends Activity implements
 			 * movie atom has to precede all the media data atoms. 2. The clip
 			 * has to be reasonably interleaved.
 			 */
-			path = "http://www.androidbook.com/akc/filestorage/android/documentfiles/3389/movie.mp4";
-			//path = "http://forum.ea3w.com/coll_ea3w/attach/2008_10/12237832415.3gp";
+			// path =
+			// "http://www.androidbook.com/akc/filestorage/android/documentfiles/3389/movie.mp4";
+			// path =
+			// "http://forum.ea3w.com/coll_ea3w/attach/2008_10/12237832415.3gp";
 
 			// Create a new media player and set the listeners
 			mMediaPlayer = new MediaPlayer();

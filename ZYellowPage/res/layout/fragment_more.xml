@@ -8,33 +8,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayoutLogin"
-            android:layout_width="fill_parent"
-            android:layout_height="170dp"
-            android:background="@drawable/user_menu_header" >
-
-            <ImageView
-                android:id="@+id/imageHead"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_above="@+id/buttonlogin"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/btn_person_normal" />
-
-            <Button
-                android:id="@+id/buttonlogin"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="5dp"
-                android:background="#EE7621"
-                android:text="登    录" />
-        </RelativeLayout>
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -42,12 +15,6 @@
             android:background="@drawable/border"
             android:orientation="vertical"
             android:padding="5dp" >
-
-            <LinearLayout
-                android:id="@+id/layoutChangeUserInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
 
                 <RelativeLayout
                     android:id="@+id/layoutChangePwd"
@@ -58,13 +25,13 @@
                     android:gravity="center_vertical" >
 
                     <Button
-                        android:id="@+id/changePwd"
+                        android:id="@+id/tie"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:background="@drawable/button_selector_user"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
-                        android:text="修改密码"
+                        android:text="喜庆专区"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
@@ -87,13 +54,13 @@
                     android:gravity="center_vertical" >
 
                     <Button
-                        android:id="@+id/myFellow"
+                        android:id="@+id/shao"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:background="@drawable/button_selector_user"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
-                        android:text="我的关注"
+                        android:text="扫一扫"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
@@ -115,13 +82,13 @@
                     android:gravity="center_vertical" >
 
                     <Button
-                        android:id="@+id/myResource"
+                        android:id="@+id/clearCache"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:background="@drawable/button_selector_user"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
-                        android:text="我的资料"
+                        android:text="清除缓存"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
@@ -134,29 +101,60 @@
                         android:src="@drawable/index_fh" />
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/layoutLogout"
+                <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dip"
-                    android:layout_marginBottom="60dp" >
+                    android:layout_height="50dp"
+                    android:layout_margin="5dip"
+                    android:background="@drawable/border_bottom"
+                    android:gravity="center_vertical" >
 
                     <Button
-                        android:id="@+id/btnLogout"
+                        android:id="@+id/checkUpdate"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/button_selector_green"
-                        android:text="退出"
-                        android:textColor="@color/white"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/button_selector_user"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:text="版本更新  1.0"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
-                </LinearLayout>
 
-                <View
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="10dp"
+                        android:src="@drawable/index_fh" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rllAboutUs"
                     android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" />
-            </LinearLayout>
+                    android:layout_height="50dp"
+                    android:layout_margin="5dip"
+                    android:background="@drawable/border_bottom"
+                    android:gravity="center_vertical" >
+
+                    <Button
+                        android:id="@+id/aboutUs"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/button_selector_user"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:text="关于我们"
+                        android:textColor="#000000"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="10dp"
+                        android:src="@drawable/index_fh" />
+                </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

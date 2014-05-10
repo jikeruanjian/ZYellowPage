@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:hint="参加人数"
-                android:inputType="numberSigned"
+                android:inputType="number"
                 android:singleLine="true"
                 android:textColor="@color/gray_black"
                 android:textSize="18sp" >

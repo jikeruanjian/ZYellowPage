@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tvAlbum"
                 android:gravity="center_vertical"
-                android:hint="选择图片"
+                android:hint="双击选择图片"
                 android:singleLine="true"
                 android:textColor="@color/gray"
                 android:textSize="18sp" />

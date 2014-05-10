@@ -124,6 +124,20 @@ public class Tie implements Serializable {
 	@Column(name = "time")
 	private String time;
 
+	/**
+	 * 　发布时间
+	 */
+	@Column(name = "qr_code")
+	private String qr_code;
+
+	public String getQr_code() {
+		return qr_code;
+	}
+
+	public void setQr_code(String qr_code) {
+		this.qr_code = qr_code;
+	}
+
 	public int get_id() {
 		return _id;
 	}

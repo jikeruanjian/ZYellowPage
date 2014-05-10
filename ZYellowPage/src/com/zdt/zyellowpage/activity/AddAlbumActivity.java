@@ -179,6 +179,7 @@ public class AddAlbumActivity extends AbActivity {
 					params.put("type", "2");
 					params.put("token", application.mUser.getToken());
 					params.put("file", file);
+					params.put("item_id", "0");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -215,7 +216,7 @@ public class AddAlbumActivity extends AbActivity {
 										album.setSort(etWeight.getText()
 												.toString());
 										album.setUrl(tempPicture.getUrl());
-										// TODO 要添加到相册列表...
+										
 										albumBll.updateAlbum(
 												AddAlbumActivity.this,
 												application.mUser.getToken(),
@@ -227,6 +228,9 @@ public class AddAlbumActivity extends AbActivity {
 															int statusCode,
 															String content) {
 														showToast(content);
+														
+														setResult(RESULT_OK, null);
+														AddAlbumActivity.this.finish();
 													}
 
 													@Override
