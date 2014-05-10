@@ -31,28 +31,19 @@ public class FindPwdActivity extends AbActivity {
 	public static String TAG = "FindPwdActivity";
 	private AbTitleBar mAbTitleBar = null;
 	private AbHttpUtil mabHttpUtil = null;
-
 	private EditText userName = null;
-	private EditText pwdAnswer = null;
-	private EditText userPwd = null;
-	private EditText userPwd2 = null;
 	private ImageButton mClear1;
-	private ImageButton mClear2;
-	private ImageButton mClearPwd;
-	private ImageButton mClearPwd2;
 
 	private String mStr_name = null;
 	private String mStr_pwdAnswer = null;
 	String mStr_pwd = null;
 	String mStr_pwd2 = null;
 
-	private Button findPwdBtn = null;
-	private Spinner spiPwdQuestion = null;
+	private EditText code = null;
+	private Button loadCode = null;
+	private ImageButton mClearCode;
 
-	RelativeLayout layoutSpiPwdQuestion = null;
-	RelativeLayout layoutPwdAnswer = null;
-	RelativeLayout layoutPwd = null;
-	RelativeLayout layoutPwd2 = null;
+	private Button findPwdBtn = null;
 
 	int step = 1;
 	String token = "";
@@ -71,29 +62,10 @@ public class FindPwdActivity extends AbActivity {
 		mAbTitleBar.setLogoLine(R.drawable.line);
 
 		userName = (EditText) this.findViewById(R.id.userName);
-		pwdAnswer = (EditText) this.findViewById(R.id.pwdAnswer);
-		userPwd = (EditText) this.findViewById(R.id.userPwd);
-		userPwd2 = (EditText) this.findViewById(R.id.userPwd2);
-
 		mClear1 = (ImageButton) findViewById(R.id.clearName);
-		mClear2 = (ImageButton) findViewById(R.id.clearPwdAnswer);
-		mClearPwd = (ImageButton) findViewById(R.id.clearPwd);
-		mClearPwd2 = (ImageButton) findViewById(R.id.clearPwd2);
-
-		spiPwdQuestion = (Spinner) findViewById(R.id.pwdQuestion);
-		spiPwdQuestion.setAdapter(ArrayAdapter.createFromResource(this,
-				R.array.pwdQuestions, android.R.layout.simple_spinner_item));
-		spiPwdQuestion.setEnabled(false);
-
-		layoutSpiPwdQuestion = (RelativeLayout) findViewById(R.id.layout02);
-		layoutPwdAnswer = (RelativeLayout) findViewById(R.id.layout03);
-		layoutSpiPwdQuestion.setVisibility(View.GONE);
-		layoutPwdAnswer.setVisibility(View.GONE);
-
-		layoutPwd = (RelativeLayout) findViewById(R.id.layout04);
-		layoutPwd2 = (RelativeLayout) findViewById(R.id.layout05);
-		layoutPwd.setVisibility(View.GONE);
-		layoutPwd2.setVisibility(View.GONE);
+		code = (EditText) this.findViewById(R.id.code);
+		loadCode = (Button) this.findViewById(R.id.loadCode);
+		mClearCode = (ImageButton) findViewById(R.id.clearCode);
 
 		userName.addTextChangedListener(new TextWatcher() {
 
@@ -104,7 +76,6 @@ public class FindPwdActivity extends AbActivity {
 				int length = str.length();
 				if (length > 0) {
 					mClear1.setVisibility(View.VISIBLE);
-
 					mClear1.postDelayed(new Runnable() {
 
 						@Override
@@ -131,160 +102,11 @@ public class FindPwdActivity extends AbActivity {
 			}
 		});
 
-		pwdAnswer.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				String str = pwdAnswer.getText().toString().trim();
-				int length = str.length();
-				if (length > 0) {
-					mClear2.setVisibility(View.VISIBLE);
-					if (AbStrUtil.isContainChinese(str)) {
-						str = str.substring(0, length - 1);
-						pwdAnswer.setText(str);
-						String str1 = pwdAnswer.getText().toString().trim();
-						pwdAnswer.setSelection(str1.length());
-						showToast(R.string.error_email_expr2);
-					}
-					mClear2.postDelayed(new Runnable() {
-
-						@Override
-						public void run() {
-							mClear2.setVisibility(View.INVISIBLE);
-						}
-
-					}, 5000);
-				} else {
-					mClear2.setVisibility(View.INVISIBLE);
-				}
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-
-			}
-		});
-
 		mClear1.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				userName.setText("");
-			}
-		});
-
-		mClear2.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				pwdAnswer.setText("");
-			}
-		});
-
-		mClearPwd.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				userPwd.setText("");
-			}
-		});
-
-		mClearPwd2.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				userPwd2.setText("");
-			}
-		});
-
-		userPwd.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				String str = userPwd.getText().toString().trim();
-				int length = str.length();
-				if (length > 0) {
-					mClearPwd.setVisibility(View.VISIBLE);
-					if (!AbStrUtil.isNumberLetter(str)) {
-						str = str.substring(0, length - 1);
-						userPwd.setText(str);
-						String str1 = userPwd.getText().toString().trim();
-						userPwd.setSelection(str1.length());
-						showToast(R.string.error_name_expr);
-					}
-
-					mClearPwd.postDelayed(new Runnable() {
-
-						@Override
-						public void run() {
-							mClearPwd.setVisibility(View.INVISIBLE);
-						}
-
-					}, 5000);
-				} else {
-					mClearPwd.setVisibility(View.INVISIBLE);
-				}
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-
-			}
-		});
-
-		userPwd2.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				String str = userPwd2.getText().toString().trim();
-				int length = str.length();
-				if (length > 0) {
-					mClearPwd2.setVisibility(View.VISIBLE);
-					if (!AbStrUtil.isNumberLetter(str)) {
-						str = str.substring(0, length - 1);
-						userPwd2.setText(str);
-						String str1 = userPwd2.getText().toString().trim();
-						userPwd2.setSelection(str1.length());
-						showToast(R.string.error_name_expr);
-					}
-					mClearPwd2.postDelayed(new Runnable() {
-
-						@Override
-						public void run() {
-							mClearPwd2.setVisibility(View.INVISIBLE);
-						}
-
-					}, 5000);
-				} else {
-					mClearPwd2.setVisibility(View.INVISIBLE);
-				}
-
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-
 			}
 		});
 

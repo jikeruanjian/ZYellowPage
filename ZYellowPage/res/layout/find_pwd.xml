@@ -47,89 +47,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/layout02"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
-            android:visibility="gone" >
-
-            <Spinner
-                android:id="@+id/pwdQuestion"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:prompt="@string/selectPwdQuestion" >
-            </Spinner>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout03"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
-
-            <EditText
-                android:id="@+id/pwdAnswer"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:hint="@string/selectPwdAnswer"
-                android:maxLength="20"
-                android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" >
-            </EditText>
-
-            <ImageButton
-                android:id="@+id/clearPwdAnswer"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dip"
-                android:layout_marginTop="12dip"
-                android:background="@drawable/clear_icon"
-                android:contentDescription="@string/infoClear"
-                android:visibility="invisible" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout04"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
-
-            <EditText
-                android:id="@+id/userPwd"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:hint="@string/userPwd"
-                android:inputType="textPassword"
-                android:maxLength="20"
-                android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" >
-            </EditText>
-
-            <ImageButton
-                android:id="@+id/clearPwd"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dip"
-                android:layout_marginTop="12dip"
-                android:background="@drawable/clear_icon"
-                android:contentDescription="@string/infoClear"
-                android:visibility="invisible" />
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/layout05"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -138,12 +55,11 @@
             android:layout_marginTop="10dip" >
 
             <EditText
-                android:id="@+id/userPwd2"
+                android:id="@+id/code"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:hint="@string/firm_pwd"
-                android:inputType="textPassword"
+                android:hint="请输入验证码"
                 android:maxLength="20"
                 android:singleLine="true"
                 android:textColor="@color/gray"
@@ -151,7 +67,7 @@
             </EditText>
 
             <ImageButton
-                android:id="@+id/clearPwd2"
+                android:id="@+id/clearCode"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
@@ -161,6 +77,27 @@
                 android:contentDescription="@string/infoClear"
                 android:visibility="invisible" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llLoadCode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/loadCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_selector_blue_light"
+                android:paddingLeft="5dip"
+                android:paddingRight="5dip"
+                android:text="获取验证码"
+                android:textColor="@color/gray_light"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btnLayout"
