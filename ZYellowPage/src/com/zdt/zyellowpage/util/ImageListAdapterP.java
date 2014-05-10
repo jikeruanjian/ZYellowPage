@@ -138,12 +138,9 @@ public class ImageListAdapterP extends BaseAdapter {
 		if (!AbStrUtil.isEmpty(Member_id)) {
 			holder.itemsBtn.setOnClickListener(new MyBtnListener(Member_id));
 		}
-		holder.itemsTitle.setOnClickListener(new MyTitileListener((String) obj
-				.get("Member_id")));
-		holder.itemsText.setOnClickListener(new MyTitileListener((String) obj
-				.get("Member_id")));
-		holder.itemsIcon.setOnClickListener(new MyTitileListener((String) obj
-				.get("Member_id")));
+		//holder.itemsTitle.setOnClickListener(new MyTitileListener((String) obj.get("Member_id")));
+		//holder.itemsText.setOnClickListener(new MyTitileListener((String) obj.get("Member_id")));
+		//holder.itemsIcon.setOnClickListener(new MyTitileListener((String) obj.get("Member_id")));
 		return convertView;
 	}
 

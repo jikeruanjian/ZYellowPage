@@ -37,6 +37,7 @@
                     android:orientation="vertical" >
 
                     <LinearLayout
+                        android:id="@+id/tie_remark_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -44,7 +45,7 @@
                         android:background="@drawable/border">
 
                         <TextView
-                            android:id="@+id/textView1"
+                            android:id="@+id/tie_remark_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -62,6 +63,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/tie_other_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -69,7 +71,7 @@
                         android:background="@drawable/border">
 
                         <TextView
-                            android:id="@+id/TextView02"
+                            android:id="@+id/tie_other_TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -87,6 +89,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/tie_content_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -94,7 +97,7 @@
                         android:background="@drawable/border">
 
                         <TextView
-                            android:id="@+id/TextView05"
+                            android:id="@+id/tie_content_TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -114,12 +117,13 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/tie_time_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip" >
 
                         <TextView
-                            android:id="@+id/TextView05"
+                            android:id="@+id/tie_time_TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="吉日："
@@ -135,12 +139,13 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/tie_phone_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip" >
 
                         <TextView
-                            android:id="@+id/TextView05"
+                            android:id="@+id/tie_phone_TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="电话："
@@ -156,12 +161,13 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/tie_address_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip" >
 
                         <TextView
-                            android:id="@+id/TextView05"
+                            android:id="@+id/tie_address_TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="地点："
@@ -176,6 +182,7 @@
                             android:textSize="18sp" />
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/tie_more_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -183,12 +190,12 @@
                         android:background="@drawable/border" >
 
                         <TextView
-                            android:id="@+id/TextView05"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tie_more_TextView"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
-                            android:text="更多"
+                            android:text="更多▼"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 

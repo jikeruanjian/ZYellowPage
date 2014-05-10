@@ -6,7 +6,9 @@
     <RelativeLayout
         android:id="@+id/itemsImage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:descendantFocusability="blocksDescendants"
+        >
 
         <ProgressBar
             android:id="@+id/progressBar"  
@@ -63,6 +65,7 @@
         android:background="@color/orange_background"
         android:padding="3dp"
         android:text="+关注"
+        android:focusable="false"
         android:textColor="#FFFFFF" />
 
 </RelativeLayout>

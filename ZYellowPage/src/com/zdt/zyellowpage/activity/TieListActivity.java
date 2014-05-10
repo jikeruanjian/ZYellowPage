@@ -195,6 +195,8 @@ public class TieListActivity extends AbActivity {
 						TieDetailActivity.class);
 				intent.putExtra("ITEM_ID",
 						list.get(position - 1).get("item_id").toString());
+				intent.putExtra("TIE_TYPE",
+						newOrPoTextView.getText().toString());
 				startActivity(intent);
 			}
 		});
@@ -243,6 +245,7 @@ public class TieListActivity extends AbActivity {
 						int position, long arg3) {
 					list.clear();
 					type = position + 1 + "";
+					newOrPoTextView .setText(NewOrPops[position]);
 					getData(0);
 					popupWindow.dismiss();
 					popupWindow = null;
