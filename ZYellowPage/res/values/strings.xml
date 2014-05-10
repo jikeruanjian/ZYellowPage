@@ -142,10 +142,10 @@
     <string name="user_newpwd">新密码</string>
     <string name="user_newpwd2">确认新密码</string>
     <string name="user_email">邮箱</string>
-    <string name="error_name">请输入用户名！</string>
+    <string name="error_name">请输入手机号码！</string>
     <string name="error_name_length1">用户名长度不能少于5个字符</string>
     <string name="error_name_length2">用户名长度不能超过28个字符</string>
-    <string name="error_name_expr">请输入争取的手机号码</string>
+    <string name="error_name_expr">请输入正确的手机号码</string>
     <string name="error_pwd">请输入密码！</string>
     <string name="error_pwd_match">两次密码输入不一致！</string>
     <string name="error_pwd_length1">密码长度不能少于6个字符</string>

@@ -25,10 +25,12 @@ import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.google.gson.Gson;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.bll.LoginBll;
 import com.zdt.zyellowpage.dao.UserInsideDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.BaseResponseEntity;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 
 public class RegisterActivity extends AbActivity {
@@ -80,7 +82,50 @@ public class RegisterActivity extends AbActivity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				final String mStr_name = userName.getText().toString().trim();
+				if (TextUtils.isEmpty(mStr_name)) {
+					showToast(R.string.error_name);
+					userName.setFocusable(true);
+					userName.requestFocus();
+					return;
+				}
+
+				if (!AbStrUtil.isMobileNo(mStr_name)) {
+					showToast(R.string.error_name_expr);
+					userName.setFocusable(true);
+					userName.requestFocus();
+					return;
+				}
+
+				new LoginBll().getCode(RegisterActivity.this, mStr_name, "0",
+						new ZzStringHttpResponseListener() {
+
+							@Override
+							public void onSuccess(int statusCode, String content) {
+								showToast(content);
+							}
+
+							@Override
+							public void onStart() {
+								showProgressDialog("正在向你手机发送验证码...");
+							}
+
+							@Override
+							public void onFinish() {
+								removeProgressDialog();
+							}
+
+							@Override
+							public void onFailure(int statusCode,
+									String content, Throwable error) {
+								showToast(content);
+							}
+
+							@Override
+							public void onErrorData(String status_description) {
+								showToast(status_description);
+							}
+						});
 
 			}
 		});
