@@ -86,7 +86,8 @@ public class FragmentUser extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				System.exit(0);
+				application.mUser = null;
+				FragmentUser.this.onResume();
 			}
 		});
 
@@ -107,11 +108,21 @@ public class FragmentUser extends Fragment {
 			new AbImageDownloader(mActivity).display(imageUserLogo,
 					application.mUser.getLogo());
 		}
-		if (application.mUser != null && application.mUser.getToken() != null) {
+		if(application.mUser != null && application.mUser.getToken() != null) {
 			btnLogin.setVisibility(View.GONE);
+			view.findViewById(R.id.after_Login_layout).setVisibility(
+					View.VISIBLE);
 			view.findViewById(R.id.layoutChangeUserInfo).setVisibility(
 					View.VISIBLE);
 
+		}
+		else{
+			imageUserLogo.setBackgroundResource(R.drawable.btn_person_normal);
+			btnLogin.setVisibility(View.VISIBLE);
+			view.findViewById(R.id.after_Login_layout).setVisibility(
+					View.GONE);
+			view.findViewById(R.id.layoutChangeUserInfo).setVisibility(
+					View.GONE);
 		}
 	}
 

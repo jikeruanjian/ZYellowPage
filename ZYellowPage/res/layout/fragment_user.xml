@@ -36,12 +36,14 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/after_Login_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dip"
             android:background="@drawable/border"
             android:orientation="vertical"
-            android:padding="5dp" >
+            android:padding="5dp" 
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/layoutChangeUserInfo"
