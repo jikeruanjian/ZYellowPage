@@ -2,6 +2,7 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -46,6 +47,9 @@ import com.baidu.mapapi.search.MKSuggestionResult;
 import com.baidu.mapapi.search.MKTransitRoutePlan;
 import com.baidu.mapapi.search.MKTransitRouteResult;
 import com.baidu.mapapi.search.MKWalkingRouteResult;
+import com.baidu.navisdk.BaiduNaviManager;
+import com.baidu.navisdk.BaiduNaviManager.OnStartNavigationListener;
+import com.baidu.navisdk.comapi.routeplan.RoutePlanParams.NE_RoutePlan_Mode;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.global.MyApplication;
@@ -354,6 +358,9 @@ public class CompanyMapActiviy extends AbActivity {
 		case R.id.btn_BusStation: {//附近公交
 			this.findViewById(R.id.btn_BusStation).setBackgroundColor(
 					Color.rgb(255, 127, 0));
+			if (poiPoint != null) {
+			launchNavigator();
+			}
 			break;
 		}
 		default:
@@ -361,7 +368,31 @@ public class CompanyMapActiviy extends AbActivity {
 		}
 
 	}
-
+	/**
+	 * 启动GPS导航. 前置条件：导航引擎初始化成功
+	 */
+	private void launchNavigator(){
+		//这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
+		BaiduNaviManager.getInstance().launchNavigator(this, 
+				locData.latitude,locData.longitude,"起点", 
+				Double.valueOf(latitude), Double.valueOf(Longitude),userCompanyFullName,
+				NE_RoutePlan_Mode.ROUTE_PLAN_MOD_MIN_TIME, 		 //算路方式
+				true, 									   		 //真实导航
+				BaiduNaviManager.STRATEGY_FORCE_ONLINE_PRIORITY, //在离线策略
+				new OnStartNavigationListener() {				 //跳转监听
+					
+					@Override
+					public void onJumpToNavigator(Bundle configParams) {
+						Intent intent = new Intent(CompanyMapActiviy.this, BNavigatorActivity.class);
+						intent.putExtras(configParams);
+				        startActivity(intent);
+					}
+					
+					@Override
+					public void onJumpToDownloader() {
+					}
+				});
+	}
 	class MyLocationListener implements BDLocationListener {
 		@Override
 		// 定位获取经纬度
