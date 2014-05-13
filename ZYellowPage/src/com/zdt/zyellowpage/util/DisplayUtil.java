@@ -11,10 +11,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 public class DisplayUtil {
@@ -368,6 +371,26 @@ public class DisplayUtil {
 		return new BitmapDrawable(res, newbmp); // 把 bitmap 转换成 drawable 并返回
 	}
     
+	public  void setListViewHeightBasedOnChildren(ListView listView, int attHeight) {  
+        ListAdapter listAdapter = listView.getAdapter();   
+        if (listAdapter == null) {  
+            // pre-condition  
+            return;  
+        }  
+  
+        int totalHeight = 0;  
+        for (int i = 0; i < listAdapter.getCount(); i++) {  
+            View listItem = listAdapter.getView(i, null, listView);  
+            listItem.measure(0, 0);  
+            totalHeight += listItem.getMeasuredHeight();  
+        }  
+  
+        ViewGroup.LayoutParams params = listView.getLayoutParams();  
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1)) + attHeight;  
+        listView.setLayoutParams(params);  
+    }  
+
+
 	public int getWindowWidth() {
 		return windowWidth;
 	}

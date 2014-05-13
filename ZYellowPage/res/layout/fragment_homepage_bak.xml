@@ -53,6 +53,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" >
 
+                        <ImageButton
+                            android:id="@+id/imageButtonMovie"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/imagebtn_movie" />
+
                         <TextView
                             android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
@@ -60,17 +66,9 @@
                             android:layout_alignBottom="@+id/imageButtonMovie"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="5dp"
-                            android:text="旅游"
+                            android:text="电影"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
-
-                        <ImageButton
-                            android:id="@+id/imageButtonMovie"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
-                            android:background="@drawable/imagebtn_movie" />
 
                     </RelativeLayout>
 
@@ -143,7 +141,7 @@
                             android:layout_alignBottom="@+id/imageButtonNewInfo"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="5dp"
-                            android:text="生活服务"
+                            android:text="今日新单"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 
@@ -166,7 +164,7 @@
                             android:layout_alignBottom="@+id/imageButtonCash"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="5dp"
-                            android:text="运动健身"
+                            android:text="代金券"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 
@@ -189,7 +187,7 @@
                             android:layout_alignBottom="@+id/imageButtonPeople"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="5dp"
-                            android:text="丽人"
+                            android:text="个人列表"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 
@@ -231,7 +229,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
@@ -259,16 +257,68 @@
                         android:textColorHint="@color/black"
                         android:textSize="24dp" />
 
-                    <ListView
-                        android:id="@+id/mListViewB"
-                        android:layout_width="fill_parent"
+                    <RelativeLayout
+                        android:id="@+id/LinearLayouthot"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:cacheColorHint="#00000000"
-                        android:divider="@drawable/list_divider"
-                        android:dividerHeight="1dip"
-                        android:fastScrollEnabled="true" >
-                    </ListView>
+                        android:layout_marginBottom="5dip"
+                        android:layout_marginLeft="8dip"
+                        android:layout_marginRight="8dip"
+                        android:layout_marginTop="5dip"
+                        android:background="@drawable/layout_press" >
 
+                        <ImageView
+                            android:id="@+id/imageViewhot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dip"
+                            android:layout_toRightOf="@id/imageViewhot"
+                            android:src="@drawable/icon_120" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dip"
+                            android:layout_toRightOf="@id/imageViewhot"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/textViewBusinessHot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:focusableInTouchMode="true"
+                                android:gravity="center_vertical"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:text="指点通传媒有限公司"
+                                android:textColor="@color/black"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/textViewBusinessConetentHot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="top"
+                                android:lines="2"
+                                android:text="二维码、超市、指点通、手机黄页…"
+                                android:textColor="@color/gray_black"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnConcernHotBussiness"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/window_bg"
+                            android:text="+关注" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -293,15 +343,66 @@
                         android:textColor="@color/textview_color"
                         android:textSize="24dp" />
 
-                    <ListView
-                        android:id="@+id/mListViewP"
-                        android:layout_width="fill_parent"
+                    <RelativeLayout
+                        android:id="@+id/LinearLayoutPerson"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:cacheColorHint="#00000000"
-                        android:divider="@drawable/list_divider"
-                        android:dividerHeight="1dip"
-                        android:fastScrollEnabled="true" >
-                    </ListView>
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginLeft="8dip"
+                        android:layout_marginRight="8dip"
+                        android:layout_marginTop="5dip" 
+                        android:background="@drawable/layout_press">
+
+                        <ImageView
+                            android:id="@+id/imageViewPerson"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dip"
+                            android:src="@drawable/icon_120" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="5dp"
+                            android:layout_toRightOf="@+id/imageViewPerson"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/textViewPersonHot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="marquee"
+                                android:focusableInTouchMode="true"
+                                android:gravity="center_vertical"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:text="指点通传媒有限公司"
+                                android:textColor="@color/black"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/textViewPersonContentHot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="top"
+                                android:text="二维码、超市、指点通、手机黄页…"
+                                android:textColor="@color/gray_black"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnConcernHotPerson"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/window_bg"
+                            android:text="+关注" />
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
             <!-- </ScrollView> -->

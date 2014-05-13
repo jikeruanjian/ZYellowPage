@@ -81,8 +81,8 @@ public class ImageListAdapterGZ extends BaseAdapter{
         mAbImageDownloader.setHeight(100);
         mAbImageDownloader.setType(AbConstant.SCALEIMG);
         mAbImageDownloader.setLoadingImage(R.drawable.image_loading);
-        mAbImageDownloader.setErrorImage(R.drawable.image_error);
-        mAbImageDownloader.setNoImage(R.drawable.image_no);
+        mAbImageDownloader.setErrorImage(R.drawable.nopic);
+        mAbImageDownloader.setNoImage(R.drawable.nopic);
         //mAbImageDownloader.setAnimation(true);
     }   
     
@@ -117,7 +117,7 @@ public class ImageListAdapterGZ extends BaseAdapter{
 			   holder.itemsTitle = ((TextView) convertView.findViewById(mTo[1]));
 			   holder.itemsText = ((TextView) convertView.findViewById(mTo[2]));
 			   holder.itemsBtn = ((Button) convertView.findViewById(mTo[3]));
-			   holder.itemsBtn.setText("-取消关注");
+			   holder.itemsBtn.setText("-取消");
 			   convertView.setTag(holder);
           }else{
         	   holder = (ViewHolder) convertView.getTag();

@@ -24,8 +24,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                 android:drawableLeft="@drawable/changecity"
+                 android:drawableLeft="@drawable/changecity1"
                 android:gravity="center"
+                android:maxLength="3"
                 android:text="昆明"
                 android:textColor="#FFFFFF"
                 android:textSize="15dp" />

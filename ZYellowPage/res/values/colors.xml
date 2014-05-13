@@ -26,4 +26,6 @@
 	<color name="selected">#fff33fff</color>  
 	<color name="focused">#ffff44ff</color>  
     <color name="selectclass">#cccccc</color>  
+    <color name="propertyname">#9d9d9d</color>  
+    <color name="propertyvalue">#393939</color>  
 </resources>
