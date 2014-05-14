@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.ab.activity.AbActivity;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
@@ -50,7 +52,7 @@ public class CertificateListActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		listCertificate = new ArrayList<Certificate>();
 		// 获取ListView对象
@@ -301,6 +303,7 @@ public class CertificateListActivity extends AbActivity {
 
 		View rightViewMore = mInflater.inflate(R.layout.more_btn, null);
 		mAbTitleBar.addRightView(rightViewMore);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		Button btnAdd = (Button) rightViewMore.findViewById(R.id.moreBtn);
 		btnAdd.setBackgroundResource(R.drawable.add);

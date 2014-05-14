@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +71,7 @@ public class EditAlbumActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+//		mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		initTitleRightLayout();
 
@@ -253,6 +254,7 @@ public class EditAlbumActivity extends AbActivity {
 	private void initTitleRightLayout() {
 		View rightViewMore = mInflater.inflate(R.layout.more_btn, null);
 		mAbTitleBar.addRightView(rightViewMore);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		Button moreBtn = (Button) rightViewMore.findViewById(R.id.moreBtn);
 		moreBtn.setOnClickListener(new OnClickListener() {
 

@@ -44,9 +44,9 @@ public class SelectAreaActivity extends AbActivity {
 		mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText(R.string.selectArea);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
-		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
+		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 
 		spiProvince = (Spinner) findViewById(R.id.spiProvince);
 		spiCity = (Spinner) findViewById(R.id.spiCity);

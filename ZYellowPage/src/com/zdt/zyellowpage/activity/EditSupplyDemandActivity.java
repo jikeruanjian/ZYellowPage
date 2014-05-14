@@ -5,6 +5,7 @@ import java.util.List;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -48,9 +49,9 @@ public class EditSupplyDemandActivity extends AbActivity {
 		mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText(fullName);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
-		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
+		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+//		mAbTitleBar.setLogoLine(R.drawable.line);
 
 		initTitleRightLayout();
 		spiType.setAdapter(ArrayAdapter.createFromResource(this, R.array.type,
@@ -107,7 +108,7 @@ public class EditSupplyDemandActivity extends AbActivity {
 		tvSave.setTextColor(Color.WHITE);
 		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		mAbTitleBar.addRightView(tvSave);
-
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		tvSave.setOnClickListener(new OnClickListener() {
 
 			@Override

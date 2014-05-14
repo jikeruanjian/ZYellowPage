@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -58,7 +59,8 @@ public class TieListActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		application = (MyApplication) abApplication;
 		initSpinner();
 		myPopupWindow = new MyPopupWindowB(TieListActivity.this, "1");
@@ -190,13 +192,13 @@ public class TieListActivity extends AbActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//sTieListActivity.this.showToast(list.get(position-1).get("item_id").toString());
+				// sTieListActivity.this.showToast(list.get(position-1).get("item_id").toString());
 				Intent intent = new Intent(TieListActivity.this,
 						TieDetailActivity.class);
-				intent.putExtra("ITEM_ID",
-						list.get(position - 1).get("item_id").toString());
-				intent.putExtra("TIE_TYPE",
-						newOrPoTextView.getText().toString());
+				intent.putExtra("ITEM_ID", list.get(position - 1)
+						.get("item_id").toString());
+				intent.putExtra("TIE_TYPE", newOrPoTextView.getText()
+						.toString());
 				startActivity(intent);
 			}
 		});
@@ -245,7 +247,7 @@ public class TieListActivity extends AbActivity {
 						int position, long arg3) {
 					list.clear();
 					type = position + 1 + "";
-					newOrPoTextView .setText(NewOrPops[position]);
+					newOrPoTextView.setText(NewOrPops[position]);
 					getData(0);
 					popupWindow.dismiss();
 					popupWindow = null;

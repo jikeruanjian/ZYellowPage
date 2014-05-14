@@ -157,7 +157,6 @@ public class MyResourceActivity extends AbActivity {
 					intent.putExtra("isEdit", true);
 					startActivity(intent);
 				} else if (selectedItem.equals("图片展示")) {
-					// TODO 图片瀑布流
 					Intent intent = null;
 					intent = new Intent(MyResourceActivity.this,
 							EditAlbumActivity.class);
