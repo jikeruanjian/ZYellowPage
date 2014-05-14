@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -84,10 +85,11 @@ public class AddAlbumActivity extends AbActivity {
 
 		mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText(getIntent().getStringExtra("title"));
+		mAbTitleBar.setTitleText("图片展示");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		initTitleRightLayout();
 
@@ -166,11 +168,11 @@ public class AddAlbumActivity extends AbActivity {
 		tvSave.setTextColor(Color.WHITE);
 		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		mAbTitleBar.addRightView(tvSave);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		tvSave.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO 保存
 				AbRequestParams params = new AbRequestParams();
 				try {
 					File file = new File(etAlbum.getText().toString());
@@ -216,7 +218,7 @@ public class AddAlbumActivity extends AbActivity {
 										album.setSort(etWeight.getText()
 												.toString());
 										album.setUrl(tempPicture.getUrl());
-										
+
 										albumBll.updateAlbum(
 												AddAlbumActivity.this,
 												application.mUser.getToken(),
@@ -228,9 +230,11 @@ public class AddAlbumActivity extends AbActivity {
 															int statusCode,
 															String content) {
 														showToast(content);
-														
-														setResult(RESULT_OK, null);
-														AddAlbumActivity.this.finish();
+
+														setResult(RESULT_OK,
+																null);
+														AddAlbumActivity.this
+																.finish();
 													}
 
 													@Override

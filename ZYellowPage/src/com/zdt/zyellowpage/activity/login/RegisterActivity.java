@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -67,9 +68,10 @@ public class RegisterActivity extends AbActivity {
 		mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText(R.string.register_name);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
-		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
+		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		userName = (EditText) this.findViewById(R.id.userName);
 		userPwd = (EditText) this.findViewById(R.id.userPwd);
@@ -150,7 +152,8 @@ public class RegisterActivity extends AbActivity {
 												}
 											};
 											timer.schedule(tt, 0, 1000);
-											showToast(bre.getStatus_description());
+											showToast(bre
+													.getStatus_description());
 										} else {
 											showToast(bre
 													.getStatus_description());

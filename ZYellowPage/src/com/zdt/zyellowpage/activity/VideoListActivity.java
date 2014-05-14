@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -49,9 +50,10 @@ public class VideoListActivity extends AbActivity {
 		AbTitleBar mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText("视频列表");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
-		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
+		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		// 获取ListView对象
 		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListView);

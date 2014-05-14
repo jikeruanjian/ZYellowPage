@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -91,9 +92,9 @@ public class AddPhotoActivity extends AbActivity {
 		mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText(getIntent().getStringExtra("title"));
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
-		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
+		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+//		mAbTitleBar.setLogoLine(R.drawable.line);
 		// 获取Http工具类
 		mAbHttpUtil = AbHttpUtil.getInstance(this);
 
@@ -198,6 +199,7 @@ public class AddPhotoActivity extends AbActivity {
 		tvSave.setTextColor(Color.WHITE);
 		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		mAbTitleBar.addRightView(tvSave);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		// 文件上传
 		tvSave.setOnClickListener(new View.OnClickListener() {
