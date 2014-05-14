@@ -158,6 +158,7 @@
         <activity
             android:name="com.zdt.zyellowpage.activity.BNavigatorActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"/>
+        <activity android:name="com.zdt.zyellowpage.activity.AllClassActivity"/>
     </application>
 
     <supports-screens

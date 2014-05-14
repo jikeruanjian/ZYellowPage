@@ -17,9 +17,9 @@
     <color name="transparent">#00000000</color>
     <color name="window_bg">#FE7C00</color>
     <color name="crop_background">#737373</color>
-    <color name="orange_background">#FF7F00</color>
+    <color name="orange_background">#FF720B</color>
     <color name="splash_bg">#FFFC01</color>
-    <color name="main_menu_bg">#3C3C3C</color>
+    <color name="main_menu_bg">#F7F7F7</color>
 	<color name="white">#ffffffff</color>  
 	<color name="unfocused">#cccccccc</color>  
 	<color name="pressed">#fff22fff</color>  

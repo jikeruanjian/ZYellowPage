@@ -88,7 +88,8 @@ public class PopBusinessListActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
+		//mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		cityId = application.cityid;
 		keyId = typeId;//"list-hot";

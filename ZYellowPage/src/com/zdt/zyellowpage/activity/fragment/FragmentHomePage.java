@@ -29,6 +29,7 @@ import com.ab.bitmap.AbImageDownloader;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.AllClassActivity;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 import com.zdt.zyellowpage.activity.CompanyBuySellActivity;
 import com.zdt.zyellowpage.activity.CompanyMapActiviy;
@@ -199,7 +200,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 				//PopBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
 				Intent intent = new Intent(mActivity,
 						 BusinessDetailActivity.class);
-				 intent.putExtra("MEMBER_ID", listB.get(position-1).get("Member_id").toString());
+				 intent.putExtra("MEMBER_ID", listB.get(position).get("Member_id").toString());
 				 startActivity(intent);
 			}
 		});
@@ -432,7 +433,9 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonAll:
-			 showPopWindows();
+			//showPopWindows();
+			intent = new Intent(mActivity, AllClassActivity.class);
+			 startActivity(intent);
 			break;
 		case R.id.imageButtonPeople:
 			 intent = new Intent(mActivity,

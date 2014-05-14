@@ -3,6 +3,7 @@ package com.zdt.zyellowpage.activity;
 import java.util.List;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -35,8 +36,8 @@ public class BuySellContentActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
-
+		//mAbTitleBar.setLogoLine(R.drawable.line);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		webContent = (WebView) this.findViewById(R.id.content);
 		tvTitle = (TextView) this.findViewById(R.id.title);
 		tvTime = (TextView) this.findViewById(R.id.time);

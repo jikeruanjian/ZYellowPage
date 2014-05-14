@@ -20,6 +20,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -96,7 +97,7 @@ public class BusinessDetailActivity extends AbActivity {
 				mAbTitleBar.setLogo(R.drawable.button_selector_back);
 				mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 				mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-				mAbTitleBar.setLogoLine(R.drawable.line);
+				//mAbTitleBar.setLogoLine(R.drawable.line);
 				userCompany = new User();
 				getData();
 
@@ -147,6 +148,8 @@ public class BusinessDetailActivity extends AbActivity {
 		InitTextView();
 		InitViewPager();
 		InitTitleView();
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
+		
 	}
 	
 	

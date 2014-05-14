@@ -94,8 +94,9 @@ public class TieDetailActivity extends AbActivity {
 				mAbTitleBar.setLogo(R.drawable.button_selector_back);
 				mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 				mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-				mAbTitleBar.setLogoLine(R.drawable.line);
+			//	mAbTitleBar.setLogoLine(R.drawable.line);
 				initTypeView();
+				mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 			}
 		}
 		

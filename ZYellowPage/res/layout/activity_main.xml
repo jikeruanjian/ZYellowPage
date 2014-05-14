@@ -82,7 +82,7 @@
                 android:gravity="center"
                 android:text="附近商家"
                 android:textColor="@color/white"
-                android:textSize="30dp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,7 +100,7 @@
                 android:gravity="center"
                 android:text="个人中心"
                 android:textColor="@color/white"
-                android:textSize="30dp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +118,7 @@
                 android:gravity="center"
                 android:text="更多"
                 android:textColor="@color/white"
-                android:textSize="30dp"
+                android:textSize="20sp"
                 android:visibility="visible" />
         </LinearLayout>
     </LinearLayout>
@@ -176,7 +176,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:background="@color/main_menu_bg"
+        android:background="@color/gray_white"
         android:orientation="horizontal" >
 
         <RadioButton
@@ -185,7 +185,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="5.0dip"
             android:drawableTop="@drawable/main_home_bg"
-            android:text="首页" />
+            android:text="首页"
+            android:textColor="@color/crop_background" />
 
         <RadioButton
             android:id="@+id/radio_buttonNear"
@@ -193,15 +194,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="5.0dip"
             android:drawableTop="@drawable/main_near_bg"
-            android:text="附近" />
-
-        <RadioButton
-            android:id="@+id/radio_buttonUser"
-            style="@style/main_tab_bottom"
-            android:layout_gravity="center"
-            android:layout_marginTop="5.0dip"
-            android:drawableTop="@drawable/main_user_bg"
-            android:text="我的" />
+            android:text="附近"
+            android:textColor="@color/crop_background" />
 
         <RadioButton
             android:id="@+id/radio_buttonMore"
@@ -209,7 +203,18 @@
             android:layout_gravity="center"
             android:layout_marginTop="5.0dip"
             android:drawableTop="@drawable/main_more_bg"
-            android:text="更多" />
+            android:text="喜庆"
+            android:textColor="@color/crop_background" />
+
+        <RadioButton
+            android:id="@+id/radio_buttonUser"
+            style="@style/main_tab_bottom"
+            android:layout_gravity="center"
+            android:layout_marginTop="5.0dip"
+            android:drawableTop="@drawable/main_user_bg"
+            android:text="我的"
+            android:textColor="@color/crop_background" />
+
     </RadioGroup>
 
 </RelativeLayout>
