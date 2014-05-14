@@ -1,12 +1,15 @@
 package com.zdt.zyellowpage.activity.login;
 
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -23,10 +26,9 @@ import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
-import com.google.gson.Gson;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity;
 import com.zdt.zyellowpage.bll.LoginBll;
-import com.zdt.zyellowpage.dao.UserInsideDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.BaseResponseEntity;
@@ -50,6 +52,10 @@ public class RegisterActivity extends AbActivity {
 	private ImageButton mClearCode;
 
 	private AbTitleBar mAbTitleBar = null;
+	private int time = 60;
+	Timer timer;
+
+	private Handler handler = new Handler();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -102,7 +108,63 @@ public class RegisterActivity extends AbActivity {
 
 							@Override
 							public void onSuccess(int statusCode, String content) {
-								showToast(content);
+								if (content != null && !content.equals("")) {
+									Log.i(TAG, content);
+									JSONObject jo = null;
+									BaseResponseEntity bre = new BaseResponseEntity();
+									// 转换数据
+									try {
+										jo = new JSONObject(content);
+										bre.setResult(jo.getString("result"));
+										bre.setSuccess(jo.getBoolean("success"));
+										bre.setStatus(jo.getInt("status"));
+										bre.setStatus_description(jo
+												.getString("status_description"));
+
+										if (bre.getSuccess()) {
+											loadCode.setEnabled(false);
+											if (timer == null)
+												timer = new Timer();
+											TimerTask tt = new TimerTask() {
+
+												@Override
+												public void run() {
+													handler.post(new Runnable() {
+
+														@Override
+														public void run() {
+
+															time--;
+															if (time > 0)
+																loadCode.setText(time
+																		+ "秒后获取");
+															else {
+																time = 60;
+																timer.cancel();
+																timer = null;
+																loadCode.setText("获取验证码");
+																loadCode.setEnabled(true);
+															}
+														}
+													});
+												}
+											};
+											timer.schedule(tt, 0, 1000);
+											showToast(bre.getStatus_description());
+										} else {
+											showToast(bre
+													.getStatus_description());
+											return;
+										}
+
+									} catch (JSONException e) {
+										e.printStackTrace();
+										showToast("异常：" + e.getMessage());
+										return;
+									}
+								} else {
+									showToast("数据请求失败！");
+								}
 							}
 
 							@Override
@@ -224,6 +286,13 @@ public class RegisterActivity extends AbActivity {
 				return;
 			}
 
+			if (AbStrUtil.strLength(code.getText().toString().trim()) < 6) {
+				showToast("请输入正确的验证码");
+				code.setFocusable(true);
+				code.requestFocus();
+				return;
+			}
+
 			// 提交数据
 			mAbHttpUtil = AbHttpUtil.getInstance(RegisterActivity.this);
 
@@ -263,32 +332,11 @@ public class RegisterActivity extends AbActivity {
 									if (bre.getSuccess()) {
 										JSONObject data = jo
 												.getJSONObject("data");
-										User user = new Gson().fromJson(
-												data.toString(), User.class);
-										user.setLoginUser(true);
-										user.setPassword(mStr_pwd);
-										user.setUsername(mStr_name);
+										User user = new User();
+										user.setToken(data.getString("token"));
+										user.setUsername(data
+												.getString("username"));
 										user.setArea_id(application.cityid);
-										user.setLoginUser(true);
-
-										UserInsideDao userDao = new UserInsideDao(
-												RegisterActivity.this);
-										userDao.startReadableDatabase(false);
-										List<User> lisUser = userDao.queryList(
-												"member_id=?",
-												new String[] { user
-														.getMember_id() });
-										userDao.closeDatabase(false);
-
-										userDao.startWritableDatabase(false);
-										if (lisUser != null
-												&& lisUser.size() > 0) {
-											user.set_id(lisUser.get(0).get_id());
-											userDao.update(user);
-										} else {
-											userDao.insert(user);
-										}
-										userDao.closeDatabase(false);
 
 										application.mUser = user;
 
@@ -313,6 +361,14 @@ public class RegisterActivity extends AbActivity {
 													Constant.FIRSTSTART, false);
 											editor.commit();
 										}
+										showToast("注册成功，请填写个人资料");
+
+										// 跳转到个人资料修改界面
+										Intent intent = new Intent(
+												RegisterActivity.this,
+												EditPersonBaseResourceActivity.class);
+										startActivity(intent);
+										RegisterActivity.this.finish();
 									} else {
 										showToast(bre.getStatus_description());
 										return;
@@ -323,10 +379,6 @@ public class RegisterActivity extends AbActivity {
 									showToast("异常：" + e.getMessage());
 									return;
 								}
-
-								showToast("注册成功！");
-								RegisterActivity.this.finish();
-								// 将信息保存起来
 							} else {
 								showToast("数据请求失败！");
 							}

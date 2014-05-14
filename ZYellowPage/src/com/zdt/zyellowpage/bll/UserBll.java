@@ -232,7 +232,7 @@ public class UserBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 						if (content != null && !content.equals("")) {
-							System.out.println("-----------" + content);
+							Log.i("UserBll", content);
 							JSONObject jo = null;
 							BaseResponseEntity bre = new BaseResponseEntity();
 							// 转换数据
@@ -459,7 +459,7 @@ public class UserBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 						if (content != null && !content.equals("")) {
-							System.out.println("-----------" + content);
+							Log.i("UserBll", content);
 							JSONObject jo = null;
 							BaseResponseEntity bre = new BaseResponseEntity();
 							// 转换数据
@@ -518,7 +518,14 @@ public class UserBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						System.out.println("数据请求异常" + content);
+						UserInsideDao userDao = new UserInsideDao(mContext);
+						userDao.startReadableDatabase(false);
+						List<User> lis = userDao.queryList("member_id=?",
+								new String[] { mMember_id });
+						userDao.closeDatabase(false);
+						objectResponseListener.onFailure(statusCode, content,
+								error, lis);
+						
 						objectResponseListener.onFailure(statusCode, content,
 								error, null);
 					}
@@ -542,7 +549,7 @@ public class UserBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 						if (content != null && !content.equals("")) {
-							System.out.println("-----------" + content);
+							Log.i("UserBll", content);
 							JSONObject jo = null;
 							BaseResponseEntity bre = new BaseResponseEntity();
 							// 转换数据

@@ -176,13 +176,12 @@ public class TieBll {
 	/**
 	 * 电子请帖签到请求
 	 */
-	public void TieSign(Context context, String token,
-			TieMessageReqEntity data, ZzStringHttpResponseListener respListener) {
+	public void TieSign(Context context, TieMessageReqEntity data,
+			ZzStringHttpResponseListener respListener) {
 		this.mContext = context;
 		JSONObject jo = new JSONObject();
 		try {
 			jo.put("method", "tie-message");
-			jo.put("token", token);
 			jo.put("data", new Gson().toJson(data).toString());
 		} catch (Exception e) {
 			e.printStackTrace();

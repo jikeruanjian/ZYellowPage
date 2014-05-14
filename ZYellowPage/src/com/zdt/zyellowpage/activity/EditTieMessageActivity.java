@@ -18,7 +18,6 @@ import com.ab.view.ioc.AbIocView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.TieBll;
-import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.TieMessageReqEntity;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 
@@ -29,7 +28,7 @@ import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
  * 
  */
 public class EditTieMessageActivity extends AbActivity {
-	private MyApplication application;
+//	private MyApplication application;
 	AbTitleBar mAbTitleBar;
 	/**
 	 * 请帖ID
@@ -77,7 +76,7 @@ public class EditTieMessageActivity extends AbActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.edit_tie_message);
-		application = (MyApplication) abApplication;
+		// application = (MyApplication) abApplication;
 		if (getIntent().getExtras() != null) {
 			item_id = getIntent().getStringExtra("ITEM_ID");
 			tie_type = getIntent().getStringExtra("TYPE");
@@ -122,6 +121,11 @@ public class EditTieMessageActivity extends AbActivity {
 			return false;
 		} else if (etTelephone.getText().toString().length() <= 0) {
 			showToast("请输入手机号码，以方便联系");
+			etTelephone.setFocusable(true);
+			etTelephone.requestFocus();
+			return false;
+		} else if (!AbStrUtil.isMobileNo(etTelephone.getText().toString())) {
+			showToast("请输入正确手机号码");
 			etTelephone.setFocusable(true);
 			etTelephone.requestFocus();
 			return false;
@@ -175,8 +179,7 @@ public class EditTieMessageActivity extends AbActivity {
 							.trim());
 
 					TieBll tieBll = new TieBll();
-					tieBll.TieSign(EditTieMessageActivity.this,
-							application.mUser.getToken(), message,
+					tieBll.TieSign(EditTieMessageActivity.this, message,
 							new ZzStringHttpResponseListener() {
 
 								@Override

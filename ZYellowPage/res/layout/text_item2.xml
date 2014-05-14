@@ -8,8 +8,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="5dp"
-        android:layout_toLeftOf="@+id/textViewSellBuyItemBtn"
         android:gravity="center"
         android:text="TextView"
         android:textColor="@color/gray_black"
