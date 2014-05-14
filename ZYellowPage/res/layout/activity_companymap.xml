@@ -82,7 +82,7 @@
            android:layout_marginTop="5px"
            android:layout_weight="1"
            android:background="@color/transparent"
-           android:text="车站"
+           android:text="导航"
            android:onClick="mKPlanOnClick"
            android:textColor="#000000" />
    </LinearLayout>

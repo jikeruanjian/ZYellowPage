@@ -255,7 +255,7 @@ public class PopBusinessListActivity extends AbActivity {
 						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
 		mAbPullListView.setAdapter(myListViewAdapter);
 		// item被点击事件
-	/*	mAbPullListView.setOnItemClickListener(new OnItemClickListener() {
+		mAbPullListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -265,7 +265,7 @@ public class PopBusinessListActivity extends AbActivity {
 				 intent.putExtra("MEMBER_ID", list.get(position-1).get("Member_id").toString());
 				 startActivity(intent);
 			}
-		});*/
+		});
 
 		currentPage= 0;
 

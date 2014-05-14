@@ -90,7 +90,7 @@ public class TieDetailActivity extends AbActivity {
 			else{
 				getData();
 				mAbTitleBar = this.getTitleBar();
-				mAbTitleBar.setTitleText(type+"详细");
+				mAbTitleBar.setTitleText("详细信息");
 				mAbTitleBar.setLogo(R.drawable.button_selector_back);
 				mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 				mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);

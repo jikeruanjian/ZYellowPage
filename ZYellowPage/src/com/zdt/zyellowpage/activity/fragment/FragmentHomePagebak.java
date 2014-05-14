@@ -1,9 +1,6 @@
 package com.zdt.zyellowpage.activity.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -20,14 +17,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
-import com.ab.view.listener.AbOnListViewListener;
-import com.ab.view.pullview.AbPullListView;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 import com.zdt.zyellowpage.activity.CompanyBuySellActivity;
@@ -45,8 +39,6 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
-import com.zdt.zyellowpage.util.ImageListAdapterC;
-import com.zdt.zyellowpage.util.ImageListAdapterP;
 
 /**
  * 首页Fragment
@@ -54,31 +46,20 @@ import com.zdt.zyellowpage.util.ImageListAdapterP;
  * @author Administrator
  * 
  */
-public class FragmentHomePage extends Fragment implements OnClickListener{
+public class FragmentHomePagebak extends Fragment implements OnClickListener{
 	private View view;
 	private AbActivity mActivity;
 	private DisplayUtil displayUtil;
 	private MyApplication application;
 	private User hotUser;
-	
+	private User PersonUser;
 	private TextView hotName;
-
+	private TextView PersonName;
 	private TextView hotConent;
-	
+	private TextView PersonConent;
 	private ImageView hotImage;
-
+	private ImageView PersonImage;
 	MyPopupWindow myPopupWindow;
-	
-	private ListView mAbPullListViewB = null;
-	private ImageListAdapterC myListViewAdapterB = null;
-	private List<Map<String, Object>> listB = null;
-	
-	private ListView mAbPullListViewP = null;
-	private ImageListAdapterP myListViewAdapterP = null;
-	private List<Map<String, Object>> listP = null;
-	
-
-	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// 获取布局文件
@@ -87,44 +68,62 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		mActivity = (AbActivity) getActivity();
 		application = (MyApplication) mActivity.abApplication;
 		displayUtil = DisplayUtil.getInstance(mActivity);
-		// 各种分类按钮
-		ImageButton imgBFood = (ImageButton) view.findViewById(R.id.imageButtonFood);
+		// 美食
+		ImageButton imgBFood = (ImageButton) view
+				.findViewById(R.id.imageButtonFood);
 		imgBFood.setOnClickListener(this);
 		
-		ImageButton imgBMovie = (ImageButton) view.findViewById(R.id.imageButtonMovie);
+		ImageButton imgBMovie = (ImageButton) view
+				.findViewById(R.id.imageButtonMovie);
 		imgBMovie.setOnClickListener(this);
 		
-		ImageButton imgBHappy = (ImageButton) view.findViewById(R.id.imageButtonHappy);
+		ImageButton imgBHappy = (ImageButton) view
+				.findViewById(R.id.imageButtonHappy);
 		imgBHappy.setOnClickListener(this);
 		
-		ImageButton imgBHotel = (ImageButton) view.findViewById(R.id.imageButtonHotel);
+		ImageButton imgBHotel = (ImageButton) view
+				.findViewById(R.id.imageButtonHotel);
 		imgBHotel.setOnClickListener(this);
 		
-		ImageButton imgBNewInfo = (ImageButton) view.findViewById(R.id.imageButtonNewInfo);
+		
+		ImageButton imgBNewInfo = (ImageButton) view
+				.findViewById(R.id.imageButtonNewInfo);
 		imgBNewInfo.setOnClickListener(this);
 		
-		ImageButton imgBCash = (ImageButton) view.findViewById(R.id.imageButtonCash);
+		ImageButton imgBCash = (ImageButton) view
+				.findViewById(R.id.imageButtonCash);
 		imgBCash.setOnClickListener(this);
 		
-		ImageButton imgBPeople = (ImageButton) view.findViewById(R.id.imageButtonPeople);
+		ImageButton imgBPeople = (ImageButton) view
+				.findViewById(R.id.imageButtonPeople);
 		imgBPeople.setOnClickListener(this);
 		
-		ImageButton imgBAllClass= (ImageButton) view.findViewById(R.id.imageButtonAll);
+		ImageButton imgBAllClass= (ImageButton) view
+				.findViewById(R.id.imageButtonAll);
 		imgBAllClass.setOnClickListener(this);
 		
 		
 		// 热门商家列表
-		TextView hotbusiness  = (TextView) view.findViewById(R.id.textViewhotbusiness);
+		TextView hotbusiness  = (TextView) view
+				.findViewById(R.id.textViewhotbusiness);
 		hotbusiness.setOnClickListener(this);
 		
 		// 热门个人列表
-		TextView textPerson = (TextView) view.findViewById(R.id.textViewhotperson);
+		TextView textPerson = (TextView) view
+				.findViewById(R.id.textViewhotperson);
 		textPerson.setOnClickListener(this);
+		view.findViewById(R.id.LinearLayouthot).setOnClickListener(this);
+		view.findViewById(R.id.LinearLayoutPerson).setOnClickListener(this);
+		// 首页热门商家
+		hotName = (TextView) view.findViewById(R.id.textViewBusinessHot);
+		//hotName.setOnClickListener(this);
 		
-		listB = new ArrayList<Map<String, Object>>();
-		listP = new ArrayList<Map<String, Object>>();
-		initPopBusinessView();
-		initPopPersonView();
+		// 首页热门关注
+		PersonName = (TextView) view.findViewById(R.id.textViewPersonHot);
+		//PersonName.setOnClickListener(this);
+		
+		view.findViewById(R.id.btnConcernHotBussiness).setOnClickListener(this);
+		view.findViewById(R.id.btnConcernHotPerson).setOnClickListener(this);
 		getData();
 		initType(view);
 		return view;
@@ -146,6 +145,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		int width = metric.widthPixels / 4;
 		int high = metric.heightPixels / 6;
 		
+		// displayUtil.setViewLayoutParamsX(view.findViewById(R.id.imageViewNews),
+		// resouce.getDrawable(R.drawable.news), width*4);
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonFood),
 				resouce.getDrawable(R.drawable.food), width, width*5/4);
@@ -175,79 +176,27 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 				view.findViewById(R.id.textViewhotbusiness), high);
 		displayUtil.setViewLayoutParamsTextView(
 				view.findViewById(R.id.textViewhotperson), high);
+		displayUtil.setViewLayoutParamsTextView(
+				view.findViewById(R.id.textViewBusinessHot), high-15);
+		displayUtil.setViewLayoutParamsTextViewC(
+				view.findViewById(R.id.textViewBusinessConetentHot), width,high+15);
+		displayUtil.setViewLayoutParamsTextView(
+				view.findViewById(R.id.textViewPersonHot), high-15);
+		displayUtil.setViewLayoutParamsTextViewC(
+				view.findViewById(R.id.textViewPersonContentHot), width, high+15);
+		displayUtil.setViewLayoutParamsLayout(
+				view.findViewById(R.id.LinearLayouthot), high);
+		displayUtil.setViewLayoutParamsLayout(
+				view.findViewById(R.id.LinearLayoutPerson), high);
+		displayUtil.setViewLayoutParamsR(view.findViewById(R.id.imageViewhot),
+				high / 3 * 2, high / 2);
+		displayUtil.setViewLayoutParamsR(
+				view.findViewById(R.id.imageViewPerson), high / 3 * 2,
+				high / 2);
 	}
 
-	/**
-	 * 初始化商家列表显示
-	 */
-	protected void initPopBusinessView() {
-		// 获取ListView对象
-		mAbPullListViewB = (ListView) view.findViewById(R.id.mListViewB);
-
-		
-
-		// 使用自定义的Adapter
-		myListViewAdapterB = new ImageListAdapterC(mActivity,application,listB,
-				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
-						"itemsText" }, new int[] { R.id.itemsIcon,
-						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
-		mAbPullListViewB.setAdapter(myListViewAdapterB);
-		mAbPullListViewB.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				//PopBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
-				Intent intent = new Intent(mActivity,
-						 BusinessDetailActivity.class);
-				 intent.putExtra("MEMBER_ID", listB.get(position-1).get("Member_id").toString());
-				 startActivity(intent);
-			}
-		});
-		
-
-		//getData();
-	}
-	
-	/**
-	 * 初始化热门个人
-	 */
-	protected void initPopPersonView() {
-		// 获取ListView对象
-		mAbPullListViewP = (ListView) view.findViewById(R.id.mListViewP);
-
-		// 打开关闭下拉刷新加载更多功能
-		//mAbPullListViewP.setPullRefreshEnable(true);
-		//mAbPullListViewP.setPullLoadEnable(true);
-
-		// 使用自定义的Adapter
-		myListViewAdapterP = new ImageListAdapterP(mActivity,application,listP,
-				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
-						"itemsText" }, new int[] { R.id.itemsIcon,
-						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
-		mAbPullListViewP.setAdapter(myListViewAdapterP);
-		/**
-		 * 添加事件
-		 * 
-		 */
-		// item被点击事件
-		mAbPullListViewP.setOnItemClickListener(new OnItemClickListener() {
-						@Override
-						public void onItemClick(AdapterView<?> parent, View view,
-								int position, long id) {
-							//PopPersonListActivity.this.showToast(list.get(position).get("Member_id").toString());
-						Intent intent = new Intent(mActivity,
-								PersonDetailActivity.class);
-						intent.putExtra("MEMBER_ID", listP.get(position).get("Member_id").toString());
-							startActivity(intent);
-						}
-					});		
-		
-		//getData();
-	}
 	
 	public void getData() {
-		listB.clear();
-		listP.clear();
 		UserBll bll = new UserBll();
 		hotUser = new User();
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(0, 10,
@@ -262,16 +211,22 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						Map<String, Object> map;
-						for (int i = 0; i < lis.size(); i++) {
-
-							User u = (User) lis.get(i);
-							map = new HashMap<String, Object>();
-							map.put("Member_id", u.getMember_id());
-							map.put("itemsIcon", u.getLogo());
-							map.put("itemsTitle", u.getFullname());
-							map.put("itemsText", u.getKeyword());
-							listB.add(map);
+						hotUser = (User) lis.get(0);
+						System.out.println("----"+hotUser.getFullname());
+						if (hotUser.getFullname() != null) {
+							hotName.setText(hotUser.getFullname());
+						}
+						
+						if (hotUser.getKeyword()!= null) {
+							hotConent = (TextView) view
+									.findViewById(R.id.textViewBusinessConetentHot);
+							hotConent.setText(hotUser.getKeyword());
+						}
+						
+						if (hotUser.getLogo() != null) {
+							hotImage = (ImageView) view.findViewById(R.id.imageViewhot);
+							new AbImageDownloader(mActivity).display(hotImage,
+									hotUser.getLogo());
 						}
 					}
 
@@ -317,13 +272,11 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 					public void onFinish() {
 						// TODO Auto-generated method stub
 						mActivity.removeProgressDialog();
-						myListViewAdapterB.notifyDataSetChanged();
-						displayUtil.setListViewHeightBasedOnChildren(mAbPullListViewB , 10);
-						
 					}
 					
 				});
 		
+		PersonUser = new User();
 		PersonListReqEntity personParams = new PersonListReqEntity(0, 10,
 				application.cityid, "list-hot");
 		new UserBll().getListPerson(mActivity, personParams,
@@ -335,16 +288,21 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						Map<String, Object> map;
-						for (int i = 0; i < lis.size(); i++) {
-
-							User u = (User) lis.get(i);
-							map = new HashMap<String, Object>();
-							map.put("Member_id", u.getMember_id());
-							map.put("itemsIcon", u.getLogo());
-							map.put("itemsTitle", u.getFullname());
-							map.put("itemsText", u.getKeyword());
-							listP.add(map);
+						PersonUser = (User) lis.get(0);
+						if (PersonUser.getFullname() != null) {
+							PersonName.setText(PersonUser.getFullname());
+						}
+						
+						if (PersonUser.getKeyword() != null) {
+							PersonConent = (TextView) view
+									.findViewById(R.id.textViewPersonContentHot);
+							PersonConent.setText(PersonUser.getKeyword());
+						}
+						
+						if (PersonUser.getLogo() != null) {
+							PersonImage = (ImageView) view.findViewById(R.id.imageViewPerson);
+							new AbImageDownloader(mActivity).display(PersonImage,
+									PersonUser.getLogo());
 						}
 					}
 
@@ -371,9 +329,6 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 					public void onFinish() {
 						// TODO Auto-generated method stub
 						mActivity.removeProgressDialog();
-						myListViewAdapterP.notifyDataSetChanged();
-						displayUtil.setListViewHeightBasedOnChildren(mAbPullListViewP , 10);
-						
 					}
 			
 				});
@@ -397,8 +352,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			
 			 intent = new Intent(mActivity,
 					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "旅游");
-			 intent.putExtra("TypeId", "旅游");
+			 intent.putExtra("Type", "电影");
+			 intent.putExtra("TypeId", "电影");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonHappy:
@@ -420,15 +375,15 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			
 			 intent = new Intent(mActivity,
 					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "生活服务");
-			 intent.putExtra("TypeId", "生活服务");
+			 intent.putExtra("Type", "今日新单");
+			 intent.putExtra("TypeId", "今日新单");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonCash:
 			 intent = new Intent(mActivity,
 					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "运动健身");
-			 intent.putExtra("TypeId","运动健身");
+			 intent.putExtra("Type", "代金券");
+			 intent.putExtra("TypeId","代金券");
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonAll:
@@ -456,9 +411,90 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			 intent.putExtra("TypeId", "list-hot");
 			startActivity(intent);
 			break;
+		case R.id.LinearLayouthot:
+			if(hotUser.getMember_id()!=null){
+			intent = new Intent(mActivity,
+					BusinessDetailActivity.class);
+			intent.putExtra("MEMBER_ID", hotUser.getMember_id());
+			startActivity(intent);
+			}
+			else{
+				mActivity.showToast("请检查网络情况！");
+			}
+			break;
+		case R.id.LinearLayoutPerson:
+			if(hotUser.getMember_id()!=null){
+			intent = new Intent(mActivity,
+					PersonDetailActivity.class);
+			intent.putExtra("MEMBER_ID",  PersonUser.getMember_id());
+			startActivity(intent);
+			}
+			else{
+				mActivity.showToast("请检查网络情况！");
+			}
+			break;
+		case R.id.btnConcernHotBussiness:
+			if(hotUser.getMember_id()!=null){
+				concernBussinessOrPerson(hotUser.getMember_id());
+			}
+			
+			break;
+		case R.id.btnConcernHotPerson:
+			if(PersonUser.getMember_id()!=null){
+				concernBussinessOrPerson(PersonUser.getMember_id());
+			}
+			break;
 		default:
 			break;
 		}
+	}
+	
+	void concernBussinessOrPerson(String id){
+		if (application.mUser != null && application.mUser.getToken() != null) {
+    		  
+    		UserBll bll = new UserBll();
+    		 bll.followUser(mActivity, application.mUser.getToken(), id,false,
+    				 new ZzStringHttpResponseListener(){
+
+						@Override
+						public void onSuccess(int statusCode, String content) {
+							// TODO Auto-generated method stub
+							Toast.makeText(mActivity,content, Toast.LENGTH_SHORT).show();
+						}
+
+						@Override
+						public void onStart() {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onFailure(int statusCode,
+								String content, Throwable error) {
+							// TODO Auto-generated method stub
+							Toast.makeText(mActivity, "关注失败！", Toast.LENGTH_SHORT).show();
+						}
+
+						@Override
+						public void onErrorData(String status_description) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onFinish() {
+							// TODO Auto-generated method stub
+							
+						}
+    			 
+    		 });
+    		
+    		
+    	}
+    	else
+    	{
+    		Toast.makeText(mActivity, "请先登陆！", Toast.LENGTH_SHORT).show();  
+    	}
 	}
 	
 	

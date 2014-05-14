@@ -43,11 +43,16 @@ import com.baidu.mapapi.search.MKSuggestionResult;
 import com.baidu.mapapi.search.MKTransitRoutePlan;
 import com.baidu.mapapi.search.MKTransitRouteResult;
 import com.baidu.mapapi.search.MKWalkingRouteResult;
+import com.baidu.navisdk.BaiduNaviManager;
+import com.baidu.navisdk.BaiduNaviManager.OnStartNavigationListener;
+import com.baidu.navisdk.comapi.routeplan.RoutePlanParams.NE_RoutePlan_Mode;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.BNavigatorActivity;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
+import com.zdt.zyellowpage.activity.CompanyMapActiviy;
 import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.bll.UserBll;
@@ -467,21 +472,11 @@ public class FragmentNearMap extends Fragment {
 			}
 
 		});
-		//查看详细
+		//导航
 		popView.findViewById(R.id.mapPopTextCotent).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (popView.getVisibility() == View.VISIBLE) {
-					popView.setVisibility(View.GONE);
-				}
-				CleanRouteOverlay();
-				if(userMumber != null){
-					Intent intent = new Intent(mActivity,
-							BusinessDetailActivity.class);
-					intent.putExtra("MEMBER_ID",  userMumber);
-					startActivity(intent);
-				}
+				launchNavigator();
 		//点击公交
 				/*公交
 				 * start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
@@ -517,6 +512,24 @@ public class FragmentNearMap extends Fragment {
 			}
 
 		});
+		//查看详细
+		popImage.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (popView.getVisibility() == View.VISIBLE) {
+					popView.setVisibility(View.GONE);
+				}
+				CleanRouteOverlay();
+				if(userMumber != null){
+					Intent intent = new Intent(mActivity,
+							BusinessDetailActivity.class);
+					intent.putExtra("MEMBER_ID",  userMumber);
+					startActivity(intent);
+				}
+			}
+
+	});
 		
 		//步行
 		popView.findViewById(R.id.mapPopTextWalk).setOnClickListener(new OnClickListener() {
@@ -904,4 +917,31 @@ public void DrawTransitRoute( int n ){
     mMapView.refresh();
     }
 
+
+
+/**
+ * 启动GPS导航. 前置条件：导航引擎初始化成功
+ */
+  private void launchNavigator(){
+	//这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
+	BaiduNaviManager.getInstance().launchNavigator(mActivity, 
+			locData.latitude,locData.longitude,"起点", 
+			(double)(poiPoint.getLatitudeE6()/1E6), (double)(poiPoint.getLongitudeE6()/1E6),"终点",
+			NE_RoutePlan_Mode.ROUTE_PLAN_MOD_MIN_TIME, 		 //算路方式
+			true, 									   		 //真实导航
+			BaiduNaviManager.STRATEGY_FORCE_ONLINE_PRIORITY, //在离线策略
+			new OnStartNavigationListener() {				 //跳转监听
+				
+				@Override
+				public void onJumpToNavigator(Bundle configParams) {
+					Intent intent = new Intent(mActivity, BNavigatorActivity.class);
+					intent.putExtras(configParams);
+			        startActivity(intent);
+				}
+				
+				@Override
+				public void onJumpToDownloader() {
+				}
+			});
+  }
 }

@@ -75,7 +75,7 @@ public class PersonDetailActivity extends AbActivity {
 		application = (MyApplication) abApplication;
 		
 		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText(R.string.person_detail);
+		mAbTitleBar.setTitleText("详细信息");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);

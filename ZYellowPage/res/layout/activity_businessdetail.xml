@@ -50,10 +50,10 @@
 
                     <TextView
                         android:id="@+id/TextView08"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="编号："
-                        android:textColor="@color/black"
+                        android:textColor="@color/propertyname"
                         android:textSize="18sp" />
 
                     <TextView
@@ -61,6 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "
+                        android:textColor="@color/propertyvalue"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -71,10 +72,10 @@
 
                     <TextView
                         android:id="@+id/TextView10"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="联系人："
-                        android:textColor="@color/black"
+                        android:textColor="@color/propertyname"
                         android:textSize="18sp" />
 
                     <TextView
@@ -82,6 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "
+                         android:textColor="@color/propertyvalue"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -93,10 +95,10 @@
 
                     <TextView
                         android:id="@+id/TextView02"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="电话："
-                        android:textColor="@color/black"
+                        android:textColor="@color/propertyname"
                         android:textSize="18sp" />
 
                     <TextView
@@ -104,6 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "
+                         android:textColor="@color/propertyvalue"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -121,10 +124,10 @@
 
                     <TextView
                         android:id="@+id/TextView05"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="地址："
-                        android:textColor="@color/black"
+                        android:textColor="@color/propertyname"
                         android:textSize="18sp" />
 
                     <TextView
@@ -133,6 +136,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text=" "
+                         android:textColor="@color/propertyvalue"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -143,10 +147,10 @@
 
                     <TextView
                         android:id="@+id/TextView05"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="邮箱："
-                        android:textColor="@color/black"
+                        android:textColor="@color/propertyname"
                         android:textSize="18sp" />
 
                     <TextView
@@ -154,6 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "
+                         android:textColor="@color/propertyvalue"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -164,10 +169,10 @@
 
                     <TextView
                         android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="网址："
-                        android:textColor="@color/black"
+                        android:textColor="@color/propertyname"
                         android:textSize="18sp" />
 
                     <TextView
@@ -175,6 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "
+                         android:textColor="@color/propertyvalue"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -185,10 +191,10 @@
 
                     <TextView
                         android:id="@+id/TextView04"
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="QQ："
-                        android:textColor="@color/black"
+                       android:textColor="@color/propertyname"
                         android:textSize="18sp" />
 
                     <TextView
@@ -196,6 +202,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "
+                         android:textColor="@color/propertyvalue"
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
