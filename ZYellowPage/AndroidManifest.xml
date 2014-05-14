@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zdt.zyellowpage"
-    android:versionCode="2"
-    android:versionName="1.0.2" >
+    android:versionCode="1"
+    android:versionName="1.0.1" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -118,7 +118,7 @@
         android:theme="@style/myTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="E0vBVTjgP3IvuuZSOSqKmsZu" />
+            android:value="RjlfVWfEcAecRGc5qG8xyLoX" />
 
         <service
             android:name="com.baidu.location.f"
@@ -173,7 +173,6 @@
         <activity android:name="com.zdt.zyellowpage.activity.TieListActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.TieDetailActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditTieMessageActivity"/>
-        <activity android:name="com.zdt.zyellowpage.activity.AddAlbumActivity"/>
     </application>
 
     <supports-screens

@@ -111,7 +111,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		// initHomePagePullView();
 		mBMapMan = new BMapManager(getApplication());
 		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
-		mBMapMan.init("E0vBVTjgP3IvuuZSOSqKmsZu", null);
+		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentHome = new FragmentHomePage();
