@@ -21,6 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,28 +90,28 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		application = (MyApplication) mActivity.abApplication;
 		displayUtil = DisplayUtil.getInstance(mActivity);
 		// 各种分类按钮
-		ImageButton imgBFood = (ImageButton) view.findViewById(R.id.imageButtonFood);
+		RelativeLayout imgBFood = (RelativeLayout) view.findViewById(R.id.imageButtonFood);
 		imgBFood.setOnClickListener(this);
 		
-		ImageButton imgBMovie = (ImageButton) view.findViewById(R.id.imageButtonMovie);
+		RelativeLayout imgBMovie = (RelativeLayout) view.findViewById(R.id.imageButtonMovie);
 		imgBMovie.setOnClickListener(this);
 		
-		ImageButton imgBHappy = (ImageButton) view.findViewById(R.id.imageButtonHappy);
+		RelativeLayout imgBHappy = (RelativeLayout) view.findViewById(R.id.imageButtonHappy);
 		imgBHappy.setOnClickListener(this);
 		
-		ImageButton imgBHotel = (ImageButton) view.findViewById(R.id.imageButtonHotel);
+		RelativeLayout imgBHotel = (RelativeLayout) view.findViewById(R.id.imageButtonHotel);
 		imgBHotel.setOnClickListener(this);
 		
-		ImageButton imgBNewInfo = (ImageButton) view.findViewById(R.id.imageButtonNewInfo);
+		RelativeLayout imgBNewInfo = (RelativeLayout) view.findViewById(R.id.imageButtonNewInfo);
 		imgBNewInfo.setOnClickListener(this);
 		
-		ImageButton imgBCash = (ImageButton) view.findViewById(R.id.imageButtonCash);
+		RelativeLayout imgBCash = (RelativeLayout) view.findViewById(R.id.imageButtonCash);
 		imgBCash.setOnClickListener(this);
 		
-		ImageButton imgBPeople = (ImageButton) view.findViewById(R.id.imageButtonPeople);
+		RelativeLayout imgBPeople = (RelativeLayout) view.findViewById(R.id.imageButtonPeople);
 		imgBPeople.setOnClickListener(this);
 		
-		ImageButton imgBAllClass= (ImageButton) view.findViewById(R.id.imageButtonAll);
+		RelativeLayout imgBAllClass= (RelativeLayout) view.findViewById(R.id.imageButtonAll);
 		imgBAllClass.setOnClickListener(this);
 		
 		
@@ -149,29 +150,32 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonFood),
-				resouce.getDrawable(R.drawable.food), width, width*5/4);
+				resouce.getDrawable(R.drawable.food), width, 102);
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonMovie),
-				resouce.getDrawable(R.drawable.movie), width, width*5/4);
+				resouce.getDrawable(R.drawable.movie), width, 0);
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonHappy),
-				resouce.getDrawable(R.drawable.happy), width, width*5/4);
+				resouce.getDrawable(R.drawable.happy), width, 0);
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonHotel),
-				resouce.getDrawable(R.drawable.hotel), width, width*5/4);
+				resouce.getDrawable(R.drawable.hotel), width, 0);
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonNewInfo),
-				resouce.getDrawable(R.drawable.newinfo), width, width*5/4);
+				resouce.getDrawable(R.drawable.newinfo), width, 0);
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonCash),
-				resouce.getDrawable(R.drawable.cash), width, width*5/4);
+				resouce.getDrawable(R.drawable.cash), width, 0);
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonPeople),
-				resouce.getDrawable(R.drawable.people), width, width*5/4);
+				resouce.getDrawable(R.drawable.people), width, 0);
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonAll),
-				resouce.getDrawable(R.drawable.all), width, width*5/4);
+				resouce.getDrawable(R.drawable.all), width, 0);
 
+		
+		
+		
 		displayUtil.setViewLayoutParamsTextView(
 				view.findViewById(R.id.textViewhotbusiness), high);
 		displayUtil.setViewLayoutParamsTextView(

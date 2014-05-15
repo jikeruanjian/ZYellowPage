@@ -22,199 +22,229 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="102dp"
                     android:layout_gravity="center_horizontal" >
 
                     <RelativeLayout
+                        android:id="@+id/imageButtonFood"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" 
+                        android:background="@drawable/food"
                         >
 
                         <ImageButton
-                            android:id="@+id/imageButtonFood"
+       						android:id="@+id/imageButtonFood_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/imagebtn_food" />
 
                         <TextView
                             android:id="@+id/textView1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/imageButtonFood"
+                            android:layout_below="@+id/imageButtonFood_x"
                             android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="美食"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/imageButtonMovie"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent" 
+                        android:background="@drawable/movie">
 
                         <TextView
                             android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/imageButtonMovie"
+                            android:layout_below="@+id/imageButtonMovie_x"
                             android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="旅游"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                         <ImageButton
-                            android:id="@+id/imageButtonMovie"
+                            android:id="@+id/imageButtonMovie_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/imagebtn_movie" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/imageButtonHappy"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent"
+                        android:background="@drawable/happy"  >
 
                         <ImageButton
-                            android:id="@+id/imageButtonHappy"
+                            android:id="@+id/imageButtonHappy_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/imagebtn_happy" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/imageButtonHappy"
+                            android:layout_below="@+id/imageButtonHappy_x"
                             android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="休闲娱乐"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/imageButtonHotel"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent"
+                        android:background="@drawable/hotel" >
 
                         <ImageButton
-                            android:id="@+id/imageButtonHotel"
+                            android:id="@+id/imageButtonHotel_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/imagebtn_hotel" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/imageButtonHotel"
+                            android:layout_below="@+id/imageButtonHotel_x"
                             android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="酒店"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="102dp"
                     android:layout_gravity="center_horizontal" >
 
                     <RelativeLayout
+                        android:id="@+id/imageButtonNewInfo"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent" 
+                         android:background="@drawable/newinfo" >
 
                         <ImageButton
-                            android:id="@+id/imageButtonNewInfo"
+                            android:id="@+id/imageButtonNewInfo_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/imagebtn_newinfo" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/imageButtonNewInfo"
+                            android:layout_below="@+id/imageButtonNewInfo_x"
                             android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="生活服务"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/imageButtonCash"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cash" >
 
                         <ImageButton
-                            android:id="@+id/imageButtonCash"
+                            android:id="@+id/imageButtonCash_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/imagebtn_cash" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/imageButtonCash"
+                            android:layout_below="@+id/imageButtonCash_x"
                             android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="运动健身"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/imageButtonPeople"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent"
+                        android:background="@drawable/people" >
 
                         <ImageButton
-                            android:id="@+id/imageButtonPeople"
+                            android:id="@+id/imageButtonPeople_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/imagebtn_people" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/imageButtonPeople"
+                            android:layout_below="@+id/imageButtonPeople_x"
                             android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="丽人"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/imageButtonAll"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent" 
+                        android:background="@drawable/all" >
 
                         <ImageButton
-                            android:id="@+id/imageButtonAll"
+                            android:id="@+id/imageButtonAll_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/imagebtn_all" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/imageButtonAll"
+                            android:layout_below="@+id/imageButtonAll_x"
                             android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="全部分类"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
                 </LinearLayout>

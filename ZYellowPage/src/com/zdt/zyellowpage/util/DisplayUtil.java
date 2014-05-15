@@ -243,8 +243,8 @@ public class DisplayUtil {
      * @param w
      */
     public void setViewLayoutParamsW(View view, Drawable drawable, int w,int h) {
-    	RelativeLayout.LayoutParams layout = (RelativeLayout.LayoutParams)view.getLayoutParams();
-		layout.height = h;
+    	LinearLayout.LayoutParams layout = (LinearLayout.LayoutParams)view.getLayoutParams();
+		//layout.height = h;
 		layout.width = w;
 		view.setLayoutParams(layout);
 	}
