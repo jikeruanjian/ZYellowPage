@@ -76,7 +76,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 	private List<Map<String, Object>> listB = null;
 	
 	private ListView mAbPullListViewP = null;
-	private ImageListAdapterP myListViewAdapterP = null;
+	private ImageListAdapterC myListViewAdapterP = null;
 	private List<Map<String, Object>> listP = null;
 	
 
@@ -128,6 +128,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		initPopBusinessView();
 		initPopPersonView();
 		getData();
+		//getLatestData();
 		initType(view);
 		return view;
 
@@ -176,10 +177,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		
 		
 		
-		displayUtil.setViewLayoutParamsTextView(
-				view.findViewById(R.id.textViewhotbusiness), high);
-		displayUtil.setViewLayoutParamsTextView(
-				view.findViewById(R.id.textViewhotperson), high);
+		//displayUtil.setViewLayoutParamsTextView(view.findViewById(R.id.textViewhotbusiness), high);
+		//displayUtil.setViewLayoutParamsTextView(view.findViewById(R.id.textViewhotperson), high);
 	}
 
 	/**
@@ -225,7 +224,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		//mAbPullListViewP.setPullLoadEnable(true);
 
 		// 使用自定义的Adapter
-		myListViewAdapterP = new ImageListAdapterP(mActivity,application,listP,
+		myListViewAdapterP = new ImageListAdapterC(mActivity,application,listP,
 				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
 						"itemsText" }, new int[] { R.id.itemsIcon,
 						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
@@ -252,13 +251,10 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 	
 	public void getData() {
 		listB.clear();
-		listP.clear();
-		UserBll bll = new UserBll();
-		hotUser = new User();
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(0, 10,
 				application.cityid, "list-hot");
 
-		bll.getListCompany(mActivity, companyParams,
+		new UserBll().getListCompany(mActivity, companyParams,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
@@ -324,14 +320,21 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						mActivity.removeProgressDialog();
 						myListViewAdapterB.notifyDataSetChanged();
 						displayUtil.setListViewHeightBasedOnChildren(mAbPullListViewB , 10);
-						
+						getLatestData();
 					}
 					
 				});
 		
-		PersonListReqEntity personParams = new PersonListReqEntity(0, 10,
-				application.cityid, "list-hot");
-		new UserBll().getListPerson(mActivity, personParams,
+		
+	}
+	public void getLatestData() {
+
+		listP.clear();
+		//---list-latest
+		CompanyListReqEntity latestCompanyParams = new CompanyListReqEntity(0, 10,
+				application.cityid, "list-latest");
+
+		new UserBll().getListCompany(mActivity, latestCompanyParams,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
@@ -383,6 +386,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			
 				});
 	}
+
 
 	@Override
 	public void onClick(View v) {

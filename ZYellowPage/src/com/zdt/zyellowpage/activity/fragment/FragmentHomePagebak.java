@@ -31,6 +31,7 @@ import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
 import com.zdt.zyellowpage.activity.PopPersonListActivity;
 import com.zdt.zyellowpage.activity.TypeBusinessListActivity;
+import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
@@ -493,7 +494,10 @@ public class FragmentHomePagebak extends Fragment implements OnClickListener{
     	}
     	else
     	{
-    		Toast.makeText(mActivity, "请先登陆！", Toast.LENGTH_SHORT).show();  
+    		Toast.makeText(mActivity, "请先登录！", Toast.LENGTH_SHORT).show();  
+    		Intent intent = new Intent(mActivity,
+    				LoginActivity.class);
+			startActivity(intent);
     	}
 	}
 	

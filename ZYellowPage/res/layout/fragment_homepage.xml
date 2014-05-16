@@ -29,15 +29,16 @@
                         android:id="@+id/imageButtonFood"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" 
-                        android:background="@drawable/food"
+                        android:background="@drawable/imagebtn_food"
                         >
 
-                        <ImageButton
+                        <ImageView
        						android:id="@+id/imageButtonFood_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/imagebtn_food" />
+                            android:background="@drawable/food_l"
+                            />
 
                         <TextView
                             android:id="@+id/textView1"
@@ -45,10 +46,9 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonFood_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="10dp"
                             android:text="美食"
-                            android:textColor="@color/black"
+                            android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -57,7 +57,7 @@
                         android:id="@+id/imageButtonMovie"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" 
-                        android:background="@drawable/movie">
+                        android:background="@drawable/imagebtn_movie">
 
                         <TextView
                             android:id="@+id/mapTextContect"
@@ -65,18 +65,17 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonMovie_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="10dp"
                             android:text="旅游"
-                            android:textColor="@color/black"
+                            android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButtonMovie_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/imagebtn_movie" />
+                            android:background="@drawable/movie_l" />
 
                     </RelativeLayout>
 
@@ -84,14 +83,14 @@
                         android:id="@+id/imageButtonHappy"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/happy"  >
+                        android:background="@drawable/imagebtn_happy"  >
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButtonHappy_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/imagebtn_happy" />
+                            android:background="@drawable/happy_l" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
@@ -99,10 +98,9 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonHappy_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_margin="10dp"
                             android:text="休闲娱乐"
-                            android:textColor="@color/black"
+                            android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -111,14 +109,14 @@
                         android:id="@+id/imageButtonHotel"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/hotel" >
+                        android:background="@drawable/imagebtn_hotel" >
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButtonHotel_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/imagebtn_hotel" />
+                            android:background="@drawable/hotel_l" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
@@ -126,10 +124,9 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonHotel_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_margin="10dp"
                             android:text="酒店"
-                            android:textColor="@color/black"
+                            android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -144,14 +141,14 @@
                         android:id="@+id/imageButtonNewInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" 
-                         android:background="@drawable/newinfo" >
+                         android:background="@drawable/imagebtn_newinfo" >
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButtonNewInfo_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/imagebtn_newinfo" />
+                            android:background="@drawable/newinfo_l" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
@@ -159,10 +156,9 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonNewInfo_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_margin="10dp"
                             android:text="生活服务"
-                            android:textColor="@color/black"
+                            android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -171,14 +167,14 @@
                         android:id="@+id/imageButtonCash"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/cash" >
+                        android:background="@drawable/imagebtn_cash" >
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButtonCash_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/imagebtn_cash" />
+                            android:background="@drawable/cash_l" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
@@ -186,10 +182,9 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonCash_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_margin="10dp"
                             android:text="运动健身"
-                            android:textColor="@color/black"
+                            android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -198,14 +193,14 @@
                         android:id="@+id/imageButtonPeople"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/people" >
+                        android:background="@drawable/imagebtn_people" >
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButtonPeople_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/imagebtn_people" />
+                            android:background="@drawable/people_l" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
@@ -213,10 +208,9 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonPeople_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_margin="10dp"
                             android:text="丽人"
-                            android:textColor="@color/black"
+                            android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -225,14 +219,14 @@
                         android:id="@+id/imageButtonAll"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" 
-                        android:background="@drawable/all" >
+                        android:background="@drawable/imagebtn_all" >
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButtonAll_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/imagebtn_all" />
+                            android:background="@drawable/all_l" />
 
                         <TextView
                             android:id="@+id/mapTextContect"
@@ -240,10 +234,9 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonAll_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_margin="10dp"
                             android:text="全部分类"
-                            android:textColor="@color/black"
+                            android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -268,6 +261,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
                     android:background="#FCFCFC"
                     android:orientation="vertical" >
 
@@ -280,14 +274,14 @@
                     <TextView
                         android:id="@+id/textViewhotbusiness"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="30dp"
                         android:background="#EEEEEE"
                         android:gravity="center_vertical"
                         android:paddingTop="1dp"
-                        android:text="  热门商家"
-                        android:textColor="@color/textview_color"
+                        android:text="  热门商企业"
+                        android:textColor="#9F9F9F"
                         android:textColorHint="@color/black"
-                        android:textSize="24dp" />
+                        android:textSize="14sp" />
 
                     <ListView
                         android:id="@+id/mListViewB"
@@ -304,6 +298,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
                     android:background="#FFFFFF"
                     android:orientation="vertical" >
 
@@ -316,12 +311,12 @@
                     <TextView
                         android:id="@+id/textViewhotperson"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="30dp"
                         android:background="#EEEEEE"
                         android:gravity="center_vertical"
-                        android:text="  热门关注"
-                        android:textColor="@color/textview_color"
-                        android:textSize="24dp" />
+                        android:text="  最新商企"
+                        android:textColor="#9F9F9F"
+                        android:textSize="14sp" />
 
                     <ListView
                         android:id="@+id/mListViewP"

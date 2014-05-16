@@ -38,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
+import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
 import com.ab.http.AbBinaryHttpResponseListener;
 import com.ab.http.AbHttpUtil;
@@ -50,6 +51,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.AlbumBll;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
@@ -74,6 +76,7 @@ public class BusinessDetailActivity extends AbActivity {
 	private int bmpW;// 动画图片宽度
 	private String[] imageUrls = new String[] {};
 	private ImageView imgCompanyVideos;
+	private ImageView imgLogo;
 	private  View mView;
 	Bitmap codeBitmap;
 	@Override
@@ -144,7 +147,11 @@ public class BusinessDetailActivity extends AbActivity {
 		qq.setText(userCompany.getQq());
 
 		// sjjwd.setText("经度："+userCompany.getLatitude()+"      纬度:"+userCompany.getLongitude());
-
+		if (userCompany.getLogo() != null) {
+			imgLogo = (ImageView) this.findViewById(R.id.companyLogoImage);
+			new AbImageDownloader(this).display(imgLogo,
+					userCompany.getLogo());
+		}
 		InitTextView();
 		InitViewPager();
 		InitTitleView();
@@ -206,12 +213,15 @@ public class BusinessDetailActivity extends AbActivity {
 	        	}
 	        	else
 	        	{
-	        		Toast.makeText(BusinessDetailActivity.this, "请先登陆！", Toast.LENGTH_SHORT).show();  
+	        		Toast.makeText(BusinessDetailActivity.this, "请先登录！", Toast.LENGTH_SHORT).show();
+	        		Intent intent = new Intent(BusinessDetailActivity.this,
+	        				LoginActivity.class);
+					startActivity(intent);
 	        	}
 				
 			}});
 	}
-	protected void getData() {
+	private void getData() {
 		UserBll bll = new UserBll();
 		bll.getDetailCompany(BusinessDetailActivity.this, member_id,
 				new ZzObjectHttpResponseListener<User>() {
@@ -259,11 +269,101 @@ public class BusinessDetailActivity extends AbActivity {
 						removeProgressDialog();
 						getView();
 						getImgUrl(userCompany.getMember_id());
+						getCodeData();
 					}
 
 				});
 	}
 
+	/**
+	 * 获取二维码图片
+	 */
+	private void getCodeData(){
+		String url = userCompany.getQr_code()+"&area="+ application.cityid;
+		Log.e("xxxxtp", "---" +url);
+		AbHttpUtil.getInstance(BusinessDetailActivity.this).get(url, new AbBinaryHttpResponseListener() {
+        	
+			// 获取数据成功会调用这里
+        	@Override
+			public void onSuccess(int statusCode, byte[] content) {
+        		Log.d("xxxx", "onSuccess");
+        		codeBitmap = AbImageUtil.bytes2Bimap(content);
+            	mView = mInflater.inflate(R.layout.code_view, null);
+            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
+          
+            	ImageView UserCode = (ImageView) BusinessDetailActivity.this.findViewById(R.id.BCodeTopRightimageView);
+            	UserCode.setImageBitmap(codeBitmap);
+            	UserCode.setOnClickListener(new View.OnClickListener() {
+        			
+        			@Override
+        			public void onClick(View v) {
+        				showDialog(AbConstant.DIALOGCENTER, mView);
+        				
+        			}
+        		});
+            	imageUserCode.setImageBitmap(codeBitmap);
+            	imageUserCode.setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(View v) {
+						//点击结束弹出框
+						removeDialog(AbConstant.DIALOGCENTER);
+					}
+				});
+            	imageUserCode.setLongClickable(true);
+            	imageUserCode.setOnLongClickListener(new OnLongClickListener(){
+
+					@Override
+					public boolean onLongClick(View v) {
+						// TODO长按保存图片
+						  /*File f = new File("/sdcard/zdtimgcard/", member_id+"code");
+						  if (f.exists()) {
+						   f.delete();
+						  }
+						  try {
+						   FileOutputStream out = new FileOutputStream(f);
+						   codeBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+						   out.flush();
+						   out.close();
+						  } catch (FileNotFoundException e) {
+						   // TODO Auto-generated catch block
+						   e.printStackTrace();
+						  } catch (IOException e) {
+						   // TODO Auto-generated catch block
+						   e.printStackTrace();
+						  }*/
+						return false;
+					}
+            		
+            	});
+            
+            	
+			}
+        	
+        	// 开始执行前
+            @Override
+			public void onStart() {
+            	Log.d("xxxx", "onStart");
+            	//显示进度框
+            	showProgressDialog();
+			}
+
+            // 失败，调用
+            @Override
+			public void onFailure(int statusCode, String content,
+					Throwable error) {
+            	showToast(error.getMessage());
+			}
+
+			// 完成后调用，失败，成功
+            @Override
+            public void onFinish() { 
+            	Log.d("xxxx", "onFinish");
+            	//移除进度框
+            	removeProgressDialog();
+            };
+            
+        });
+	}
 	void getImgUrl(String m_id) {
 
 		AlbumBll imgBll = new AlbumBll();
@@ -314,7 +414,7 @@ public class BusinessDetailActivity extends AbActivity {
 				Gallery gallery = (Gallery) findViewById(R.id.user_company_gallery);
 				Log.e("xxxx", "-----图片张数为" + imageUrls.length);
 				gallery.setAdapter(new ImageGalleryAdapter());
-				gallery.setSelection(1);
+				gallery.setSelection(0);
 				//gallery.
 				gallery.setOnItemClickListener(new OnItemClickListener() {
 					@Override
@@ -389,86 +489,7 @@ public class BusinessDetailActivity extends AbActivity {
 
 				});
 		// 商家二维码
-		this.findViewById(R.id.imgBussnissCode).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				String url = userCompany.getQr_code()+"&area="+ application.cityid;
-				Log.e("xxxxtp", "---" +url);
-				AbHttpUtil.getInstance(BusinessDetailActivity.this).get(url, new AbBinaryHttpResponseListener() {
-		        	
-					// 获取数据成功会调用这里
-		        	@Override
-					public void onSuccess(int statusCode, byte[] content) {
-		        		Log.d("xxxx", "onSuccess");
-		        		codeBitmap = AbImageUtil.bytes2Bimap(content);
-		            	mView = mInflater.inflate(R.layout.code_view, null);
-		            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
-		            	imageUserCode.setImageBitmap(codeBitmap);
-		            	imageUserCode.setOnClickListener(new OnClickListener(){
-							@Override
-							public void onClick(View v) {
-								//点击结束弹出框
-								removeDialog(AbConstant.DIALOGCENTER);
-							}
-						});
-		            	imageUserCode.setLongClickable(true);
-		            	imageUserCode.setOnLongClickListener(new OnLongClickListener(){
-
-							@Override
-							public boolean onLongClick(View v) {
-								// TODO长按保存图片
-								  /*File f = new File("/sdcard/zdtimgcard/", member_id+"code");
-								  if (f.exists()) {
-								   f.delete();
-								  }
-								  try {
-								   FileOutputStream out = new FileOutputStream(f);
-								   codeBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-								   out.flush();
-								   out.close();
-								  } catch (FileNotFoundException e) {
-								   // TODO Auto-generated catch block
-								   e.printStackTrace();
-								  } catch (IOException e) {
-								   // TODO Auto-generated catch block
-								   e.printStackTrace();
-								  }*/
-								return false;
-							}
-		            		
-		            	});
-		            	showDialog(AbConstant.DIALOGCENTER, mView);
-		            	
-					}
-		        	
-		        	// 开始执行前
-		            @Override
-					public void onStart() {
-		            	Log.d("xxxx", "onStart");
-		            	//显示进度框
-		            	showProgressDialog();
-					}
-
-		            // 失败，调用
-		            @Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-		            	showToast(error.getMessage());
-					}
-
-					// 完成后调用，失败，成功
-		            @Override
-		            public void onFinish() { 
-		            	Log.d("xxxx", "onFinish");
-		            	//移除进度框
-		            	removeProgressDialog();
-		            };
-		            
-		        });
-			}
-		});
+		
         
 
 		this.findViewById(R.id.imgBussnissPhone).setOnClickListener(
@@ -653,7 +674,7 @@ public class BusinessDetailActivity extends AbActivity {
 
 		@Override
 		public void onPageSelected(int arg0) {
-			Animation animation = null;
+			//Animation animation = null;
 
 			t1.setTextColor(getResources().getColor(R.color.black));
 
@@ -663,35 +684,35 @@ public class BusinessDetailActivity extends AbActivity {
 			case 0: {
 				t1.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 1) {
-					animation = new TranslateAnimation(one, 0, 0, 0);
+				//	animation = new TranslateAnimation(one, 0, 0, 0);
 				} else if (currIndex == 2) {
-					animation = new TranslateAnimation(two, 0, 0, 0);
+					//animation = new TranslateAnimation(two, 0, 0, 0);
 				}
 				break;
 			}
 			case 1: {
 				t2.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 0) {
-					animation = new TranslateAnimation(offset, one, 0, 0);
+					//animation = new TranslateAnimation(offset, one, 0, 0);
 				} else if (currIndex == 2) {
-					animation = new TranslateAnimation(two, one, 0, 0);
+					//animation = new TranslateAnimation(two, one, 0, 0);
 				}
 				break;
 			}
 			case 2: {
 				t4.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 0) {
-					animation = new TranslateAnimation(offset, two, 0, 0);
+					//animation = new TranslateAnimation(offset, two, 0, 0);
 				} else if (currIndex == 1) {
-					animation = new TranslateAnimation(one, two, 0, 0);
+					//animation = new TranslateAnimation(one, two, 0, 0);
 				}
 				break;
 			}
 			case 3: {
 				if (currIndex == 0) {
-					animation = new TranslateAnimation(offset, two, 0, 0);
+					//animation = new TranslateAnimation(offset, two, 0, 0);
 				} else if (currIndex == 1) {
-					animation = new TranslateAnimation(one, two, 0, 0);
+					//animation = new TranslateAnimation(one, two, 0, 0);
 				}
 				break;
 			}

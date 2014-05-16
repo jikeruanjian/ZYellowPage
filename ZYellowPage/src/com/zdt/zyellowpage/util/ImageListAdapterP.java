@@ -20,6 +20,7 @@ import com.ab.global.AbConstant;
 import com.ab.util.AbStrUtil;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.PersonDetailActivity;
+import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
@@ -207,7 +208,10 @@ public class ImageListAdapterP extends BaseAdapter {
 						});
 
 			} else {
-				Toast.makeText(mContext, "请先登陆！", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "请先登录！", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(mContext,
+        				LoginActivity.class);
+        		mContext.startActivity(intent);
 			}
 		}
 

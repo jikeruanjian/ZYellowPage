@@ -15,11 +15,44 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_menu_bg" >
+
+                <ImageView
+                    android:id="@+id/companyLogoImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/nopic" />
+
+                <TextView
+                    android:id="@+id/companyfullname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="云南指点通通信传媒有限公司"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/BCodeTopRightimageView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/companycode" />
+
+            </LinearLayout>
+
             <Gallery
                 android:id="@+id/user_company_gallery"
-                android:layout_width="fill_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
@@ -33,15 +66,6 @@
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="8dip"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/companyfullname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="云南指点通通信传媒有限公司"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textSize="22sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

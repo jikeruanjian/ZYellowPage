@@ -15,29 +15,54 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/person_detail_photo"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
-                android:gravity="center_horizontal"
-                android:src="@drawable/nopic" />
+                android:background="@color/main_menu_bg" >
+
+                <ImageView
+                    android:id="@+id/person_detail_photo"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/nopic" />
+
+                <TextView
+                    android:id="@+id/personFullNametextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="名字"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/codeTopRightimageView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/companycode" />
+
+            </LinearLayout>
+		<ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/orange" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
+                android:layout_margin="5dp"
                 android:orientation="vertical" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
                     android:orientation="vertical" >
 
                     <LinearLayout
@@ -50,7 +75,7 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="姓名："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
@@ -58,7 +83,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" "
+                            android:textColor="@color/propertyvalue"
                             android:textSize="18sp" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -71,7 +98,7 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="性别："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
@@ -79,7 +106,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" "
+                            android:textColor="@color/propertyvalue"
                             android:textSize="18sp" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -92,13 +121,14 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="年龄："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_age"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -113,13 +143,14 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="所在地："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -134,13 +165,14 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="民族："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_mz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -152,16 +184,17 @@
 
                         <TextView
                             android:id="@+id/TextView05"
-                           android:layout_width="90dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="电话："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_tel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -173,16 +206,17 @@
 
                         <TextView
                             android:id="@+id/TextView05"
-                             android:layout_height="wrap_content"
                             android:layout_width="90dp"
+                            android:layout_height="wrap_content"
                             android:text="电子邮箱："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -197,13 +231,14 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="编号："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -218,13 +253,14 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="QQ："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_qq"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -239,13 +275,14 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="学校："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_school"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -260,13 +297,14 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="专业："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_zy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -281,13 +319,14 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="行业："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_hy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -299,16 +338,17 @@
 
                         <TextView
                             android:id="@+id/TextView05"
-                           android:layout_width="90dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="地址："
-                            android:textColor="@color/black"
+                            android:textColor="@color/propertyname"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/person_detail_dz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/propertyvalue"
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
