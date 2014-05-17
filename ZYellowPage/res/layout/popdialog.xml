@@ -1,16 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:background="@color/gray_white"
     android:orientation="vertical" >
 
     <ListView
         android:id="@+id/listViewPopW"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/gray_light"
-        android:dividerHeight="3px" >
-    </ListView>
+        android:background="@drawable/popl_bg"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@drawable/list_divider"
+        android:dividerHeight="1dip"
+        android:drawSelectorOnTop="true"
+        android:focusable="true"
+        android:padding="0dip"
+        android:scrollbars="none" />
 
 
 </LinearLayout>

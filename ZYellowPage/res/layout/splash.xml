@@ -8,10 +8,11 @@
 
     <ImageView
         android:id="@+id/ivSplash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_gravity="center"
         android:contentDescription="@string/about"
+        android:scaleType="centerCrop"
         android:src="@drawable/start" />
 
 </LinearLayout>

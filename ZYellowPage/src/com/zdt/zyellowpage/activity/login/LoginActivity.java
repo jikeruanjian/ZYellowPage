@@ -16,9 +16,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -80,7 +77,6 @@ public class LoginActivity extends AbActivity {
 
 		userName = (EditText) this.findViewById(R.id.userName);
 		userPwd = (EditText) this.findViewById(R.id.userPwd);
-		CheckBox checkBox = (CheckBox) findViewById(R.id.login_check);
 		mClear1 = (ImageButton) findViewById(R.id.clearName);
 		mClear2 = (ImageButton) findViewById(R.id.clearPwd);
 
@@ -123,19 +119,6 @@ public class LoginActivity extends AbActivity {
 			}
 		});
 
-		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				Editor editor = abSharedPreferences.edit();
-				editor.putBoolean(Constant.USERPASSWORDREMEMBERCOOKIE,
-						isChecked);
-				editor.commit();
-				application.userPasswordRemember = isChecked;
-			}
-		});
-
 		String name = abSharedPreferences
 				.getString(Constant.USERNAMECOOKIE, "");
 		String password = abSharedPreferences.getString(
@@ -146,11 +129,9 @@ public class LoginActivity extends AbActivity {
 		if (userPwdRemember) {
 			userName.setText(name);
 			userPwd.setText(password);
-			checkBox.setChecked(true);
 		} else {
 			userName.setText("");
 			userPwd.setText("");
-			checkBox.setChecked(false);
 		}
 
 		initTitleRightLayout();
@@ -267,14 +248,6 @@ public class LoginActivity extends AbActivity {
 					return;
 				}
 
-				// if (!AbStrUtil.isEmail(mStr_name)
-				// && !AbStrUtil.isMobileNo(mStr_name)) {
-				// showToast(R.string.error_name_expr);
-				// userName.setFocusable(true);
-				// userName.requestFocus();
-				// return;
-				// }
-
 				if (AbStrUtil.strLength(mStr_name) < 5) {
 					showToast(R.string.error_name_length1);
 					userName.setFocusable(true);
@@ -327,7 +300,7 @@ public class LoginActivity extends AbActivity {
 								application.mUser = new User();
 								if (content != null && !content.equals("")
 										&& application.mUser != null) {
-									System.out.println("-----------" + content);
+									Log.i("LoginActivity", content);
 									JSONObject jo = null;
 									BaseResponseEntity bre = new BaseResponseEntity();
 									// 转换数据

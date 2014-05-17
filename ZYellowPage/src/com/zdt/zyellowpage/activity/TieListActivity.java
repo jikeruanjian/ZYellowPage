@@ -38,7 +38,6 @@ public class TieListActivity extends AbActivity {
 	private AbPullListView mAbPullListView = null;
 	private int currentPage = 0;
 	private boolean isRefresh = true;
-	// private DisplayUtil displayUtil;
 	private TextView newOrPoTextView;
 	private PopupWindow popupWindow;
 	private LinearLayout layout;
@@ -49,21 +48,34 @@ public class TieListActivity extends AbActivity {
 	private String[] NewOrPops;
 	MyPopupWindowB myPopupWindow;
 	AbTitleBar mAbTitleBar;
+	String typeName;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.tiepull_list);
+
+		type = getIntent().getStringExtra("tieType");
+		if ("1".equals(type))
+			typeName = "婚庆";
+		else if ("2".equals(type))
+			typeName = "乔迁";
+		else if ("3".equals(type))
+			typeName = "聚会";
+		else if ("4".equals(type))
+			typeName = "开业";
+		else if ("5".equals(type))
+			typeName = "庆典";
 		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText("喜庆专区");
+		mAbTitleBar.setTitleText(typeName);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		// mAbTitleBar.setLogoLine(R.drawable.line);
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		application = (MyApplication) abApplication;
-		initSpinner();
-		myPopupWindow = new MyPopupWindowB(TieListActivity.this, "1");
+
+		// initSpinner();
+		// myPopupWindow = new MyPopupWindowB(TieListActivity.this, "1");
 		list = new ArrayList<Map<String, Object>>();
 		newList = new ArrayList<Map<String, Object>>();
 		initPopBusinessView();
@@ -197,8 +209,7 @@ public class TieListActivity extends AbActivity {
 						TieDetailActivity.class);
 				intent.putExtra("ITEM_ID", list.get(position - 1)
 						.get("item_id").toString());
-				intent.putExtra("TIE_TYPE", newOrPoTextView.getText()
-						.toString());
+				intent.putExtra("TIE_TYPE", typeName);
 				startActivity(intent);
 			}
 		});

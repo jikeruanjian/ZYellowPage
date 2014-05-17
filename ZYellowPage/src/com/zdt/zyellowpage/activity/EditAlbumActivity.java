@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
@@ -21,15 +22,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
 import com.ab.activity.AbActivity;
+import com.ab.util.AbViewUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
@@ -71,7 +73,7 @@ public class EditAlbumActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-//		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		initTitleRightLayout();
 
@@ -137,8 +139,8 @@ public class EditAlbumActivity extends AbActivity {
 								.considerExifParams(true)
 								.displayer(new FadeInBitmapDisplayer(300))
 								.build();
-						imageLoader.init(ImageLoaderConfiguration
-								.createDefault(EditAlbumActivity.this));
+						// imageLoader.init(ImageLoaderConfiguration
+						// .createDefault(EditAlbumActivity.this));
 
 						pager.setAdapter(new ImagePagerAdapter(localList));
 					}
@@ -265,26 +267,41 @@ public class EditAlbumActivity extends AbActivity {
 		});
 	}
 
-	public void showPopupWindow(View view) {
-		if (popupWindow != null) {
-			popupWindow.showAsDropDown(view, view.getRight() + 10, 10);
-			return;
-		}
-		LinearLayout layout = (LinearLayout) LayoutInflater.from(
+	private void showPopupWindow(View parent) {
+		LinearLayout view = (LinearLayout) LayoutInflater.from(
 				EditAlbumActivity.this).inflate(R.layout.popdialog, null);
-		ListView listView = (ListView) layout.findViewById(R.id.listViewPopW);
+		ListView listView = (ListView) view.findViewById(R.id.listViewPopW);
 		listView.setAdapter(new ArrayAdapter<String>(EditAlbumActivity.this,
 				R.layout.text_itemselect, R.id.textViewSelectItemName,
 				new String[] { "添加", "删除" }));
 
-		popupWindow = new PopupWindow(EditAlbumActivity.this);
-		popupWindow
-				.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 2);
-		popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-		popupWindow.setOutsideTouchable(true);
+		AbViewUtil.measureView(view);
+		int popWidth = parent.getMeasuredWidth();
+		if (view.getMeasuredWidth() > parent.getMeasuredWidth()) {
+			popWidth = view.getMeasuredWidth();
+		}
+		int popMargin = (mAbTitlebar.getMeasuredHeight() - parent
+				.getMeasuredHeight()) / 2;
+
+		popupWindow = new PopupWindow(view, popWidth,
+				LayoutParams.WRAP_CONTENT, true);
+
+		// int[] location = new int[2];
+		// parent.getLocationInWindow(location);
+		// int startX = location[0] - parent.getLeft();
+		// if (startX + popWidth >= diaplayWidth) {
+		int startX = diaplayWidth - popWidth - 5;
+		// }
+
+		// 使其聚集
 		popupWindow.setFocusable(true);
-		popupWindow.setContentView(layout);
-		popupWindow.showAsDropDown(view, view.getRight() + 10, 10);
+		// 设置允许在外点击消失
+		popupWindow.setOutsideTouchable(true);
+		// 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+		popupWindow.setBackgroundDrawable(new ColorDrawable(
+				android.R.color.transparent));
+
+		popupWindow.showAsDropDown(parent, -2, popMargin + 2);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1,

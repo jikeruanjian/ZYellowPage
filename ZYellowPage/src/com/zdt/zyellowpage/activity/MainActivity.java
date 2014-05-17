@@ -16,6 +16,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -40,19 +41,19 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.util.AbStrUtil;
 import com.baidu.mapapi.BMapManager;
-import com.baidu.navisdk.BaiduNaviManager;
 import com.baidu.navisdk.BNaviEngineManager.NaviEngineInitListener;
+import com.baidu.navisdk.BaiduNaviManager;
 import com.baidu.navisdk.util.verify.BNKeyVerifyListener;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.fragment.FragmentHomePage;
-import com.zdt.zyellowpage.activity.fragment.FragmentMore;
 import com.zdt.zyellowpage.activity.fragment.FragmentNearMap;
+import com.zdt.zyellowpage.activity.fragment.FragmentTie;
 import com.zdt.zyellowpage.activity.fragment.FragmentUser;
 import com.zdt.zyellowpage.bll.AreaBll;
 import com.zdt.zyellowpage.bll.CategoryBll;
@@ -71,7 +72,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	private FragmentHomePage newFragmentHome = null;
 	private FragmentNearMap newFragmentNearMap = null;
 	private FragmentUser newFragmentUser = null;
-	private FragmentMore newFragmentMore = null;
+	private FragmentTie newFragmentTie = null;
 	public static BMapManager mBMapMan = null;
 	private TextView textViewArea;
 	private MyApplication application;
@@ -94,7 +95,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	private long mExitTime;
 
 	private boolean mIsEngineInitSuccess = false;
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
@@ -115,24 +116,24 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		application = (MyApplication) abApplication;
 		initView();
 		// initHomePagePullView();
-		//地图
+		// 地图
 		mBMapMan = new BMapManager(getApplication());
 		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
 		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
-		//导航
-		BaiduNaviManager.getInstance().
-		initEngine(this, getSdcardDir(), mNaviEngineInitListener,"RjlfVWfEcAecRGc5qG8xyLoX",mKeyVerifyListener);
+		// 导航
+		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
+				mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
+				mKeyVerifyListener);
 
-		
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentHome = new FragmentHomePage();
 		newFragmentUser = new FragmentUser();
-		newFragmentMore = new FragmentMore();
+		newFragmentTie = new FragmentTie();
 
 		fragmentTransaction.add(R.id.fragmentViewHome, newFragmentHome, "home");
 		fragmentTransaction.add(R.id.fragmentViewUser, newFragmentUser, "user");
-		fragmentTransaction.add(R.id.fragmentViewMore, newFragmentMore, "more");
+		fragmentTransaction.add(R.id.fragmentViewMore, newFragmentTie, "more");
 
 		fragmentTransaction.commit();
 		listArea = new ArrayList<Area>();
@@ -533,7 +534,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 		popupWindow = new PopupWindow(MainActivity.this);
 
-		// popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		popupWindow.setBackgroundDrawable(new ColorDrawable(
+				android.R.color.transparent));
 		popupWindow
 				.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 3);
 		// popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -542,7 +544,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		popupWindow.setFocusable(true);
 		popupWindow.setContentView(layout);
 		// showAsDropDown会把里面的view作为参照物，所以要那满屏幕parent
-		popupWindow.showAsDropDown(textVSearch, x, 10);
+		popupWindow.showAsDropDown(textVSearch, x + 5, 10);
+
 		// popupWindow.showAtLocation(findViewById(R.id.LinearLayoutpopwindows),
 		// Gravity.LEFT
 		// | Gravity.TOP, x, y);//需要指定Gravity，默认情况是center.
@@ -675,45 +678,49 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		intent.setDataAndType(uri, "application/vnd.android.package-archive");
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * 导航初始化
 	 */
 	private NaviEngineInitListener mNaviEngineInitListener = new NaviEngineInitListener() {
 		public void engineInitSuccess() {
 			mIsEngineInitSuccess = true;
-			//Toast.makeText(MainActivity.this, "初始化导航成功", Toast.LENGTH_LONG).show();
+			// Toast.makeText(MainActivity.this, "初始化导航成功",
+			// Toast.LENGTH_LONG).show();
 		}
 
 		public void engineInitStart() {
 		}
 
 		public void engineInitFail() {
-			//Toast.makeText(MainActivity.this, "初始化导航失败", Toast.LENGTH_LONG).show();
+			// Toast.makeText(MainActivity.this, "初始化导航失败",
+			// Toast.LENGTH_LONG).show();
 		}
 	};
-	
-    private BNKeyVerifyListener mKeyVerifyListener = new BNKeyVerifyListener() {
-		
+
+	private BNKeyVerifyListener mKeyVerifyListener = new BNKeyVerifyListener() {
+
 		@Override
 		public void onVerifySucc() {
 			// TODO Auto-generated method stub
-			Toast.makeText(MainActivity.this, "key校验成功", Toast.LENGTH_LONG).show();
+			Toast.makeText(MainActivity.this, "key校验成功", Toast.LENGTH_LONG)
+					.show();
 		}
-		
+
 		@Override
 		public void onVerifyFailed(int arg0, String arg1) {
 			// TODO Auto-generated method stub
-			Toast.makeText(MainActivity.this, "key校验失败", Toast.LENGTH_LONG).show();
+			Toast.makeText(MainActivity.this, "key校验失败", Toast.LENGTH_LONG)
+					.show();
 		}
 	};
-	
-	private String getSdcardDir() {  
-        if (Environment.getExternalStorageState().equalsIgnoreCase(  
-                Environment.MEDIA_MOUNTED)) {  
-            return Environment.getExternalStorageDirectory().toString();  
-        }  
-        return null;  
-    }  
-	
+
+	private String getSdcardDir() {
+		if (Environment.getExternalStorageState().equalsIgnoreCase(
+				Environment.MEDIA_MOUNTED)) {
+			return Environment.getExternalStorageDirectory().toString();
+		}
+		return null;
+	}
+
 }
