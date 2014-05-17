@@ -30,7 +30,7 @@ import com.ab.bitmap.AbImageDownloader;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.zdt.zyellowpage.R;
-import com.zdt.zyellowpage.activity.AllClassActivity;
+import com.zdt.zyellowpage.activity.AllTypeActivity;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 import com.zdt.zyellowpage.activity.CompanyBuySellActivity;
 import com.zdt.zyellowpage.activity.CompanyMapActiviy;
@@ -442,7 +442,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 			break;
 		case R.id.imageButtonAll:
 			//showPopWindows();
-			intent = new Intent(mActivity, AllClassActivity.class);
+			intent = new Intent(mActivity, AllTypeActivity.class);
 			 startActivity(intent);
 			break;
 		case R.id.imageButtonPeople:

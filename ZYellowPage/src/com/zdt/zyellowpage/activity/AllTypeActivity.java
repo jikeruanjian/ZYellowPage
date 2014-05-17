@@ -2,8 +2,11 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,28 +17,54 @@ import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.http.AbHttpUtil;
+import com.ab.view.sliding.AbSlidingTabView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.fragment.FragmentAllCompanyType;
+import com.zdt.zyellowpage.activity.fragment.FragmentAllPersonType;
+import com.zdt.zyellowpage.activity.fragment.FragmentBuy;
+import com.zdt.zyellowpage.activity.fragment.FragmentSell;
 
-public class AllClassActivity extends AbActivity{
+public class AllTypeActivity extends AbActivity{
 	private AbTitleBar mAbTitleBar = null;
 	private GridView gridview;
 	private String[] commonType;
+	private AbSlidingTabView mAbSlidingTabView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	
 		 super.onCreate(savedInstanceState);  
-	      setContentView(R.layout.all_class_activity);  
-	      mAbTitleBar = this.getTitleBar();
-			mAbTitleBar.setTitleText("更多");
-			mAbTitleBar.setLogo(R.drawable.button_selector_back);
-			mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
-			mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
+	     setContentView(R.layout.all_class_activity);  
+	     mAbTitleBar = this.getTitleBar();
+		 mAbTitleBar.setTitleText("更多");
+		 mAbTitleBar.setLogo(R.drawable.button_selector_back);
+		 mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
+		 mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 			// mAbTitleBar.setLogoLine(R.drawable.line);
-			mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
-	      gridview = (GridView) findViewById(R.id.commonClassGridView);  
+		 mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
+	     gridview = (GridView) findViewById(R.id.commonClassGridView);  
 	      
-	     
+	      
+	     mAbSlidingTabView = (AbSlidingTabView) this.findViewById(R.id.mAllTypeAbSlidingTabView);
+	      	// 缓存数量
+	     mAbSlidingTabView.getViewPager().setOffscreenPageLimit(2);
+	     FragmentAllCompanyType page1 = new FragmentAllCompanyType();
+	     FragmentAllPersonType page2 = new FragmentAllPersonType();	
+			List<Fragment> mFragments = new ArrayList<Fragment>();
+			mFragments.add(page1);
+			mFragments.add(page2);
+
+			List<String> tabTexts = new ArrayList<String>();
+			tabTexts.add("商家人类");
+			tabTexts.add("个人分类");
+
+			mAbSlidingTabView.setTabColor(Color.BLACK);
+			mAbSlidingTabView.setTabSelectColor(getResources().getColor(
+					R.color.orange));
+
+			mAbSlidingTabView.addItemViews(tabTexts, mFragments);
+
+			mAbSlidingTabView.setTabLayoutBackground(R.drawable.slide_top);	     
 	       initCommonClassGridView();
 	     
 	  }  
@@ -71,7 +100,7 @@ public class AllClassActivity extends AbActivity{
 				long arg3) {
 			// TODO Auto-generated method stub
 		      
-			Toast.makeText(AllClassActivity.this, commonType[arg2], Toast.LENGTH_SHORT).show();  
+			Toast.makeText(AllTypeActivity.this, commonType[arg2], Toast.LENGTH_SHORT).show();  
 		}  
 
 	}

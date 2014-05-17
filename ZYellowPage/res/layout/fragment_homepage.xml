@@ -33,12 +33,12 @@
                         >
 
                         <ImageView
-       						android:id="@+id/imageButtonFood_x"
+                            android:id="@+id/imageButtonFood_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:background="@drawable/food_l"
-                            />
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:background="@drawable/food_l" />
 
                         <TextView
                             android:id="@+id/textView1"
@@ -74,7 +74,8 @@
                             android:id="@+id/imageButtonMovie_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/movie_l" />
 
                     </RelativeLayout>
@@ -89,7 +90,8 @@
                             android:id="@+id/imageButtonHappy_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/happy_l" />
 
                         <TextView
@@ -115,7 +117,8 @@
                             android:id="@+id/imageButtonHotel_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/hotel_l" />
 
                         <TextView
@@ -147,7 +150,8 @@
                             android:id="@+id/imageButtonNewInfo_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/newinfo_l" />
 
                         <TextView
@@ -173,7 +177,8 @@
                             android:id="@+id/imageButtonCash_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/cash_l" />
 
                         <TextView
@@ -199,7 +204,8 @@
                             android:id="@+id/imageButtonPeople_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/people_l" />
 
                         <TextView
@@ -225,7 +231,8 @@
                             android:id="@+id/imageButtonAll_x"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
                             android:background="@drawable/all_l" />
 
                         <TextView
@@ -281,6 +288,7 @@
                         android:text="  热门商企业"
                         android:textColor="#9F9F9F"
                         android:textColorHint="@color/black"
+                        android:drawableRight="@drawable/arrow_right"
                         android:textSize="14sp" />
 
                     <ListView
@@ -316,6 +324,7 @@
                         android:gravity="center_vertical"
                         android:text="  最新商企"
                         android:textColor="#9F9F9F"
+                        android:drawableRight="@drawable/arrow_right"
                         android:textSize="14sp" />
 
                     <ListView

@@ -46,7 +46,7 @@
         </LinearLayout>
 
         <com.ab.view.sliding.AbSlidingTabView
-            android:id="@+id/mAbSlidingTabView"
+            android:id="@+id/mAllTypeAbSlidingTabView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
         </com.ab.view.sliding.AbSlidingTabView>
