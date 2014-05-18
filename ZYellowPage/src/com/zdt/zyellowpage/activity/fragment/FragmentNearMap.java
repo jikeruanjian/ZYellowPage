@@ -340,10 +340,11 @@ public class FragmentNearMap extends Fragment {
 
 			// -------虚拟机测试时注释
 			
-			  locData.latitude = location.getLatitude(); locData.longitude =
-			  location.getLongitude(); //如果不显示定位精度圈，将accuracy赋值为0即可
-			  locData.accuracy = location.getRadius(); locData.direction =
-			 location.getDerect();
+			  locData.latitude = location.getLatitude(); 
+			//如果不显示定位精度圈，将accuracy赋值为0即可
+			  locData.longitude = location.getLongitude(); 
+			  locData.accuracy = location.getRadius(); 
+			  locData.direction = location.getDerect();
 			  Log.e("fragmentmap", "-------------------所在城市："+location.getCity());  
 			// 更新定位数据
 			myLocationOverlay.setData(locData);

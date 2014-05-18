@@ -53,7 +53,7 @@
 				<LinearLayout
 				    android:layout_width="wrap_content"
 				    android:layout_height="match_parent"
-				    android:background="@color/orange_background"
+				    android:background="@color/selectclass"
 				    android:orientation="vertical" >
 
                 <com.ab.view.sliding.AbSlidingPlayView
@@ -311,7 +311,15 @@
         android:layout_height="35dip"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_toLeftOf="@+id/busnessmid"
         android:src="@drawable/google_maps" />
+
+    <TextView
+        android:id="@+id/busnessmid"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="" />
 
     <ImageView
         android:id="@+id/imgBussnissPhone"
@@ -319,25 +327,16 @@
         android:layout_height="35dip"
         android:layout_alignTop="@+id/business_detail_sjdt"
         android:layout_marginRight="30dp"
-        android:layout_toLeftOf="@+id/imgBussnissCode"
-        android:src="@drawable/phone" />
-    
-    <ImageView
-        android:id="@+id/imgBussnissCode"
-        android:layout_width="35dip"
-        android:layout_height="35dip"
-        android:layout_alignTop="@+id/business_detail_sjdt"
-        android:layout_marginRight="30dp"
         android:layout_toLeftOf="@+id/business_detail_sjdt"
-        android:src="@drawable/companycode" />
+        android:src="@drawable/phone" />
 
     <ImageView
         android:id="@+id/imgCompanyBuySell"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignTop="@+id/business_detail_sjdt"
-        android:layout_marginLeft="30dp"
-        android:layout_toRightOf="@+id/business_detail_sjdt"
+        
+        android:layout_toRightOf="@id/busnessmid"
         android:src="@drawable/tasks" />
     
     <ImageView

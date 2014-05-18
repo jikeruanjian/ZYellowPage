@@ -34,10 +34,10 @@
 
                         <ImageView
                             android:id="@+id/imageButtonFood_x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="59dp"
+                            android:layout_height="59dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/food_l" />
 
                         <TextView
@@ -46,7 +46,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonFood_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
+                            android:layout_margin="5dp"
                             android:text="美食"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
@@ -65,17 +65,17 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonMovie_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="10dp"
+                            android:layout_margin="5dp"
                             android:text="旅游"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
                         <ImageView
                             android:id="@+id/imageButtonMovie_x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="59dp"
+                            android:layout_height="59dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/movie_l" />
 
                     </RelativeLayout>
@@ -88,10 +88,10 @@
 
                         <ImageView
                             android:id="@+id/imageButtonHappy_x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="59dp"
+                            android:layout_height="59dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/happy_l" />
 
                         <TextView
@@ -100,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonHappy_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:text="休闲娱乐"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
@@ -115,10 +115,10 @@
 
                         <ImageView
                             android:id="@+id/imageButtonHotel_x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="59dp"
+                            android:layout_height="59dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/hotel_l" />
 
                         <TextView
@@ -127,7 +127,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonHotel_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:text="酒店"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
@@ -148,10 +148,10 @@
 
                         <ImageView
                             android:id="@+id/imageButtonNewInfo_x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="59dp"
+                            android:layout_height="59dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/newinfo_l" />
 
                         <TextView
@@ -160,7 +160,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonNewInfo_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:text="生活服务"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
@@ -175,10 +175,10 @@
 
                         <ImageView
                             android:id="@+id/imageButtonCash_x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="59dp"
+                            android:layout_height="59dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/cash_l" />
 
                         <TextView
@@ -187,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonCash_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:text="运动健身"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
@@ -202,10 +202,10 @@
 
                         <ImageView
                             android:id="@+id/imageButtonPeople_x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="59dp"
+                            android:layout_height="59dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/people_l" />
 
                         <TextView
@@ -214,7 +214,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonPeople_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:text="丽人"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
@@ -229,10 +229,10 @@
 
                         <ImageView
                             android:id="@+id/imageButtonAll_x"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="59dp"
+                            android:layout_height="59dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="15dp"
                             android:background="@drawable/all_l" />
 
                         <TextView
@@ -241,7 +241,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imageButtonAll_x"
                             android:layout_centerHorizontal="true"
-                            android:layout_margin="10dp"
+                            android:layout_margin="5dp"
                             android:text="全部分类"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
@@ -278,18 +278,31 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/orange" />
 
-                    <TextView
-                        android:id="@+id/textViewhotbusiness"
+                    <LinearLayout
+                         android:id="@+id/textViewhotbusiness"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:background="#EEEEEE"
-                        android:gravity="center_vertical"
-                        android:paddingTop="1dp"
-                        android:text="  热门商企"
-                        android:textColor="#9F9F9F"
-                        android:textColorHint="@color/black"
-                        android:drawableRight="@drawable/arrow_right"
-                        android:textSize="14sp" />
+                        android:layout_height="wrap_content"
+                        android:background="#EEEEEE" >
+
+                        <TextView
+                           
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:paddingTop="1dp"
+                            android:text="  热门商企"
+                            android:textColor="#9F9F9F"
+                            android:textColorHint="@color/black"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多" />
+
+                    </LinearLayout>
 
                     <ListView
                         android:id="@+id/mListViewB"
@@ -316,16 +329,29 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/orange" />
 
-                    <TextView
-                        android:id="@+id/textViewhotperson"
+                    <LinearLayout
+                         android:id="@+id/textViewhotperson"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:background="#EEEEEE"
-                        android:gravity="center_vertical"
-                        android:text="  最新商企"
-                        android:textColor="#9F9F9F"
-                        android:drawableRight="@drawable/arrow_right"
-                        android:textSize="14sp" />
+                        android:layout_height="wrap_content" 
+                        android:background="#EEEEEE">
+
+                        <TextView
+                           
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:text="  最新商企"
+                             android:layout_weight="0.8"
+                            android:textColor="#9F9F9F"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/TextView01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多" />
+
+                    </LinearLayout>
 
                     <ListView
                         android:id="@+id/mListViewP"

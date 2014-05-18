@@ -64,11 +64,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 	private User hotUser;
 	
 	private TextView hotName;
-
 	private TextView hotConent;
-	
 	private ImageView hotImage;
-
 	MyPopupWindow myPopupWindow;
 	
 	private ListView mAbPullListViewB = null;
@@ -116,12 +113,10 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		
 		
 		// 热门商家列表
-		TextView hotbusiness  = (TextView) view.findViewById(R.id.textViewhotbusiness);
-		hotbusiness.setOnClickListener(this);
+		view.findViewById(R.id.textViewhotbusiness).setOnClickListener(this);
 		
 		// 热门个人列表
-		TextView textPerson = (TextView) view.findViewById(R.id.textViewhotperson);
-		textPerson.setOnClickListener(this);
+		view.findViewById(R.id.textViewhotperson).setOnClickListener(this);
 		
 		listB = new ArrayList<Map<String, Object>>();
 		listP = new ArrayList<Map<String, Object>>();

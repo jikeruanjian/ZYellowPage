@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.app.AlertDialog.Builder;
 import android.app.DownloadManager.Query;
 import android.app.DownloadManager.Request;
 import android.content.BroadcastReceiver;
@@ -26,6 +28,7 @@ import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,10 +52,16 @@ import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.ab.util.AbStrUtil;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.map.GraphicsOverlay;
 import com.baidu.navisdk.BNaviEngineManager.NaviEngineInitListener;
 import com.baidu.navisdk.BaiduNaviManager;
 import com.baidu.navisdk.util.verify.BNKeyVerifyListener;
+import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.fragment.FragmentHomePage;
 import com.zdt.zyellowpage.activity.fragment.FragmentNearMap;
@@ -63,6 +72,7 @@ import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.bll.VersionBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Area;
 import com.zdt.zyellowpage.model.Category;
 import com.zdt.zyellowpage.model.Version;
@@ -103,7 +113,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	
 	private long mExitTime;
 	private boolean mIsEngineInitSuccess = false;
+	private String mCityName = null;
 	
+	LocationClient mLocationClient;
 	private Handler myHandler = new Handler() {   
 		  
         @Override  
@@ -112,23 +124,35 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
             super.handleMessage(msg);   
             switch (msg.what) {   
             case 1:    
-            	MainActivity.getCategoryList( "0");
-        		MainActivity.getCategoryListP( "0");
                 break;   
   
             }   
-        }   
+        }
+
+		private void showDialog(String title,String msg,DialogInterface.OnClickListener mOkOnClickListener) {
+			// TODO Auto-generated method stub
+			AlertDialog.Builder builder = new Builder(MainActivity.this);
+			builder.setMessage(msg);
+		    builder.setTitle(title);
+			builder.setPositiveButton("确认",mOkOnClickListener);
+			builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				   @Override
+				   public void onClick(DialogInterface dialog, int which) {
+					   dialog.dismiss();
+				   }
+			 });
+			 builder.create().show();
+		}   
   
     };   
 
 	private Thread myThread = new Thread(new Runnable() {   		  
         @Override  
         public void run() {   
-            // 耗时操作
-        	  
         	Message msg = new Message();   
-            msg.what = 1;   
-            MainActivity.this.myHandler.sendMessage(msg);   
+                msg.what = 1;   
+                MainActivity.this.myHandler.sendMessage(msg);   
+        	
         }   
   
     });   
@@ -162,6 +186,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
 				mKeyVerifyListener);
 
+    	
+		
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentHome = new FragmentHomePage();
@@ -198,9 +224,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				showPopupWindow(x, y);
 			}
 		});
-
+		getCityNameByLoc();
 		checkUpdate();
-		myThread.start();   
+	//	myThread.start();   
 
 	}
 
@@ -821,4 +847,95 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		return null;
 	}
 
+	private String getCityNameByLoc(){
+		MyLocationListener myListener = new MyLocationListener();
+		mLocationClient = new LocationClient(MainActivity.this); // 声明LocationClient类
+		mLocationClient.registerLocationListener(myListener); // 注册监听函数
+		LocationClientOption option = new LocationClientOption();// 设置定位参数
+		option.setOpenGps(true);
+		option.setAddrType("all");// 返回的定位结果包含地址信息
+		option.setCoorType("bd09ll");// 返回的定位结果是百度经纬度,默认值gcj02
+		option.setScanSpan(5000);// 设置发起定位请求的间隔时间为5000ms
+		option.disableCache(true);// 禁止启用缓存定位
+		mLocationClient.setLocOption(option);
+		mLocationClient.start();
+		return null;
+		
+	}
+	// 民生网点的定位牵涉到定位后选择范围，所以定位之后会根据所选择的范围来显示覆盖物（定位接口）
+		class MyLocationListener implements BDLocationListener {
+			@Override
+			// 定位获取经纬度
+			public void onReceiveLocation(BDLocation location) {
+				Log.e("xxxx", "-------------------开始定位");
+				if (location == null)
+					return;
+				
+				mCityName = location.getCity();
+				String showCityName = mCityName.substring(0, 2);
+				Log.e("fragmentmap", "-------------------所在城市："+showCityName); 
+				if(mCityName != null){
+					MainActivity.this.showDialog("位置提醒", "现在在所在的城市是"+mCityName+",是否切换城市？", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							showToast("正在切换……");
+							application.cityName=mCityName;
+							new AreaBll().getAreaIdByAreaName(MainActivity.this, mCityName.substring(0, 2), 
+									new  ZzStringHttpResponseListener(){
+
+										@Override
+										public void onSuccess(int statusCode,
+												String content) {
+											// TODO Auto-generated method stub
+											if(content == null)
+												return;
+											application.cityid = content;
+											textViewArea.setText(mCityName.substring(0, 2));
+										}
+
+										@Override
+										public void onStart() {
+											// TODO Auto-generated method stub
+											
+										}
+
+										@Override
+										public void onFailure(int statusCode,
+												String content, Throwable error) {
+											// TODO Auto-generated method stub
+											
+										}
+
+										@Override
+										public void onErrorData(
+												String status_description) {
+											// TODO Auto-generated method stub
+											
+										}
+
+										@Override
+										public void onFinish() {
+											// TODO Auto-generated method stub
+											
+										}
+								
+							});
+						}
+
+					});
+            	}
+				
+				mLocationClient.stop();
+				
+				}
+
+			// 获得搜索点
+			@Override
+			public void onReceivePoi(BDLocation poiLocation) {
+
+			}
+
+		}
+		
 }

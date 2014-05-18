@@ -280,6 +280,7 @@ public class BusinessDetailActivity extends AbActivity {
 	}
 	private void initImageView() {
 		mSlidingPlayView =  (AbSlidingPlayView)this.findViewById(R.id.mAbSlidingPlayViewB);
+		//mSlidingPlayView.setPageLineLayoutBackground(R.color.selectclass);
 		displayUtil = DisplayUtil.getInstance(BusinessDetailActivity.this);
 		DisplayMetrics metric = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(metric);

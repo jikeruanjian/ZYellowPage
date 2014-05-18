@@ -41,7 +41,7 @@
             <EditText
                 android:id="@+id/et_searchtext_search"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
@@ -116,7 +116,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:text="更多"
+                android:text="喜庆专区"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="visible" />

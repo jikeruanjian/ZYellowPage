@@ -424,17 +424,6 @@ public class PersonDetailActivity extends AbActivity {
 		t2.setOnClickListener(new MyOnClickListener(1));
 		t3.setOnClickListener(new MyOnClickListener(2));
 		t4.setOnClickListener(new MyOnClickListener(3));
-		this.findViewById(R.id.person_detail_Code).setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				PersonDetailActivity.this.showDialog(AbConstant.DIALOGCENTER,mCodeView);
-			}
-
-			//
-		
-		});
 		this.findViewById(R.id.person_detail_phone).setOnClickListener(new View.OnClickListener() {
 
 			@Override

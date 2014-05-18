@@ -245,6 +245,7 @@ public class TieDetailActivity extends AbActivity {
 	}
 	private void initImageView() {
 		mSlidingPlayView =  (AbSlidingPlayView)this.findViewById(R.id.mAbSlidingPlayView);
+		//mSlidingPlayView.setPageLineLayoutBackground(R.color.selectclass);
 		displayUtil = DisplayUtil.getInstance(TieDetailActivity.this);
 		DisplayMetrics metric = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(metric);
