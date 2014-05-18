@@ -287,6 +287,10 @@ public class BusinessDetailActivity extends AbActivity {
 		int width = metric.widthPixels/4*3;
 		displayUtil.setViewLayoutParamsL(mSlidingPlayView,0,width);
 		mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
+		if( imageUrls.length < 1 ){
+			this.findViewById(R.id.mAbSlidingPlayViewBLinearLayout).setVisibility(View.GONE);
+			return;
+		}
 		for(int i = 0;i < imageUrls.length;i++){
 			//Log.e("tie", "------"+imageUrl[i]);
 			View mPlayView = new View(BusinessDetailActivity.this);

@@ -253,6 +253,11 @@ public class TieDetailActivity extends AbActivity {
 		displayUtil.setViewLayoutParamsL(mSlidingPlayView,0,width);
 		mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
 		imageUrl = mTie.getAlbum().split(",");
+		if(imageUrl.length < 1 ){
+			this.findViewById(R.id.mAbSlidingPlayViewLinearLayout).setVisibility(View.GONE);
+			return;
+		}
+		
 		for(int i = 0;i < imageUrl.length;i++){
 			//Log.e("tie", "------"+imageUrl[i]);
 			View mPlayView = new View(TieDetailActivity.this);

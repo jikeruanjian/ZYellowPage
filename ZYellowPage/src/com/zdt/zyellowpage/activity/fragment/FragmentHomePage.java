@@ -451,16 +451,16 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		case R.id.textViewhotbusiness:
 			 intent = new Intent(mActivity,
 					PopBusinessListActivity.class);
-			 intent.putExtra("Type", "热门商家");
+			 intent.putExtra("Type", "热门商企");
 			 intent.putExtra("TypeId", "list-hot");
 			startActivity(intent);
 			break;
 		case R.id.textViewhotperson:
-			 intent = new Intent(mActivity,
-					PopPersonListActivity.class);
-			 intent.putExtra("Type", "热门关注");
-			 intent.putExtra("TypeId", "list-hot");
-			startActivity(intent);
+		 intent = new Intent(mActivity,
+				PopBusinessListActivity.class);
+		 intent.putExtra("Type", "热门商企");
+		 intent.putExtra("TypeId", "list-latest");
+		startActivity(intent);
 			break;
 		default:
 			break;

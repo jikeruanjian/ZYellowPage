@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -70,6 +71,7 @@ import com.zdt.zyellowpage.activity.fragment.FragmentUser;
 import com.zdt.zyellowpage.bll.AreaBll;
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.bll.VersionBll;
+import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
@@ -224,6 +226,16 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				showPopupWindow(x, y);
 			}
 		});
+		
+		 findViewById(R.id.imageViewSaoyisao).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, "功能开发中……", Toast.LENGTH_SHORT); 
+			}
+			 
+		 });
 		getCityNameByLoc();
 		checkUpdate();
 	//	myThread.start();   
@@ -872,7 +884,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 					return;
 				
 				mCityName = location.getCity();
-				
+				if(mCityName == null){
+					return;
+				}
 				String showCityName = mCityName.substring(0, 2);
 				if(showCityName.equals(textViewArea.getText().toString())){
 					return;
@@ -896,6 +910,10 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 												return;
 											application.cityid = content;
 											textViewArea.setText(mCityName.substring(0, 2));
+											Editor editor = abSharedPreferences.edit();
+											editor.putString(Constant.CITYID, content);
+											editor.putString(Constant.CITYNAME, mCityName.substring(0, 2));
+											editor.commit();
 											newFragmentHome.getData();
 										}
 
