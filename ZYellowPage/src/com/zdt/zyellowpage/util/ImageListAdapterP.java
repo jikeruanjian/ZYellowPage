@@ -83,7 +83,7 @@ public class ImageListAdapterP extends BaseAdapter {
 		mAbImageDownloader.setWidth(100);
 		mAbImageDownloader.setHeight(100);
 		mAbImageDownloader.setType(AbConstant.SCALEIMG);
-		mAbImageDownloader.setLoadingImage(R.drawable.image_loading);
+		mAbImageDownloader.setLoadingImage(R.drawable.nopic);
 		mAbImageDownloader.setErrorImage(R.drawable.nopic);
 		mAbImageDownloader.setNoImage(R.drawable.nopic);
 		// mAbImageDownloader.setAnimation(true);

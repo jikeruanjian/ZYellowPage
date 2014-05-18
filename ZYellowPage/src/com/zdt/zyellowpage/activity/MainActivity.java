@@ -872,9 +872,13 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 					return;
 				
 				mCityName = location.getCity();
+				
 				String showCityName = mCityName.substring(0, 2);
+				if(showCityName.equals(textViewArea.getText().toString())){
+					return;
+				}
 				Log.e("fragmentmap", "-------------------所在城市："+showCityName); 
-				if(mCityName != null){
+				if(mCityName != null ){
 					MainActivity.this.showDialog("位置提醒", "现在在所在的城市是"+mCityName+",是否切换城市？", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -892,6 +896,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 												return;
 											application.cityid = content;
 											textViewArea.setText(mCityName.substring(0, 2));
+											newFragmentHome.getData();
 										}
 
 										@Override

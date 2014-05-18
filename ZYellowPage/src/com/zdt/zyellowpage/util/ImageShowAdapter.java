@@ -57,7 +57,7 @@ public class ImageShowAdapter extends BaseAdapter {
         mAbImageDownloader = new AbImageDownloader(mContext);
         mAbImageDownloader.setWidth(this.mWidth);
         mAbImageDownloader.setHeight(this.mHeight);
-        mAbImageDownloader.setLoadingImage(R.drawable.image_loading);
+        mAbImageDownloader.setLoadingImage(R.drawable.nopic);
         mAbImageDownloader.setErrorImage(R.drawable.nopic);
         mAbImageDownloader.setNoImage(R.drawable.nopic);
 	}
