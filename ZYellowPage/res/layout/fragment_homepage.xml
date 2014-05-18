@@ -272,11 +272,11 @@
                     android:background="#FCFCFC"
                     android:orientation="vertical" >
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/imageView2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/orange" />
+                        android:layout_height="1dp"
+                        android:background="@color/orange_background" />
 
                     <LinearLayout
                          android:id="@+id/textViewhotbusiness"
@@ -323,11 +323,11 @@
                     android:background="#FFFFFF"
                     android:orientation="vertical" >
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/imageView2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/orange" />
+                        android:layout_height="1dp"
+                        android:background="@color/orange_background" />
 
                     <LinearLayout
                          android:id="@+id/textViewhotperson"

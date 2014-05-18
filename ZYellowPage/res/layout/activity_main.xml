@@ -229,11 +229,11 @@
         
     </RadioGroup>
 
-<ImageView
-    android:id="@+id/imageView2"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignTop="@+id/main_radio"
-    android:src="@drawable/black_line" />
+	<TextView
+	    android:id="@+id/imageView2"
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:layout_alignTop="@+id/main_radio"
+	    android:background="@color/list_divider" />
     
 </RelativeLayout>
