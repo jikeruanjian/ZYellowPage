@@ -237,6 +237,20 @@ public class User implements Serializable {
 	@Column(name = "job")
 	private String job;
 
+	/**
+	 * 多图片地址，使用“,”号分割,图片是绝对地址
+	 */
+	@Column(name = "album")
+	private String album;
+
+	public String getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(String album) {
+		this.album = album;
+	}
+
 	public String getJob() {
 		return job;
 	}

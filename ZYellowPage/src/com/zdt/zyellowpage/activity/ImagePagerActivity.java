@@ -8,8 +8,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.polites.android.GestureImageView;
 import com.zdt.zyellowpage.R;
 
 /**
@@ -53,6 +54,13 @@ public class ImagePagerActivity extends Activity {
 
 		pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(new ImagePagerAdapter(imageUrls));
+		pager.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				ImagePagerActivity.this.finish();
+			}
+		});
 	}
 
 	@Override
@@ -85,8 +93,15 @@ public class ImagePagerActivity extends Activity {
 			View imageLayout = inflater.inflate(R.layout.item_pager_image,
 					view, false);
 			assert imageLayout != null;
-			ImageView imageView = (ImageView) imageLayout
+			GestureImageView imageView = (GestureImageView) imageLayout
 					.findViewById(R.id.image);
+			imageView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					ImagePagerActivity.this.finish();
+				}
+			});
 			final ProgressBar spinner = (ProgressBar) imageLayout
 					.findViewById(R.id.loading);
 

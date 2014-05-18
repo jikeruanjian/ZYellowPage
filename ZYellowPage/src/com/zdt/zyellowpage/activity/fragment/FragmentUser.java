@@ -111,6 +111,8 @@ public class FragmentUser extends Fragment {
 				intent = new Intent(mActivity, AddPhotoActivity.class);
 				intent.putExtra("title", "设置Logo");
 				startActivity(intent);
+				mActivity.overridePendingTransition(R.anim.push_left_in,
+						R.anim.push_left_out);
 			}
 		});
 		imageQr.setOnClickListener(new OnClickListener() {
