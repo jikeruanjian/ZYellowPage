@@ -54,6 +54,7 @@ import com.zdt.zyellowpage.bll.VersionBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
+import com.zdt.zyellowpage.util.DisplayUtil;
 
 public class FragmentUser extends Fragment {
 	AbActivity mActivity;
@@ -70,7 +71,8 @@ public class FragmentUser extends Fragment {
 	ScrollView svMain;
 	List<String> commonMenu = new ArrayList<String>();
 	MenuAdapter menuAdapter;
-
+	DisplayUtil displayUtil;
+	
 	AbImageDownloader imageLoader;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +93,7 @@ public class FragmentUser extends Fragment {
 
 		lvMenu.setParentScrollView(svMain);
 		lvMenu.setMaxHeight(700);
-		lvMenu.setMinimumHeight(200);
+		lvMenu.setMinimumHeight(300);
 
 		commonMenu.add("清除缓存");
 		commonMenu.add("版本更新");
@@ -285,6 +287,8 @@ public class FragmentUser extends Fragment {
 			// }
 			addMenu.addAll(commonMenu);
 			menuAdapter.setLisMenu(addMenu);
+			//displayUtil = DisplayUtil.getInstance(mActivity);
+			//displayUtil.setListViewHeightBasedOnChildren(lvMenu , 7);
 		} else {
 			rllUserInfo.setVisibility(View.GONE);
 			btnLogout.setVisibility(View.GONE);

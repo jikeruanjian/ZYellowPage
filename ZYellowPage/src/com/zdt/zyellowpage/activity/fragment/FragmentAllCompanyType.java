@@ -31,38 +31,31 @@ public class FragmentAllCompanyType extends Fragment{
 	private AbActivity mActivity = null;
 	View view;
 	  //子视图显示文字
-		private List<List<Category>> generalsC;
-		private String[][] generals;
-		List<Category> lowerType;
-		ExpandableListAdapter adapter;
-		ExpandableListView expandableListView;
+	private String[][] generals;
+	ExpandableListAdapter adapter;
+	ExpandableListView expandableListView;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mActivity = (AbActivity) this.getActivity();
 
 		view = inflater.inflate(R.layout.all_companytype_fragment, null);
-		initView();
 		initData();
-		
-		
-		
-		
+		initView();
 		return view;
 	}
+	/**
+	 * 获取二级分来的名称
+	 */
 	private  void initData(){
-		generalsC = new ArrayList<List<Category>>();
 		int x= MainActivity.listCategory.size();
 		generals = new String[x][];
 		for(int i = 0;i<x;i++){
-			generalsC.add(getRightData(MainActivity.listCategory.get(i).getId(),"1"));
-			generals[i] = new String[]{"测试1","测试2"};
-					//getArrayData(generalsC.get(i));new 
+			generals[i]=getArrayData(MainActivity.listChildCategory.get(i));
 		}
-		Log.e("Company","----"+generalsC.size());
 	}
 	
 	/**
-	 * 抽取分类数组
+	 * 抽取分类名称数组
 	 * @param array
 	 * @return
 	 */
@@ -73,55 +66,6 @@ public class FragmentAllCompanyType extends Fragment{
 		}
 		return list.toArray(new String[0]);
 	}
-	
-	/**
-	 * 获取二级分类
-	 * @param oId
-	 * @param type
-	 * @return
-	 */
-	List<Category> getRightData(String oId,String type){
-		 lowerType = new ArrayList<Category>();
-	    	CategoryBll categoryBll = new CategoryBll();
-			categoryBll.getCategoryist(mActivity,oId, type, new ZzObjectHttpResponseListener<Category>(){
-				@Override
-				public void onSuccess(int statusCode, List<Category> lis) {
-					// TODO Auto-generated method stub
-					// TODO Auto-generated method stub
-					if (lis == null || lis.size() == 0) {
-						return;
-					}
-					lowerType.addAll(lis);
-				}
-
-				@Override
-				public void onStart() {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onFailure(int statusCode, String content,
-						Throwable error, List<Category> localList) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onErrorData(String status_description) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onFinish() {
-					// TODO Auto-generated method stub
-					((BaseExpandableListAdapter) adapter).notifyDataSetChanged();
-				}
-				
-			});
-			return lowerType;
-	    }
 	/**
 	 * 初始化界面
 	 */
@@ -137,9 +81,9 @@ public class FragmentAllCompanyType extends Fragment{
                 		mActivity );
                 textView.setLayoutParams(lp);
                 textView.setGravity(Gravity.CENTER_VERTICAL);
-                textView.setPadding(36, 0, 0, 0);
-                textView.setTextSize(20);
-                textView.setTextColor(Color.BLACK);
+                textView.setPadding(100, 0, 0, 0);
+                textView.setTextSize(14);
+                textView.setTextColor(R.color.propertyvalue);
                 return textView;
             }
 

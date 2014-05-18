@@ -33,41 +33,43 @@ import android.widget.Toast;
 public class FragmentAllPersonType  extends Fragment{
 	private View view;
 	private AbActivity mActivity = null;
-     //子视图显示文字
-	private List<List<Category>> generalsC;
 	private String[][] generals;
-	List<Category> lowerType;
-	
 	ExpandableListAdapter adapter;
 	ExpandableListView expandableListView;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mActivity = (AbActivity) this.getActivity();
-		
 		view = inflater.inflate(R.layout.all_persontype_fragment, null);
-		initView();
 		initData();
+		initView();
 		return view;
 	}
 	
 	private  void initData(){
-		generalsC = new ArrayList<List<Category>>();
 		int x= MainActivity.listCategoryP.size();
 		generals = new String[x][];
 		for(int i = 0;i<x;i++){
-			generalsC.add(getRightData(MainActivity.listCategoryP.get(i).getId(),"1"));
-			//generals[i] = getArrayData(generalsC.get(i));
-			generals[i] = new String[]{"测试1","测试2"};
+			generals[i]=getArrayData(MainActivity.listChildCategoryP.get(i));
 		}
-		Log.e("person","----"+generalsC.size());
-	
 	}
 	
-	
+	/**
+	 * 抽取分类数组名称
+	 * @param array
+	 * @return
+	 */
+	private  String[] getArrayData(List<Category> array ){
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < array.size(); i++) {
+			list.add( array.get(i).getName());
+		}
+		return list.toArray(new String[0]);
+	}
 	/**
 	 * 初始化界面
 	 */
 	private  void initView(){
+		//initData();
 		adapter = new BaseExpandableListAdapter() {
             //设置组视图的显示文字
             private String[] generalsTypes = MainActivity.listCategoryNameP.toArray(new String[0]);
@@ -75,16 +77,16 @@ public class FragmentAllPersonType  extends Fragment{
             
             //自己定义一个获得文字信息的方法
             TextView getTextView() {
-                AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-                        ViewGroup.LayoutParams.FILL_PARENT, 64);
-                TextView textView = new TextView(
-                		mActivity );
-                textView.setLayoutParams(lp);
-                textView.setGravity(Gravity.CENTER_VERTICAL);
-                textView.setPadding(36, 0, 0, 0);
-                textView.setTextSize(20);
-                textView.setTextColor(Color.BLACK);
-                return textView;
+            	   AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
+                           ViewGroup.LayoutParams.FILL_PARENT, 64);
+                   TextView textView = new TextView(
+                   		mActivity );
+                   textView.setLayoutParams(lp);
+                   textView.setGravity(Gravity.CENTER_VERTICAL);
+                   textView.setPadding(100, 0, 0, 0);
+                   textView.setTextSize(14);
+                   textView.setTextColor(R.color.propertyvalue); 
+                   return textView;
             }
 
             
@@ -98,6 +100,8 @@ public class FragmentAllPersonType  extends Fragment{
             @Override
             public Object getGroup(int groupPosition) {
                 // TODO Auto-generated method stub
+            	//generalsC.add(getRightData(MainActivity.listCategoryP.get(groupPosition).getId(),"1"));
+            	//generals[groupPosition] = getArrayData(generalsC.get(groupPosition));
                 return generalsTypes[groupPosition];
             }
 
@@ -116,6 +120,8 @@ public class FragmentAllPersonType  extends Fragment{
             @Override
             public Object getChild(int groupPosition, int childPosition) {
                 // TODO Auto-generated method stub
+            //	generalsC.add(getRightData(MainActivity.listCategoryP.get(groupPosition).getId(),"1"));
+            	//generals[groupPosition] = getArrayData(generalsC.get(groupPosition));
                 return generals[groupPosition][childPosition];
             }
 
@@ -172,7 +178,7 @@ public class FragmentAllPersonType  extends Fragment{
         };
 
        expandableListView = (ExpandableListView) view.findViewById(R.id.personListExpand);
-        expandableListView.setAdapter(adapter);
+       expandableListView.setAdapter(adapter);
         
         
         //设置item点击的监听器
@@ -193,65 +199,7 @@ public class FragmentAllPersonType  extends Fragment{
 
 	}
 	
-	/**
-	 * 抽取分类数组
-	 * @param array
-	 * @return
-	 */
-	private  String[] getArrayData(List<Category> array ){
-		List<String> list = new ArrayList<String>();
-		for (int i = 0; i < array.size(); i++) {
-			list.add( array.get(i).getName());
-		}
-		return list.toArray(new String[0]);
-	}
 	
-	/**
-	 * 获取二级分类
-	 * @param oId
-	 * @param type
-	 * @return
-	 */
-	List<Category> getRightData(String oId,String type){
-		 lowerType = new ArrayList<Category>();
-	    	CategoryBll categoryBll = new CategoryBll();
-			categoryBll.getCategoryist(mActivity,oId, type, new ZzObjectHttpResponseListener<Category>(){
-				@Override
-				public void onSuccess(int statusCode, List<Category> lis) {
-					// TODO Auto-generated method stub
-					// TODO Auto-generated method stub
-					if (lis == null || lis.size() == 0) {
-						return;
-					}
-					lowerType.addAll(lis);
-				}
-
-				@Override
-				public void onStart() {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onFailure(int statusCode, String content,
-						Throwable error, List<Category> localList) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onErrorData(String status_description) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onFinish() {
-					// TODO Auto-generated method stub
-					((BaseExpandableListAdapter) adapter).notifyDataSetChanged();
-				}
-				
-			});
-			return lowerType;
-	    }
+	
+	
 }

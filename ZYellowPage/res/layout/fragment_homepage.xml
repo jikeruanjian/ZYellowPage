@@ -285,7 +285,7 @@
                         android:background="#EEEEEE"
                         android:gravity="center_vertical"
                         android:paddingTop="1dp"
-                        android:text="  热门商企业"
+                        android:text="  热门商企"
                         android:textColor="#9F9F9F"
                         android:textColorHint="@color/black"
                         android:drawableRight="@drawable/arrow_right"

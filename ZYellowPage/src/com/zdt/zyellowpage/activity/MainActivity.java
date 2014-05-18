@@ -20,6 +20,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
@@ -92,9 +95,43 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	// 个人分类列表
 	public static List<Category> listCategoryP;
 	public static List<String> listCategoryNameP;
+	//个人子分类列表
+	public static  List<List<Category>> listChildCategoryP;
+	//商家子分类列表
+	public static  List<List<Category>> listChildCategory;
+	public static  Context mContext;
+	
 	private long mExitTime;
-
 	private boolean mIsEngineInitSuccess = false;
+	
+	private Handler myHandler = new Handler() {   
+		  
+        @Override  
+        public void handleMessage(Message msg) {   
+            // //执行接收到的通知，更新UI 此时执行的顺序是按照队列进行，即先进先出   
+            super.handleMessage(msg);   
+            switch (msg.what) {   
+            case 1:    
+            	MainActivity.getCategoryList( "0");
+        		MainActivity.getCategoryListP( "0");
+                break;   
+  
+            }   
+        }   
+  
+    };   
+
+	private Thread myThread = new Thread(new Runnable() {   		  
+        @Override  
+        public void run() {   
+            // 耗时操作
+        	  
+        	Message msg = new Message();   
+            msg.what = 1;   
+            MainActivity.this.myHandler.sendMessage(msg);   
+        }   
+  
+    });   
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
@@ -142,25 +179,29 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		listCategoryName = new ArrayList<String>();
 		listCategoryP = new ArrayList<Category>();
 		listCategoryNameP = new ArrayList<String>();
+		listChildCategoryP = new ArrayList<List<Category>>();
+		listChildCategory =  new ArrayList<List<Category>>();
+		mContext = this;
 		initChangeEvent();
 
 		MainActivity.getAreaList(MainActivity.this, application.cityid);
-		MainActivity.getCategoryList(MainActivity.this, "0");
-		MainActivity.getCategoryListP(MainActivity.this, "0");
+		//MainActivity.getCategoryList( "0");
+		//MainActivity.getCategoryListP( "0");
+		
 		textVSearch = (TextView) findViewById(R.id.textViewSearchType);
 		textVSearch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// button.getTop();
 				int y = textVSearch.getBottom() * 3 / 2;
-				// int x = getWindowManager().getDefaultDisplay().getWidth() /
-				// 2;
+				
 				int x = textVSearch.getRight() + 10;
 				showPopupWindow(x, y);
 			}
 		});
 
 		checkUpdate();
+		myThread.start();   
+
 	}
 
 	@Override
@@ -168,6 +209,12 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		super.onResume();
 		editRearch.setText("");
 	}
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+	}
+	
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -301,7 +348,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+	
 		if (isChecked) {
 			switch (buttonView.getId()) {
 			case R.id.radio_buttonHome: {
@@ -432,9 +479,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 * @param type
 	 *            0 为商家 1为个人
 	 */
-	public static void getCategoryList(Context context, String id) {
+	public static void getCategoryList( String id) {
 		CategoryBll categoryBll = new CategoryBll();
-		categoryBll.getCategoryist(context, id, "0",
+		categoryBll.getCategoryist(mContext, id, "0",
 				new ZzObjectHttpResponseListener<Category>() {
 
 					@Override
@@ -448,6 +495,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 						// Log.e("xxxx", "包含的分类个数为-----"+listCategory.size());
 						for (Category category : listCategory) {
 							listCategoryName.add(category.getName());
+							listChildCategory.add(getRightData(category.getId(),"0")); 
 						}
 
 					}
@@ -480,9 +528,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 * @param type
 	 *            0 为商家 1为个人
 	 */
-	public static void getCategoryListP(Context context, String id) {
+	public static  void getCategoryListP( String id) {
 		CategoryBll categoryBll = new CategoryBll();
-		categoryBll.getCategoryist(context, id, "1",
+		categoryBll.getCategoryist(mContext, id, "1",
 				new ZzObjectHttpResponseListener<Category>() {
 
 					@Override
@@ -497,6 +545,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 						// "包含的个人分类个数为-----"+listCategoryP.size());
 						for (Category category : listCategoryP) {
 							listCategoryNameP.add(category.getName());
+							listChildCategoryP.add(getRightData(category.getId(),"1")); 
 						}
 
 					}
@@ -519,12 +568,61 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 					@Override
 					public void onFinish() {
-
+						
 					}
 
 				});
 	}
+	
+	/**
+	 * 获取二级分类
+	 * @param oId
+	 * @param type
+	 * @return
+	 */
+	static List<Category> getRightData(String oId,String type){
+		    final List<Category> lowerType = new ArrayList<Category>();
+	    	CategoryBll categoryBll = new CategoryBll();
+			categoryBll.getCategoryist(mContext,oId, type, new ZzObjectHttpResponseListener<Category>(){
+				@Override
+				public void onSuccess(int statusCode, List<Category> lis) {
+					// TODO Auto-generated method stub
+					// TODO Auto-generated method stub
+					if (lis == null || lis.size() == 0) {
+						return;
+					}
+					lowerType.addAll(lis);
+				}
 
+				@Override
+				public void onStart() {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onFailure(int statusCode, String content,
+						Throwable error, List<Category> localList) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onErrorData(String status_description) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onFinish() {
+					// TODO Auto-generated method stub
+					//((BaseExpandableListAdapter) adapter).notifyDataSetChanged();
+				}
+				
+			});
+			return lowerType;
+	    }
+	
 	public void showPopupWindow(int x, int y) {
 		layout = (LinearLayout) LayoutInflater.from(MainActivity.this).inflate(
 				R.layout.popdialog, null);

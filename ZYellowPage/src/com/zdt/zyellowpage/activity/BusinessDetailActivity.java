@@ -18,6 +18,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -44,6 +45,7 @@ import com.ab.http.AbBinaryHttpResponseListener;
 import com.ab.http.AbHttpUtil;
 import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
+import com.ab.view.sliding.AbSlidingPlayView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -60,10 +62,12 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Album;
 import com.zdt.zyellowpage.model.User;
+import com.zdt.zyellowpage.util.DisplayUtil;
 
 public class BusinessDetailActivity extends AbActivity {
 	private MyApplication application;
 	private AbTitleBar mAbTitleBar = null;
+	private AbSlidingPlayView mSlidingPlayView = null;
 	private String member_id;
 	private User userCompany;
 	private ImageLoader imageLoader = ImageLoader.getInstance();
@@ -79,11 +83,11 @@ public class BusinessDetailActivity extends AbActivity {
 	private ImageView imgLogo;
 	private  View mView;
 	Bitmap codeBitmap;
+	private DisplayUtil displayUtil;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.activity_businessdetail);
-
 		if (getIntent().getExtras() != null) {
 			member_id = (String) getIntent().getExtras().get("MEMBER_ID");
 			if(member_id == null){
@@ -274,7 +278,37 @@ public class BusinessDetailActivity extends AbActivity {
 
 				});
 	}
-
+	private void initImageView() {
+		mSlidingPlayView =  (AbSlidingPlayView)this.findViewById(R.id.mAbSlidingPlayViewB);
+		displayUtil = DisplayUtil.getInstance(BusinessDetailActivity.this);
+		DisplayMetrics metric = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(metric);
+		int width = metric.widthPixels/4*3;
+		displayUtil.setViewLayoutParamsL(mSlidingPlayView,0,width);
+		mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
+		for(int i = 0;i < imageUrls.length;i++){
+			//Log.e("tie", "------"+imageUrl[i]);
+			View mPlayView = new View(BusinessDetailActivity.this);
+			mPlayView = mInflater.inflate(R.layout.play_view_item, null);
+			ImageView mPlayImage = (ImageView) mPlayView.findViewById(R.id.mPlayImage);
+			mPlayImage.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(BusinessDetailActivity.this,
+							ImagePagerActivity.class);
+					intent.putExtra("imageUrls", imageUrls);
+					startActivity(intent);
+				}
+				
+			});
+			TextView mPlayText = (TextView) mPlayView.findViewById(R.id.mPlayText);
+			new AbImageDownloader(BusinessDetailActivity.this).display(mPlayImage,imageUrls[i]);
+			mPlayText.setText("");		
+			mSlidingPlayView.addView(mPlayView);
+		}
+		
+	}
 	/**
 	 * 获取二维码图片
 	 */
@@ -411,26 +445,7 @@ public class BusinessDetailActivity extends AbActivity {
 			@Override
 			public void onFinish() {
 				// TODO Auto-generated method stub
-				Gallery gallery = (Gallery) findViewById(R.id.user_company_gallery);
-				Log.e("xxxx", "-----图片张数为" + imageUrls.length);
-				gallery.setAdapter(new ImageGalleryAdapter());
-				gallery.setSelection(0);
-				//gallery.
-				gallery.setOnItemClickListener(new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						startImagePagerActivity(position);
-					}
-
-					private void startImagePagerActivity(int position) {
-						Intent intent = new Intent(BusinessDetailActivity.this,
-								ImagePagerActivity.class);
-						intent.putExtra("imageUrls", imageUrls);
-						startActivity(intent);
-					}
-
-				});
+				initImageView();
 			}
 
 		});

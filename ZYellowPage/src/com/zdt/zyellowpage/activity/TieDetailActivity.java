@@ -70,6 +70,7 @@ public class TieDetailActivity extends AbActivity {
 	private DisplayUtil displayUtil;
 	private String type;
 	private TextView moreTextView;
+	private ImageView imgLogo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +219,19 @@ public class TieDetailActivity extends AbActivity {
 		else{
 			more.loadDataWithBaseURL(null, mTie.getMore(), "text/html","utf-8", null);
 		}
+		if (mTie.getLogo() != null) {
+			imgLogo = (ImageView) this.findViewById(R.id.tieLogoImage);
+			new AbImageDownloader(this).display(imgLogo,
+					mTie.getLogo());
+		}
+		
+		if (mTie.getQr_code() != null) {
+			ImageView codeImage = (ImageView) this.findViewById(R.id.TCodeTopRightimageView);
+			new AbImageDownloader(this).display(codeImage,
+					mTie.getQr_code());
+		}
+		TextView fullName= (TextView)this.findViewById(R.id.tiefullname);
+		fullName.setText(mTie.getTitle());
 		more.setVisibility(View.GONE);
 		moreTextView = (TextView)this.findViewById(R.id.tie_more_TextView);
 		TextView time= (TextView)this.findViewById(R.id.tie_detail_time);
@@ -243,6 +257,17 @@ public class TieDetailActivity extends AbActivity {
 			View mPlayView = new View(TieDetailActivity.this);
 			mPlayView = mInflater.inflate(R.layout.play_view_item, null);
 			ImageView mPlayImage = (ImageView) mPlayView.findViewById(R.id.mPlayImage);
+			mPlayImage.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(TieDetailActivity.this,
+							ImagePagerActivity.class);
+					intent.putExtra("imageUrls", imageUrl);
+					startActivity(intent);
+				}
+				
+			});
 			TextView mPlayText = (TextView) mPlayView.findViewById(R.id.mPlayText);
 			new AbImageDownloader(TieDetailActivity.this).display(mPlayImage,imageUrl[i]);
 			mPlayText.setText("");		
@@ -303,7 +328,7 @@ public class TieDetailActivity extends AbActivity {
 					}
 					
 				});
-		this.findViewById(R.id.tie_image_code).setOnClickListener(
+		this.findViewById(R.id.TCodeTopRightimageView).setOnClickListener(
 				new OnClickListener(){
 
 					@Override

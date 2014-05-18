@@ -111,7 +111,7 @@
             <com.ab.view.sample.AbInnerListView
                 android:id="@+id/lvMenu"
                 android:layout_width="fill_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:cacheColorHint="@color/transparent"
                 android:divider="@color/list_divider"
                 android:dividerHeight="1dip"
