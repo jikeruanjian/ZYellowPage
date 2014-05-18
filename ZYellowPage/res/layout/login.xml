@@ -47,7 +47,10 @@
                 android:paddingTop="5dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp" >
+
+                <requestFocus />
+            </EditText>
 
             <ImageButton
                 android:id="@+id/clearName"
@@ -101,8 +104,6 @@
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="18sp" >
-
-                <requestFocus />
             </EditText>
 
             <ImageButton

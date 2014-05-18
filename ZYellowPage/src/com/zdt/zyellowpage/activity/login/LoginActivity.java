@@ -123,10 +123,10 @@ public class LoginActivity extends AbActivity {
 				.getString(Constant.USERNAMECOOKIE, "");
 		String password = abSharedPreferences.getString(
 				Constant.USERPASSWORDCOOKIE, "");
-		boolean userPwdRemember = abSharedPreferences.getBoolean(
-				Constant.USERPASSWORDREMEMBERCOOKIE, false);
+		// boolean userPwdRemember = abSharedPreferences.getBoolean(
+		// Constant.USERPASSWORDREMEMBERCOOKIE, true);
 
-		if (userPwdRemember) {
+		if (application.userPasswordRemember) {
 			userName.setText(name);
 			userPwd.setText(password);
 		} else {
