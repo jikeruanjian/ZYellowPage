@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@color/orange_background"
-            android:visibility="visible" >
+            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/textViewarea"
@@ -90,17 +90,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/orange_background"
-            android:visibility="gone" >
+            >
 
             <TextView
                 android:id="@+id/TextView01"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:text="个人中心"
                 android:textColor="@color/white"
+                 android:layout_weight="1"
                 android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imageViewSaoyisao"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/saoyisao" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -174,7 +183,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/main_radio"
-        android:src="@drawable/orange" />
+        android:src="@drawable/black_line" />
 
     <RadioGroup
         android:id="@+id/main_radio"

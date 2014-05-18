@@ -879,7 +879,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				}
 				Log.e("fragmentmap", "-------------------所在城市："+showCityName); 
 				if(mCityName != null ){
-					MainActivity.this.showDialog("位置提醒", "现在在所在的城市是"+mCityName+",是否切换城市？", new DialogInterface.OnClickListener() {
+					MainActivity.this.showDialog("位置提醒", "当前定位到您所在的城市是"+mCityName+",是否切换城市？", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
