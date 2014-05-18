@@ -32,11 +32,11 @@ public class BuySellContentActivity extends AbActivity {
 			Item_id = (String) getIntent().getExtras().get("ITEMID");
 		}
 		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText("供求详细信息");
+		mAbTitleBar.setTitleText("详细信息");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		//mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		webContent = (WebView) this.findViewById(R.id.content);
 		tvTitle = (TextView) this.findViewById(R.id.title);

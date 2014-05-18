@@ -70,7 +70,7 @@ public class FragmentSell extends Fragment {
 
 		if (isEdit) {
 			adapter = new SimpleAdapter(mActivity, list,
-					R.layout.text_edit_item, new String[] {
+					R.layout.text_item, new String[] {
 							"textViewSellBuyItemNames", "time" }, new int[] {
 							R.id.textViewSellBuyItemName, R.id.tvTime });
 		} else

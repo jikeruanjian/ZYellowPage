@@ -132,14 +132,13 @@ public class TieListActivity extends AbActivity {
 
 					@Override
 					public void onStart() {
-						showProgressDialog("同步信息...");
+						showProgressDialog("请稍候...");
 					}
 
-					@SuppressWarnings("null")
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Tie> lis) {
-						if (lis != null || lis.size() > 0) {
+						if (lis != null && lis.size() > 0) {
 							Map<String, Object> map;
 							for (int i = 0; i < lis.size(); i++) {
 								Tie tie = lis.get(i);
@@ -151,6 +150,8 @@ public class TieListActivity extends AbActivity {
 										+ "\r\n时间：" + tie.getTime());
 								newList.add(map);
 							}
+						} else {
+							showToast(content);
 						}
 					}
 
@@ -166,6 +167,10 @@ public class TieListActivity extends AbActivity {
 						int len = newList.size();
 						newList.clear();
 						removeProgressDialog();
+						if (list.size() > 0
+								&& (newList == null || newList.size() == 0)) {
+							showToast("没有更多数据");
+						}
 						if (isRefresh) {
 							mAbPullListView.stopRefresh();
 						} else {

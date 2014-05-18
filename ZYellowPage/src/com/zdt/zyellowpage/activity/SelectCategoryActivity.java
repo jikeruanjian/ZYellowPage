@@ -113,8 +113,8 @@ public class SelectCategoryActivity extends AbActivity {
 
 						ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(
 								SelectCategoryActivity.this,
-								android.R.layout.simple_spinner_item, lis);
-
+								R.layout.spinner_display_style, lis);
+						adapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
 						spinner.setAdapter(adapter);
 					}
 

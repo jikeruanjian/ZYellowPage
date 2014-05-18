@@ -75,13 +75,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="25dp" 
-            android:visibility="gone">
+            android:padding="25dp"
+            android:visibility="gone" >
 
             <ImageView
                 android:id="@+id/imageHead"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:src="@drawable/nopic" />
 
             <TextView
@@ -95,8 +95,8 @@
 
             <ImageView
                 android:id="@+id/imageQr"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:src="@drawable/nopic" />
         </LinearLayout>
 
@@ -114,8 +114,7 @@
                 android:layout_height="wrap_content"
                 android:cacheColorHint="@color/transparent"
                 android:divider="@color/list_divider"
-                android:dividerHeight="1dip"
-                android:fastScrollEnabled="true" />
+                android:dividerHeight="1dip" />
 
             <LinearLayout
                 android:id="@+id/layoutLogout"

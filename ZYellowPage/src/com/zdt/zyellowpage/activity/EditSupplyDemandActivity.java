@@ -51,11 +51,13 @@ public class EditSupplyDemandActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-//		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 
 		initTitleRightLayout();
-		spiType.setAdapter(ArrayAdapter.createFromResource(this, R.array.type,
-				android.R.layout.simple_spinner_item));
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+				this, R.array.sex, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
+		spiType.setAdapter(adapter);
 		bindData();
 	}
 

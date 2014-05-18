@@ -47,7 +47,7 @@
                 android:paddingTop="5dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="18sp" >
+                android:textSize="@dimen/main_text_size_h2" >
 
                 <requestFocus />
             </EditText>

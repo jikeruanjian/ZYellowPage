@@ -9,10 +9,9 @@
         android:id="@+id/mListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/border_bottom"
-        android:cacheColorHint="#00000000"
-        android:divider="@drawable/list_divider"
+        android:layout_margin="10dp"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/list_divider"
         android:dividerHeight="1dip"
         android:fastScrollEnabled="true" >
     </ListView>

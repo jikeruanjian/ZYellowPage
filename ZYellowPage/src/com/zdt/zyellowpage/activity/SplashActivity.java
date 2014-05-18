@@ -34,13 +34,14 @@ public class SplashActivity extends AbActivity {
 
 				@Override
 				public void run() {
-					if (((MyApplication) SplashActivity.this.getApplication()).firstStart) {
-						SplashActivity.this.startActivity(new Intent(
-								SplashActivity.this, SelectAreaActivity.class));
-					} else {
-						SplashActivity.this.startActivity(new Intent(
-								SplashActivity.this, MainActivity.class));
-					}
+					// if (((MyApplication)
+					// SplashActivity.this.getApplication()).firstStart) {
+					// SplashActivity.this.startActivity(new Intent(
+					// SplashActivity.this, SelectAreaActivity.class));
+					// } else {
+					SplashActivity.this.startActivity(new Intent(
+							SplashActivity.this, MainActivity.class));
+					// }
 					SplashActivity.this.finish();
 				}
 			}, 1500);

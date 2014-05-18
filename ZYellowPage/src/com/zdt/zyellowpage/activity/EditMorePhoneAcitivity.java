@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -56,11 +57,12 @@ public class EditMorePhoneAcitivity extends AbActivity {
 			newContact = null;
 		}
 		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText("修改更多联系方式");
+		mAbTitleBar.setTitleText("详细信息");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
+
 		application = (MyApplication) abApplication;
 		initTitleRightLayout();
 		// 绑定默认数据
@@ -77,6 +79,7 @@ public class EditMorePhoneAcitivity extends AbActivity {
 		tvSave.setTextColor(Color.WHITE);
 		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		mAbTitleBar.addRightView(tvSave);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		tvSave.setOnClickListener(new View.OnClickListener() {
 
