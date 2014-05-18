@@ -26,8 +26,8 @@ public class MyResourceActivity extends AbActivity {
 	private ListView listView = null;
 	private String[] perSonItems = new String[] { "基本信息", "设置头像", "个人简介",
 			"成功案例", "我的特长", "资质管理" };
-	private String[] companyItems = new String[] { "基本信息", "设置Logo", "详细介绍",
-			"优惠信息", "经营范围", "供求信息", "图片展示", "更多电话", "地图坐标" };
+	private String[] companyItems = new String[] { "基本信息", "设置Logo", "供求信息",
+			"图片展示", "更多电话", "地图坐标" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,6 @@ public class MyResourceActivity extends AbActivity {
 					intent.putExtra("type", "specialty");
 					startActivity(intent);
 				} else if (selectedItem.equals("资质管理")) {
-					// TODO 还没有资质管理的接口
 					Intent intent = null;
 					intent = new Intent(MyResourceActivity.this,
 							CertificateListActivity.class);

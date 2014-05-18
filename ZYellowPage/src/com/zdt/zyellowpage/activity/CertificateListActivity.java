@@ -266,33 +266,8 @@ public class CertificateListActivity extends AbActivity {
 					.getCertificate_name());
 			holder.number.setText("编号:"
 					+ listCertificate.get(position).getCertificate_no());
-			holder.viewBtn.setImageResource(R.drawable.document_edit);
+			holder.viewBtn.setImageResource(R.drawable.index_fh);
 			return convertView;
-		}
-	}
-
-	/**
-	 * 编辑更多电话
-	 * 
-	 * @author Administrator
-	 * 
-	 */
-	private class EditCertificateBtnListener implements OnClickListener {
-		Certificate certificateInfo;
-
-		public EditCertificateBtnListener(Certificate info) {
-			certificateInfo = info;
-		}
-
-		@Override
-		public void onClick(View v) {
-			// 编辑
-			Intent intent = new Intent(CertificateListActivity.this,
-					EditCertificateActivity.class);
-			Bundle mBundle = new Bundle();
-			mBundle.putSerializable("Certificate", certificateInfo);
-			intent.putExtras(mBundle);
-			startActivity(intent);
 		}
 	}
 
@@ -306,7 +281,8 @@ public class CertificateListActivity extends AbActivity {
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		Button btnAdd = (Button) rightViewMore.findViewById(R.id.moreBtn);
-		btnAdd.setBackgroundResource(R.drawable.add);
+		btnAdd.setBackgroundResource(R.color.transparent);
+		btnAdd.setText(" 添加  ");
 		btnAdd.setOnClickListener(new OnClickListener() {
 
 			@Override

@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,7 +57,8 @@ public class MorePhoneActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		mAbTitleBar.setLogoLine(R.drawable.line);
+		
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		listContact = new ArrayList<Contact>();
 		// 获取ListView对象
@@ -347,7 +349,7 @@ public class MorePhoneActivity extends AbActivity {
 			holder.name.setText(listContact.get(position).getDepartment() + ":"
 					+ listContact.get(position).getContacter());
 			holder.number.setText(listContact.get(position).getTelephone());
-			holder.viewBtn.setImageResource(R.drawable.document_edit);
+			holder.viewBtn.setImageResource(R.drawable.index_fh);
 			return convertView;
 		}
 	}
@@ -386,7 +388,9 @@ public class MorePhoneActivity extends AbActivity {
 		mAbTitleBar.addRightView(rightViewMore);
 
 		Button btnAdd = (Button) rightViewMore.findViewById(R.id.moreBtn);
-		btnAdd.setBackgroundResource(R.drawable.add);
+		btnAdd.setBackgroundResource(R.color.transparent);
+		btnAdd.setText(" 添加  ");
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		btnAdd.setOnClickListener(new OnClickListener() {
 
 			@Override

@@ -45,7 +45,9 @@ import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
 import com.ab.view.sample.AbInnerListView;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.AddPhotoActivity;
 import com.zdt.zyellowpage.activity.CertificateListActivity;
+import com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity;
 import com.zdt.zyellowpage.activity.MyConcernActivity;
 import com.zdt.zyellowpage.activity.MyResourceActivity;
 import com.zdt.zyellowpage.activity.login.ChangePwdActivity;
@@ -72,7 +74,7 @@ public class FragmentUser extends Fragment {
 	List<String> commonMenu = new ArrayList<String>();
 	MenuAdapter menuAdapter;
 	DisplayUtil displayUtil;
-	
+
 	AbImageDownloader imageLoader;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,8 +107,10 @@ public class FragmentUser extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mActivity.showToast("功能正在开发中...");
+				Intent intent = null;
+				intent = new Intent(mActivity, AddPhotoActivity.class);
+				intent.putExtra("title", "设置Logo");
+				startActivity(intent);
 			}
 		});
 		imageQr.setOnClickListener(new OnClickListener() {
@@ -188,8 +192,13 @@ public class FragmentUser extends Fragment {
 				} else if (menuTitle.equals("关于我们")) {
 					mActivity.showToast("正在开发中...");
 				} else if (menuTitle.equals("我的资料")) {
-					Intent intent = new Intent(mActivity,
-							MyResourceActivity.class);
+					Intent intent = null;
+					if (application.mUser.getType() == 0) {
+						intent = new Intent(mActivity, MyResourceActivity.class);
+					} else {
+						intent = new Intent(mActivity,
+								EditPersonBaseResourceActivity.class);
+					}
 					startActivity(intent);
 				} else if (menuTitle.equals("我的资质")) {
 					Intent intent = null;
@@ -277,18 +286,21 @@ public class FragmentUser extends Fragment {
 
 			// 增加menu
 			List<String> addMenu = new ArrayList<String>();
-			// if (application.mUser.getType() == 0) {
-			// TODO 商家
-			// } else {
-			addMenu.add("我的资料");
-			addMenu.add("我的资质");
-			addMenu.add("我的关注");
-			addMenu.add("修改密码");
-			// }
+			if (application.mUser.getType() == 0) {
+				// TODO 商家
+				addMenu.add("我的资料");
+				addMenu.add("我的关注");
+				addMenu.add("修改密码");
+			} else {
+				addMenu.add("我的资料");
+				addMenu.add("我的资质");
+				addMenu.add("我的关注");
+				addMenu.add("修改密码");
+			}
 			addMenu.addAll(commonMenu);
 			menuAdapter.setLisMenu(addMenu);
-			//displayUtil = DisplayUtil.getInstance(mActivity);
-			//displayUtil.setListViewHeightBasedOnChildren(lvMenu , 7);
+			// displayUtil = DisplayUtil.getInstance(mActivity);
+			// displayUtil.setListViewHeightBasedOnChildren(lvMenu , 7);
 		} else {
 			rllUserInfo.setVisibility(View.GONE);
 			btnLogout.setVisibility(View.GONE);

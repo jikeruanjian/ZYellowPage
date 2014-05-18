@@ -106,7 +106,7 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 
 		ArrayAdapter<CharSequence> aaSex = ArrayAdapter.createFromResource(
 				this, R.array.sex, android.R.layout.simple_spinner_item);
-		aaSex.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		aaSex.setDropDownViewResource(R.layout.spinner_dropdown_style);
 		spiSex.setAdapter(aaSex);
 
 		// 绑定默认数据
@@ -142,6 +142,7 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 				newUser.setFullname(tvFullName.getText().toString());
 				newUser.setSex(Integer.valueOf(String.valueOf(spiSex
 						.getSelectedItemId())));
+				newUser.setAge(tempAge);
 				newUser.setNation(tvNation.getText().toString());
 				newUser.setTelephone(tvTelphone.getText().toString());
 				if (selectedArea != null) {
@@ -171,6 +172,7 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 								application.mUser.setFullname(newUser
 										.getFullname());
 								application.mUser.setSex(newUser.getSex());
+								application.mUser.setAge(newUser.getAge());
 								application.mUser.setNation(newUser.getNation());
 								application.mUser.setTelephone(newUser
 										.getTelephone());

@@ -19,9 +19,7 @@
             android:id="@+id/layout02"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -30,41 +28,47 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="标题"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="标题："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tvTitle"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="标题"
                 android:inputType="text"
-                android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray_black"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearTitle"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
-                android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <RelativeLayout
             android:id="@+id/rlType"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip">
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvType"
@@ -73,27 +77,35 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="类别"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="类别："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <Spinner
                 android:id="@+id/type"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tvType"
+                android:background="@color/transparent"
                 android:drawSelectorOnTop="true"
-                android:prompt="@string/selectType" >
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:prompt="@string/selectType"
+                android:spinnerMode="dropdown" >
             </Spinner>
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <LinearLayout
             android:id="@+id/layout05"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
+            android:background="@drawable/edit_lay_border_bottom"
             android:orientation="vertical" >
 
             <TextView
@@ -101,20 +113,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="详细信息"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="详细信息："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/content"
                 android:layout_width="fill_parent"
                 android:layout_height="260dp"
+                android:gravity="top"
                 android:hint="详细信息"
-                android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray_black"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
         </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
     </LinearLayout>
 
 </ScrollView>

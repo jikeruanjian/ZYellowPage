@@ -41,7 +41,7 @@ public class CompanyBuySellActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.drawable.top_bg);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		//mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 		initTitleRightLayout();
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		mAbSlidingTabView = (AbSlidingTabView) findViewById(R.id.mAbSlidingTabView);
@@ -76,19 +76,15 @@ public class CompanyBuySellActivity extends AbActivity {
 		mAbSlidingTabView.setTabLayoutBackground(R.drawable.slide_top);
 	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-
-	}
-
 	private void initTitleRightLayout() {
 		if (isEdit) {
 			View rightViewMore = mInflater.inflate(R.layout.more_btn, null);
 			mAbTitleBar.addRightView(rightViewMore);
 
 			Button btnAdd = (Button) rightViewMore.findViewById(R.id.moreBtn);
-			btnAdd.setBackgroundResource(R.drawable.add);
+			btnAdd.setBackgroundResource(R.color.transparent);
+			btnAdd.setText(" 添加  ");
+			mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 			btnAdd.setOnClickListener(new OnClickListener() {
 
 				@Override

@@ -38,16 +38,19 @@
             android:id="@+id/layout06"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:layout_margin="10dip" >
 
             <Spinner
                 android:id="@+id/spiMainCategory"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom"
                 android:drawSelectorOnTop="true"
-                android:prompt="@string/selectCagegory" >
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp"
+                android:prompt="@string/selectCagegory"
+                android:spinnerMode="dropdown" >
             </Spinner>
         </RelativeLayout>
 
@@ -55,16 +58,19 @@
             android:id="@+id/layout07"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:layout_margin="10dip" >
 
             <Spinner
                 android:id="@+id/spiChildCagetory"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/border_bottom"
                 android:drawSelectorOnTop="true"
-                android:prompt="@string/selectCagegory" >
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp"
+                android:prompt="@string/selectCagegory"
+                android:spinnerMode="dropdown" >
             </Spinner>
         </RelativeLayout>
 

@@ -118,7 +118,9 @@ public class FragmentTie extends Fragment {
 
 					@Override
 					public void onStart() {
-						if ("5".equals(tieType)) {
+						if ("1".equals(tieType)) {
+							mActivity.showProgressDialog("请稍后...");
+						} else if ("5".equals(tieType)) {
 							loadCount = 0;
 						}
 					}
@@ -126,6 +128,7 @@ public class FragmentTie extends Fragment {
 					@Override
 					public void onFinish() {
 						if ("5".equals(tieType)) {
+							mActivity.removeProgressDialog();
 							mAbPullView.stopRefresh();
 						}
 					}

@@ -19,9 +19,7 @@
             android:id="@+id/layout02"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvFullName"
@@ -30,41 +28,49 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="商家名称"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="商家名称："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/fullName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvFullName"
-                android:gravity="center_vertical"
+                
                 android:hint="商家名称"
                 android:inputType="text"
                 android:maxLength="28"
+                android:background="@color/transparent"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearFullName"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
-                android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <RelativeLayout
             android:id="@+id/layout13"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvArea"
@@ -73,30 +79,36 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="所  在  地"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="所  在  地："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <Button
                 android:id="@+id/area"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tvArea"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="所在地"
-                android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <RelativeLayout
             android:id="@+id/layout14"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvCategory"
@@ -105,30 +117,36 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="所属行业"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="所属行业："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <Button
                 android:id="@+id/category"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tvCategory"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="所属行业"
-                android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <RelativeLayout
             android:id="@+id/layout03"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvContact"
@@ -137,41 +155,49 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="联  系  人"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="联  系  人："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/contact"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvContact"
-                android:gravity="center_vertical"
+                android:background="@color/transparent"
                 android:hint="@string/contact"
                 android:inputType="text"
                 android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearContact"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout05"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvTelphone"
@@ -180,41 +206,48 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="联系电话"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="联系电话："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/telphone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvTelphone"
-                android:gravity="center_vertical"
+                android:background="@color/transparent"
                 android:hint="联系电话"
                 android:inputType="phone"
-                android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/cleartelphone"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout08"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvEmail"
@@ -223,41 +256,48 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="电子邮箱"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="电子邮箱："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvEmail"
-                android:gravity="center_vertical"
+                android:background="@color/transparent"
                 android:hint="电子邮箱"
                 android:inputType="textEmailAddress"
-                android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearEmail"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout09"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvAddress"
@@ -266,41 +306,48 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="地        址"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="地        址："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvAddress"
-                android:gravity="center_vertical"
+                android:background="@color/transparent"
                 android:hint="@string/address"
                 android:inputType="text"
-                android:maxLength="28"
-                android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:maxLines="2"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearAddress"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout10"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvWebsite"
@@ -309,41 +356,48 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="网        址"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="网        址："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/website"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvWebsite"
-                android:gravity="center_vertical"
+                android:background="@color/transparent"
                 android:hint="网址"
-                android:inputType="text"
-                android:maxLength="28"
+                android:inputType="textUri"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearWebsite"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout11"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvQQ"
@@ -352,41 +406,48 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="Q          Q"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="Q          Q："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/qq"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvQQ"
-                android:gravity="center_vertical"
+                android:background="@color/transparent"
                 android:hint="@string/qq"
-                android:inputType="number"
-                android:maxLength="28"
+                android:inputType="phone"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearQQ"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout06"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvWifiUserName"
@@ -395,41 +456,48 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="网线账号"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="网线账号："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/wifiUserName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvWifiUserName"
-                android:gravity="center_vertical"
+                android:background="@color/transparent"
                 android:hint="网线账号"
                 android:inputType="text"
-                android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearWifiUserName"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout07"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <TextView
                 android:id="@+id/tvWifiPassword"
@@ -438,33 +506,42 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="无线密码"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:text="无线密码："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/wifiPassword"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tvWifiPassword"
-                android:gravity="center_vertical"
+                android:background="@color/transparent"
                 android:hint="无线密码"
                 android:inputType="text"
-                android:maxLength="28"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearWifiPassword"
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="12dip"
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
     </LinearLayout>
 
 </ScrollView>
