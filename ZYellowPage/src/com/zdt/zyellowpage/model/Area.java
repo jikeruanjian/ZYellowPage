@@ -20,17 +20,19 @@ public class Area {
 	/**
 	 * 父地区的Id
 	 */
-	@Column(name = "parentId", length = 20)
-	private String parentId;
+	@Column(name = "Parent", length = 20)
+	private String parent;
 
-	public Area(String i,String n,String pi){
+	public Area(String i, String n, String pi) {
 		id = i;
 		name = n;
-		parentId = pi;
+		parent = pi;
 	}
+
 	public Area() {
 		// TODO Auto-generated constructor stub
 	}
+
 	public String getId() {
 		return id;
 	}
@@ -47,12 +49,12 @@ public class Area {
 		this.name = name;
 	}
 
-	public String getParentId() {
-		return parentId;
+	public String getParent() {
+		return parent;
 	}
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
+	public void setParent(String parent) {
+		this.parent = parent;
 	}
 
 	@Override

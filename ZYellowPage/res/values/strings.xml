@@ -66,7 +66,7 @@
     <string name="error_pwdanswer_isempty">密保答案不能为空</string>
     <string name="error_fullName_isempty">姓名不能为空</string>
     <string name="infoClear">清空</string>
-    <string name="titleCurrentArea">当前区域：</string>
+    <string name="titleCurrentArea">定位区域：</string>
     <string name="oldPassword">旧密码</string>
     <string name="newPassword">新密码</string>
     <string name="confirmNewPassword">确认新密码</string>

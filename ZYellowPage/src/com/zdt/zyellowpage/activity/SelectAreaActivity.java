@@ -1,10 +1,12 @@
 package com.zdt.zyellowpage.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import com.ab.activity.AbActivity;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.AreaBll;
+import com.zdt.zyellowpage.dao.AreaDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
@@ -35,6 +38,8 @@ public class SelectAreaActivity extends AbActivity {
 	private Spinner spiCoutny;
 	private Button btnConfirm;
 	private TextView tvCurrentAreaName;
+	private List<Area> lisCurrentAreas;
+	boolean isInit = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,7 @@ public class SelectAreaActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		// mAbTitleBar.setLogoLine(R.drawable.line);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		spiProvince = (Spinner) findViewById(R.id.spiProvince);
 		spiCity = (Spinner) findViewById(R.id.spiCity);
@@ -54,7 +59,7 @@ public class SelectAreaActivity extends AbActivity {
 		btnConfirm = (Button) findViewById(R.id.selectAreaBtn);
 		tvCurrentAreaName = (TextView) findViewById(R.id.tvCurrentArea);
 		tvCurrentAreaName.setText(application.cityName);
-
+		lisCurrentAreas = getAreaParent();
 		initArea("0", spiProvince, adapterProvince);
 
 		spiProvince.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -62,11 +67,15 @@ public class SelectAreaActivity extends AbActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				// 获取键的方法：mySpinner.getSelectedItem().toString()或((Dict)mySpinner.getSelectedItem()).getId()
-				// 获取值的方法：((Dict)mySpinner.getSelectedItem()).getText();
-				// showToast(((Area) spiProvince.getSelectedItem()).getId());
-				initArea(((Area) spiProvince.getSelectedItem()).getId(),
-						spiCity, adapterCity);
+				String parent1 = ((Area) spiProvince.getSelectedItem()).getId();
+				if (parent1.equals("000000")) {
+					spiCity.setVisibility(View.GONE);
+					spiCoutny.setVisibility(View.GONE);
+				} else {
+					spiCity.setVisibility(View.VISIBLE);
+					spiCoutny.setVisibility(View.VISIBLE);
+					initArea(parent1, spiCity, adapterCity);
+				}
 			}
 
 			@Override
@@ -80,9 +89,6 @@ public class SelectAreaActivity extends AbActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				// 获取键的方法：mySpinner.getSelectedItem().toString()或((Dict)mySpinner.getSelectedItem()).getId()
-				// 获取值的方法：((Dict)mySpinner.getSelectedItem()).getText();
-				// showToast(((Area) spiProvince.getSelectedItem()).getId());
 				initArea(((Area) spiCity.getSelectedItem()).getId(), spiCoutny,
 						adapterCounty);
 			}
@@ -98,6 +104,10 @@ public class SelectAreaActivity extends AbActivity {
 			@Override
 			public void onClick(View v) {
 				Area selectedArea = (Area) spiCoutny.getSelectedItem();
+
+				if (spiCoutny.getVisibility() == View.GONE) {
+					selectedArea = (Area) spiProvince.getSelectedItem();
+				}
 				if (selectedArea == null) {
 					showToast("没有正确选择区域，请重新选择");
 					return;
@@ -106,7 +116,8 @@ public class SelectAreaActivity extends AbActivity {
 						selectedArea = (Area) spiCity.getSelectedItem();
 					}
 					application.cityid = selectedArea.getId();
-					application.cityName = selectedArea.getName();
+					application.cityName = selectedArea.getName().substring(0,
+							2);
 					if (application.firstStart) {
 						Editor editor = abSharedPreferences.edit();
 						editor.putBoolean(Constant.FIRSTSTART, false);
@@ -118,7 +129,6 @@ public class SelectAreaActivity extends AbActivity {
 				Editor editor = abSharedPreferences.edit();
 				editor.putString(Constant.CITYID, application.cityid);
 				editor.putString(Constant.CITYNAME, application.cityName);
-				// showToast(application.cityid + application.cityName);
 				editor.commit();
 				setResult(RESULT_OK, null);
 				if (application.firstStart) {
@@ -153,6 +163,77 @@ public class SelectAreaActivity extends AbActivity {
 	private void initArea(final String parentId, final Spinner spinner,
 			ArrayAdapter<Area> mAdapter) {
 
+		AreaDao areaDao = new AreaDao(this);
+		areaDao.startReadableDatabase(false);
+		List<Area> areas = areaDao.queryList("parent=?",
+				new String[] { parentId });
+		areaDao.closeDatabase(false);
+
+		if (areas != null && areas.size() > 0) {
+			if (spinner.equals(spiProvince)) {
+				Area area = new Area();
+				area.setId("000000");
+				area.setParent("0");
+				area.setName("全国");
+				areas.add(0, area);
+			} else if (spinner.equals(spiCoutny)) {
+				Area area = new Area();
+				area.setId("-" + parentId);
+				area.setParent(parentId);
+				area.setName("全部");
+				areas.add(0, area);
+			}
+
+			ArrayAdapter<Area> adapter = new ArrayAdapter<Area>(
+					SelectAreaActivity.this, R.layout.spinner_display_style,
+					areas);
+			adapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
+			spinner.setAdapter(adapter);
+
+			if (spinner.equals(spiProvince)) {
+				if (isInit && lisCurrentAreas != null
+						&& lisCurrentAreas.size() >= 1
+						&& lisCurrentAreas.get(0) != null) {
+					int i = 0;
+					for (Area item : areas) {
+						if (item.getId().equals(lisCurrentAreas.get(0).getId())) {
+							spinner.setSelection(i);
+							break;
+						}
+						i++;
+					}
+				}
+			} else if (spinner.equals(spiCity)) {
+				if (isInit && lisCurrentAreas != null
+						&& lisCurrentAreas.size() > 1
+						&& lisCurrentAreas.get(1) != null) {
+					int i = 0;
+					for (Area item : areas) {
+						if (item.getId().equals(lisCurrentAreas.get(1).getId())) {
+							spinner.setSelection(i);
+							break;
+						}
+						i++;
+					}
+				}
+			} else if (spinner.equals(spiCoutny)) {
+				if (isInit && lisCurrentAreas != null
+						&& lisCurrentAreas.size() > 2
+						&& lisCurrentAreas.get(2) != null) {
+					int i = 0;
+					for (Area item : areas) {
+						if (item.getId().equals(lisCurrentAreas.get(2).getId())) {
+							spinner.setSelection(i);
+							break;
+						}
+						i++;
+					}
+				}
+				isInit = false;
+			}
+			return;
+		}
+
 		new AreaBll().getAreaList(this, parentId,
 				new ZzObjectHttpResponseListener<Area>() {
 
@@ -161,7 +242,7 @@ public class SelectAreaActivity extends AbActivity {
 						if (spinner.equals(spiCoutny)) {
 							Area area = new Area();
 							area.setId("-" + parentId);
-							area.setParentId(parentId);
+							area.setParent(parentId);
 							area.setName("全部");
 							lis.add(0, area);
 						}
@@ -196,7 +277,7 @@ public class SelectAreaActivity extends AbActivity {
 						if (spinner.equals(spiCoutny)) {
 							Area area = new Area();
 							area.setId("-" + parentId);
-							area.setParentId(parentId);
+							area.setParent(parentId);
 							area.setName("全部");
 							localList.add(0, area);
 						}
@@ -215,4 +296,24 @@ public class SelectAreaActivity extends AbActivity {
 				});
 	}
 
+	private List<Area> getAreaParent() {
+		AreaDao ad = new AreaDao(this);
+		ad.startReadableDatabase(false);
+		Area area = ad.queryOne(Integer.valueOf(application.cityid));
+		List<Area> lisArea = new ArrayList<Area>();
+		if (area == null)
+			return null;
+
+		if (!area.getParent().equals("0")) {
+			Area area2 = ad.queryOne(Integer.valueOf(area.getParent()));
+			if (!area2.getParent().equals("0")) {
+				Area area3 = ad.queryOne(Integer.valueOf(area2.getParent()));
+				lisArea.add(area3);
+			}
+			lisArea.add(area2);
+		}
+		ad.closeDatabase(false);
+		lisArea.add(area);
+		return lisArea;
+	}
 }
