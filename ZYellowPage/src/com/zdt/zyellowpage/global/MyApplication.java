@@ -22,7 +22,7 @@ public class MyApplication extends Application {
 
 	public String cityid = Constant.DEFAULTCITYID;
 	public String cityName = Constant.DEFAULTCITYNAME;
-	public boolean userPasswordRemember = false;
+	public boolean userPasswordRemember = true;
 	public boolean ad = false;
 	public boolean firstStart = true;
 
@@ -44,8 +44,8 @@ public class MyApplication extends Application {
 				Context.MODE_PRIVATE);
 		String userName = sp.getString(Constant.USERNAMECOOKIE, null);
 		String userPwd = sp.getString(Constant.USERPASSWORDCOOKIE, null);
-		Boolean userPwdRemember = sp.getBoolean(
-				Constant.USERPASSWORDREMEMBERCOOKIE, false);
+		// Boolean userPwdRemember = sp.getBoolean(
+		// Constant.USERPASSWORDREMEMBERCOOKIE, true);
 
 		cityid = sp.getString(Constant.CITYID, Constant.DEFAULTCITYID);
 		cityName = sp.getString(Constant.CITYNAME, Constant.DEFAULTCITYNAME);
@@ -68,7 +68,7 @@ public class MyApplication extends Application {
 				mUser.setPassword(userPwd);
 			}
 
-			userPasswordRemember = userPwdRemember;
+			// userPasswordRemember = userPwdRemember;
 		}
 		initImageLoader(getApplicationContext());
 	}

@@ -438,7 +438,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 						listArea.clear();
 						listArea.addAll(lis);
-						listArea.add(new Area(lis.get(0).getParentId(), "全部区域",
+						listArea.add(new Area(lis.get(0).getParent(), "全部区域",
 								"0"));
 						listAreaName.clear();
 						for (Area area : listArea) {

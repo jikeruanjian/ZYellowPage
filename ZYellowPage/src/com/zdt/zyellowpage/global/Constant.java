@@ -17,6 +17,7 @@ public class Constant {
 	public static final String USERPASSWORDCOOKIE = "cookiePassword";
 	public static final String USERPASSWORDREMEMBERCOOKIE = "cookieRemember";
 	public static final String FIRSTSTART = "firstStart";
+	public static final String LASTUPDATETIME = "dataLastUpdateTime";
 
 	// 连接超时
 	public static final int timeOut = 12000;
@@ -39,6 +40,16 @@ public class Constant {
 	public static final String IMAGEBASEURL = "http://service.321hy.cn/image";
 
 	public static final String AREAURL = "http://service.321hy.cn/generic/area";
+
+	/**
+	 * 获取所有区域
+	 */
+	public static final String ALLAREA = "http://service.321hy.cn/generic/areaall";
+
+	/**
+	 * 区域反查接口
+	 */
+	public static final String AREANAME = "http://service.321hy.cn/generic/areaid?area_name=";
 
 	public static final String CATEGORYURL = "http://service.321hy.cn/generic/category";
 
