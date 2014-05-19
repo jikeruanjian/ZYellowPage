@@ -97,6 +97,37 @@ public class TieDetailActivity extends AbActivity {
 				mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 			//	mAbTitleBar.setLogoLine(R.drawable.line);
 				initTypeView();
+				//在标题栏添加参加按钮
+				mAbTitleBar.clearRightView();
+				TextView tvSave = new TextView(this);
+				tvSave.setText("+参加  ");
+				tvSave.setTextColor(Color.WHITE);
+				tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+				tvSave.setOnClickListener(
+						new OnClickListener(){
+
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								Intent intent;
+								if (application.mUser == null|| application.mUser.getToken() == null) {
+									TieDetailActivity.this.showToast("请先登录");
+									intent = new Intent(TieDetailActivity.this, LoginActivity.class);
+									startActivity(intent);
+								}
+								else{
+								
+									intent = new Intent(TieDetailActivity.this,
+										EditTieMessageActivity.class);
+									intent.putExtra("ITEM_ID",mTie.getItem_id());
+									intent.putExtra("TYPE",mTie.getType());
+									intent.putExtra("PASSWORD",mTie.getPassword());
+									startActivity(intent);
+								}
+							}
+							
+						});
+				mAbTitleBar.addRightView(tvSave);
 				mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 			}
 		}
@@ -282,7 +313,7 @@ public class TieDetailActivity extends AbActivity {
 	}
 	
 	private void initEvent(){
-		this.findViewById(R.id.tie_image_join).setOnClickListener(
+	/*	this.findViewById(R.id.tie_image_join).setOnClickListener(
 				new OnClickListener(){
 
 					@Override
@@ -305,7 +336,7 @@ public class TieDetailActivity extends AbActivity {
 						}
 					}
 					
-				});
+				});*/
 		this.findViewById(R.id.tie_image_phone).setOnClickListener(
 				new OnClickListener(){
 

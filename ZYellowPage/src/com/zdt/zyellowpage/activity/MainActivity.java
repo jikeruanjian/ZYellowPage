@@ -227,7 +227,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 			}
 		});
 		
-		 findViewById(R.id.imageViewSaoyisao).setOnClickListener(new OnClickListener() {
+		 this.findViewById(R.id.imageViewSaoyisao).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -839,15 +839,13 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		@Override
 		public void onVerifySucc() {
 			// TODO Auto-generated method stub
-			Toast.makeText(MainActivity.this, "key校验成功", Toast.LENGTH_LONG)
-					.show();
+			//Toast.makeText(MainActivity.this, "  ", Toast.LENGTH_LONG).show();
 		}
 
 		@Override
 		public void onVerifyFailed(int arg0, String arg1) {
 			// TODO Auto-generated method stub
-			Toast.makeText(MainActivity.this, "key校验失败", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(MainActivity.this, "校验失败，无法提供导航功能！", Toast.LENGTH_LONG).show();
 		}
 	};
 

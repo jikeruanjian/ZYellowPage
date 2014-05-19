@@ -23,6 +23,7 @@ import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.fragment.FragmentAllCompanyType;
 import com.zdt.zyellowpage.activity.fragment.FragmentAllPersonType;
+import com.zdt.zyellowpage.global.MyApplication;
 
 
 public class AllTypeActivity extends AbActivity{
@@ -30,12 +31,14 @@ public class AllTypeActivity extends AbActivity{
 	private AbTitleBar mAbTitleBar = null;
 	private String[] commonType;
 	private AbSlidingTabView mAbSlidingTabView;
+	private MyApplication application;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	
 		 super.onCreate(savedInstanceState);  
 	     setContentView(R.layout.all_class_activity);
 	     
+	     application = (MyApplication) abApplication;
 	    mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText("更多");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
