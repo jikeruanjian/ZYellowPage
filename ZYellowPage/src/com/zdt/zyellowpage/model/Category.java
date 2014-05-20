@@ -15,40 +15,26 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 418987853355818158L;
 
 	@Id
-	@Column(name = "_id")
-	private int _id;
-
-	/**
-	 * 分类编号
-	 */
-	@Column(name = "id")
+	@Column(name = "Id")
 	private String id;
 
 	/**
 	 * 分类名称
 	 */
-	@Column(name = "name")
+	@Column(name = "Name")
 	private String name;
 
 	/**
-	 * 商家/个人
+	 * 商家0/个人1
 	 */
-	@Column(name = "type")
+	@Column(name = "Type")
 	private String type;
 
 	/**
 	 * 父分类
 	 */
-	@Column(name = "parentId")
-	private String parentId = "0";
-
-	public int get_id() {
-		return _id;
-	}
-
-	public void set_id(int _id) {
-		this._id = _id;
-	}
+	@Column(name = "Parent")
+	private String parent;
 
 	public String getId() {
 		return id;
@@ -74,12 +60,12 @@ public class Category implements Serializable {
 		this.type = type;
 	}
 
-	public String getParentId() {
-		return parentId;
+	public String getParent() {
+		return parent;
 	}
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
+	public void setParentId(String parent) {
+		this.parent = parent;
 	}
 
 	@Override

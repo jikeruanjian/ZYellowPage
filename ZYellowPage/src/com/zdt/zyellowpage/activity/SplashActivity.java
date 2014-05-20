@@ -13,8 +13,9 @@ import com.ab.activity.AbActivity;
 import com.ab.global.AbConstant;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.AreaBll;
+import com.zdt.zyellowpage.bll.CategoryBll;
+import com.zdt.zyellowpage.bll.HotKeyWordBll;
 import com.zdt.zyellowpage.global.Constant;
-import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 
 public class SplashActivity extends AbActivity {
@@ -50,6 +51,58 @@ public class SplashActivity extends AbActivity {
 	}
 
 	private void downData() {
+		new HotKeyWordBll().downAllKeyWord(this,
+				new ZzStringHttpResponseListener() {
+
+					@Override
+					public void onSuccess(int statusCode, String content) {
+					}
+
+					@Override
+					public void onStart() {
+					}
+
+					@Override
+					public void onFinish() {
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+					}
+				});
+
+		// 下载分类
+		new CategoryBll().downAllCategory(SplashActivity.this,
+				new ZzStringHttpResponseListener() {
+
+					@Override
+					public void onSuccess(int statusCode, String content) {
+					}
+
+					@Override
+					public void onStart() {
+					}
+
+					@Override
+					public void onFinish() {
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+					}
+				});
+
+		// 下载区域
 		new AreaBll().downAllArea(SplashActivity.this,
 				new ZzStringHttpResponseListener() {
 
@@ -68,15 +121,15 @@ public class SplashActivity extends AbActivity {
 
 					@Override
 					public void onFinish() {
-						if (((MyApplication) SplashActivity.this
-								.getApplication()).firstStart) {
-							SplashActivity.this.startActivity(new Intent(
-									SplashActivity.this,
-									SelectAreaActivity.class));
-						} else {
-							SplashActivity.this.startActivity(new Intent(
-									SplashActivity.this, MainActivity.class));
-						}
+						// if (((MyApplication) SplashActivity.this
+						// .getApplication()).firstStart) {
+						// SplashActivity.this.startActivity(new Intent(
+						// SplashActivity.this,
+						// SelectAreaActivity.class));
+						// } else {
+						SplashActivity.this.startActivity(new Intent(
+								SplashActivity.this, MainActivity.class));
+						// }
 						SplashActivity.this.finish();
 					}
 
@@ -89,5 +142,6 @@ public class SplashActivity extends AbActivity {
 					public void onErrorData(String status_description) {
 					}
 				});
+
 	}
 }

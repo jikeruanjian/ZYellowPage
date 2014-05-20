@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zdt.zyellowpage.dao.CategoryDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Category;
 
 /**
@@ -27,6 +28,45 @@ public class CategoryBll {
 	ZzObjectHttpResponseListener<Category> objectResponseListener;
 	Context mContext;
 
+	public void downAllCategory(final Context context,
+			final ZzStringHttpResponseListener respListener) {
+		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
+		mAbHttpUtil.get(Constant.ALLCATEGORY,
+				new AbStringHttpResponseListener() {
+					@Override
+					public void onSuccess(int statusCode, String content) {
+
+						List<Category> mAreas = new Gson().fromJson(
+								content.toLowerCase(),
+								new TypeToken<List<Category>>() {
+								}.getType());
+
+						CategoryDao categoryDao = new CategoryDao(context);
+						categoryDao.startWritableDatabase(true);
+						categoryDao.deleteAll();
+						categoryDao.insertList(mAreas, false);
+						categoryDao.closeDatabase(true);
+						respListener.onSuccess(statusCode, "更新成功");
+					}
+
+					@Override
+					public void onStart() {
+						respListener.onStart();
+					}
+
+					@Override
+					public void onFinish() {
+						respListener.onFinish();
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						respListener.onFailure(statusCode, content, error);
+					}
+				});
+	}
+
 	/**
 	 * 获取列表
 	 * 
@@ -38,7 +78,7 @@ public class CategoryBll {
 			final String type,
 			ZzObjectHttpResponseListener<Category> respListener) {
 		this.mContext = context;
-		objectResponseListener =respListener;
+		objectResponseListener = respListener;
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
 		String url = Constant.CATEGORYURL + "?category_id=" + category_id
 				+ "&type=" + type;

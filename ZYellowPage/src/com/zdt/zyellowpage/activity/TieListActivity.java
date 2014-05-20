@@ -162,15 +162,16 @@ public class TieListActivity extends AbActivity {
 
 					@Override
 					public void onFinish() {
-						list.addAll(newList);
-						myListViewAdapter.notifyDataSetChanged();
-						int len = newList.size();
-						newList.clear();
-						removeProgressDialog();
 						if (list.size() > 0
 								&& (newList == null || newList.size() == 0)) {
 							showToast("没有更多数据");
 						}
+						list.addAll(newList);
+						int len = newList.size();
+						if (len > 0)
+							myListViewAdapter.notifyDataSetChanged();
+						newList.clear();
+						removeProgressDialog();
 						if (isRefresh) {
 							mAbPullListView.stopRefresh();
 						} else {

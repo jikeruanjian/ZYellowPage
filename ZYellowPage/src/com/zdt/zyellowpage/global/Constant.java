@@ -47,6 +47,16 @@ public class Constant {
 	public static final String ALLAREA = "http://service.321hy.cn/generic/areaall";
 
 	/**
+	 * 所有分类
+	 */
+	public static final String ALLCATEGORY = "http://service.321hy.cn/generic/categoryall";
+
+	/**
+	 * 热门关键词
+	 */
+	public static final String ALLHOTKEYWORD = "http://service.321hy.cn/generic/keyword";
+
+	/**
 	 * 区域反查接口
 	 */
 	public static final String AREANAME = "http://service.321hy.cn/generic/areaid?area_name=";
