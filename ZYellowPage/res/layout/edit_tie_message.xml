@@ -19,20 +19,22 @@
             android:id="@+id/layout02"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <EditText
                 android:id="@+id/fullname"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="姓名"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray_black"
-                android:textSize="18sp" >
-                <requestFocus />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" >
+
+                <requestFocus />
             </EditText>
 
             <ImageButton
@@ -46,24 +48,31 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/RelativeLayout02"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <EditText
                 android:id="@+id/telephone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="手机号码"
                 android:inputType="phone"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray_black"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearTelephone"
@@ -76,59 +85,82 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/rllFriend"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
+            android:background="@drawable/edit_lay_border_bottom"
             android:visibility="gone" >
 
             <Spinner
                 android:id="@+id/friend"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/transparent"
                 android:drawSelectorOnTop="true"
-                android:prompt="@string/selectFriend" >
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:prompt="@string/selectFriend"
+                android:spinnerMode="dropdown" >
             </Spinner>
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <RelativeLayout
             android:id="@+id/rllAttend"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <Spinner
                 android:id="@+id/attend"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/transparent"
                 android:drawSelectorOnTop="true"
-                android:prompt="@string/selectAttend" >
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:prompt="@string/selectAttend"
+                android:spinnerMode="dropdown" >
             </Spinner>
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <RelativeLayout
             android:id="@+id/RelativeLayout01"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <EditText
                 android:id="@+id/amount"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="参加人数"
                 android:inputType="number"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray_black"
-                android:textSize="18sp" >
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" >
             </EditText>
 
             <ImageButton
@@ -142,23 +174,30 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/rllMessage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <EditText
                 android:id="@+id/message"
                 android:layout_width="fill_parent"
                 android:layout_height="120dp"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="送祝福，50字以内"
                 android:maxLength="50"
-                android:textColor="@color/gray_black"
-                android:textSize="18sp" >
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" >
             </EditText>
 
             <ImageButton
@@ -172,23 +211,30 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/rllCode"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
 
             <EditText
                 android:id="@+id/code"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="验证码"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray_black"
-                android:textSize="18sp" >
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" >
             </EditText>
 
             <ImageButton
@@ -201,6 +247,12 @@
                 android:background="@drawable/clear_icon"
                 android:visibility="invisible" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
     </LinearLayout>
 
 </ScrollView>

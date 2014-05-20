@@ -57,7 +57,7 @@ public class MorePhoneActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		
+
 		// mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		listContact = new ArrayList<Contact>();
@@ -175,7 +175,10 @@ public class MorePhoneActivity extends AbActivity {
 			public void onLoadMore() {
 			}
 		});
+
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		getData();
+
 	}
 
 	void getData() {
@@ -355,31 +358,6 @@ public class MorePhoneActivity extends AbActivity {
 	}
 
 	/**
-	 * 编辑更多电话
-	 * 
-	 * @author Administrator
-	 * 
-	 */
-	private class EditPhoneBtnListener implements OnClickListener {
-		Contact contactInfo;
-
-		public EditPhoneBtnListener(Contact phone) {
-			contactInfo = phone;
-		}
-
-		@Override
-		public void onClick(View v) {
-			// 编辑
-			Intent intent = new Intent(MorePhoneActivity.this,
-					EditMorePhoneAcitivity.class);
-			Bundle mBundle = new Bundle();
-			mBundle.putSerializable("Contact", contactInfo);
-			intent.putExtras(mBundle);
-			startActivity(intent);
-		}
-	}
-
-	/**
 	 * 如果是编辑就添加添加按钮
 	 */
 	private void initTitleRightLayout() {
@@ -390,7 +368,6 @@ public class MorePhoneActivity extends AbActivity {
 		Button btnAdd = (Button) rightViewMore.findViewById(R.id.moreBtn);
 		btnAdd.setBackgroundResource(R.color.transparent);
 		btnAdd.setText(" 添加  ");
-		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		btnAdd.setOnClickListener(new OnClickListener() {
 
 			@Override

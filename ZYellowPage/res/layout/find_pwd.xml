@@ -19,20 +19,33 @@
             android:id="@+id/layout01"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="手  机  号："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/userName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvUserName"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/userName"
                 android:inputType="phone"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <ImageButton
                 android:id="@+id/clearName"
@@ -46,27 +59,52 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/rllCode"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
+
+            <TextView
+                android:id="@+id/tvCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="验  证  码："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/code"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvCode"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="请输入验证码"
                 android:inputType="number"
                 android:maxLength="6"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" >
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" >
             </EditText>
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <RelativeLayout
             android:id="@+id/layout02"
@@ -86,24 +124,38 @@
             </Spinner>
         </RelativeLayout>
 
+
         <RelativeLayout
             android:id="@+id/layout03"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
+
+            <TextView
+                android:id="@+id/tvPwdAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="关  键  字："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/pwdAnswer"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvPwdAnswer"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/selectPwdAnswer"
                 android:maxLength="20"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" >
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" >
             </EditText>
 
             <ImageButton
@@ -118,25 +170,44 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout04"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
+
+            <TextView
+                android:id="@+id/tvUserPwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="密        码："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/userPwd"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvUserPwd"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/userPwd"
                 android:inputType="textPassword"
                 android:maxLength="20"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" >
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" >
             </EditText>
 
             <ImageButton
@@ -151,25 +222,44 @@
                 android:visibility="invisible" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
+
         <RelativeLayout
             android:id="@+id/layout05"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip" >
+            android:background="@drawable/edit_lay_border_bottom" >
+
+            <TextView
+                android:id="@+id/tvUserPwd2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="确认密码："
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h2" />
 
             <EditText
                 android:id="@+id/userPwd2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvUserPwd2"
+                android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/firm_pwd"
                 android:inputType="textPassword"
                 android:maxLength="20"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" >
+                android:textColor="@color/black"
+                android:textSize="@dimen/main_text_size_h2" >
             </EditText>
 
             <ImageButton
@@ -183,6 +273,12 @@
                 android:contentDescription="@string/infoClear"
                 android:visibility="invisible" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/list_divider" >
+        </View>
 
         <LinearLayout
             android:id="@+id/llLoadCode"

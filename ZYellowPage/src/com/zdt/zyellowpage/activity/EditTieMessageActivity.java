@@ -29,7 +29,7 @@ import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
  * 
  */
 public class EditTieMessageActivity extends AbActivity {
-//	private MyApplication application;
+	// private MyApplication application;
 	AbTitleBar mAbTitleBar;
 	/**
 	 * 请帖ID
@@ -89,7 +89,7 @@ public class EditTieMessageActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-//		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 
 		initTitleRightLayout();
 		if (!AbStrUtil.isEmpty(tie_code)) {
@@ -98,12 +98,18 @@ public class EditTieMessageActivity extends AbActivity {
 		if (tie_type.equals("1")) {
 			// 如果是婚庆
 			rllFriend.setVisibility(View.VISIBLE);
-			spiFriend.setAdapter(ArrayAdapter.createFromResource(this,
-					R.array.tieFriend, android.R.layout.simple_spinner_item));
+			ArrayAdapter<CharSequence> friendAtapter = ArrayAdapter
+					.createFromResource(this, R.array.tieFriend,
+							android.R.layout.simple_spinner_item);
+			friendAtapter
+					.setDropDownViewResource(R.layout.spinner_dropdown_style);
+			spiFriend.setAdapter(friendAtapter);
 		}
-
-		spiAttend.setAdapter(ArrayAdapter.createFromResource(this,
-				R.array.tieAttend, android.R.layout.simple_spinner_item));
+		ArrayAdapter<CharSequence> attendAtapter = ArrayAdapter
+				.createFromResource(this, R.array.tieAttend,
+						android.R.layout.simple_spinner_item);
+		attendAtapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
+		spiAttend.setAdapter(attendAtapter);
 		bindData();
 	}
 
