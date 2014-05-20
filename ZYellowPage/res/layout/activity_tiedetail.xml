@@ -271,17 +271,17 @@
         android:layout_height="35dip"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="5dp"
-        android:layout_marginRight="30dp"
-        android:layout_toLeftOf="@+id/tie_image_loc"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/tie_image_center"
         android:src="@drawable/phone" />
 
      <ImageView
          android:id="@+id/tie_image_loc"
          android:layout_width="35dip"
          android:layout_height="35dip"
-         android:layout_alignTop="@+id/tie_image_phone"
-         android:layout_centerHorizontal="true"
-       
+         android:layout_alignTop="@+id/tie_image_center"
+         android:layout_toRightOf="@+id/tie_image_phone"
+         android:layout_marginLeft="15dp"
          android:src="@drawable/locmark1" />
     
      <ImageView
@@ -291,12 +291,4 @@
          android:layout_alignTop="@+id/tie_image_phone"
          android:layout_centerHorizontal="true"
           />
-     <ImageView
-         android:id="@+id/tie_image_join"
-         android:layout_width="35dip"
-         android:layout_height="35dip"
-         android:layout_alignTop="@+id/tie_image_phone"
-         android:layout_toRightOf="@+id/tie_image_loc"
-         android:layout_marginLeft="30dp"
-         android:src="@drawable/buysell" />
 </RelativeLayout>

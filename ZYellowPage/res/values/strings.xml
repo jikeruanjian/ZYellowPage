@@ -187,5 +187,6 @@
     <string name="read_desc">请仔细阅读如下条款</string>
     <string name="register_protocol">同意注册协议</string>
     <string name="clear_cache">清空缓存</string>
+    <string name="BaiDuMap_Key">RjlfVWfEcAecRGc5qG8xyLoX</string>
 
 </resources>

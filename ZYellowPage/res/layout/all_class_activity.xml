@@ -39,11 +39,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <com.ab.view.sliding.AbSlidingTabView
+    <com.ab.view.sliding.AbSlidingTabView
             android:id="@+id/mAllTypeAbSlidingTabView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
-        </com.ab.view.sliding.AbSlidingTabView>
+     </com.ab.view.sliding.AbSlidingTabView>
 
     </LinearLayout>
 
