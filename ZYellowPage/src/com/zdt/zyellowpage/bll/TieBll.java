@@ -70,7 +70,7 @@ public class TieBll {
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
 
-		getBasicTieList(context, params, respListener);
+		getBasicTieList(context, params, type, respListener);
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class TieBll {
 	}
 
 	private void getBasicTieList(Context context, AbRequestParams params,
-			ZzObjectHttpResponseListener<Tie> respListener) {
+			final String type, ZzObjectHttpResponseListener<Tie> respListener) {
 		this.objectResponseListener = respListener;
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
 		mAbHttpUtil.post(Constant.BASEURL, params,
@@ -224,16 +224,16 @@ public class TieBll {
 											dataTie.toString(),
 											new TypeToken<List<Tie>>() {
 											}.getType());
-
-									TieDao tieDao = new TieDao(mContext);
-									tieDao.startWritableDatabase(false);
-
-									tieDao.deleteAll(); // 只缓存一页就够了
-
-									if (tempTie != null) {
-										tieDao.insertList(tempTie);
+									if (page_number == 0) {
+										TieDao tieDao = new TieDao(mContext);
+										tieDao.startWritableDatabase(false);
+										tieDao.delete("type=?",
+												new String[] { type }); // 只缓存一页就够了
+										if (tempTie != null) {
+											tieDao.insertList(tempTie);
+										}
+										tieDao.closeDatabase(false);
 									}
-									tieDao.closeDatabase(false);
 									objectResponseListener.onSuccess(
 											statusCode, tempTie);
 								} else {
@@ -251,24 +251,28 @@ public class TieBll {
 					// 开始执行前
 					@Override
 					public void onStart() {
-						objectResponseListener.onStart();
+						if (page_number == 0) {
+							TieDao tieDao = new TieDao(mContext);
+							List<Tie> lis = tieDao
+									.rawQuery(
+											"select * from tie order by _id limit ? offset ?*?",
+											new String[] {
+													String.valueOf(max_size),
+													String.valueOf(page_number) },
+											Tie.class);
+							objectResponseListener.onFailure(200, null, null,
+									lis);
+						} else {
+							objectResponseListener.onStart();
+						}
 					}
 
 					// 失败，调用
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						System.out.println("数据请求异常" + content);
-						TieDao tieDao = new TieDao(mContext);
-						List<Tie> lis = tieDao
-								.rawQuery(
-										"select * from tie order by _id desc limit ? offset ?*?",
-										new String[] {
-												String.valueOf(max_size),
-												String.valueOf(page_number) },
-										Tie.class);
 						objectResponseListener.onFailure(statusCode, content,
-								error, lis);
+								error, null);
 					}
 
 					// 完成后调用，失败，成功

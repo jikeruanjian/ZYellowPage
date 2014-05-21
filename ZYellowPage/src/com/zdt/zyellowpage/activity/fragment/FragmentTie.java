@@ -136,6 +136,12 @@ public class FragmentTie extends Fragment {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Tie> localList) {
+						// 加载本地缓存
+						if (localList != null) {
+							imageLoader.display(ivTieLogo, localList.get(0)
+									.getLogo());
+							tvTieTitle.setText(localList.get(0).getTitle());
+						}
 						if ("5".equals(tieType) && loadCount == 0) {
 							mActivity.showToast(content);
 						}

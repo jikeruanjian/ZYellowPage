@@ -105,7 +105,7 @@ public class TieListActivity extends AbActivity {
 		// displayUtil.setViewLayoutParamsByX(newOrPoTextView, 3, width);
 	}
 
-	void getData(int i) {
+	void getData(final int i) {
 		TieBll tieBll = new TieBll();
 
 		tieBll.getTieList(this, i, 20, application.cityid, type,
@@ -138,7 +138,8 @@ public class TieListActivity extends AbActivity {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Tie> lis) {
-						if (lis != null && lis.size() > 0) {
+						// 先来加载第一页的缓存
+						if (i == 0 && lis != null && lis.size() > 0) {
 							Map<String, Object> map;
 							for (int i = 0; i < lis.size(); i++) {
 								Tie tie = lis.get(i);
@@ -149,6 +150,10 @@ public class TieListActivity extends AbActivity {
 								map.put("itemsText", "地点：" + tie.getAddress()
 										+ "\r\n时间：" + tie.getTime());
 								newList.add(map);
+
+								list.addAll(newList);
+								if (list.size() > 0)
+									myListViewAdapter.notifyDataSetChanged();
 							}
 						} else {
 							showToast(content);
@@ -162,6 +167,8 @@ public class TieListActivity extends AbActivity {
 
 					@Override
 					public void onFinish() {
+						if (i == 0)
+							list.clear();
 						if (list.size() > 0
 								&& (newList == null || newList.size() == 0)) {
 							showToast("没有更多数据");
