@@ -203,7 +203,7 @@ public class FragmentHomePagebak extends Fragment implements OnClickListener{
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(0, 10,
 				application.cityid, "list-hot");
 
-		bll.getListCompany(mActivity, companyParams,
+		bll.getListCompany(mActivity, companyParams,"list-hot",
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
@@ -280,7 +280,7 @@ public class FragmentHomePagebak extends Fragment implements OnClickListener{
 		PersonUser = new User();
 		PersonListReqEntity personParams = new PersonListReqEntity(0, 10,
 				application.cityid, "list-hot");
-		new UserBll().getListPerson(mActivity, personParams,
+		new UserBll().getListPerson(mActivity, personParams,"list-hot",
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override

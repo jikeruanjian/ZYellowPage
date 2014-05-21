@@ -163,7 +163,7 @@ public class PopPersonListActivity extends AbActivity {
 		
 		PersonListReqEntity personParams = new PersonListReqEntity(i, 10,
 				cityId,keyId);
-		bll.getListPerson(PopPersonListActivity.this, personParams,
+		bll.getListPerson(PopPersonListActivity.this, personParams,null,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override

@@ -143,7 +143,7 @@ public class BusinessDetailActivity extends AbActivity {
 
 		name.setText(userCompany.getFullname());
 		num.setText(userCompany.getMember_id());
-		userName.setText(userCompany.getUsername());
+		userName.setText(userCompany.getContact());
 		tel.setText(userCompany.getTelephone());
 		url.setText(userCompany.getWebsite());
 		address.setText(userCompany.getAddress());

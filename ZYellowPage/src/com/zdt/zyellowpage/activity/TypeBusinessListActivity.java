@@ -125,7 +125,7 @@ public class TypeBusinessListActivity extends AbActivity {
 
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(i, 10,
 				application.cityid, type);
-		bll.getListCompany(TypeBusinessListActivity.this, companyParams,
+		bll.getListCompany(TypeBusinessListActivity.this, companyParams,null,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override

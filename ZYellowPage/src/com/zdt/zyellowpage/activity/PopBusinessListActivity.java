@@ -167,7 +167,7 @@ public class PopBusinessListActivity extends AbActivity {
 
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(i, 10,
 				cityId,keyId);//application.cityid, "list-hot"
-		bll.getListCompany(PopBusinessListActivity.this, companyParams,
+		bll.getListCompany(PopBusinessListActivity.this, companyParams,null,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override

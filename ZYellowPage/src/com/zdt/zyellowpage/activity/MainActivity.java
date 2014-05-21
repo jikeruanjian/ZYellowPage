@@ -938,7 +938,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 										@Override
 										public void onFinish() {
 											// TODO Auto-generated method stub
-											
+											mLocationClient.stop();
+											mLocationClient = null;
 										}
 								
 							});
@@ -947,7 +948,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 					});
             	}
 				
-				mLocationClient.stop();
+				
 				
 				}
 

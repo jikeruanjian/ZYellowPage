@@ -308,7 +308,7 @@
                         android:id="@+id/mListViewB"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:cacheColorHint="#00000000"
+                        android:cacheColorHint="@android:color/white"
                         android:divider="@drawable/list_divider"
                         android:dividerHeight="1dip"
                         android:fastScrollEnabled="true" >
@@ -357,7 +357,7 @@
                         android:id="@+id/mListViewP"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:cacheColorHint="#00000000"
+                        android:cacheColorHint="@android:color/white"
                         android:divider="@drawable/list_divider"
                         android:dividerHeight="1dip"
                         android:fastScrollEnabled="true" >

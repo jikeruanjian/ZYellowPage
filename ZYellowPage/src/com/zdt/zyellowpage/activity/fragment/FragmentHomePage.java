@@ -249,7 +249,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(0, 10,
 				application.cityid, "list-hot");
 
-		new UserBll().getListCompany(mActivity, companyParams,
+		new UserBll().getListCompany(mActivity, companyParams,"list-hot",
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
@@ -284,22 +284,16 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 						if (localList == null || localList.size() == 0) {
 							return;
 						}
-						hotUser = (User) localList.get(0);
-						System.out.println("----"+hotUser.getFullname());
-						if (hotUser.getFullname() != null) {
-							hotName.setText(hotUser.getFullname());
-						}
-						
-						if (hotUser.getKeyword()!= null) {
-							hotConent = (TextView) view
-									.findViewById(R.id.textViewBusinessConetentHot);
-							hotConent.setText(hotUser.getKeyword());
-						}
-						
-						if (hotUser.getLogo() != null) {
-							hotImage = (ImageView) view.findViewById(R.id.imageViewhot);
-							new AbImageDownloader(mActivity).display(hotImage,
-									hotUser.getLogo());
+						Map<String, Object> map;
+						for (int i = 0; i < localList.size(); i++) {
+
+							User u = (User) localList.get(i);
+							map = new HashMap<String, Object>();
+							map.put("Member_id", u.getMember_id());
+							map.put("itemsIcon", u.getLogo());
+							map.put("itemsTitle", u.getFullname());
+							map.put("itemsText", u.getKeyword());
+							listB.add(map);
 						}
 					}
 
@@ -329,7 +323,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		CompanyListReqEntity latestCompanyParams = new CompanyListReqEntity(0, 10,
 				application.cityid, "list-latest");
 
-		new UserBll().getListCompany(mActivity, latestCompanyParams,
+		new UserBll().getListCompany(mActivity, latestCompanyParams,"list-latest",
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
@@ -361,7 +355,20 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
 						// TODO Auto-generated method stub
-						mActivity.showToast(error.getMessage());
+						if (localList == null || localList.size() == 0) {
+							return;
+						}
+						Map<String, Object> map;
+						for (int i = 0; i < localList.size(); i++) {
+
+							User u = (User) localList.get(i);
+							map = new HashMap<String, Object>();
+							map.put("Member_id", u.getMember_id());
+							map.put("itemsIcon", u.getLogo());
+							map.put("itemsTitle", u.getFullname());
+							map.put("itemsText", u.getKeyword());
+							listP.add(map);
+						}
 					}
 
 					@Override
