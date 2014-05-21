@@ -6,16 +6,18 @@
     android:orientation="vertical" >
 
     <ScrollView
-        android:id="@+id/scrollView1"
+        android:id="@+id/svMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dip" >
-	
+        android:layout_marginBottom="60dip" 
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
-<LinearLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/main_menu_bg" >
@@ -45,25 +47,22 @@
                     android:layout_height="40dp"
                     android:layout_gravity="right|center_vertical"
                     android:src="@drawable/companycode" />
-
             </LinearLayout>
 
-<LinearLayout
-     android:id="@+id/mAbSlidingPlayViewLinearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/selectclass"
-    android:orientation="vertical" >
+            <LinearLayout
+                android:id="@+id/mAbSlidingPlayViewLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/selectclass"
+                android:orientation="vertical" >
 
-    <com.ab.view.sliding.AbSlidingPlayView
-        android:id="@+id/mAbSlidingPlayView"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_margin="5dp" >
-
-    </com.ab.view.sliding.AbSlidingPlayView>
-
-</LinearLayout>
+                <com.ab.view.sliding.AbSlidingPlayView
+                    android:id="@+id/mAbSlidingPlayView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="5dp" >
+                </com.ab.view.sliding.AbSlidingPlayView>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,9 +82,9 @@
                         android:id="@+id/tie_remark_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="10dip" 
-                        android:background="@drawable/border">
+                        android:layout_marginTop="10dip"
+                        android:background="@drawable/border"
+                        android:orientation="vertical" >
 
                         <TextView
                             android:id="@+id/tie_remark_textView"
@@ -102,16 +101,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="2dp" />
-
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/tie_other_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="10dip" 
-                        android:background="@drawable/border">
+                        android:layout_marginTop="10dip"
+                        android:background="@drawable/border"
+                        android:orientation="vertical" >
 
                         <TextView
                             android:id="@+id/tie_other_TextView"
@@ -128,16 +126,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="2dp" />
-
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/tie_content_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="10dip"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:orientation="vertical" >
 
                         <TextView
                             android:id="@+id/tie_content_TextView"
@@ -156,7 +153,6 @@
                             android:layout_margin="2dp"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -224,13 +220,14 @@
                             android:text=" "
                             android:textSize="18sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/tie_more_LinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="10dip"
-                        android:background="@drawable/border" >
+                        android:background="@drawable/border"
+                        android:orientation="vertical" >
 
                         <TextView
                             android:id="@+id/tie_more_TextView"
@@ -249,7 +246,6 @@
                             android:layout_margin="2dp"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp" />
-
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -275,20 +271,20 @@
         android:layout_toLeftOf="@+id/tie_image_center"
         android:src="@drawable/phone" />
 
-     <ImageView
-         android:id="@+id/tie_image_loc"
-         android:layout_width="35dip"
-         android:layout_height="35dip"
-         android:layout_alignTop="@+id/tie_image_center"
-         android:layout_toRightOf="@+id/tie_image_phone"
-         android:layout_marginLeft="15dp"
-         android:src="@drawable/locmark1" />
-    
-     <ImageView
-         android:id="@+id/tie_image_center"
-         android:layout_height="35dip"
-         android:layout_width="0dip"
-         android:layout_alignTop="@+id/tie_image_phone"
-         android:layout_centerHorizontal="true"
-          />
+    <ImageView
+        android:id="@+id/tie_image_loc"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
+        android:layout_alignTop="@+id/tie_image_center"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/tie_image_phone"
+        android:src="@drawable/locmark1" />
+
+    <ImageView
+        android:id="@+id/tie_image_center"
+        android:layout_width="0dip"
+        android:layout_height="35dip"
+        android:layout_alignTop="@+id/tie_image_phone"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

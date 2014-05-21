@@ -155,12 +155,14 @@ public class AlbumBll {
 						albumDao.startReadableDatabase(false);
 						List<Album> lis = albumDao
 								.rawQuery(
-										"select * from album order by _id desc limit ? offset ?*?",
+										"select * from album order by _id desc limit ? offset ?",
 										new String[] {
 												String.valueOf(mAlbumParams
 														.getMax_size()),
 												String.valueOf(mAlbumParams
-														.getPage_number()) },
+														.getMax_size()
+														* mAlbumParams
+																.getPage_number()) },
 										Album.class);
 						albumDao.closeDatabase(false);
 						objectResponseListener.onFailure(statusCode, content,

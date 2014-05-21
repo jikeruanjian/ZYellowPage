@@ -36,16 +36,16 @@ public class CategoryBll {
 					@Override
 					public void onSuccess(int statusCode, String content) {
 
-						List<Category> mAreas = new Gson().fromJson(
+						List<Category> mCategorys = new Gson().fromJson(
 								content.toLowerCase(),
 								new TypeToken<List<Category>>() {
 								}.getType());
 
 						CategoryDao categoryDao = new CategoryDao(context);
-						categoryDao.startWritableDatabase(true);
+						categoryDao.startWritableDatabase(false);
 						categoryDao.deleteAll();
-						categoryDao.insertList(mAreas, false);
-						categoryDao.closeDatabase(true);
+						categoryDao.insertList(mCategorys, false);
+						categoryDao.closeDatabase(false);
 						respListener.onSuccess(statusCode, "更新成功");
 					}
 
@@ -94,7 +94,7 @@ public class CategoryBll {
 							new TypeToken<List<Category>>() {
 							}.getType());
 					for (Category category : mCategory) {
-						category.setParentId(category_id);
+						category.setParent(category_id);
 						category.setType(type);
 					}
 

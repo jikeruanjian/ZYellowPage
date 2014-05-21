@@ -37,7 +37,7 @@ public class TieListActivity extends AbActivity {
 	private List<Map<String, Object>> newList = null;
 	private AbPullListView mAbPullListView = null;
 	private int currentPage = 0;
-	private boolean isRefresh = true;
+	private boolean isRefresh = false;
 	private TextView newOrPoTextView;
 	private PopupWindow popupWindow;
 	private LinearLayout layout;
@@ -116,7 +116,6 @@ public class TieListActivity extends AbActivity {
 							showToast("没有更多数据！");
 							return;
 						}
-
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 							Tie tie = lis.get(i);
@@ -139,7 +138,9 @@ public class TieListActivity extends AbActivity {
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Tie> lis) {
 						// 先来加载第一页的缓存
-						if (i == 0 && lis != null && lis.size() > 0) {
+						if (!isRefresh && i == 0 && lis != null
+								&& lis.size() > 0) {
+							list.clear();
 							Map<String, Object> map;
 							for (int i = 0; i < lis.size(); i++) {
 								Tie tie = lis.get(i);
@@ -154,6 +155,7 @@ public class TieListActivity extends AbActivity {
 								list.addAll(newList);
 								if (list.size() > 0)
 									myListViewAdapter.notifyDataSetChanged();
+								newList.clear();
 							}
 						} else {
 							showToast(content);
@@ -167,7 +169,7 @@ public class TieListActivity extends AbActivity {
 
 					@Override
 					public void onFinish() {
-						if (i == 0)
+						if (i == 0 && newList != null && newList.size() > 0)
 							list.clear();
 						if (list.size() > 0
 								&& (newList == null || newList.size() == 0)) {

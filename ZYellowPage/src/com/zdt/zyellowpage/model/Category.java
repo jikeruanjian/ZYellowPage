@@ -64,12 +64,7 @@ public class Category implements Serializable {
 		return parent;
 	}
 
-	public void setParentId(String parent) {
+	public void setParent(String parent) {
 		this.parent = parent;
-	}
-
-	@Override
-	public String toString() {
-		return name;
 	}
 }

@@ -121,18 +121,8 @@ public class TieBll {
 
 									Tie tempTie = new Gson().fromJson(
 											data.toString(), Tie.class);
-
-									TieDao tieDao = new TieDao(mContext);
-									tieDao.startWritableDatabase(false);
-
-									tieDao.delete("item_id=?",
-											new String[] { item_id });
-
-									tieDao.insert(tempTie);
-									tieDao.closeDatabase(false);
 									List<Tie> lis = new ArrayList<Tie>();
 									lis.add(tempTie);
-
 									objectResponseListener.onSuccess(
 											statusCode, lis);
 								} else {
@@ -157,12 +147,9 @@ public class TieBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						System.out.println("数据请求异常" + content);
-						TieDao tieDao = new TieDao(mContext);
-						List<Tie> tie = tieDao.queryList("item_id=?",
-								new String[] { item_id });
-						objectResponseListener.onFailure(statusCode, content,
-								error, tie);
+						objectResponseListener.onFailure(statusCode,
+								content == null ? "获取数据失败" : content, error,
+								null);
 					}
 
 					// 完成后调用，失败，成功
@@ -275,8 +262,9 @@ public class TieBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						objectResponseListener.onFailure(statusCode, content,
-								error, null);
+						objectResponseListener.onFailure(statusCode,
+								content == null ? "数据获取失败" : content, error,
+								null);
 					}
 
 					// 完成后调用，失败，成功

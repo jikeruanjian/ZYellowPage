@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.ab.activity.AbActivity;
@@ -15,6 +16,7 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.AreaBll;
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.bll.HotKeyWordBll;
+import com.zdt.zyellowpage.dao.CategoryDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 
@@ -31,10 +33,15 @@ public class SplashActivity extends AbActivity {
 		if ((new Date().getTime() - lastUpdateTime) > 86400000) {
 			downData();
 		} else {
+
 			iv.postDelayed(new Runnable() {
 
 				@Override
 				public void run() {
+					CategoryDao c = new CategoryDao(SplashActivity.this);
+					c.startReadableDatabase(true);
+					Log.e("size", c.queryList().size() + "");
+					c.closeDatabase(true);
 					// if (((MyApplication)
 					// SplashActivity.this.getApplication()).firstStart) {
 					// SplashActivity.this.startActivity(new Intent(
@@ -82,6 +89,7 @@ public class SplashActivity extends AbActivity {
 
 					@Override
 					public void onSuccess(int statusCode, String content) {
+						
 					}
 
 					@Override
