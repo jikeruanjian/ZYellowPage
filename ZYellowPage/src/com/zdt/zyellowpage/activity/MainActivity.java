@@ -71,6 +71,8 @@ import com.zdt.zyellowpage.activity.fragment.FragmentUser;
 import com.zdt.zyellowpage.bll.AreaBll;
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.bll.VersionBll;
+import com.zdt.zyellowpage.dao.AreaDao;
+import com.zdt.zyellowpage.dao.CategoryDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
@@ -213,8 +215,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		initChangeEvent();
 
 		MainActivity.getAreaList(MainActivity.this, application.cityid);
-		//MainActivity.getCategoryList( "0");
-		//MainActivity.getCategoryListP( "0");
+		MainActivity.getCategoryList(MainActivity.this, "0");
+		MainActivity.getCategoryListP(MainActivity.this,"1");
 		
 		textVSearch = (TextView) findViewById(R.id.textViewSearchType);
 		textVSearch.setOnClickListener(new OnClickListener() {
@@ -464,49 +466,19 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 *            ---城市id
 	 */
 	public static void getAreaList(Context context, String id) {
-		AreaBll areaBll = new AreaBll();
-		areaBll.getAreaList(context, id,
-				new ZzObjectHttpResponseListener<Area>() {
-
-					@Override
-					public void onSuccess(int statusCode, List<Area> lis) {
-						if (lis == null || lis.size() == 0) {
-							return;
-						}
-
-						listArea.clear();
-						listArea.addAll(lis);
-						listArea.add(new Area(lis.get(0).getParent(), "全部区域",
-								"0"));
-						listAreaName.clear();
-						for (Area area : listArea) {
-							listAreaName.add(area.getName());
-						}
-						// Log.e("xxxx", "包含的县区个数为-----"+listArea.size());
-					}
-
-					@Override
-					public void onStart() {
-
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error, List<Area> localList) {
-
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-
-					}
-
-					@Override
-					public void onFinish() {
-
-					}
-
-				});
+		        AreaDao areaDao = new AreaDao(context);
+		        listArea.clear();
+		        areaDao.startReadableDatabase(false);
+		        List<Area> list = areaDao.
+		        		rawQuery("select * from area where Parent = ?",new String[]{id},Area.class);
+		        areaDao.closeDatabase(false);
+		        if(list != null){
+		        	listArea.addAll(list);
+		        	listAreaName.clear();
+		        	for(Area a:listArea){
+			    	listAreaName.add(a.getName());
+		        	}
+		        }	
 	}
 
 	/**
@@ -517,45 +489,34 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 * @param type
 	 *            0 为商家 1为个人
 	 */
-	public static void getCategoryList( String id) {
-		CategoryBll categoryBll = new CategoryBll();
-		categoryBll.getCategoryist(mContext, id, "0",
-				new ZzObjectHttpResponseListener<Category>() {
-
-					@Override
-					public void onSuccess(int statusCode, List<Category> lis) {
-						if (lis == null || lis.size() == 0) {
-							return;
-						}
+	public static void getCategoryList(Context context, String id) {
 						listCategory.clear();
-						listCategory.addAll(lis);
+						CategoryDao categoryDao = new CategoryDao(context);
+						categoryDao.startReadableDatabase(false);
+						//List<Category> list = categoryDao.rawQuery("select * from category where Type = ?", new String[]{"0"}, Category.class);
+						List<Category> list = categoryDao.queryList("Type = ?", new String[]{"0"});
+						categoryDao.closeDatabase(false);
+						if(list != null ){
+							Log.e("company","-----"+list.size());
 						listCategoryName.clear();
-						// Log.e("xxxx", "包含的分类个数为-----"+listCategory.size());
-						for (Category category : listCategory) {
-							listCategoryName.add(category.getName());
-							listChildCategory.add(getRightData(category.getId(),"0")); 
+						listChildCategory.clear();
+						for(Category c: list){
+							//如果是二级分类
+							if(c.getParent().equals('0')){
+								//加入二级分类表
+								listCategory.add(c);
+								listCategoryName.add(c.getName());
+								//获取子项
+								List<Category> listc = new ArrayList<Category>();
+								for(Category ca: list){
+									if(ca.getParent().equals(c.getId())){
+										listc.add(ca);
+									}
+								}
+								listChildCategory.add(listc);	
+							}
 						}
-
-					}
-
-					@Override
-					public void onStart() {
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error, List<Category> localList) {
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-					}
-
-					@Override
-					public void onFinish() {
-					}
-
-				});
+						}
 	}
 
 	/**
@@ -566,100 +527,38 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 * @param type
 	 *            0 为商家 1为个人
 	 */
-	public static  void getCategoryListP( String id) {
-		CategoryBll categoryBll = new CategoryBll();
-		categoryBll.getCategoryist(mContext, id, "1",
-				new ZzObjectHttpResponseListener<Category>() {
-
-					@Override
-					public void onSuccess(int statusCode, List<Category> lis) {
-						if (lis == null || lis.size() == 0) {
-							return;
-						}
+	public static  void getCategoryListP(Context context, String id) {
 						listCategoryP.clear();
-						listCategoryP.addAll(lis);
-						listCategoryNameP.clear();
-						// Log.e("xxxx",
-						// "包含的个人分类个数为-----"+listCategoryP.size());
-						for (Category category : listCategoryP) {
-							listCategoryNameP.add(category.getName());
-							listChildCategoryP.add(getRightData(category.getId(),"1")); 
+						CategoryDao categoryDao = new CategoryDao(context);
+						categoryDao.startReadableDatabase(false);
+						//List<Category> list = categoryDao.rawQuery("select * from category where Type =?", new String[]{"1"}, Category.class);
+						List<Category> list = categoryDao.queryList("Type = ?", new String[]{"1"});
+						categoryDao.closeDatabase(false);
+						if(list != null ){
+							Log.e("person","-----"+list.size());
+							listCategoryNameP.clear();
+							listChildCategoryP.clear();
+							for(Category c: list){
+							//如果是二级分类
+								if(c.getParent().equals('0')){
+								//加入二级分类表
+									listCategoryP.add(c);
+									listCategoryNameP.add(c.getName());
+									//获取子项
+									List<Category> listc = new ArrayList<Category>();
+									for(Category ca: list){
+									if(ca.getParent().equals(c.getId())){
+										listc.add(ca);
+									}
+								}
+								listChildCategoryP.add(listc);	
+							}
 						}
-
-					}
-
-					@Override
-					public void onStart() {
-
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error, List<Category> localList) {
-
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-
-					}
-
-					@Override
-					public void onFinish() {
-						
-					}
-
-				});
+						}
+					
 	}
 	
-	/**
-	 * 获取二级分类
-	 * @param oId
-	 * @param type
-	 * @return
-	 */
-	static List<Category> getRightData(String oId,String type){
-		    final List<Category> lowerType = new ArrayList<Category>();
-	    	CategoryBll categoryBll = new CategoryBll();
-			categoryBll.getCategoryist(mContext,oId, type, new ZzObjectHttpResponseListener<Category>(){
-				@Override
-				public void onSuccess(int statusCode, List<Category> lis) {
-					// TODO Auto-generated method stub
-					// TODO Auto-generated method stub
-					if (lis == null || lis.size() == 0) {
-						return;
-					}
-					lowerType.addAll(lis);
-				}
-
-				@Override
-				public void onStart() {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onFailure(int statusCode, String content,
-						Throwable error, List<Category> localList) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onErrorData(String status_description) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onFinish() {
-					// TODO Auto-generated method stub
-					//((BaseExpandableListAdapter) adapter).notifyDataSetChanged();
-				}
-				
-			});
-			return lowerType;
-	    }
+	
 	
 	public void showPopupWindow(int x, int y) {
 		layout = (LinearLayout) LayoutInflater.from(MainActivity.this).inflate(
@@ -869,6 +768,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		option.disableCache(true);// 禁止启用缓存定位
 		mLocationClient.setLocOption(option);
 		mLocationClient.start();
+		
 		return null;
 		
 	}
@@ -883,14 +783,17 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				
 				mCityName = location.getCity();
 				if(mCityName == null){
+					mLocationClient.stop();
 					return;
 				}
 				String showCityName = mCityName.substring(0, 2);
-				if(showCityName.equals(textViewArea.getText().toString())){
+				if(showCityName.equals(textViewArea.getText().toString().substring(0, 2))){
+					mLocationClient.stop();
 					return;
 				}
 				Log.e("fragmentmap", "-------------------所在城市："+showCityName); 
 				if(mCityName != null ){
+					mLocationClient.stop();
 					MainActivity.this.showDialog("位置提醒", "当前定位到您所在的城市是"+mCityName+",是否切换城市？", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -913,6 +816,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 											editor.putString(Constant.CITYNAME, mCityName.substring(0, 2));
 											editor.commit();
 											newFragmentHome.getData();
+											
 										}
 
 										@Override
@@ -938,8 +842,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 										@Override
 										public void onFinish() {
 											// TODO Auto-generated method stub
-											mLocationClient.stop();
-											mLocationClient = null;
+											
 										}
 								
 							});
