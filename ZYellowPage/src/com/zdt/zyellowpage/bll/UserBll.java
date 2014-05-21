@@ -65,13 +65,15 @@ public class UserBll {
 
 	/**
 	 * 获取商家列表
+	 * 
 	 * @param context
 	 * @param companyParams
-	 * @param dataType，如果需要缓存，就要添加此参数
+	 * @param dataType
+	 *            ，如果需要缓存，就要添加此参数
 	 * @param respListener
 	 */
 	public void getListCompany(Context context,
-			CompanyListReqEntity companyParams,String dataType,
+			CompanyListReqEntity companyParams, String dataType,
 			ZzObjectHttpResponseListener<User> respListener) {
 		JSONObject jo = new JSONObject();
 		mContext = context;
@@ -83,8 +85,8 @@ public class UserBll {
 		}
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
-		getBasicUserList(context, params, null, companyParams.getPage_number(),
-				respListener);
+		getBasicUserList(context, params, dataType,
+				companyParams.getPage_number(), respListener);
 	}
 
 	/**
@@ -92,11 +94,12 @@ public class UserBll {
 	 * 
 	 * @param context
 	 * @param companyParams
-	 *  @param dataType，如果需要缓存，就要添加此参数
+	 * @param dataType
+	 *            ，如果需要缓存，就要添加此参数
 	 * @param respListener
 	 */
 	public void getListPerson(Context context,
-			PersonListReqEntity companyParams,String dataType,
+			PersonListReqEntity companyParams, String dataType,
 			ZzObjectHttpResponseListener<User> respListener) {
 		JSONObject jo = new JSONObject();
 		mContext = context;
@@ -108,8 +111,8 @@ public class UserBll {
 		}
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
-		getBasicUserList(context, params, null, companyParams.getPage_number(),
-				respListener);
+		getBasicUserList(context, params, dataType,
+				companyParams.getPage_number(), respListener);
 	}
 
 	/**
@@ -496,15 +499,13 @@ public class UserBll {
 													.getJSONArray("following");
 										}
 									}
-									int page_number = data
-											.getInt("page_number");
 									List<User> tempUser = new Gson().fromJson(
 											dataUser.toString(),
 											new TypeToken<List<User>>() {
 											}.getType());
 									// 缓存下来，同种数据类型的数据，只缓存一页
 									if (!AbStrUtil.isEmpty(dataType)
-											&& page_number == 0) {
+											&& page_num == 0) {
 										for (User user : tempUser) {
 											user.setDataType(dataType);
 										}

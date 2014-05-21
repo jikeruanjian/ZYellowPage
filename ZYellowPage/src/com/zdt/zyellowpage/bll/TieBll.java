@@ -253,13 +253,17 @@ public class TieBll {
 					public void onStart() {
 						if (page_number == 0) {
 							TieDao tieDao = new TieDao(mContext);
+							tieDao.startReadableDatabase(false);
 							List<Tie> lis = tieDao
 									.rawQuery(
-											"select * from tie order by _id limit ? offset ?*?",
+											"select * from tie where type=? order by _id limit ? offset ?",
 											new String[] {
+													type,
 													String.valueOf(max_size),
-													String.valueOf(page_number) },
+													String.valueOf(max_size
+															* page_number) },
 											Tie.class);
+							tieDao.closeDatabase(false);
 							objectResponseListener.onFailure(200, null, null,
 									lis);
 						} else {

@@ -10,7 +10,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,37 +17,26 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
-import com.ab.bitmap.AbImageDownloader;
-import com.ab.view.listener.AbOnListViewListener;
-import com.ab.view.pullview.AbPullListView;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.AllTypeActivity;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
-import com.zdt.zyellowpage.activity.CompanyBuySellActivity;
-import com.zdt.zyellowpage.activity.CompanyMapActiviy;
 import com.zdt.zyellowpage.activity.MyPopupWindow;
 import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
 import com.zdt.zyellowpage.activity.PopPersonListActivity;
-import com.zdt.zyellowpage.activity.TypeBusinessListActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
-import com.zdt.zyellowpage.jsonEntity.PersonListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
-import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 import com.zdt.zyellowpage.util.ImageListAdapterC;
-import com.zdt.zyellowpage.util.ImageListAdapterP;
 
 /**
  * 首页Fragment
@@ -56,28 +44,26 @@ import com.zdt.zyellowpage.util.ImageListAdapterP;
  * @author Administrator
  * 
  */
-public class FragmentHomePage extends Fragment implements OnClickListener{
+public class FragmentHomePage extends Fragment implements OnClickListener {
 	private View view;
 	private AbActivity mActivity;
 	private DisplayUtil displayUtil;
 	private MyApplication application;
 	private User hotUser;
-	
+
 	private TextView hotName;
 	private TextView hotConent;
 	private ImageView hotImage;
 	MyPopupWindow myPopupWindow;
-	
+
 	private ListView mAbPullListViewB = null;
 	private ImageListAdapterC myListViewAdapterB = null;
 	private List<Map<String, Object>> listB = null;
-	
+
 	private ListView mAbPullListViewP = null;
 	private ImageListAdapterC myListViewAdapterP = null;
 	private List<Map<String, Object>> listP = null;
-	
 
-	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// 获取布局文件
@@ -87,43 +73,50 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		application = (MyApplication) mActivity.abApplication;
 		displayUtil = DisplayUtil.getInstance(mActivity);
 		// 各种分类按钮
-		RelativeLayout imgBFood = (RelativeLayout) view.findViewById(R.id.imageButtonFood);
+		RelativeLayout imgBFood = (RelativeLayout) view
+				.findViewById(R.id.imageButtonFood);
 		imgBFood.setOnClickListener(this);
-		
-		RelativeLayout imgBMovie = (RelativeLayout) view.findViewById(R.id.imageButtonMovie);
+
+		RelativeLayout imgBMovie = (RelativeLayout) view
+				.findViewById(R.id.imageButtonMovie);
 		imgBMovie.setOnClickListener(this);
-		
-		RelativeLayout imgBHappy = (RelativeLayout) view.findViewById(R.id.imageButtonHappy);
+
+		RelativeLayout imgBHappy = (RelativeLayout) view
+				.findViewById(R.id.imageButtonHappy);
 		imgBHappy.setOnClickListener(this);
-		
-		RelativeLayout imgBHotel = (RelativeLayout) view.findViewById(R.id.imageButtonHotel);
+
+		RelativeLayout imgBHotel = (RelativeLayout) view
+				.findViewById(R.id.imageButtonHotel);
 		imgBHotel.setOnClickListener(this);
-		
-		RelativeLayout imgBNewInfo = (RelativeLayout) view.findViewById(R.id.imageButtonNewInfo);
+
+		RelativeLayout imgBNewInfo = (RelativeLayout) view
+				.findViewById(R.id.imageButtonNewInfo);
 		imgBNewInfo.setOnClickListener(this);
-		
-		RelativeLayout imgBCash = (RelativeLayout) view.findViewById(R.id.imageButtonCash);
+
+		RelativeLayout imgBCash = (RelativeLayout) view
+				.findViewById(R.id.imageButtonCash);
 		imgBCash.setOnClickListener(this);
-		
-		RelativeLayout imgBPeople = (RelativeLayout) view.findViewById(R.id.imageButtonPeople);
+
+		RelativeLayout imgBPeople = (RelativeLayout) view
+				.findViewById(R.id.imageButtonPeople);
 		imgBPeople.setOnClickListener(this);
-		
-		RelativeLayout imgBAllClass= (RelativeLayout) view.findViewById(R.id.imageButtonAll);
+
+		RelativeLayout imgBAllClass = (RelativeLayout) view
+				.findViewById(R.id.imageButtonAll);
 		imgBAllClass.setOnClickListener(this);
-		
-		
+
 		// 热门商家列表
 		view.findViewById(R.id.textViewhotbusiness).setOnClickListener(this);
-		
+
 		// 热门个人列表
 		view.findViewById(R.id.textViewhotperson).setOnClickListener(this);
-		
+
 		listB = new ArrayList<Map<String, Object>>();
 		listP = new ArrayList<Map<String, Object>>();
 		initPopBusinessView();
 		initPopPersonView();
 		getData();
-		//getLatestData();
+		// getLatestData();
 		initType(view);
 		return view;
 
@@ -143,7 +136,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		mActivity.getWindowManager().getDefaultDisplay().getMetrics(metric);
 		int width = metric.widthPixels / 4;
 		int high = metric.heightPixels / 6;
-		
+
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonFood),
 				resouce.getDrawable(R.drawable.food), width, 102);
@@ -169,11 +162,10 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 				view.findViewById(R.id.imageButtonAll),
 				resouce.getDrawable(R.drawable.all), width, 0);
 
-		
-		
-		
-		//displayUtil.setViewLayoutParamsTextView(view.findViewById(R.id.textViewhotbusiness), high);
-		//displayUtil.setViewLayoutParamsTextView(view.findViewById(R.id.textViewhotperson), high);
+		// displayUtil.setViewLayoutParamsTextView(view.findViewById(R.id.textViewhotbusiness),
+		// high);
+		// displayUtil.setViewLayoutParamsTextView(view.findViewById(R.id.textViewhotperson),
+		// high);
 	}
 
 	/**
@@ -183,30 +175,29 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		// 获取ListView对象
 		mAbPullListViewB = (ListView) view.findViewById(R.id.mListViewB);
 
-		
-
 		// 使用自定义的Adapter
-		myListViewAdapterB = new ImageListAdapterC(mActivity,application,listB,
-				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
-						"itemsText" }, new int[] { R.id.itemsIcon,
-						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
+		myListViewAdapterB = new ImageListAdapterC(mActivity, application,
+				listB, R.layout.list_items, new String[] { "itemsIcon",
+						"itemsTitle", "itemsText" }, new int[] {
+						R.id.itemsIcon, R.id.itemsTitle, R.id.itemsText,
+						R.id.itemsBtnConcern });
 		mAbPullListViewB.setAdapter(myListViewAdapterB);
 		mAbPullListViewB.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//PopBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
+				// PopBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
 				Intent intent = new Intent(mActivity,
-						 BusinessDetailActivity.class);
-				 intent.putExtra("MEMBER_ID", listB.get(position).get("Member_id").toString());
-				 startActivity(intent);
+						BusinessDetailActivity.class);
+				intent.putExtra("MEMBER_ID",
+						listB.get(position).get("Member_id").toString());
+				startActivity(intent);
 			}
 		});
-		
 
-		//getData();
+		// getData();
 	}
-	
+
 	/**
 	 * 初始化热门个人
 	 */
@@ -215,14 +206,15 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		mAbPullListViewP = (ListView) view.findViewById(R.id.mListViewP);
 
 		// 打开关闭下拉刷新加载更多功能
-		//mAbPullListViewP.setPullRefreshEnable(true);
-		//mAbPullListViewP.setPullLoadEnable(true);
+		// mAbPullListViewP.setPullRefreshEnable(true);
+		// mAbPullListViewP.setPullLoadEnable(true);
 
 		// 使用自定义的Adapter
-		myListViewAdapterP = new ImageListAdapterC(mActivity,application,listP,
-				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
-						"itemsText" }, new int[] { R.id.itemsIcon,
-						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
+		myListViewAdapterP = new ImageListAdapterC(mActivity, application,
+				listP, R.layout.list_items, new String[] { "itemsIcon",
+						"itemsTitle", "itemsText" }, new int[] {
+						R.id.itemsIcon, R.id.itemsTitle, R.id.itemsText,
+						R.id.itemsBtnConcern });
 		mAbPullListViewP.setAdapter(myListViewAdapterP);
 		/**
 		 * 添加事件
@@ -230,34 +222,38 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 		 */
 		// item被点击事件
 		mAbPullListViewP.setOnItemClickListener(new OnItemClickListener() {
-						@Override
-						public void onItemClick(AdapterView<?> parent, View view,
-								int position, long id) {
-							//PopPersonListActivity.this.showToast(list.get(position).get("Member_id").toString());
-						Intent intent = new Intent(mActivity,
-								PersonDetailActivity.class);
-						intent.putExtra("MEMBER_ID", listP.get(position).get("Member_id").toString());
-							startActivity(intent);
-						}
-					});		
-		
-		//getData();
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// PopPersonListActivity.this.showToast(list.get(position).get("Member_id").toString());
+				Intent intent = new Intent(mActivity,
+						PersonDetailActivity.class);
+				intent.putExtra("MEMBER_ID",
+						listP.get(position).get("Member_id").toString());
+				startActivity(intent);
+			}
+		});
+
+		// getData();
 	}
-	
+
+	/**
+	 * 获取热门商企
+	 */
 	public void getData() {
-		listB.clear();
+
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(0, 10,
 				application.cityid, "list-hot");
 
-		new UserBll().getListCompany(mActivity, companyParams,"list-hot",
+		new UserBll().getListCompany(mActivity, companyParams, "list-hot",
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
-						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
+						listB.clear();
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
@@ -273,20 +269,16 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 
 					@Override
 					public void onStart() {
-						// TODO Auto-generated method stub
-						mActivity.showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						// TODO Auto-generated method stub
 						if (localList == null || localList.size() == 0) {
 							return;
 						}
 						Map<String, Object> map;
 						for (int i = 0; i < localList.size(); i++) {
-
 							User u = (User) localList.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
@@ -295,43 +287,42 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 							map.put("itemsText", u.getKeyword());
 							listB.add(map);
 						}
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
-						mActivity.showToast(status_description);
-					}
-
-					@Override
-					public void onFinish() {
-						// TODO Auto-generated method stub
-						mActivity.removeProgressDialog();
 						myListViewAdapterB.notifyDataSetChanged();
-						displayUtil.setListViewHeightBasedOnChildren(mAbPullListViewB , 10);
-						getLatestData();
 					}
-					
-				});
-		
-		
-	}
-	public void getLatestData() {
-
-		listP.clear();
-		//---list-latest
-		CompanyListReqEntity latestCompanyParams = new CompanyListReqEntity(0, 10,
-				application.cityid, "list-latest");
-
-		new UserBll().getListCompany(mActivity, latestCompanyParams,"list-latest",
-				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
+					public void onErrorData(String status_description) {
+						if (listB.size() <= 0)
+							mActivity.showToast(status_description);
+					}
+
+					@Override
+					public void onFinish() {
+						// mActivity.removeProgressDialog();
+						myListViewAdapterB.notifyDataSetChanged();
+						displayUtil.setListViewHeightBasedOnChildren(
+								mAbPullListViewB, 10);
+					}
+				});
+
+		getLatestData();
+	}
+
+	/**
+	 * 获取最新商企
+	 */
+	public void getLatestData() {
+		CompanyListReqEntity latestCompanyParams = new CompanyListReqEntity(0,
+				10, application.cityid, "list-latest");
+
+		new UserBll().getListCompany(mActivity, latestCompanyParams,
+				"list-latest", new ZzObjectHttpResponseListener<User>() {
+					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
-						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
+						listP.clear();
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
@@ -347,20 +338,16 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 
 					@Override
 					public void onStart() {
-						// TODO Auto-generated method stub
-						mActivity.showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						// TODO Auto-generated method stub
 						if (localList == null || localList.size() == 0) {
 							return;
 						}
 						Map<String, Object> map;
 						for (int i = 0; i < localList.size(); i++) {
-
 							User u = (User) localList.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
@@ -369,126 +356,118 @@ public class FragmentHomePage extends Fragment implements OnClickListener{
 							map.put("itemsText", u.getKeyword());
 							listP.add(map);
 						}
+						myListViewAdapterP.notifyDataSetChanged();
 					}
 
 					@Override
 					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
-						mActivity.showToast(status_description);
+						if (listP.size() <= 0)
+							mActivity.showToast(status_description);
 					}
 
 					@Override
 					public void onFinish() {
-						// TODO Auto-generated method stub
-						mActivity.removeProgressDialog();
 						myListViewAdapterP.notifyDataSetChanged();
-						displayUtil.setListViewHeightBasedOnChildren(mAbPullListViewP , 10);
-						
+						displayUtil.setListViewHeightBasedOnChildren(
+								mAbPullListViewP, 10);
 					}
-			
 				});
 	}
-
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		Intent intent;
 		switch (v.getId()) {
-		//美食
+		// 美食
 		case R.id.imageButtonFood:
-			
-			 intent = new Intent(mActivity,
-					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "美食");
-			 intent.putExtra("TypeId", "美食");
-			 startActivity(intent);
+
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "美食");
+			intent.putExtra("TypeId", "美食");
+			startActivity(intent);
 			break;
 		case R.id.imageButtonMovie:
-			
-			 intent = new Intent(mActivity,
-					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "旅游");
-			 intent.putExtra("TypeId", "旅游");
-			 startActivity(intent);
+
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "旅游");
+			intent.putExtra("TypeId", "旅游");
+			startActivity(intent);
 			break;
 		case R.id.imageButtonHappy:
-			 intent = new Intent(mActivity,
-					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "休闲娱乐");
-			 intent.putExtra("TypeId", "休闲娱乐");
-			 startActivity(intent);
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "休闲娱乐");
+			intent.putExtra("TypeId", "休闲娱乐");
+			startActivity(intent);
 			break;
 		case R.id.imageButtonHotel:
-			
-			 intent = new Intent(mActivity,
-					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "酒店");
-			 intent.putExtra("TypeId", "酒店");
-			 startActivity(intent);
+
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "酒店");
+			intent.putExtra("TypeId", "酒店");
+			startActivity(intent);
 			break;
 		case R.id.imageButtonNewInfo:
-			
-			 intent = new Intent(mActivity,
-					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "生活服务");
-			 intent.putExtra("TypeId", "生活服务");
-			 startActivity(intent);
+
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "生活服务");
+			intent.putExtra("TypeId", "生活服务");
+			startActivity(intent);
 			break;
 		case R.id.imageButtonCash:
-			 intent = new Intent(mActivity,
-					 PopBusinessListActivity.class);
-			 intent.putExtra("Type", "运动健身");
-			 intent.putExtra("TypeId","运动健身");
-			 startActivity(intent);
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "运动健身");
+			intent.putExtra("TypeId", "运动健身");
+			startActivity(intent);
 			break;
 		case R.id.imageButtonAll:
-			//showPopWindows();
+			// showPopWindows();
 			intent = new Intent(mActivity, AllTypeActivity.class);
-			 startActivity(intent);
+			startActivity(intent);
 			break;
 		case R.id.imageButtonPeople:
-			 intent = new Intent(mActivity,
-						PopPersonListActivity.class);
-			 intent.putExtra("Type", "个人列表");
-			 intent.putExtra("TypeId", "list-hot");
-				startActivity(intent);
+			intent = new Intent(mActivity, PopPersonListActivity.class);
+			intent.putExtra("Type", "个人列表");
+			intent.putExtra("TypeId", "list-hot");
+			startActivity(intent);
 			break;
-			//热门商家
+		// 热门商家
 		case R.id.textViewhotbusiness:
-			 intent = new Intent(mActivity,
-					PopBusinessListActivity.class);
-			 intent.putExtra("Type", "热门商企");
-			 intent.putExtra("TypeId", "list-hot");
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "热门商企");
+			intent.putExtra("TypeId", "list-hot");
 			startActivity(intent);
 			break;
 		case R.id.textViewhotperson:
-		 intent = new Intent(mActivity,
-				PopBusinessListActivity.class);
-		 intent.putExtra("Type", "热门商企");
-		 intent.putExtra("TypeId", "list-latest");
-		startActivity(intent);
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "热门商企");
+			intent.putExtra("TypeId", "list-latest");
+			startActivity(intent);
 			break;
 		default:
 			break;
 		}
 	}
-	
-	
-	void  showPopWindows(){
-		//Log.e("fragment", "-----点击了全部分类");
+
+	void showPopWindows() {
+		// Log.e("fragment", "-----点击了全部分类");
 		myPopupWindow = new MyPopupWindow(mActivity);
-		myPopupWindow.popupWindow.setWidth(mActivity.getWindowManager().getDefaultDisplay().getWidth()/7*6);
-		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft,
-				mActivity.getWindowManager().getDefaultDisplay().getWidth()/7*3,0);
-		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
-				0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
-		//displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
-		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassP,
-				0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
-		myPopupWindow.popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+		myPopupWindow.popupWindow.setWidth(mActivity.getWindowManager()
+				.getDefaultDisplay().getWidth() / 7 * 6);
+		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft, mActivity
+				.getWindowManager().getDefaultDisplay().getWidth() / 7 * 3, 0);
+		displayUtil
+				.setViewLayoutParamsL(myPopupWindow.listViewClassB, 0,
+						mActivity.getWindowManager().getDefaultDisplay()
+								.getHeight() / 5 * 3);
+		// displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+		displayUtil
+				.setViewLayoutParamsL(myPopupWindow.listViewClassP, 0,
+						mActivity.getWindowManager().getDefaultDisplay()
+								.getHeight() / 5 * 3);
+		myPopupWindow.popupWindow
+				.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 		myPopupWindow.popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-		
+
 	}
 
 }
