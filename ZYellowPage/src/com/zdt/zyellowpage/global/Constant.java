@@ -77,14 +77,24 @@ public class Constant {
 
 	public class DataType {
 		/**
-		 * 我的关注
+		 * 我的全部关注
 		 */
 		public static final String MYFOLLOWING = "myFollowing";
 
 		/**
-		 * 我的粉丝
+		 * 我的全部粉丝
 		 */
 		public static final String MYFANS = "myFans";
+
+		/**
+		 * 热门企业
+		 */
+		public static final String HOTCOMPANY = "hotCompany";
+
+		/**
+		 * 最新企业
+		 */
+		public static final String LASTEDCOMPANY = "lastedCompany";
 	}
 
 }

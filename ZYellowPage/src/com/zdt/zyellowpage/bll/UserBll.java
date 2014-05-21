@@ -13,6 +13,7 @@ import android.util.Log;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.ab.util.AbStrUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zdt.zyellowpage.dao.UserInsideDao;
@@ -58,18 +59,19 @@ public class UserBll {
 		}
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
-		getBasicUserList(context, params, respListener);
+		getBasicUserList(context, params, null, companyParams.getPage_number(),
+				respListener);
 	}
 
 	/**
 	 * 获取商家列表
-	 * 
 	 * @param context
 	 * @param companyParams
+	 * @param dataType，如果需要缓存，就要添加此参数
 	 * @param respListener
 	 */
 	public void getListCompany(Context context,
-			CompanyListReqEntity companyParams,
+			CompanyListReqEntity companyParams,String dataType,
 			ZzObjectHttpResponseListener<User> respListener) {
 		JSONObject jo = new JSONObject();
 		mContext = context;
@@ -81,7 +83,8 @@ public class UserBll {
 		}
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
-		getBasicUserList(context, params, respListener);
+		getBasicUserList(context, params, null, companyParams.getPage_number(),
+				respListener);
 	}
 
 	/**
@@ -89,10 +92,11 @@ public class UserBll {
 	 * 
 	 * @param context
 	 * @param companyParams
+	 *  @param dataType，如果需要缓存，就要添加此参数
 	 * @param respListener
 	 */
 	public void getListPerson(Context context,
-			PersonListReqEntity companyParams,
+			PersonListReqEntity companyParams,String dataType,
 			ZzObjectHttpResponseListener<User> respListener) {
 		JSONObject jo = new JSONObject();
 		mContext = context;
@@ -104,7 +108,8 @@ public class UserBll {
 		}
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
-		getBasicUserList(context, params, respListener);
+		getBasicUserList(context, params, null, companyParams.getPage_number(),
+				respListener);
 	}
 
 	/**
@@ -246,8 +251,8 @@ public class UserBll {
 
 								if (bre.getSuccess()) {
 									JSONObject data = jo.getJSONObject("data");
-									// int page_number = data
-									// .getInt("page_number");
+									int page_number = data
+											.getInt("page_number");
 									JSONArray dataUser;
 									dataUser = data.getJSONArray("following");
 
@@ -256,35 +261,40 @@ public class UserBll {
 											new TypeToken<List<User>>() {
 											}.getType());
 
-									UserInsideDao userDao = new UserInsideDao(
-											mContext);
-									userDao.startWritableDatabase(false);
-									String dataType = Constant.DataType.MYFOLLOWING;
-									if (Integer.valueOf(type) > 2) {
-										dataType = Constant.DataType.MYFANS;
+									if (page_number == 0) {
+
+										UserInsideDao userDao = new UserInsideDao(
+												mContext);
+										userDao.startWritableDatabase(true);
+										String dataType = Constant.DataType.MYFOLLOWING;
+										if (Integer.valueOf(type) > 2) {
+											dataType = Constant.DataType.MYFANS;
+										}
+										for (User user : tempUser) {
+											user.setDataType(dataType);
+										}
+										String whereClause = "";
+										String[] whereArgs = null;
+										if (type.equals("2")
+												|| type.equals("5")) {
+											whereClause = "dataType=?";
+											whereArgs = new String[] { dataType };
+										} else if (type.equals("0")
+												|| type.equals("3")) {
+											whereClause = "dataType=? and type=?";
+											whereArgs = new String[] {
+													dataType, "0" };
+										} else if (type.equals("1")
+												|| type.equals("4")) {
+											whereClause = "dataType=? and type=?";
+											whereArgs = new String[] {
+													dataType, "1" };
+										}
+
+										userDao.delete(whereClause, whereArgs);
+										userDao.insertList(tempUser);
+										userDao.closeDatabase(true);
 									}
-									String whereClause = "";
-									String[] whereArgs = null;
-									if (type.equals("2") || type.equals("5")) {
-										whereClause = "dataType=?";
-										whereArgs = new String[] { dataType };
-									} else if (type.equals("0")
-											|| type.equals("3")) {
-										whereClause = "dataType=? and type=?";
-										whereArgs = new String[] { dataType,
-												"0" };
-									} else if (type.equals("1")
-											|| type.equals("4")) {
-										whereClause = "dataType=? and type=?";
-										whereArgs = new String[] { dataType,
-												"1" };
-									}
-
-									userDao.delete(whereClause, whereArgs);
-
-									userDao.insertList(tempUser);
-									userDao.closeDatabase(false);
-
 									objectResponseListener.onSuccess(
 											statusCode, tempUser);
 								} else {
@@ -309,7 +319,6 @@ public class UserBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						System.out.println("数据请求异常" + content);
 						UserInsideDao userDao = new UserInsideDao(mContext);
 						userDao.startReadableDatabase(false);
 						List<User> lis = userDao.queryList();
@@ -449,7 +458,8 @@ public class UserBll {
 				});
 	}
 
-	private void getBasicUserList(Context context, AbRequestParams params,
+	private void getBasicUserList(final Context context,
+			AbRequestParams params, final String dataType, final int page_num,
 			ZzObjectHttpResponseListener<User> respListener) {
 		this.objectResponseListener = respListener;
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
@@ -473,8 +483,6 @@ public class UserBll {
 
 								if (bre.getSuccess()) {
 									JSONObject data = jo.getJSONObject("data");
-									// int page_number = data
-									// .getInt("page_number");
 									JSONArray dataUser;
 									try {
 										dataUser = data
@@ -488,11 +496,28 @@ public class UserBll {
 													.getJSONArray("following");
 										}
 									}
-
+									int page_number = data
+											.getInt("page_number");
 									List<User> tempUser = new Gson().fromJson(
 											dataUser.toString(),
 											new TypeToken<List<User>>() {
 											}.getType());
+									// 缓存下来，同种数据类型的数据，只缓存一页
+									if (!AbStrUtil.isEmpty(dataType)
+											&& page_number == 0) {
+										for (User user : tempUser) {
+											user.setDataType(dataType);
+										}
+
+										UserInsideDao userDao = new UserInsideDao(
+												context);
+										String whereClause = "dataType=?";
+										String[] whereArgs = new String[] { dataType };
+										userDao.startWritableDatabase(false);
+										userDao.delete(whereClause, whereArgs);
+										userDao.insertList(tempUser);
+										userDao.closeDatabase(false);
+									}
 
 									objectResponseListener.onSuccess(
 											statusCode, tempUser);
@@ -511,21 +536,25 @@ public class UserBll {
 					// 开始执行前
 					@Override
 					public void onStart() {
-						objectResponseListener.onStart();
+						List<User> lis = null;
+						if (!AbStrUtil.isEmpty(dataType) && page_num == 0) {
+							UserInsideDao userDao = new UserInsideDao(mContext);
+							userDao.startReadableDatabase(false);
+							String whereClause = "dataType=?";
+							String[] whereArgs = new String[] { dataType };
+							lis = userDao.queryList(whereClause, whereArgs);
+							userDao.closeDatabase(false);
+							objectResponseListener.onFailure(200, null, null,
+									lis);
+						} else {
+							objectResponseListener.onStart();
+						}
 					}
 
 					// 失败，调用
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						UserInsideDao userDao = new UserInsideDao(mContext);
-						userDao.startReadableDatabase(false);
-						List<User> lis = userDao.queryList("member_id=?",
-								new String[] { mMember_id });
-						userDao.closeDatabase(false);
-						objectResponseListener.onFailure(statusCode, content,
-								error, lis);
-						
 						objectResponseListener.onFailure(statusCode, content,
 								error, null);
 					}
