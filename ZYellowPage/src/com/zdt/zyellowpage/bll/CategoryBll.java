@@ -101,7 +101,7 @@ public class CategoryBll {
 					CategoryDao categoryDao = new CategoryDao(mContext);
 					categoryDao.startWritableDatabase(false);
 
-					categoryDao.delete("parentId=? and type=?", new String[] {
+					categoryDao.delete("parent=? and type=?", new String[] {
 							category_id, type });
 
 					if (mCategory != null) {

@@ -29,6 +29,7 @@ import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity;
+import com.zdt.zyellowpage.activity.NewsContentDetailActivity;
 import com.zdt.zyellowpage.bll.LoginBll;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
@@ -83,6 +84,18 @@ public class RegisterActivity extends AbActivity {
 		mClearPwd = (ImageButton) findViewById(R.id.clearPwd);
 		mClearPwd2 = (ImageButton) findViewById(R.id.clearPwd2);
 		mClearCode = (ImageButton) findViewById(R.id.clearCode);
+
+		Button agreementBtn = (Button) findViewById(R.id.agreementBtn);
+		agreementBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(RegisterActivity.this,
+						NewsContentDetailActivity.class);
+				intent.putExtra("item_id", "3");
+				startActivity(intent);
+			}
+		});
 
 		Button registerBtn = (Button) this.findViewById(R.id.registerBtn);
 		registerBtn.setOnClickListener(new RegisterOnClickListener());

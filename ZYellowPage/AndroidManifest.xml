@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zdt.zyellowpage"
     android:versionCode="1"
-    android:versionName="1.0.1" >
+    android:versionName="1.0.3" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -48,15 +48,22 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
-    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" ></permission>
+    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
+    </permission>
 
-    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" ></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" ></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" ></uses-permission>
-    <uses-permission android:name="android.permission.INTERNET" > </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" ></uses-permission>
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" >
+    </uses-permission>
     <!-- <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"></uses-permission> -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" > </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" >
     </uses-permission>
@@ -70,25 +77,37 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.CAMERA" > </uses-permission>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" > </uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" > </uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 来电消音 -->
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" > </uses-permission>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" >
+    </uses-permission>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" > </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" > </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" > </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" ></uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" ></uses-permission>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" > </uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" > </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" ></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    </uses-permission>
     <uses-permission android:name="android.permission.READ_LOGS" >
     </uses-permission>
 
@@ -99,7 +118,7 @@
         android:theme="@style/myTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="RjlfVWfEcAecRGc5qG8xyLoX" />
+            android:value="E0vBVTjgP3IvuuZSOSqKmsZu" />
 
         <service
             android:name="com.baidu.location.f"
@@ -118,8 +137,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.zdt.zyellowpage.activity.MainActivity"
-             android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.zdt.zyellowpage.activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="com.zdt.zyellowpage.activity.login.LoginActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.login.FindPwdActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.login.RegisterActivity" />
@@ -149,16 +169,17 @@
         <activity android:name="com.zdt.zyellowpage.activity.EditAlbumActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditSupplyDemandActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditMorePhoneAcitivity" />
-        <activity android:name="com.zdt.zyellowpage.activity.CertificateListActivity"/>
+        <activity android:name="com.zdt.zyellowpage.activity.CertificateListActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.EditCertificateActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.TieListActivity" />
         <activity android:name="com.zdt.zyellowpage.activity.TieDetailActivity" />
-        <activity android:name="com.zdt.zyellowpage.activity.EditTieMessageActivity"/>
-        <activity android:name="com.zdt.zyellowpage.activity.AddAlbumActivity"/>
+        <activity android:name="com.zdt.zyellowpage.activity.EditTieMessageActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.AddAlbumActivity" />
+        <activity android:name="com.zdt.zyellowpage.activity.NewsContentDetailActivity" />
         <activity
             android:name="com.zdt.zyellowpage.activity.BNavigatorActivity"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"/>
-        <activity android:name="com.zdt.zyellowpage.activity.AllTypeActivity"/>
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
+        <activity android:name="com.zdt.zyellowpage.activity.AllTypeActivity" />
     </application>
 
     <supports-screens

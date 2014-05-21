@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ab.R;
 import com.ab.util.AbStrUtil;
 import com.zdt.zyellowpage.activity.webView.IntegratedWebView.OnPressBackListener;
 import com.zdt.zyellowpage.activity.webView.IntegratedWebView.OritationChangeActivity;
@@ -24,16 +25,17 @@ public class MyWebViewActivity extends Activity implements
 
 		url = getIntent().getStringExtra("url");
 		if (AbStrUtil.isEmpty(url)) {
-			Toast.makeText(this, "地址错误", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "视频地址错误", Toast.LENGTH_LONG).show();
 			this.finish();
 		}
 		contentView.setVideoPlayerClient(this);
-
-		// String data =
-		// "<embed width=\"290\" src=\"http:/\"+\"/player.youku.com/player.php/sid/XNTgxNTA5NjY4/v.swf\" type=\"application/x-shockwave-flash\" allowfullscreen=\"true\" loop=\"true\" play=\"true\" menu=\"false\" quality=\"high\" wmode=\"opaque\" classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-4445535400000\"></embed>";
-
-		// contentView.(data);
-		contentView.loadUrl(url);
+		url = "http://player.youku.com/embed/XNzEwMzgzOTQ4";
+		try {
+			contentView.loadUrl(url);
+		} catch (Exception e) {
+			Toast.makeText(this, "无法播放该视频!", Toast.LENGTH_LONG).show();
+			this.finish();
+		}
 
 	}
 
@@ -83,5 +85,13 @@ public class MyWebViewActivity extends Activity implements
 	protected void onDestroy() {
 		contentView.onDestroy();
 		super.onDestroy();
+	}
+	
+	@Override
+	public void finish() {
+		super.finish();
+
+		this.overridePendingTransition(R.anim.push_right_out,
+				R.anim.push_right_in);
 	}
 }

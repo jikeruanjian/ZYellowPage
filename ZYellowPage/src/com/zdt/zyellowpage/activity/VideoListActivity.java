@@ -76,17 +76,17 @@ public class VideoListActivity extends AbActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String url = list.get(position - 1).get("url").toString();
-				if (!AbStrUtil.isEmpty(url)
-						&& url.toLowerCase().endsWith(".mp4")) {
-					Intent intent = new Intent(VideoListActivity.this,
-							MyWebViewActivity.class);
-					intent.putExtra("url", url);
-					startActivity(intent);
-				} else if (!url.toLowerCase().endsWith(".mp4")) {
-					showToast("当前仅支持MP4格式的视频播放");
-				} else if (AbStrUtil.isEmpty(url)) {
-					showToast("该视频地址有误，无法播放");
-				}
+				// if (!AbStrUtil.isEmpty(url)
+				// && url.toLowerCase().endsWith(".mp4")) {
+				Intent intent = new Intent(VideoListActivity.this,
+						MyWebViewActivity.class);
+				intent.putExtra("url", url);
+				startActivity(intent);
+				// } else if (!url.toLowerCase().endsWith(".mp4")) {
+				// showToast("当前仅支持MP4格式的视频播放");
+				// } else if (AbStrUtil.isEmpty(url)) {
+				// showToast("该视频地址有误，无法播放");
+				// }
 			}
 		});
 

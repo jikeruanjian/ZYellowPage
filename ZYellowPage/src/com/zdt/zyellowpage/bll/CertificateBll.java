@@ -54,7 +54,7 @@ public class CertificateBll {
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
 
-		getBasicContactList(context, params, respListener);
+		getBasicCertificateList(context, params, respListener);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class CertificateBll {
 		basicExcute(context, params, respListener);
 	}
 
-	private void getBasicContactList(Context context, AbRequestParams params,
+	private void getBasicCertificateList(Context context, AbRequestParams params,
 			ZzObjectHttpResponseListener<Certificate> respListener) {
 		this.objectResponseListener = respListener;
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);

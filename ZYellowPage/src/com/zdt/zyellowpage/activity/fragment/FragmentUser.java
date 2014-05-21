@@ -50,11 +50,14 @@ import com.zdt.zyellowpage.activity.CertificateListActivity;
 import com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity;
 import com.zdt.zyellowpage.activity.MyConcernActivity;
 import com.zdt.zyellowpage.activity.MyResourceActivity;
+import com.zdt.zyellowpage.activity.NewsContentDetailActivity;
 import com.zdt.zyellowpage.activity.login.ChangePwdActivity;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
+import com.zdt.zyellowpage.bll.NewsContentBll;
 import com.zdt.zyellowpage.bll.VersionBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
@@ -110,9 +113,7 @@ public class FragmentUser extends Fragment {
 				Intent intent = null;
 				intent = new Intent(mActivity, AddPhotoActivity.class);
 				intent.putExtra("title", "设置Logo");
-				startActivity(intent);
-				mActivity.overridePendingTransition(R.anim.push_left_in,
-						R.anim.push_left_out);
+				mActivity.startActivity(intent);
 			}
 		});
 		imageQr.setOnClickListener(new OnClickListener() {
@@ -192,7 +193,10 @@ public class FragmentUser extends Fragment {
 								}
 							});
 				} else if (menuTitle.equals("关于我们")) {
-					mActivity.showToast("正在开发中...");
+					Intent intent = new Intent(mActivity,
+							NewsContentDetailActivity.class);
+					intent.putExtra("item_id", "1");
+					mActivity.startActivity(intent);
 				} else if (menuTitle.equals("我的资料")) {
 					Intent intent = null;
 					if (application.mUser.getType() == 0) {
@@ -201,18 +205,18 @@ public class FragmentUser extends Fragment {
 						intent = new Intent(mActivity,
 								EditPersonBaseResourceActivity.class);
 					}
-					startActivity(intent);
+					mActivity.startActivity(intent);
 				} else if (menuTitle.equals("我的资质")) {
 					Intent intent = null;
 					intent = new Intent(mActivity,
 							CertificateListActivity.class);
 					intent.putExtra("MEMBER_ID",
 							application.mUser.getMember_id());
-					startActivity(intent);
+					mActivity.startActivity(intent);
 				} else if (menuTitle.equals("我的关注")) {
 					Intent intent = new Intent(mActivity,
 							MyConcernActivity.class);
-					startActivity(intent);
+					mActivity.startActivity(intent);
 				} else if (menuTitle.equals("修改密码")) {
 					mActivity.startActivity(new Intent(mActivity,
 							ChangePwdActivity.class));
@@ -225,7 +229,7 @@ public class FragmentUser extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(mActivity, LoginActivity.class);
-				startActivity(intent);
+				mActivity.startActivity(intent);
 			}
 		});
 
@@ -439,6 +443,6 @@ public class FragmentUser extends Fragment {
 		intent.setType("application/vnd.android.package-archive");
 		intent.setData(uri);
 		intent.setDataAndType(uri, "application/vnd.android.package-archive");
-		startActivity(intent);
+		mActivity.startActivity(intent);
 	}
 }
