@@ -1,9 +1,5 @@
 package com.zdt.zyellowpage.activity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +15,16 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +37,6 @@ import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
 import com.ab.view.sliding.AbSlidingPlayView;
 import com.ab.view.titlebar.AbTitleBar;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.AlbumBll;
@@ -70,8 +55,8 @@ public class BusinessDetailActivity extends AbActivity {
 	private AbSlidingPlayView mSlidingPlayView = null;
 	private String member_id;
 	private User userCompany;
-	private ImageLoader imageLoader = ImageLoader.getInstance();
-	private DisplayImageOptions options;
+	// private ImageLoader imageLoader = ImageLoader.getInstance();
+	// private DisplayImageOptions options;
 	private ViewPager mPager;// 页卡内容
 	private List<View> listViews; // Tab页面列表
 	private TextView t1, t2, t4;// 页卡头标
@@ -81,49 +66,66 @@ public class BusinessDetailActivity extends AbActivity {
 	private String[] imageUrls = new String[] {};
 	private ImageView imgCompanyVideos;
 	private ImageView imgLogo;
-	private  View mView;
+	private View mView;
 	Bitmap codeBitmap;
 	private DisplayUtil displayUtil;
+	RelativeLayout layMain;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.activity_businessdetail);
 		if (getIntent().getExtras() != null) {
 			member_id = (String) getIntent().getExtras().get("MEMBER_ID");
-			if(member_id == null){
-				this.showDialog("错误", "数据获取失败", new android.content.DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface arg0, int arg1) {
-						finish();
-					}
-				});
-			}
-			else{ 
+			if (member_id == null) {
+				this.showDialog("错误", "数据获取失败",
+						new android.content.DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface arg0, int arg1) {
+								finish();
+							}
+						});
+			} else {
 				application = (MyApplication) abApplication;
 				mAbTitleBar = this.getTitleBar();
 				mAbTitleBar.setTitleText("详细信息");
 				mAbTitleBar.setLogo(R.drawable.button_selector_back);
 				mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 				mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-				//mAbTitleBar.setLogoLine(R.drawable.line);
+				// mAbTitleBar.setLogoLine(R.drawable.line);
 				userCompany = new User();
+				layMain = (RelativeLayout) findViewById(R.id.layMain);
+
+				mSlidingPlayView = (AbSlidingPlayView) this
+						.findViewById(R.id.mAbSlidingPlayViewB);
+				displayUtil = DisplayUtil
+						.getInstance(BusinessDetailActivity.this);
+				DisplayMetrics metric = new DisplayMetrics();
+				this.getWindowManager().getDefaultDisplay().getMetrics(metric);
+				int width = metric.widthPixels / 4 * 3;
+				displayUtil.setViewLayoutParamsL(mSlidingPlayView, 0, width);
+				mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
+
+				InitTitleView();
 				getData();
 
-				options = new DisplayImageOptions.Builder()
-						.showImageForEmptyUri(R.drawable.businessdetail)
-						.showImageOnFail(R.drawable.businessdetail)
-						.resetViewBeforeLoading(true).cacheOnDisc(true)
-						.imageScaleType(ImageScaleType.EXACTLY)
-						.bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
-						.displayer(new FadeInBitmapDisplayer(300)).build();
-				imageLoader.init(ImageLoaderConfiguration
-						.createDefault(BusinessDetailActivity.this));
+				// options = new DisplayImageOptions.Builder()
+				// .showImageForEmptyUri(R.drawable.businessdetail)
+				// .showImageOnFail(R.drawable.businessdetail)
+				// .resetViewBeforeLoading(true).cacheOnDisc(true)
+				// .imageScaleType(ImageScaleType.EXACTLY)
+				// .bitmapConfig(Bitmap.Config.RGB_565)
+				// .considerExifParams(true)
+				// .displayer(new FadeInBitmapDisplayer(300)).build();
+				// imageLoader.init(ImageLoaderConfiguration
+				// .createDefault(BusinessDetailActivity.this));
 			}
 		}
-		
+
 	}
 
 	private void getView() {
 
+		layMain.setVisibility(View.VISIBLE);
 		TextView name = (TextView) BusinessDetailActivity.this
 				.findViewById(R.id.companyfullname);
 		TextView userName = (TextView) BusinessDetailActivity.this
@@ -150,81 +152,75 @@ public class BusinessDetailActivity extends AbActivity {
 		email.setText(userCompany.getEmail());
 		qq.setText(userCompany.getQq());
 
-		// sjjwd.setText("经度："+userCompany.getLatitude()+"      纬度:"+userCompany.getLongitude());
 		if (userCompany.getLogo() != null) {
 			imgLogo = (ImageView) this.findViewById(R.id.companyLogoImage);
-			new AbImageDownloader(this).display(imgLogo,
-					userCompany.getLogo());
+			new AbImageDownloader(this).display(imgLogo, userCompany.getLogo());
 		}
 		InitTextView();
 		InitViewPager();
-		InitTitleView();
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
-		
 	}
-	
-	
-	private void InitTitleView(){
+
+	private void InitTitleView() {
 		mAbTitleBar.clearRightView();
 		TextView tvSave = new TextView(this);
 		tvSave.setText("+关注  ");
 		tvSave.setTextColor(Color.WHITE);
 		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		mAbTitleBar.addRightView(tvSave);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		tvSave.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if (application.mUser != null && application.mUser.getToken() != null) {  
-	        		UserBll bll = new UserBll();
-	        		 bll.followUser(BusinessDetailActivity.this, application.mUser.getToken(), 
-	        				 userCompany.getMember_id(),false,
-	        				 new ZzStringHttpResponseListener(){
+				if (application.mUser != null
+						&& application.mUser.getToken() != null) {
+					UserBll bll = new UserBll();
+					bll.followUser(BusinessDetailActivity.this,
+							application.mUser.getToken(),
+							userCompany.getMember_id(), false,
+							new ZzStringHttpResponseListener() {
 								@Override
-								public void onSuccess(int statusCode, String content) {
-									// TODO Auto-generated method stub
-									Toast.makeText(BusinessDetailActivity.this,content, Toast.LENGTH_SHORT).show();
+								public void onSuccess(int statusCode,
+										String content) {
+									Toast.makeText(BusinessDetailActivity.this,
+											content, Toast.LENGTH_SHORT).show();
 								}
 
 								@Override
 								public void onStart() {
-									// TODO Auto-generated method stub
-									
+									showProgressDialog();
 								}
 
 								@Override
 								public void onFailure(int statusCode,
 										String content, Throwable error) {
-									// TODO Auto-generated method stub
-									Toast.makeText(BusinessDetailActivity.this, "关注失败！", Toast.LENGTH_SHORT).show();
+									showToast(content);
 								}
 
 								@Override
-								public void onErrorData(String status_description) {
-									// TODO Auto-generated method stub
-									
+								public void onErrorData(
+										String status_description) {
+									showToast(status_description);
 								}
 
 								@Override
 								public void onFinish() {
-									// TODO Auto-generated method stub
-									
+									removeProgressDialog();
 								}
-	        			 
-	        		 });
-	        		
-	        		
-	        	}
-	        	else
-	        	{
-	        		Toast.makeText(BusinessDetailActivity.this, "请先登录！", Toast.LENGTH_SHORT).show();
-	        		Intent intent = new Intent(BusinessDetailActivity.this,
-	        				LoginActivity.class);
+							});
+				} else {
+					Toast.makeText(BusinessDetailActivity.this, "请先登录！",
+							Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(BusinessDetailActivity.this,
+							LoginActivity.class);
 					startActivity(intent);
-	        	}
-				
-			}});
+				}
+
+			}
+		});
 	}
+
 	private void getData() {
 		UserBll bll = new UserBll();
 		bll.getDetailCompany(BusinessDetailActivity.this, member_id,
@@ -232,186 +228,180 @@ public class BusinessDetailActivity extends AbActivity {
 
 					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
-						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
 						userCompany = (User) lis.get(0);
-					}
-
-					@Override
-					public void onStart() {
-						// TODO Auto-generated method stub
-						showProgressDialog("同步信息...");
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error, List<User> localList) {
-						// TODO Auto-generated method stub
-						if (localList == null || localList.size() == 0) {
-							BusinessDetailActivity.this.showDialog("错误", "数据获取失败",
-									new android.content.DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface arg0, int arg1) {
-									finish();
-								}
-							});
-							return;
-						}
-						userCompany = (User) localList.get(0);
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
-						showToast(status_description);
-					}
-
-					@Override
-					public void onFinish() {
-						// TODO Auto-generated method stub
-						removeProgressDialog();
 						getView();
 						getImgUrl(userCompany.getMember_id());
 						getCodeData();
 					}
 
+					@Override
+					public void onStart() {
+						showProgressDialog("正在获取企业详细信息...");
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error, List<User> localList) {
+						// if (localList == null || localList.size() == 0) {
+						// BusinessDetailActivity.this
+						// .showDialog(
+						// "错误",
+						// "数据获取失败",
+						// new android.content.DialogInterface.OnClickListener()
+						// {
+						// public void onClick(
+						// DialogInterface arg0,
+						// int arg1) {
+						// finish();
+						// }
+						// });
+						// return;
+						// }
+						showToast(content);
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+						showToast(status_description);
+					}
+
+					@Override
+					public void onFinish() {
+						removeProgressDialog();
+					}
 				});
 	}
+
 	private void initImageView() {
-		mSlidingPlayView =  (AbSlidingPlayView)this.findViewById(R.id.mAbSlidingPlayViewB);
-		//mSlidingPlayView.setPageLineLayoutBackground(R.color.selectclass);
-		displayUtil = DisplayUtil.getInstance(BusinessDetailActivity.this);
-		DisplayMetrics metric = new DisplayMetrics();
-		this.getWindowManager().getDefaultDisplay().getMetrics(metric);
-		int width = metric.widthPixels/4*3;
-		displayUtil.setViewLayoutParamsL(mSlidingPlayView,0,width);
-		mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
-		if( imageUrls.length < 1 ){
-			this.findViewById(R.id.mAbSlidingPlayViewBLinearLayout).setVisibility(View.GONE);
+
+		if (imageUrls.length < 1) {
+			this.findViewById(R.id.mAbSlidingPlayViewBLinearLayout)
+					.setVisibility(View.GONE);
 			return;
 		}
-		for(int i = 0;i < imageUrls.length;i++){
-			//Log.e("tie", "------"+imageUrl[i]);
+		for (int i = 0; i < imageUrls.length; i++) {
+			// Log.e("tie", "------"+imageUrl[i]);
 			View mPlayView = new View(BusinessDetailActivity.this);
 			mPlayView = mInflater.inflate(R.layout.play_view_item, null);
-			ImageView mPlayImage = (ImageView) mPlayView.findViewById(R.id.mPlayImage);
-			mPlayImage.setOnClickListener(new OnClickListener(){
+			ImageView mPlayImage = (ImageView) mPlayView
+					.findViewById(R.id.mPlayImage);
+			mPlayImage.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
 					Intent intent = new Intent(BusinessDetailActivity.this,
 							ImagePagerActivity.class);
 					intent.putExtra("imageUrls", imageUrls);
 					startActivity(intent);
 				}
-				
+
 			});
-			TextView mPlayText = (TextView) mPlayView.findViewById(R.id.mPlayText);
-			new AbImageDownloader(BusinessDetailActivity.this).display(mPlayImage,imageUrls[i]);
-			mPlayText.setText("");		
+			TextView mPlayText = (TextView) mPlayView
+					.findViewById(R.id.mPlayText);
+			new AbImageDownloader(BusinessDetailActivity.this).display(
+					mPlayImage, imageUrls[i]);
+			mPlayText.setText("");
 			mSlidingPlayView.addView(mPlayView);
 		}
-		
+
 	}
+
 	/**
 	 * 获取二维码图片
 	 */
-	private void getCodeData(){
-		String url = userCompany.getQr_code()+"&area="+ application.cityid;
-		Log.e("xxxxtp", "---" +url);
-		AbHttpUtil.getInstance(BusinessDetailActivity.this).get(url, new AbBinaryHttpResponseListener() {
-        	
-			// 获取数据成功会调用这里
-        	@Override
-			public void onSuccess(int statusCode, byte[] content) {
-        		Log.d("xxxx", "onSuccess");
-        		codeBitmap = AbImageUtil.bytes2Bimap(content);
-            	mView = mInflater.inflate(R.layout.code_view, null);
-            	ImageView imageUserCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
-          
-            	ImageView UserCode = (ImageView) BusinessDetailActivity.this.findViewById(R.id.BCodeTopRightimageView);
-            	UserCode.setImageBitmap(codeBitmap);
-            	UserCode.setOnClickListener(new View.OnClickListener() {
-        			
-        			@Override
-        			public void onClick(View v) {
-        				showDialog(AbConstant.DIALOGCENTER, mView);
-        				
-        			}
-        		});
-            	imageUserCode.setImageBitmap(codeBitmap);
-            	imageUserCode.setOnClickListener(new OnClickListener(){
+	private void getCodeData() {
+		String url = userCompany.getQr_code() + "&area=" + application.cityid;
+		AbHttpUtil.getInstance(BusinessDetailActivity.this).get(url,
+				new AbBinaryHttpResponseListener() {
+
+					// 获取数据成功会调用这里
 					@Override
-					public void onClick(View v) {
-						//点击结束弹出框
-						removeDialog(AbConstant.DIALOGCENTER);
+					public void onSuccess(int statusCode, byte[] content) {
+						codeBitmap = AbImageUtil.bytes2Bimap(content);
+						mView = mInflater.inflate(R.layout.code_view, null);
+						ImageView imageUserCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+
+						ImageView UserCode = (ImageView) BusinessDetailActivity.this
+								.findViewById(R.id.BCodeTopRightimageView);
+						UserCode.setImageBitmap(codeBitmap);
+						UserCode.setOnClickListener(new View.OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								showDialog(AbConstant.DIALOGCENTER, mView);
+
+							}
+						});
+						imageUserCode.setImageBitmap(codeBitmap);
+						imageUserCode.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								// 点击结束弹出框
+								removeDialog(AbConstant.DIALOGCENTER);
+							}
+						});
+						imageUserCode.setLongClickable(true);
+						imageUserCode
+								.setOnLongClickListener(new OnLongClickListener() {
+
+									@Override
+									public boolean onLongClick(View v) {
+										// TODO长按保存图片
+										/*
+										 * File f = new
+										 * File("/sdcard/zdtimgcard/",
+										 * member_id+"code"); if (f.exists()) {
+										 * f.delete(); } try { FileOutputStream
+										 * out = new FileOutputStream(f);
+										 * codeBitmap
+										 * .compress(Bitmap.CompressFormat.JPEG,
+										 * 90, out); out.flush(); out.close(); }
+										 * catch (FileNotFoundException e) { //
+										 * e.printStackTrace(); } catch
+										 * Auto-generated catch block
+										 * e.printStackTrace(); }
+										 */
+										return false;
+									}
+
+								});
+
 					}
+
+					// 开始执行前
+					@Override
+					public void onStart() {
+						// 显示进度框
+						showProgressDialog();
+					}
+
+					// 失败，调用
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						showToast(error.getMessage());
+					}
+
+					// 完成后调用，失败，成功
+					@Override
+					public void onFinish() {
+						// 移除进度框
+						removeProgressDialog();
+					};
+
 				});
-            	imageUserCode.setLongClickable(true);
-            	imageUserCode.setOnLongClickListener(new OnLongClickListener(){
-
-					@Override
-					public boolean onLongClick(View v) {
-						// TODO长按保存图片
-						  /*File f = new File("/sdcard/zdtimgcard/", member_id+"code");
-						  if (f.exists()) {
-						   f.delete();
-						  }
-						  try {
-						   FileOutputStream out = new FileOutputStream(f);
-						   codeBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-						   out.flush();
-						   out.close();
-						  } catch (FileNotFoundException e) {
-						   // TODO Auto-generated catch block
-						   e.printStackTrace();
-						  } catch (IOException e) {
-						   // TODO Auto-generated catch block
-						   e.printStackTrace();
-						  }*/
-						return false;
-					}
-            		
-            	});
-            
-            	
-			}
-        	
-        	// 开始执行前
-            @Override
-			public void onStart() {
-            	Log.d("xxxx", "onStart");
-            	//显示进度框
-            	showProgressDialog();
-			}
-
-            // 失败，调用
-            @Override
-			public void onFailure(int statusCode, String content,
-					Throwable error) {
-            	showToast(error.getMessage());
-			}
-
-			// 完成后调用，失败，成功
-            @Override
-            public void onFinish() { 
-            	Log.d("xxxx", "onFinish");
-            	//移除进度框
-            	removeProgressDialog();
-            };
-            
-        });
 	}
-	void getImgUrl(String m_id) {
 
+	void getImgUrl(String m_id) {
 		AlbumBll imgBll = new AlbumBll();
 		imgBll.getAlbumList(BusinessDetailActivity.this, new AlbumReqEntity(0,
-				5, m_id), new ZzObjectHttpResponseListener<Album>() {
+				10, m_id), new ZzObjectHttpResponseListener<Album>() {
 
 			@Override
 			public void onSuccess(int statusCode, List<Album> lis) {
-				// TODO Auto-generated method stub
 				if (lis == null || lis.size() == 0) {
 					return;
 				}
@@ -424,14 +414,11 @@ public class BusinessDetailActivity extends AbActivity {
 
 			@Override
 			public void onStart() {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error, List<Album> localList) {
-				// TODO Auto-generated method stub
 				if (localList == null || localList.size() == 0) {
 					return;
 				}
@@ -444,19 +431,16 @@ public class BusinessDetailActivity extends AbActivity {
 
 			@Override
 			public void onErrorData(String status_description) {
-				// TODO Auto-generated method stub
 			}
 
 			@Override
 			public void onFinish() {
-				// TODO Auto-generated method stub
 				initImageView();
 			}
 
 		});
 	}
 
-	
 	/**
 	 * 初始化头标
 	 */
@@ -475,7 +459,6 @@ public class BusinessDetailActivity extends AbActivity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						if (userCompany.getFullname() == null
 								|| "".equals(userCompany.getFullname())) {
 
@@ -485,8 +468,10 @@ public class BusinessDetailActivity extends AbActivity {
 									CompanyMapActiviy.class);
 							intent.putExtra("FUllNAME",
 									userCompany.getFullname());
-							intent.putExtra("LAT", Double.toString(userCompany.getLatitude()));
-							intent.putExtra("LON", Double.toString(userCompany.getLongitude()));
+							intent.putExtra("LAT",
+									Double.toString(userCompany.getLatitude()));
+							intent.putExtra("LON",
+									Double.toString(userCompany.getLongitude()));
 							startActivity(intent);
 						}
 					}
@@ -497,8 +482,6 @@ public class BusinessDetailActivity extends AbActivity {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
-
 						Intent intent = new Intent(BusinessDetailActivity.this,
 								CompanyBuySellActivity.class);
 						intent.putExtra("FUllNAME", userCompany.getFullname());
@@ -509,18 +492,16 @@ public class BusinessDetailActivity extends AbActivity {
 
 				});
 		// 商家二维码
-		
-        
-
 		this.findViewById(R.id.imgBussnissPhone).setOnClickListener(
 				new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						Intent intent=new Intent(); 
-			        	intent.setAction(Intent.ACTION_DIAL);   //android.intent.action.DIAL 
-			        	intent.setData(Uri.parse("tel:" + userCompany.getTelephone())); 
-			        	startActivity(intent);  
+						Intent intent = new Intent();
+						intent.setAction(Intent.ACTION_DIAL); // android.intent.action.DIAL
+						intent.setData(Uri.parse("tel:"
+								+ userCompany.getTelephone()));
+						startActivity(intent);
 					}
 				});
 
@@ -537,20 +518,20 @@ public class BusinessDetailActivity extends AbActivity {
 				startActivity(intent);
 			}
 		});
-		
-		
-		this.findViewById(R.id.imageViewMoewPhone).setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				if (AbStrUtil.isEmpty(member_id)) {
-					return;
-				}
-				Intent intent = new Intent(BusinessDetailActivity.this,
-						MorePhoneActivity.class);
-				intent.putExtra("MEMBER_ID", member_id);
-				startActivity(intent);
-			}
-		});
+
+		this.findViewById(R.id.imageViewMoewPhone).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (AbStrUtil.isEmpty(member_id)) {
+							return;
+						}
+						Intent intent = new Intent(BusinessDetailActivity.this,
+								MorePhoneActivity.class);
+						intent.putExtra("MEMBER_ID", member_id);
+						startActivity(intent);
+					}
+				});
 	}
 
 	/**
@@ -559,7 +540,7 @@ public class BusinessDetailActivity extends AbActivity {
 	private void InitViewPager() {
 		mPager = (ViewPager) findViewById(R.id.vPager);
 		listViews = new ArrayList<View>();
-		LayoutInflater mInflater = getLayoutInflater();
+		// LayoutInflater mInflater = getLayoutInflater();
 		// listViews.add(mInflater.inflate(R.layout.business_detail_info,
 		// null));
 		// listViews.add(mInflater.inflate(R.layout.business_detail_info,
@@ -576,47 +557,21 @@ public class BusinessDetailActivity extends AbActivity {
 	}
 
 	public View addTextByText(String text) {
-		// TextView tv = new TextView(this);
-		// tv.setText(text);
-		// tv.setBackgroundColor(color.white);
-		// tv.setGravity(1);
-
+		LinearLayout lay = new LinearLayout(this);
+		lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT));
+		lay.setOrientation(LinearLayout.VERTICAL);
 		WebView webView = new WebView(this);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
-		// Log.i("BusinessDetailActivity", text);
+		webView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
 		if (AbStrUtil.isEmpty(text)) {
 			text = "用户暂时还未添加该项数据";
 		}
 		webView.loadDataWithBaseURL(null, text, "text/html", "utf-8", null);
-		return webView;
-	}
 
-	private class ImageGalleryAdapter extends BaseAdapter {
-		@Override
-		public int getCount() {
-			return imageUrls.length;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return position;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ImageView imageView = (ImageView) convertView;
-			if (imageView == null) {
-				imageView = (ImageView) getLayoutInflater().inflate(
-						R.layout.item_gallery_image, parent, false);
-			}
-			imageLoader.displayImage(imageUrls[position], imageView, options);
-			return imageView;
-		}
+		lay.addView(webView);
+		return lay;
 	}
 
 	/**
@@ -694,7 +649,7 @@ public class BusinessDetailActivity extends AbActivity {
 
 		@Override
 		public void onPageSelected(int arg0) {
-			//Animation animation = null;
+			// Animation animation = null;
 
 			t1.setTextColor(getResources().getColor(R.color.black));
 
@@ -704,35 +659,35 @@ public class BusinessDetailActivity extends AbActivity {
 			case 0: {
 				t1.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 1) {
-				//	animation = new TranslateAnimation(one, 0, 0, 0);
+					// animation = new TranslateAnimation(one, 0, 0, 0);
 				} else if (currIndex == 2) {
-					//animation = new TranslateAnimation(two, 0, 0, 0);
+					// animation = new TranslateAnimation(two, 0, 0, 0);
 				}
 				break;
 			}
 			case 1: {
 				t2.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 0) {
-					//animation = new TranslateAnimation(offset, one, 0, 0);
+					// animation = new TranslateAnimation(offset, one, 0, 0);
 				} else if (currIndex == 2) {
-					//animation = new TranslateAnimation(two, one, 0, 0);
+					// animation = new TranslateAnimation(two, one, 0, 0);
 				}
 				break;
 			}
 			case 2: {
 				t4.setTextColor(getResources().getColor(R.color.orange));
 				if (currIndex == 0) {
-					//animation = new TranslateAnimation(offset, two, 0, 0);
+					// animation = new TranslateAnimation(offset, two, 0, 0);
 				} else if (currIndex == 1) {
-					//animation = new TranslateAnimation(one, two, 0, 0);
+					// animation = new TranslateAnimation(one, two, 0, 0);
 				}
 				break;
 			}
 			case 3: {
 				if (currIndex == 0) {
-					//animation = new TranslateAnimation(offset, two, 0, 0);
+					// animation = new TranslateAnimation(offset, two, 0, 0);
 				} else if (currIndex == 1) {
-					//animation = new TranslateAnimation(one, two, 0, 0);
+					// animation = new TranslateAnimation(one, two, 0, 0);
 				}
 				break;
 			}

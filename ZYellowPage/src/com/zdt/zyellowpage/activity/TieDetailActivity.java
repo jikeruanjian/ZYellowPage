@@ -2,7 +2,6 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.List;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -14,7 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
@@ -43,14 +42,14 @@ public class TieDetailActivity extends AbActivity {
 	private TextView moreTextView;
 	private ImageView imgLogo;
 
-	ScrollView svMain;
+	RelativeLayout layMain;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.activity_tiedetail);
 		application = (MyApplication) abApplication;
-		svMain = (ScrollView) findViewById(R.id.svMain);
+		layMain = (RelativeLayout) findViewById(R.id.layMain);
 
 		if (getIntent().getExtras() != null) {
 			item_id = (String) getIntent().getExtras().get("ITEM_ID");
@@ -99,6 +98,15 @@ public class TieDetailActivity extends AbActivity {
 				mAbTitleBar.addRightView(tvSave);
 				mAbTitleBar
 						.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
+
+				mSlidingPlayView = (AbSlidingPlayView) this
+						.findViewById(R.id.mAbSlidingPlayView);
+				displayUtil = DisplayUtil.getInstance(TieDetailActivity.this);
+				DisplayMetrics metric = new DisplayMetrics();
+				this.getWindowManager().getDefaultDisplay().getMetrics(metric);
+				int width = metric.widthPixels / 4 * 3;
+				displayUtil.setViewLayoutParamsL(mSlidingPlayView, 0, width);
+				mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
 			}
 		} else {
 			showToast("参数错误");
@@ -118,7 +126,8 @@ public class TieDetailActivity extends AbActivity {
 						}
 						mTie = (Tie) lis.get(0);
 						initView();
-						svMain.setVisibility(View.VISIBLE);
+						// svMain.setVisibility(View.VISIBLE);
+						layMain.setVisibility(View.VISIBLE);
 					}
 
 					@Override
@@ -217,6 +226,8 @@ public class TieDetailActivity extends AbActivity {
 		}
 
 		WebView more = (WebView) this.findViewById(R.id.tie_more_WebView);
+		// more.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+		// height));
 		if (AbStrUtil.isEmpty(mTie.getMore())) {
 			this.findViewById(R.id.tie_more_LinearLayout).setVisibility(
 					View.GONE);
@@ -250,14 +261,7 @@ public class TieDetailActivity extends AbActivity {
 	}
 
 	private void initImageView() {
-		mSlidingPlayView = (AbSlidingPlayView) this
-				.findViewById(R.id.mAbSlidingPlayView);
-		displayUtil = DisplayUtil.getInstance(TieDetailActivity.this);
-		DisplayMetrics metric = new DisplayMetrics();
-		this.getWindowManager().getDefaultDisplay().getMetrics(metric);
-		int width = metric.widthPixels / 4 * 3;
-		displayUtil.setViewLayoutParamsL(mSlidingPlayView, 0, width);
-		mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
+
 		imageUrl = mTie.getAlbum().split(",");
 		if (imageUrl.length < 1) {
 			this.findViewById(R.id.mAbSlidingPlayViewLinearLayout)

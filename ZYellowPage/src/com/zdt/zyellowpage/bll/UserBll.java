@@ -444,13 +444,13 @@ public class UserBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						UserInsideDao userDao = new UserInsideDao(mContext);
-						userDao.startReadableDatabase(false);
-						List<User> lis = userDao.queryList("member_id=?",
-								new String[] { mMember_id });
-						userDao.closeDatabase(false);
+						// UserInsideDao userDao = new UserInsideDao(mContext);
+						// userDao.startReadableDatabase(false);
+						// List<User> lis = userDao.queryList("member_id=?",
+						// new String[] { mMember_id });
+						// userDao.closeDatabase(false);
 						objectResponseListener.onFailure(statusCode, content,
-								error, lis);
+								error, null);
 					}
 
 					// 完成后调用，失败，成功
