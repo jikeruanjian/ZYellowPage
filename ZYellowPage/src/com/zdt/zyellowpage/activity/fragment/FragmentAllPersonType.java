@@ -88,8 +88,8 @@ public class FragmentAllPersonType  extends Fragment{
                    textView.setLayoutParams(lp);
                    textView.setGravity(Gravity.CENTER_VERTICAL);
                    textView.setPadding(50, 0, 0, 0);
-                   textView.setTextSize(14);
-                   textView.setTextColor(R.color.propertyvalue); 
+                   textView.setTextSize(16);
+                   textView.setTextColor(R.color.propertyname);
                    return textView;
             }
 
@@ -157,7 +157,7 @@ public class FragmentAllPersonType  extends Fragment{
         LinearLayout parentLayout=(LinearLayout) View.inflate(mActivity, R.layout.expandgroup_item, null);
         TextView parentTextView=(TextView) parentLayout.findViewById(R.id.groupNametextView);
         parentTextView.setText(getGroup(groupPosition).toString());
-        parentTextView.setTextColor(Color.BLACK);
+        //parentTextView.setTextColor(Color.BLACK);
         ImageView parentImageViw=(ImageView) parentLayout.findViewById(R.id.groupNameImageView);
         if(!isExpanded){
         	 parentImageViw.setBackgroundResource(R.drawable.changecity);

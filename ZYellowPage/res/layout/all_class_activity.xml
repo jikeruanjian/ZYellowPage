@@ -56,7 +56,7 @@
             android:checked="true"
             android:text="商企分类"
             android:textColor="@color/black"
-            android:textSize="@dimen/main_text_size_h4" />
+            android:textSize="@dimen/main_text_size_h2" />
 
         <RadioButton
             android:id="@+id/personRadio_button"
@@ -68,7 +68,7 @@
             android:background="@drawable/type_radio_bg"
             android:text="个人分类"
             android:textColor="@color/black"
-            android:textSize="@dimen/main_text_size_h4"/>
+            android:textSize="@dimen/main_text_size_h2"/>
         
     </RadioGroup>
 
