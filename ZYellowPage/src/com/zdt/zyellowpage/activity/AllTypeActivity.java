@@ -36,7 +36,7 @@ public class AllTypeActivity extends AbActivity{
 	public void onCreate(Bundle savedInstanceState) {
 	
 		 super.onCreate(savedInstanceState);  
-	     setContentView(R.layout.all_class_activity);
+		 setAbContentView(R.layout.all_class_activity);
 	     
 	     application = (MyApplication) abApplication;
 	    mAbTitleBar = this.getTitleBar();

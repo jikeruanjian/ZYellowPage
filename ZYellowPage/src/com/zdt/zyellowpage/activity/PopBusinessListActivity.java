@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -20,19 +16,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.ab.activity.AbActivity;
-import com.ab.bitmap.AbImageDownloader;
-import com.ab.task.AbTaskItem;
-import com.ab.task.AbTaskListener;
-import com.ab.task.AbTaskQueue;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.ab.view.titlebar.AbTitleBar;
@@ -40,12 +28,10 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
-import com.zdt.zyellowpage.jsonEntity.PersonListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 import com.zdt.zyellowpage.util.ImageListAdapterC;
-
 public class PopBusinessListActivity extends AbActivity {
 
 	private List<Map<String, Object>> list = null;

@@ -215,15 +215,14 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		initChangeEvent();
 
 		MainActivity.getAreaList(MainActivity.this, application.cityid);
-		MainActivity.getCategoryList(MainActivity.this, "0");
-		MainActivity.getCategoryListP(MainActivity.this,"1");
+		MainActivity.getCategoryData(MainActivity.this, "0");
+		MainActivity.getCategoryDataP(MainActivity.this,"1");
 		
 		textVSearch = (TextView) findViewById(R.id.textViewSearchType);
 		textVSearch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				int y = textVSearch.getBottom() * 3 / 2;
-				
 				int x = textVSearch.getRight() + 10;
 				showPopupWindow(x, y);
 			}
@@ -234,7 +233,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this, "功能开发中……", Toast.LENGTH_SHORT); 
+				//Toast.makeText(MainActivity.this, "功能开发中……", Toast.LENGTH_SHORT); 
+			
 			}
 			 
 		 });
@@ -489,7 +489,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 * @param type
 	 *            0 为商家 1为个人
 	 */
-	public static void getCategoryList(Context context, String id) {
+	public static void getCategoryData(Context context, String id) {
 						listCategory.clear();
 						CategoryDao categoryDao = new CategoryDao(context);
 						categoryDao.startReadableDatabase(false);
@@ -502,7 +502,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 						listChildCategory.clear();
 						for(Category c: list){
 							//如果是二级分类
-							if(c.getParent().equals('0')){
+							if(c.getParent().equals("0")){
 								//加入二级分类表
 								listCategory.add(c);
 								listCategoryName.add(c.getName());
@@ -527,7 +527,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 * @param type
 	 *            0 为商家 1为个人
 	 */
-	public static  void getCategoryListP(Context context, String id) {
+	public static  void getCategoryDataP(Context context, String id) {
 						listCategoryP.clear();
 						CategoryDao categoryDao = new CategoryDao(context);
 						categoryDao.startReadableDatabase(false);
@@ -540,7 +540,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 							listChildCategoryP.clear();
 							for(Category c: list){
 							//如果是二级分类
-								if(c.getParent().equals('0')){
+								if(c.getParent().equals("0")){
 								//加入二级分类表
 									listCategoryP.add(c);
 									listCategoryNameP.add(c.getName());
@@ -552,6 +552,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 									}
 								}
 								listChildCategoryP.add(listc);	
+								Log.e("person","-----"+listc.size());
 							}
 						}
 						}
@@ -861,6 +862,12 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 			}
 
+		}
+		
+		@Override
+		public void finish() {
+			super.finish();
+			overridePendingTransition(0, 0);
 		}
 		
 }

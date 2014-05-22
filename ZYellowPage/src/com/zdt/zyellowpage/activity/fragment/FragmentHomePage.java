@@ -384,64 +384,64 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "美食");
 			intent.putExtra("TypeId", "美食");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonMovie:
 
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "旅游");
 			intent.putExtra("TypeId", "旅游");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonHappy:
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "休闲娱乐");
 			intent.putExtra("TypeId", "休闲娱乐");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonHotel:
 
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "酒店");
 			intent.putExtra("TypeId", "酒店");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonNewInfo:
 
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "生活服务");
 			intent.putExtra("TypeId", "生活服务");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonCash:
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "运动健身");
 			intent.putExtra("TypeId", "运动健身");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonAll:
 			// showPopWindows();
 			intent = new Intent(mActivity, AllTypeActivity.class);
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonPeople:
 			intent = new Intent(mActivity, PopPersonListActivity.class);
 			intent.putExtra("Type", "个人列表");
 			intent.putExtra("TypeId", "list-hot");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		// 热门商家
 		case R.id.textViewhotbusiness:
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "热门商企");
 			intent.putExtra("TypeId", "list-hot");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		case R.id.textViewhotperson:
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "热门商企");
 			intent.putExtra("TypeId", "list-latest");
-			startActivity(intent);
+			mActivity.startActivity(intent);
 			break;
 		default:
 			break;
@@ -469,5 +469,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 		myPopupWindow.popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
 	}
+	
+
 
 }

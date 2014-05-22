@@ -16,8 +16,7 @@
     <GridView
         android:id="@+id/commonClassGridView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       
+        android:layout_height="300dp"
         android:background="#FFFFFF"
         android:horizontalSpacing="10dp"
         android:numColumns="3"
@@ -34,6 +33,42 @@
        android:text="全部"
        android:textColor="@color/propertyname" />
 
+<RadioGroup
+    android:id="@+id/main_radio"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentLeft="true"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/orange_background"
+    android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/companyRadio_button"
+            style="@style/main_tab_bottom"
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:drawableTop="@drawable/type_radio_bg"
+            android:text="首页"
+            android:textColor="@color/orange_background" />
+
+        <RadioButton
+            android:id="@+id/personRadio_button"
+            style="@style/main_tab_bottom"
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dp"
+              android:drawableTop="@drawable/type_radio_bg"
+            android:text="附近"
+            android:textColor="@color/orange_background" />
+        
+    </RadioGroup>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
