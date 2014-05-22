@@ -45,6 +45,7 @@ public class NewsContentDetailActivity extends AbActivity {
 		WebSettings webSettings = mWebView.getSettings();
 
 		webSettings.setDefaultTextEncodingName("UTF-8");
+//		mWebView.setInitialScale(100);
 
 		new NewsContentBll().getNewsContent(this, item_id,
 				new ZzStringHttpResponseListener() {

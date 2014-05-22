@@ -68,6 +68,7 @@ import com.zdt.zyellowpage.activity.fragment.FragmentHomePage;
 import com.zdt.zyellowpage.activity.fragment.FragmentNearMap;
 import com.zdt.zyellowpage.activity.fragment.FragmentTie;
 import com.zdt.zyellowpage.activity.fragment.FragmentUser;
+import com.zdt.zyellowpage.barcode.CaptureActivity;
 import com.zdt.zyellowpage.bll.AreaBll;
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.bll.VersionBll;
@@ -109,57 +110,59 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	// 个人分类列表
 	public static List<Category> listCategoryP;
 	public static List<String> listCategoryNameP;
-	//个人子分类列表
-	public static  List<List<Category>> listChildCategoryP;
-	//商家子分类列表
-	public static  List<List<Category>> listChildCategory;
-	public static  Context mContext;
-	
+	// 个人子分类列表
+	public static List<List<Category>> listChildCategoryP;
+	// 商家子分类列表
+	public static List<List<Category>> listChildCategory;
+	public static Context mContext;
+
 	private long mExitTime;
 	private boolean mIsEngineInitSuccess = false;
 	private String mCityName = null;
-	
-	LocationClient mLocationClient;
-	private Handler myHandler = new Handler() {   
-		  
-        @Override  
-        public void handleMessage(Message msg) {   
-            // //执行接收到的通知，更新UI 此时执行的顺序是按照队列进行，即先进先出   
-            super.handleMessage(msg);   
-            switch (msg.what) {   
-            case 1:    
-                break;   
-  
-            }   
-        }
 
-		private void showDialog(String title,String msg,DialogInterface.OnClickListener mOkOnClickListener) {
+	LocationClient mLocationClient;
+	private Handler myHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// //执行接收到的通知，更新UI 此时执行的顺序是按照队列进行，即先进先出
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case 1:
+				break;
+
+			}
+		}
+
+		private void showDialog(String title, String msg,
+				DialogInterface.OnClickListener mOkOnClickListener) {
 			// TODO Auto-generated method stub
 			AlertDialog.Builder builder = new Builder(MainActivity.this);
 			builder.setMessage(msg);
-		    builder.setTitle(title);
-			builder.setPositiveButton("确认",mOkOnClickListener);
-			builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-				   @Override
-				   public void onClick(DialogInterface dialog, int which) {
-					   dialog.dismiss();
-				   }
-			 });
-			 builder.create().show();
-		}   
-  
-    };   
+			builder.setTitle(title);
+			builder.setPositiveButton("确认", mOkOnClickListener);
+			builder.setNegativeButton("取消",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+			builder.create().show();
+		}
 
-	private Thread myThread = new Thread(new Runnable() {   		  
-        @Override  
-        public void run() {   
-        	Message msg = new Message();   
-                msg.what = 1;   
-                MainActivity.this.myHandler.sendMessage(msg);   
-        	
-        }   
-  
-    });   
+	};
+
+	private Thread myThread = new Thread(new Runnable() {
+		@Override
+		public void run() {
+			Message msg = new Message();
+			msg.what = 1;
+			MainActivity.this.myHandler.sendMessage(msg);
+
+		}
+
+	});
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
@@ -190,8 +193,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
 				mKeyVerifyListener);
 
-    	
-		
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentHome = new FragmentHomePage();
@@ -210,14 +211,14 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		listCategoryP = new ArrayList<Category>();
 		listCategoryNameP = new ArrayList<String>();
 		listChildCategoryP = new ArrayList<List<Category>>();
-		listChildCategory =  new ArrayList<List<Category>>();
+		listChildCategory = new ArrayList<List<Category>>();
 		mContext = this;
 		initChangeEvent();
 
 		MainActivity.getAreaList(MainActivity.this, application.cityid);
 		MainActivity.getCategoryData(MainActivity.this, "0");
-		MainActivity.getCategoryDataP(MainActivity.this,"1");
-		
+		MainActivity.getCategoryDataP(MainActivity.this, "1");
+
 		textVSearch = (TextView) findViewById(R.id.textViewSearchType);
 		textVSearch.setOnClickListener(new OnClickListener() {
 			@Override
@@ -227,20 +228,19 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				showPopupWindow(x, y);
 			}
 		});
-		
-		 this.findViewById(R.id.imageViewSaoyisao).setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				//Toast.makeText(MainActivity.this, "功能开发中……", Toast.LENGTH_SHORT); 
-			
-			}
-			 
-		 });
+		this.findViewById(R.id.imageViewSaoyisao).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						startActivity(new Intent(MainActivity.this,
+								CaptureActivity.class));
+					}
+				});
 		getCityNameByLoc();
 		checkUpdate();
-	//	myThread.start();   
+		// myThread.start();
 
 	}
 
@@ -249,12 +249,12 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		super.onResume();
 		editRearch.setText("");
 	}
+
 	@Override
 	public void onStart() {
 		super.onStart();
-		
+
 	}
-	
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -388,7 +388,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-	
+
 		if (isChecked) {
 			switch (buttonView.getId()) {
 			case R.id.radio_buttonHome: {
@@ -466,19 +466,20 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 *            ---城市id
 	 */
 	public static void getAreaList(Context context, String id) {
-		        AreaDao areaDao = new AreaDao(context);
-		        listArea.clear();
-		        areaDao.startReadableDatabase(false);
-		        List<Area> list = areaDao.
-		        		rawQuery("select * from area where Parent = ?",new String[]{id},Area.class);
-		        areaDao.closeDatabase(false);
-		        if(list != null){
-		        	listArea.addAll(list);
-		        	listAreaName.clear();
-		        	for(Area a:listArea){
-			    	listAreaName.add(a.getName());
-		        	}
-		        }	
+		AreaDao areaDao = new AreaDao(context);
+		listArea.clear();
+		areaDao.startReadableDatabase(false);
+		List<Area> list = areaDao.rawQuery(
+				"select * from area where Parent = ?", new String[] { id },
+				Area.class);
+		areaDao.closeDatabase(false);
+		if (list != null) {
+			listArea.addAll(list);
+			listAreaName.clear();
+			for (Area a : listArea) {
+				listAreaName.add(a.getName());
+			}
+		}
 	}
 
 	/**
@@ -490,33 +491,36 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 *            0 为商家 1为个人
 	 */
 	public static void getCategoryData(Context context, String id) {
-						listCategory.clear();
-						CategoryDao categoryDao = new CategoryDao(context);
-						categoryDao.startReadableDatabase(false);
-						//List<Category> list = categoryDao.rawQuery("select * from category where Type = ?", new String[]{"0"}, Category.class);
-						List<Category> list = categoryDao.queryList("Type = ?", new String[]{"0"});
-						categoryDao.closeDatabase(false);
-						if(list != null ){
-							Log.e("company","-----"+list.size());
-						listCategoryName.clear();
-						listChildCategory.clear();
-						for(Category c: list){
-							//如果是二级分类
-							if(c.getParent().equals("0")){
-								//加入二级分类表
-								listCategory.add(c);
-								listCategoryName.add(c.getName());
-								//获取子项
-								List<Category> listc = new ArrayList<Category>();
-								for(Category ca: list){
-									if(ca.getParent().equals(c.getId())){
-										listc.add(ca);
-									}
-								}
-								listChildCategory.add(listc);	
-							}
+		listCategory.clear();
+		CategoryDao categoryDao = new CategoryDao(context);
+		categoryDao.startReadableDatabase(false);
+		// List<Category> list =
+		// categoryDao.rawQuery("select * from category where Type = ?", new
+		// String[]{"0"}, Category.class);
+		List<Category> list = categoryDao.queryList("Type = ?",
+				new String[] { "0" });
+		categoryDao.closeDatabase(false);
+		if (list != null) {
+			Log.e("company", "-----" + list.size());
+			listCategoryName.clear();
+			listChildCategory.clear();
+			for (Category c : list) {
+				// 如果是二级分类
+				if (c.getParent().equals("0")) {
+					// 加入二级分类表
+					listCategory.add(c);
+					listCategoryName.add(c.getName());
+					// 获取子项
+					List<Category> listc = new ArrayList<Category>();
+					for (Category ca : list) {
+						if (ca.getParent().equals(c.getId())) {
+							listc.add(ca);
 						}
-						}
+					}
+					listChildCategory.add(listc);
+				}
+			}
+		}
 	}
 
 	/**
@@ -527,40 +531,41 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 * @param type
 	 *            0 为商家 1为个人
 	 */
-	public static  void getCategoryDataP(Context context, String id) {
-						listCategoryP.clear();
-						CategoryDao categoryDao = new CategoryDao(context);
-						categoryDao.startReadableDatabase(false);
-						//List<Category> list = categoryDao.rawQuery("select * from category where Type =?", new String[]{"1"}, Category.class);
-						List<Category> list = categoryDao.queryList("Type = ?", new String[]{"1"});
-						categoryDao.closeDatabase(false);
-						if(list != null ){
-							Log.e("person","-----"+list.size());
-							listCategoryNameP.clear();
-							listChildCategoryP.clear();
-							for(Category c: list){
-							//如果是二级分类
-								if(c.getParent().equals("0")){
-								//加入二级分类表
-									listCategoryP.add(c);
-									listCategoryNameP.add(c.getName());
-									//获取子项
-									List<Category> listc = new ArrayList<Category>();
-									for(Category ca: list){
-									if(ca.getParent().equals(c.getId())){
-										listc.add(ca);
-									}
-								}
-								listChildCategoryP.add(listc);	
-								Log.e("person","-----"+listc.size());
-							}
+	public static void getCategoryDataP(Context context, String id) {
+		listCategoryP.clear();
+		CategoryDao categoryDao = new CategoryDao(context);
+		categoryDao.startReadableDatabase(false);
+		// List<Category> list =
+		// categoryDao.rawQuery("select * from category where Type =?", new
+		// String[]{"1"}, Category.class);
+		List<Category> list = categoryDao.queryList("Type = ?",
+				new String[] { "1" });
+		categoryDao.closeDatabase(false);
+		if (list != null) {
+			Log.e("person", "-----" + list.size());
+			listCategoryNameP.clear();
+			listChildCategoryP.clear();
+			for (Category c : list) {
+				// 如果是二级分类
+				if (c.getParent().equals("0")) {
+					// 加入二级分类表
+					listCategoryP.add(c);
+					listCategoryNameP.add(c.getName());
+					// 获取子项
+					List<Category> listc = new ArrayList<Category>();
+					for (Category ca : list) {
+						if (ca.getParent().equals(c.getId())) {
+							listc.add(ca);
 						}
-						}
-					
+					}
+					listChildCategoryP.add(listc);
+					Log.e("person", "-----" + listc.size());
+				}
+			}
+		}
+
 	}
-	
-	
-	
+
 	public void showPopupWindow(int x, int y) {
 		layout = (LinearLayout) LayoutInflater.from(MainActivity.this).inflate(
 				R.layout.popdialog, null);
@@ -739,13 +744,15 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		@Override
 		public void onVerifySucc() {
 			// TODO Auto-generated method stub
-			//Toast.makeText(MainActivity.this, "  ", Toast.LENGTH_LONG).show();
+			// Toast.makeText(MainActivity.this, "  ",
+			// Toast.LENGTH_LONG).show();
 		}
 
 		@Override
 		public void onVerifyFailed(int arg0, String arg1) {
 			// TODO Auto-generated method stub
-			Toast.makeText(MainActivity.this, "校验失败，无法提供导航功能！", Toast.LENGTH_LONG).show();
+			Toast.makeText(MainActivity.this, "校验失败，无法提供导航功能！",
+					Toast.LENGTH_LONG).show();
 		}
 	};
 
@@ -757,7 +764,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		return null;
 	}
 
-	private String getCityNameByLoc(){
+	private String getCityNameByLoc() {
 		MyLocationListener myListener = new MyLocationListener();
 		mLocationClient = new LocationClient(MainActivity.this); // 声明LocationClient类
 		mLocationClient.registerLocationListener(myListener); // 注册监听函数
@@ -769,105 +776,111 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		option.disableCache(true);// 禁止启用缓存定位
 		mLocationClient.setLocOption(option);
 		mLocationClient.start();
-		
+
 		return null;
-		
+
 	}
+
 	// 民生网点的定位牵涉到定位后选择范围，所以定位之后会根据所选择的范围来显示覆盖物（定位接口）
-		class MyLocationListener implements BDLocationListener {
-			@Override
-			// 定位获取经纬度
-			public void onReceiveLocation(BDLocation location) {
-				Log.e("xxxx", "-------------------开始定位");
-				if (location == null)
-					return;
-				
-				mCityName = location.getCity();
-				if(mCityName == null){
-					mLocationClient.stop();
-					return;
-				}
-				String showCityName = mCityName.substring(0, 2);
-				if(showCityName.equals(textViewArea.getText().toString().substring(0, 2))){
-					mLocationClient.stop();
-					return;
-				}
-				Log.e("fragmentmap", "-------------------所在城市："+showCityName); 
-				if(mCityName != null ){
-					mLocationClient.stop();
-					MainActivity.this.showDialog("位置提醒", "当前定位到您所在的城市是"+mCityName+",是否切换城市？", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							showToast("正在切换……");
-							application.cityName=mCityName;
-							new AreaBll().getAreaIdByAreaName(MainActivity.this, mCityName.substring(0, 2), 
-									new  ZzStringHttpResponseListener(){
+	class MyLocationListener implements BDLocationListener {
+		@Override
+		// 定位获取经纬度
+		public void onReceiveLocation(BDLocation location) {
+			Log.e("xxxx", "-------------------开始定位");
+			if (location == null)
+				return;
 
-										@Override
-										public void onSuccess(int statusCode,
-												String content) {
-											// TODO Auto-generated method stub
-											if(content == null)
-												return;
-											application.cityid = content;
-											textViewArea.setText(mCityName.substring(0, 2));
-											Editor editor = abSharedPreferences.edit();
-											editor.putString(Constant.CITYID, content);
-											editor.putString(Constant.CITYNAME, mCityName.substring(0, 2));
-											editor.commit();
-											newFragmentHome.getData();
-											
-										}
+			mCityName = location.getCity();
+			if (mCityName == null) {
+				mLocationClient.stop();
+				return;
+			}
+			String showCityName = mCityName.substring(0, 2);
+			if (showCityName.equals(textViewArea.getText().toString()
+					.substring(0, 2))) {
+				mLocationClient.stop();
+				return;
+			}
+			Log.e("fragmentmap", "-------------------所在城市：" + showCityName);
+			if (mCityName != null) {
+				mLocationClient.stop();
+				MainActivity.this.showDialog("位置提醒", "当前定位到您所在的城市是" + mCityName
+						+ ",是否切换城市？", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						showToast("正在切换……");
+						application.cityName = mCityName;
+						new AreaBll().getAreaIdByAreaName(MainActivity.this,
+								mCityName.substring(0, 2),
+								new ZzStringHttpResponseListener() {
 
-										@Override
-										public void onStart() {
-											// TODO Auto-generated method stub
-											
-										}
+									@Override
+									public void onSuccess(int statusCode,
+											String content) {
+										// TODO Auto-generated method stub
+										if (content == null)
+											return;
+										application.cityid = content;
+										textViewArea.setText(mCityName
+												.substring(0, 2));
+										Editor editor = abSharedPreferences
+												.edit();
+										editor.putString(Constant.CITYID,
+												content);
+										editor.putString(Constant.CITYNAME,
+												mCityName.substring(0, 2));
+										editor.commit();
+										newFragmentHome.getData();
 
-										@Override
-										public void onFailure(int statusCode,
-												String content, Throwable error) {
-											// TODO Auto-generated method stub
-											
-										}
+									}
 
-										@Override
-										public void onErrorData(
-												String status_description) {
-											// TODO Auto-generated method stub
-											
-										}
+									@Override
+									public void onStart() {
+										// TODO Auto-generated method stub
 
-										@Override
-										public void onFinish() {
-											// TODO Auto-generated method stub
-											
-										}
-								
-							});
-						}
+									}
 
-					});
-            	}
-				
-				
-				
-				}
+									@Override
+									public void onFailure(int statusCode,
+											String content, Throwable error) {
+										// TODO Auto-generated method stub
 
-			// 获得搜索点
-			@Override
-			public void onReceivePoi(BDLocation poiLocation) {
+									}
 
+									@Override
+									public void onErrorData(
+											String status_description) {
+										// TODO Auto-generated method stub
+
+									}
+
+									@Override
+									public void onFinish() {
+										// TODO Auto-generated method stub
+
+									}
+
+								});
+					}
+
+				});
 			}
 
 		}
-		
+
+		// 获得搜索点
 		@Override
-		public void finish() {
-			super.finish();
-			overridePendingTransition(0, 0);
+		public void onReceivePoi(BDLocation poiLocation) {
+
 		}
-		
+
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		overridePendingTransition(0, 0);
+	}
+
 }
