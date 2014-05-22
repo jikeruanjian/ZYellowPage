@@ -40,10 +40,10 @@ public class HotKeyWordBll {
 						}.getType());
 
 						HotKeyWorkDao hotKeyWordDao = new HotKeyWorkDao(context);
-				hotKeyWordDao.startWritableDatabase(true);
+				hotKeyWordDao.startWritableDatabase(false);
 				hotKeyWordDao.deleteAll();
 				hotKeyWordDao.insertList(mKeyWord, true);
-				hotKeyWordDao.closeDatabase(true);
+				hotKeyWordDao.closeDatabase(false);
 				respListener.onSuccess(statusCode, "更新成功");
 			}
 

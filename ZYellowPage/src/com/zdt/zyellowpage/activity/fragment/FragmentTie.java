@@ -143,7 +143,7 @@ public class FragmentTie extends Fragment {
 							tvTieTitle.setText(localList.get(0).getTitle());
 						}
 						if ("5".equals(tieType) && loadCount == 0) {
-							mActivity.showToast(content);
+						//	mActivity.showToast(content);
 						}
 					}
 

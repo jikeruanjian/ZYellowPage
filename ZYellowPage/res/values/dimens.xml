@@ -24,6 +24,7 @@
     <dimen name="main_text_size_h1">20.0sp</dimen>
     <dimen name="main_text_size_h2">18.0sp</dimen>
     <dimen name="main_text_size_h3">16.0sp</dimen>
+    <dimen name="main_text_size_h4">14.0sp</dimen>
     <dimen name="normal_padding_length">10.0dip</dimen>
     <dimen name="no_result_padding_length">50.0dip</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>

@@ -4,16 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,22 +29,31 @@ import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.fragment.FragmentAllCompanyType;
 import com.zdt.zyellowpage.activity.fragment.FragmentAllPersonType;
-import com.zdt.zyellowpage.global.MyApplication;
-
+import com.zdt.zyellowpage.activity.fragment.FragmentHomePage;
+import com.zdt.zyellowpage.activity.fragment.FragmentNearMap;
+import com.zdt.zyellowpage.activity.fragment.FragmentTie;
+import com.zdt.zyellowpage.activity.fragment.FragmentUser;
+import com.zdt.zyellowpage.dao.HotKeyWorkDao;
+import com.zdt.zyellowpage.model.Area;
+import com.zdt.zyellowpage.model.HotKeyWord;
 
 public class AllTypeActivity extends AbActivity{
 	private GridView gridview;
 	private AbTitleBar mAbTitleBar = null;
 	private String[] commonType;
-	private AbSlidingTabView mAbSlidingTabView;
-	private MyApplication application;
+
+	RadioButton radioBtn;
+	RadioButton radioBtnP;
+	
+	private FragmentManager fragmentManager;
+	private FragmentTransaction fragmentTransaction;
+	private FragmentAllCompanyType newFragmentCompany = null;
+	private FragmentAllPersonType newFragmentPerson = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	
 		 super.onCreate(savedInstanceState);  
 		 setAbContentView(R.layout.all_class_activity);
-	     
-	     application = (MyApplication) abApplication;
 	    mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText("更多");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
@@ -49,28 +64,19 @@ public class AllTypeActivity extends AbActivity{
 		
 		
 	     gridview = (GridView) findViewById(R.id.commonClassGridView);  
-	     mAbSlidingTabView = (AbSlidingTabView) this.findViewById(R.id.mAllTypeAbSlidingTabView);
-	     // 缓存数量
-	     mAbSlidingTabView.getViewPager().setOffscreenPageLimit(2);
-	     FragmentAllCompanyType page1 = new FragmentAllCompanyType();
-	     FragmentAllPersonType page2 = new FragmentAllPersonType();	
-		 List<Fragment> mFragments = new ArrayList<Fragment>();
-		 mFragments.add(page1);
-		 mFragments.add(page2);
-		 List<String> tabTexts = new ArrayList<String>();
-		 tabTexts.add("商家人类");
-		 tabTexts.add("个人分类");
-
-		 mAbSlidingTabView.setTabColor(R.color.propertyvalue);
-		 mAbSlidingTabView.setTabTextSize(14);
-		 mAbSlidingTabView.setTabSelectColor(getResources().getColor(
-					R.color.orange));
-
-			mAbSlidingTabView.addItemViews(tabTexts, mFragments);
-
-			mAbSlidingTabView.setTabLayoutBackground(R.drawable.slide_top);	
-	       initCommonClassGridView();
 	     
+	     newFragmentCompany = new FragmentAllCompanyType();
+	     newFragmentPerson = new FragmentAllPersonType();	
+	     
+	     fragmentManager = this.getSupportFragmentManager();
+		 fragmentTransaction = fragmentManager.beginTransaction();
+		 fragmentTransaction.add(R.id.fragmentCompanyType, newFragmentCompany, "Company");
+		 fragmentTransaction.add(R.id.fragmentPersonType, newFragmentPerson, "Person");
+		 fragmentTransaction.commit();
+		 this.findViewById(R.id.fragmentPersonType).setVisibility(View.GONE);
+		 this.findViewById(R.id.fragmentCompanyType).setVisibility(View.VISIBLE);
+	     initCommonClassGridView();
+	     initRadioBtn();
 	  }  
 	    
 	/**
@@ -78,21 +84,25 @@ public class AllTypeActivity extends AbActivity{
 	 */
 	private void initCommonClassGridView(){
 		 //生成动态数组，并且转入数据   
-		 commonType = new String[]{"电影院","云南菜","火锅","小吃简餐","面包甜点","KTV",
-				  "烧烤","西餐","川菜","经济型酒店","四星级酒店","全部"};
-	      ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();  
-	      for(int i=0;i<12;i++)  
+		HotKeyWorkDao hotKeyWorkDao = new HotKeyWorkDao(AllTypeActivity.this);
+		hotKeyWorkDao.startReadableDatabase(false);
+		List<HotKeyWord> list=  hotKeyWorkDao.queryList();
+		if(list == null){
+			return;
+		}
+		commonType = new String[list.size()];
+		hotKeyWorkDao.closeDatabase(false);
+		for(int i = 0 ;i<list.size();i++){
+			commonType[i] = list.get(i).getName();
+		}
+	     ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();  
+	      for(int i=0;i<list.size();i++)  
 	      {  
 	        HashMap<String, Object> map = new HashMap<String, Object>();  
 	        map.put("ItemImage", R.drawable.layout_pressimg);//添加图像资源的ID   
 	        map.put("ItemText", commonType[i]);//按序号做ItemText   
 	        lstImageItem.add(map);  
 	      }  
-	      //生成适配器的ImageItem <====> 动态数组的元素，两者一一对应   
-	     // SimpleAdapter saImageItems = new SimpleAdapter(this, lstImageItem,R.layout.gridview_item,
-	     // new String[] {"ItemImage","ItemText"}, new int[] {R.id.ItemImage,R.id.ItemText});  
-	      
-	       
 	      //添加并且显示   
 	      gridview.setAdapter(new CommonAdapter());  
 	      //添加消息处理   
@@ -106,7 +116,11 @@ public class AllTypeActivity extends AbActivity{
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			// TODO Auto-generated method stub
-			Toast.makeText(AllTypeActivity.this, commonType[arg2], Toast.LENGTH_SHORT).show();  
+			//Toast.makeText(AllTypeActivity.this, commonType[arg2], Toast.LENGTH_SHORT).show();  
+			Intent intent = new Intent(AllTypeActivity.this, PopBusinessListActivity.class);
+			intent.putExtra("Type", commonType[arg2]);
+			intent.putExtra("TypeId", commonType[arg2]);
+			AllTypeActivity.this.startActivity(intent);
 		}  
 
 	}
@@ -141,7 +155,29 @@ public class AllTypeActivity extends AbActivity{
 			convertView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, 100));
 			convertView.setPadding(-10, -10, -10, -10);
 			return convertView ;
-		}
-		  
+		}	  
 	  }
+	  
+	  private void initRadioBtn(){
+		 radioBtn =  ((RadioButton) this.findViewById(R.id.companyRadio_button));
+		 radioBtn.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
+				   	AllTypeActivity.this.findViewById(R.id.fragmentPersonType).setVisibility(View.VISIBLE);
+		        	AllTypeActivity.this.findViewById(R.id.fragmentCompanyType).setVisibility(View.GONE);
+				}	
+			});
+		 radioBtnP = ((RadioButton) this.findViewById(R.id.personRadio_button));
+		 radioBtnP.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+		        @Override
+		       public void onCheckedChanged(CompoundButton buttonView,
+		 		boolean isChecked) {
+		        	AllTypeActivity.this.findViewById(R.id.fragmentCompanyType).setVisibility(View.VISIBLE);
+					AllTypeActivity.this.findViewById(R.id.fragmentPersonType).setVisibility(View.GONE);	
+			
+		      }
+		
+	      });
+	 }
 }

@@ -10,27 +10,26 @@
         android:layout_height="30dp"
         android:background="@color/gray_white"
         android:gravity="center_vertical"
-        android:text="常用"
+        android:text="  常用"
         android:textColor="@color/propertyname" />
 
     <GridView
         android:id="@+id/commonClassGridView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="175dp"
         android:background="#FFFFFF"
         android:horizontalSpacing="10dp"
         android:numColumns="3"
         android:verticalSpacing="10dp" >
-
     </GridView>
 
    <TextView
        android:id="@+id/textView2"
        android:layout_width="match_parent"
-       android:layout_height="30dp"
+       android:layout_height="15dp"
        android:background="@color/gray_white"
        android:gravity="center_vertical"
-       android:text="全部"
+       android:text=" "
        android:textColor="@color/propertyname" />
 
 <RadioGroup
@@ -40,8 +39,8 @@
     android:layout_alignParentBottom="true"
     android:layout_alignParentEnd="true"
     android:layout_alignParentLeft="true"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:layout_marginTop="5dp"
     android:background="@color/orange_background"
     android:orientation="horizontal" >
@@ -53,9 +52,11 @@
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
-            android:drawableTop="@drawable/type_radio_bg"
-            android:text="首页"
-            android:textColor="@color/orange_background" />
+            android:background="@drawable/type_radio_bg"
+            android:checked="true"
+            android:text="商企分类"
+            android:textColor="@color/black"
+            android:textSize="@dimen/main_text_size_h4" />
 
         <RadioButton
             android:id="@+id/personRadio_button"
@@ -64,22 +65,36 @@
             android:layout_marginBottom="2dp"
             android:layout_marginRight="2dp"
             android:layout_marginTop="2dp"
-              android:drawableTop="@drawable/type_radio_bg"
-            android:text="附近"
-            android:textColor="@color/orange_background" />
+            android:background="@drawable/type_radio_bg"
+            android:text="个人分类"
+            android:textColor="@color/black"
+            android:textSize="@dimen/main_text_size_h4"/>
         
     </RadioGroup>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
 
-    <com.ab.view.sliding.AbSlidingTabView
-            android:id="@+id/mAllTypeAbSlidingTabView"
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp" >
+
+        <LinearLayout
+            android:id="@+id/fragmentCompanyType"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-     </com.ab.view.sliding.AbSlidingTabView>
-
-    </LinearLayout>
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:visibility="gone" >
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/fragmentPersonType"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:visibility="gone" >
+        </LinearLayout>
+</RelativeLayout>
 
 </LinearLayout>

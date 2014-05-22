@@ -292,8 +292,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 
 					@Override
 					public void onErrorData(String status_description) {
-						if (listB.size() <= 0)
-							mActivity.showToast(status_description);
+						if (listB.size() <= 0){}
+							//mActivity.showToast(status_description);
 					}
 
 					@Override
@@ -361,8 +361,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 
 					@Override
 					public void onErrorData(String status_description) {
-						if (listP.size() <= 0)
-							mActivity.showToast(status_description);
+						if (listP.size() <= 0){}
+							//mActivity.showToast(status_description);
 					}
 
 					@Override
@@ -380,7 +380,6 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 		switch (v.getId()) {
 		// 美食
 		case R.id.imageButtonFood:
-
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "美食");
 			intent.putExtra("TypeId", "美食");

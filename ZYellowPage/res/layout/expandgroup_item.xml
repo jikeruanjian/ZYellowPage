@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/groupNametextView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/groupNameImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/changecity_right" />
+
+</LinearLayout>

@@ -6,10 +6,12 @@ import java.util.List;
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.MainActivity;
+import com.zdt.zyellowpage.activity.PopBusinessListActivity;
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Category;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +24,8 @@ import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,7 +85,7 @@ public class FragmentAllCompanyType extends Fragment{
                 		mActivity );
                 textView.setLayoutParams(lp);
                 textView.setGravity(Gravity.CENTER_VERTICAL);
-                textView.setPadding(100, 0, 0, 0);
+                textView.setPadding(50, 0, 0, 0);
                 textView.setTextSize(14);
                 textView.setTextColor(R.color.propertyvalue);
                 return textView;
@@ -135,7 +139,7 @@ public class FragmentAllCompanyType extends Fragment{
             public View getGroupView(int groupPosition, boolean isExpanded,
                     View convertView, ViewGroup parent) {
                 // TODO Auto-generated method stub
-                LinearLayout ll = new LinearLayout(
+               /* LinearLayout ll = new LinearLayout(
                 		mActivity);
                 ll.setOrientation(0);
                
@@ -143,8 +147,21 @@ public class FragmentAllCompanyType extends Fragment{
                 textView.setTextColor(Color.BLACK);
                 textView.setText(getGroup(groupPosition).toString());
                 ll.addView(textView);
+    */
+                LinearLayout parentLayout=(LinearLayout) View.inflate(mActivity, R.layout.expandgroup_item, null);
+                TextView parentTextView=(TextView) parentLayout.findViewById(R.id.groupNametextView);
+                parentTextView.setText(getGroup(groupPosition).toString());
+                parentTextView.setTextColor(Color.BLACK);
+                ImageView parentImageViw=(ImageView) parentLayout.findViewById(R.id.groupNameImageView);
+                if(isExpanded){
+                    parentImageViw.setBackgroundResource(R.drawable.changecity);
+                }else{
+                    parentImageViw.setBackgroundResource(R.drawable.changecity_right);
+                } 
 
-                return ll;
+
+
+                return parentLayout;
             }
 
             @Override
@@ -184,12 +201,28 @@ public class FragmentAllCompanyType extends Fragment{
 
                 Toast.makeText(
                 		mActivity,
-                        "你点击了" + adapter.getChild(groupPosition, childPosition),
+                        "你点击了" + MainActivity.listChildCategory.get(groupPosition).get(childPosition).getName(),
                         Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(mActivity, PopBusinessListActivity.class);
+    			intent.putExtra("Type", adapter.getChild(groupPosition, childPosition).toString());
+    			intent.putExtra("TypeId", "list-"+
+    					MainActivity.listChildCategory.get(groupPosition).get(childPosition).getId());
+    			mActivity.startActivity(intent);
                 return false;
             }
         });
+        
+        expandableListView.setOnGroupExpandListener(new OnGroupExpandListener() {  
+            @Override  
+            public void onGroupExpand(int groupPosition) {  
+                for (int i = 0; i < adapter.getGroupCount(); i++) {  
+                    if (groupPosition != i) {  
+                    	expandableListView.collapseGroup(i);  
+                    }  
+                }  
+            }  
+        });  
+
 
 	}
 }

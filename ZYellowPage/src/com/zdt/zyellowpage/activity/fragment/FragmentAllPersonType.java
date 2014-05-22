@@ -8,10 +8,13 @@ import java.util.Map;
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.MainActivity;
+import com.zdt.zyellowpage.activity.PopBusinessListActivity;
+import com.zdt.zyellowpage.activity.PopPersonListActivity;
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Category;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +28,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -83,7 +87,7 @@ public class FragmentAllPersonType  extends Fragment{
                    		mActivity );
                    textView.setLayoutParams(lp);
                    textView.setGravity(Gravity.CENTER_VERTICAL);
-                   textView.setPadding(100, 0, 0, 0);
+                   textView.setPadding(50, 0, 0, 0);
                    textView.setTextSize(14);
                    textView.setTextColor(R.color.propertyvalue); 
                    return textView;
@@ -141,17 +145,25 @@ public class FragmentAllPersonType  extends Fragment{
             public View getGroupView(int groupPosition, boolean isExpanded,
                     View convertView, ViewGroup parent) {
                 // TODO Auto-generated method stub
-                LinearLayout ll = new LinearLayout(
-                		mActivity);
-                ll.setOrientation(0);
-               
-                TextView textView = getTextView();
-                textView.setTextColor(Color.BLACK);
-                textView.setText(getGroup(groupPosition).toString());
-                ll.addView(textView);
-
-                return ll;
-            }
+            	 /* LinearLayout ll = new LinearLayout(
+        		mActivity);
+        ll.setOrientation(0);
+       
+        TextView textView = getTextView();
+        textView.setTextColor(Color.BLACK);
+        textView.setText(getGroup(groupPosition).toString());
+        ll.addView(textView);
+*/
+        LinearLayout parentLayout=(LinearLayout) View.inflate(mActivity, R.layout.expandgroup_item, null);
+        TextView parentTextView=(TextView) parentLayout.findViewById(R.id.groupNametextView);
+        parentTextView.setText(getGroup(groupPosition).toString());
+        parentTextView.setTextColor(Color.BLACK);
+        ImageView parentImageViw=(ImageView) parentLayout.findViewById(R.id.groupNameImageView);
+        if(!isExpanded){
+        	 parentImageViw.setBackgroundResource(R.drawable.changecity);
+        }
+        return parentLayout;
+        }
 
             @Override
             public View getChildView(int groupPosition, int childPosition,
@@ -160,7 +172,6 @@ public class FragmentAllPersonType  extends Fragment{
                 LinearLayout ll = new LinearLayout(
                 		mActivity );
                 ll.setOrientation(0);
-                
                 TextView textView = getTextView();
                 textView.setText(getChild(groupPosition, childPosition)
                         .toString());
@@ -188,14 +199,29 @@ public class FragmentAllPersonType  extends Fragment{
             public boolean onChildClick(ExpandableListView parent, View v,
                     int groupPosition, int childPosition, long id) {
 
-                Toast.makeText(
+            	Toast.makeText(
                 		mActivity,
-                        "你点击了" + adapter.getChild(groupPosition, childPosition),
+                        "你点击了" + MainActivity.listChildCategoryP.get(groupPosition).get(childPosition).getName(),
                         Toast.LENGTH_SHORT).show();
-
+            	Intent intent = new Intent(mActivity, PopPersonListActivity.class);
+    			intent.putExtra("Type", adapter.getChild(groupPosition, childPosition).toString());
+    			intent.putExtra("TypeId", "list-"+
+    					MainActivity.listChildCategoryP.get(groupPosition).get(childPosition).getId());
+    			mActivity.startActivity(intent);
                 return false;
             }
         });
+        
+        expandableListView.setOnGroupExpandListener(new OnGroupExpandListener() {  
+            @Override  
+            public void onGroupExpand(int groupPosition) {  
+                for (int i = 0; i < adapter.getGroupCount(); i++) {  
+                    if (groupPosition != i) {  
+                    	expandableListView.collapseGroup(i);  
+                    }  
+                }  
+            }  
+        });  
 
 	}
 	
