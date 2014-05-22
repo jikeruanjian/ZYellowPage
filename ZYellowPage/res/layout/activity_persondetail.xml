@@ -1,8 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layMain"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:visibility="gone" >
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -12,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -30,29 +32,30 @@
 
                 <TextView
                     android:id="@+id/personFullNametextView"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="名字"
-                    android:textSize="20sp" />
+                    android:textColor="@color/gray_black"
+                    android:textSize="@dimen/main_text_size_h2" />
 
                 <ImageView
                     android:id="@+id/codeTopRightimageView"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="right|center_vertical"
                     android:layout_margin="5dp"
                     android:src="@drawable/companycode" />
-
             </LinearLayout>
-		<ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/orange" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/orange" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,6 +66,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dip"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="20dip"
+                    android:layout_marginTop="8dip"
                     android:orientation="vertical" >
 
                     <LinearLayout
@@ -76,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:text="姓名："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_name"
@@ -84,8 +91,7 @@
                             android:layout_height="wrap_content"
                             android:text=" "
                             android:textColor="@color/propertyvalue"
-                            android:textSize="18sp" />
-
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -99,7 +105,7 @@
                             android:layout_height="wrap_content"
                             android:text="性别："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_sex"
@@ -107,8 +113,7 @@
                             android:layout_height="wrap_content"
                             android:text=" "
                             android:textColor="@color/propertyvalue"
-                            android:textSize="18sp" />
-
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -122,15 +127,15 @@
                             android:layout_height="wrap_content"
                             android:text="年龄："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_age"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -144,15 +149,15 @@
                             android:layout_height="wrap_content"
                             android:text="所在地："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -166,15 +171,15 @@
                             android:layout_height="wrap_content"
                             android:text="民族："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_mz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -188,15 +193,15 @@
                             android:layout_height="wrap_content"
                             android:text="电话："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_tel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -210,15 +215,15 @@
                             android:layout_height="wrap_content"
                             android:text="电子邮箱："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -232,15 +237,15 @@
                             android:layout_height="wrap_content"
                             android:text="编号："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -254,15 +259,15 @@
                             android:layout_height="wrap_content"
                             android:text="QQ："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_qq"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -276,15 +281,15 @@
                             android:layout_height="wrap_content"
                             android:text="学校："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_school"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -298,15 +303,15 @@
                             android:layout_height="wrap_content"
                             android:text="专业："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_zy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -320,15 +325,15 @@
                             android:layout_height="wrap_content"
                             android:text="行业："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_hy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -342,15 +347,15 @@
                             android:layout_height="wrap_content"
                             android:text="地址："
                             android:textColor="@color/propertyname"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/main_text_size_h3" />
 
                         <TextView
                             android:id="@+id/person_detail_dz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/propertyvalue"
                             android:text=" "
-                            android:textSize="18sp" />
+                            android:textColor="@color/propertyvalue"
+                            android:textSize="@dimen/main_text_size_h3" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -379,8 +384,8 @@
                             android:layout_weight="1.0"
                             android:gravity="center"
                             android:text="简介"
-                            android:textColor="#000000"
-                            android:textSize="20sp" />
+                            android:textColor="@color/gray_black"
+                            android:textSize="@dimen/main_text_size_h2" />
 
                         <TextView
                             android:id="@+id/textzizhi"
@@ -389,17 +394,19 @@
                             android:layout_weight="1.0"
                             android:gravity="center"
                             android:text="资质"
-                            android:textColor="#000000"
-                            android:textSize="20sp" />
-						<TextView
+                            android:textColor="@color/gray_black"
+                            android:textSize="@dimen/main_text_size_h2" />
+
+                        <TextView
                             android:id="@+id/texttechang"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:layout_weight="1.0"
                             android:gravity="center"
                             android:text="特长"
-                            android:textColor="#000000"
-                            android:textSize="20sp" />
+                            android:textColor="@color/gray_black"
+                            android:textSize="@dimen/main_text_size_h2" />
+
                         <TextView
                             android:id="@+id/textanli"
                             android:layout_width="fill_parent"
@@ -407,10 +414,8 @@
                             android:layout_weight="1.0"
                             android:gravity="center"
                             android:text="案例"
-                            android:textColor="#000000"
-                            android:textSize="20sp" />
-                        
-                        
+                            android:textColor="@color/gray_black"
+                            android:textSize="@dimen/main_text_size_h2" />
                     </LinearLayout>
 
                     <android.support.v4.view.ViewPager
