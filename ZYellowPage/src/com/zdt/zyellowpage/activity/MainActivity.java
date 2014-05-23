@@ -60,6 +60,7 @@ import com.zdt.zyellowpage.activity.fragment.FragmentHomePage;
 import com.zdt.zyellowpage.activity.fragment.FragmentNearMap;
 import com.zdt.zyellowpage.activity.fragment.FragmentTie;
 import com.zdt.zyellowpage.activity.fragment.FragmentUser;
+import com.zdt.zyellowpage.barcode.CaptureActivity;
 import com.zdt.zyellowpage.bll.AreaBll;
 import com.zdt.zyellowpage.bll.VersionBll;
 import com.zdt.zyellowpage.global.Constant;
@@ -221,9 +222,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						// Toast.makeText(MainActivity.this, "功能开发中……",
-						// Toast.LENGTH_SHORT);
+						startActivity(new Intent(MainActivity.this,
+								CaptureActivity.class));
 					}
 				});
 		getCityNameByLoc();
