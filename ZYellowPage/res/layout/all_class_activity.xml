@@ -23,27 +23,25 @@
         android:verticalSpacing="10dp" >
     </GridView>
 
-   <TextView
-       android:id="@+id/textView2"
-       android:layout_width="match_parent"
-       android:layout_height="15dp"
-       android:background="@color/gray_white"
-       android:gravity="center_vertical"
-       android:text=" "
-       android:textColor="@color/propertyname" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/gray_white"
+        android:gravity="center_vertical"
+        android:text=" "
+        android:textColor="@color/propertyname" />
 
-<RadioGroup
-    android:id="@+id/main_radio"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true"
-    android:layout_alignParentLeft="true"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="5dp"
-    android:background="@color/orange_background"
-    android:orientation="horizontal" >
+    <RadioGroup
+        android:id="@+id/main_radio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/orange_background"
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/companyRadio_button"
@@ -68,15 +66,14 @@
             android:background="@drawable/type_radio_bg"
             android:text="个人分类"
             android:textColor="@color/black"
-            android:textSize="@dimen/main_text_size_h2"/>
-        
+            android:textSize="@dimen/main_text_size_h2" />
     </RadioGroup>
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" >
 
         <LinearLayout
             android:id="@+id/fragmentCompanyType"
@@ -86,7 +83,7 @@
             android:scrollbars="vertical"
             android:visibility="gone" >
         </LinearLayout>
-        
+
         <LinearLayout
             android:id="@+id/fragmentPersonType"
             android:layout_width="fill_parent"
@@ -95,6 +92,6 @@
             android:scrollbars="vertical"
             android:visibility="gone" >
         </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

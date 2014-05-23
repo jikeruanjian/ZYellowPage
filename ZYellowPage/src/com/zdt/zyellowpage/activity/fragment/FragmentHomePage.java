@@ -10,17 +10,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
@@ -49,11 +46,11 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 	private AbActivity mActivity;
 	private DisplayUtil displayUtil;
 	private MyApplication application;
-	private User hotUser;
-
-	private TextView hotName;
-	private TextView hotConent;
-	private ImageView hotImage;
+	// private User hotUser;
+	//
+	// private TextView hotName;
+	// private TextView hotConent;
+	// private ImageView hotImage;
 	MyPopupWindow myPopupWindow;
 
 	private ListView mAbPullListViewB = null;
@@ -116,7 +113,6 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 		initPopBusinessView();
 		initPopPersonView();
 		getData();
-		// getLatestData();
 		initType(view);
 		return view;
 
@@ -292,8 +288,9 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 
 					@Override
 					public void onErrorData(String status_description) {
-						if (listB.size() <= 0){}
-							//mActivity.showToast(status_description);
+						if (listB.size() <= 0) {
+						}
+						// mActivity.showToast(status_description);
 					}
 
 					@Override
@@ -361,8 +358,9 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 
 					@Override
 					public void onErrorData(String status_description) {
-						if (listP.size() <= 0){}
-							//mActivity.showToast(status_description);
+						if (listP.size() <= 0) {
+						}
+						// mActivity.showToast(status_description);
 					}
 
 					@Override
@@ -386,7 +384,6 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonMovie:
-
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "旅游");
 			intent.putExtra("TypeId", "旅游");
@@ -399,7 +396,6 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonHotel:
-
 			intent = new Intent(mActivity, PopBusinessListActivity.class);
 			intent.putExtra("Type", "酒店");
 			intent.putExtra("TypeId", "酒店");
@@ -447,28 +443,26 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 		}
 	}
 
-	void showPopWindows() {
-		// Log.e("fragment", "-----点击了全部分类");
-		myPopupWindow = new MyPopupWindow(mActivity);
-		myPopupWindow.popupWindow.setWidth(mActivity.getWindowManager()
-				.getDefaultDisplay().getWidth() / 7 * 6);
-		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft, mActivity
-				.getWindowManager().getDefaultDisplay().getWidth() / 7 * 3, 0);
-		displayUtil
-				.setViewLayoutParamsL(myPopupWindow.listViewClassB, 0,
-						mActivity.getWindowManager().getDefaultDisplay()
-								.getHeight() / 5 * 3);
-		// displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
-		displayUtil
-				.setViewLayoutParamsL(myPopupWindow.listViewClassP, 0,
-						mActivity.getWindowManager().getDefaultDisplay()
-								.getHeight() / 5 * 3);
-		myPopupWindow.popupWindow
-				.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-		myPopupWindow.popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-	}
-	
-
+	// void showPopWindows() {
+	// // Log.e("fragment", "-----点击了全部分类");
+	// myPopupWindow = new MyPopupWindow(mActivity);
+	// myPopupWindow.popupWindow.setWidth(mActivity.getWindowManager()
+	// .getDefaultDisplay().getWidth() / 7 * 6);
+	// displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft, mActivity
+	// .getWindowManager().getDefaultDisplay().getWidth() / 7 * 3, 0);
+	// displayUtil
+	// .setViewLayoutParamsL(myPopupWindow.listViewClassB, 0,
+	// mActivity.getWindowManager().getDefaultDisplay()
+	// .getHeight() / 5 * 3);
+	// //
+	// displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,0,mActivity.getWindowManager().getDefaultDisplay().getHeight()/5*3);
+	// displayUtil
+	// .setViewLayoutParamsL(myPopupWindow.listViewClassP, 0,
+	// mActivity.getWindowManager().getDefaultDisplay()
+	// .getHeight() / 5 * 3);
+	// myPopupWindow.popupWindow
+	// .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+	// myPopupWindow.popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+	// }
 
 }

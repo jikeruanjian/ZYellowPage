@@ -562,9 +562,10 @@ public class BusinessDetailActivity extends AbActivity {
 				LayoutParams.WRAP_CONTENT));
 		lay.setOrientation(LinearLayout.VERTICAL);
 		WebView webView = new WebView(this);
+		webView.setFocusable(false);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
 		webView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT));
+				LayoutParams.WRAP_CONTENT));
 		if (AbStrUtil.isEmpty(text)) {
 			text = "用户暂时还未添加该项数据";
 		}

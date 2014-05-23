@@ -20,9 +20,11 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
@@ -30,6 +32,7 @@ import com.ab.global.AbConstant;
 import com.ab.http.AbBinaryHttpResponseListener;
 import com.ab.http.AbHttpUtil;
 import com.ab.util.AbImageUtil;
+import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
@@ -440,16 +443,21 @@ public class PersonDetailActivity extends AbActivity {
 	}
 
 	public View addTextByText(String text) {
-		// TextView tv = new TextView(this);
-		// tv.setText(text);
-		// tv.setBackgroundColor(color.white);
-		// tv.setGravity(1);
-
+		LinearLayout lay = new LinearLayout(this);
+		lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT));
+		lay.setOrientation(LinearLayout.VERTICAL);
 		WebView webView = new WebView(this);
+		webView.setFocusable(false);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
-		// Log.i("PersonDetailActivity", text);
+		webView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT));
+		if (AbStrUtil.isEmpty(text)) {
+			text = "用户暂时还未添加该项数据";
+		}
 		webView.loadDataWithBaseURL(null, text, "text/html", "utf-8", null);
-		return webView;
+		lay.addView(webView);
+		return lay;
 	}
 
 	/**

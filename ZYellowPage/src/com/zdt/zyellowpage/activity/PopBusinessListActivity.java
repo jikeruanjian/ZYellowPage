@@ -32,6 +32,7 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 import com.zdt.zyellowpage.util.ImageListAdapterC;
+
 public class PopBusinessListActivity extends AbActivity {
 
 	private List<Map<String, Object>> list = null;
@@ -49,8 +50,8 @@ public class PopBusinessListActivity extends AbActivity {
 	private LinearLayout layout;
 	private ListView listView;
 	private MyApplication application;
-	private String type="商家";
-	private String typeId="商家";
+	private String type = "商家";
+	private String typeId = "商家";
 	private String[] KeyWords;
 	private String[] Areas;
 	private String[] NewOrPops;
@@ -60,6 +61,7 @@ public class PopBusinessListActivity extends AbActivity {
 	private String condition;
 	MyPopupWindowB myPopupWindow;
 	AbTitleBar mAbTitleBar;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,69 +77,69 @@ public class PopBusinessListActivity extends AbActivity {
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
-		//mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		cityId = application.cityid;
-		keyId = typeId;//"list-hot";
-		myPopupWindow = new MyPopupWindowB(PopBusinessListActivity.this,"0");
+		keyId = typeId;// "list-hot";
+		myPopupWindow = new MyPopupWindowB(PopBusinessListActivity.this, "0");
 		initSpinner();
 
 		list = new ArrayList<Map<String, Object>>();
 		newList = new ArrayList<Map<String, Object>>();
 		initPopBusinessView();
-		
+
 	}
 
 	/**
 	 * 初始化三个下拉框
 	 */
 	void initSpinner() {
-		
-		NewOrPops = new String[]{ "热门", "最新" };
-		typeTextView = (TextView)this.findViewById(R.id.spinnerKeyWord);
-		typeTextView.setOnClickListener(new OnClickListener(){
+
+		NewOrPops = new String[] { "热门", "最新" };
+		typeTextView = (TextView) this.findViewById(R.id.spinnerKeyWord);
+		typeTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
-				int x = typeTextView.getLeft()+10;
-				words =  MainActivity.listCategoryName.toArray(new String[0]);
+				int x = typeTextView.getLeft() + 10;
+				// words = MainActivity.listCategoryName.toArray(new String[0]);
 				wordsTextView = typeTextView;
 				condition = "1";
 				showPopupWindowT(x, y);
-			
+
 			}
-			
+
 		});
-		areaTextView = (TextView)this.findViewById(R.id.spinnerArea);
-		areaTextView.setOnClickListener(new OnClickListener(){
+		areaTextView = (TextView) this.findViewById(R.id.spinnerArea);
+		areaTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
-				int x = typeTextView.getLeft()-10;
-				words =  MainActivity.listAreaName.toArray(new String[0]);
+				int x = typeTextView.getLeft() - 10;
+				// words = MainActivity.listAreaName.toArray(new String[0]);
 				wordsTextView = areaTextView;
 				condition = "2";
 				showPopupWindow(x, y);
 			}
-			
+
 		});
-		
-		newOrPoTextView = (TextView)this.findViewById(R.id.spinnerNewOrPop);
-		newOrPoTextView.setOnClickListener(new OnClickListener(){
+
+		newOrPoTextView = (TextView) this.findViewById(R.id.spinnerNewOrPop);
+		newOrPoTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
-				int x = typeTextView.getLeft()-10;
+				int x = typeTextView.getLeft() - 10;
 				words = NewOrPops;
 				wordsTextView = newOrPoTextView;
 				condition = "3";
 				showPopupWindow(x, y);
 			}
 		});
-		
+
 		displayUtil = DisplayUtil.getInstance(this);
 		DisplayMetrics metric = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -147,13 +149,12 @@ public class PopBusinessListActivity extends AbActivity {
 		displayUtil.setViewLayoutParamsByX(newOrPoTextView, 3, width);
 	}
 
-
 	void getData(int i) {
 		UserBll bll = new UserBll();
 
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(i, 10,
-				cityId,keyId);//application.cityid, "list-hot"
-		bll.getListCompany(PopBusinessListActivity.this, companyParams,null,
+				cityId, keyId);// application.cityid, "list-hot"
+		bll.getListCompany(PopBusinessListActivity.this, companyParams, null,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
@@ -163,7 +164,7 @@ public class PopBusinessListActivity extends AbActivity {
 							showToast("没有更多数据！");
 							return;
 						}
-						
+
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
@@ -175,7 +176,7 @@ public class PopBusinessListActivity extends AbActivity {
 							map.put("itemsText", u.getKeyword());
 							newList.add(map);
 						}
-						
+
 						Log.e("xxxx11", "-----" + newList.size());
 					}
 
@@ -206,14 +207,12 @@ public class PopBusinessListActivity extends AbActivity {
 						int len = newList.size();
 						newList.clear();
 						removeProgressDialog();
-						if(isRefresh){
+						if (isRefresh) {
 							mAbPullListView.stopRefresh();
-						}
-						else{
-							if(len == 10){
+						} else {
+							if (len == 10) {
 								mAbPullListView.stopLoadMore(true);
-							}
-							else{
+							} else {
 								mAbPullListView.stopLoadMore(false);
 							}
 						}
@@ -236,7 +235,7 @@ public class PopBusinessListActivity extends AbActivity {
 		// ListView数据
 
 		// 使用自定义的Adapter
-		myListViewAdapter = new ImageListAdapterC(this,application,list,
+		myListViewAdapter = new ImageListAdapterC(this, application, list,
 				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
 						"itemsText" }, new int[] { R.id.itemsIcon,
 						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
@@ -246,15 +245,16 @@ public class PopBusinessListActivity extends AbActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//PopBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
+				// PopBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
 				Intent intent = new Intent(PopBusinessListActivity.this,
-						 BusinessDetailActivity.class);
-				 intent.putExtra("MEMBER_ID", list.get(position-1).get("Member_id").toString());
-				 startActivity(intent);
+						BusinessDetailActivity.class);
+				intent.putExtra("MEMBER_ID",
+						list.get(position - 1).get("Member_id").toString());
+				startActivity(intent);
 			}
 		});
 
-		currentPage= 0;
+		currentPage = 0;
 
 		/**
 		 * 添加事件
@@ -263,8 +263,8 @@ public class PopBusinessListActivity extends AbActivity {
 
 			@Override
 			public void onRefresh() {
-				//改写成执行查询
-				//mAbTaskQueue.execute(item1);
+				// 改写成执行查询
+				// mAbTaskQueue.execute(item1);
 				isRefresh = true;
 				list.clear();
 				getData(0);
@@ -272,7 +272,7 @@ public class PopBusinessListActivity extends AbActivity {
 
 			@Override
 			public void onLoadMore() {
-				//mAbTaskQueue.execute(item2);
+				// mAbTaskQueue.execute(item2);
 				isRefresh = false;
 				getData(++currentPage);
 			}
@@ -282,7 +282,6 @@ public class PopBusinessListActivity extends AbActivity {
 		getData(0);
 	}
 
-	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -293,36 +292,36 @@ public class PopBusinessListActivity extends AbActivity {
 	}
 
 	public void showPopupWindow(int x, int y) {
-		layout = (LinearLayout) LayoutInflater.from(PopBusinessListActivity.this).inflate(
-				R.layout.popdialog, null);
+		layout = (LinearLayout) LayoutInflater.from(
+				PopBusinessListActivity.this).inflate(R.layout.popdialog, null);
 		listView = (ListView) layout.findViewById(R.id.listViewPopW);
-		listView.setAdapter(new ArrayAdapter<String>(PopBusinessListActivity.this,
-				R.layout.text_itemselect, R.id.textViewSelectItemName,  words));
+		listView.setAdapter(new ArrayAdapter<String>(
+				PopBusinessListActivity.this, R.layout.text_itemselect,
+				R.id.textViewSelectItemName, words));
 
 		popupWindow = new PopupWindow(PopBusinessListActivity.this);
-		//popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		// popupWindow.setBackgroundDrawable(new BitmapDrawable());
 		popupWindow
-				.setWidth(getWindowManager().getDefaultDisplay().getWidth() /5*2);
+				.setWidth(getWindowManager().getDefaultDisplay().getWidth() / 5 * 2);
 		popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setFocusable(true);
 		popupWindow.setContentView(layout);
 		// showAsDropDown会把里面的view作为参照物，所以要那满屏幕parent
 		popupWindow.showAsDropDown(wordsTextView, x, 10);
-		//popupWindow.showAtLocation(findViewById(R.id.LinearLayoutpopwindows), Gravity.LEFT
-			//	| Gravity.TOP, x, y);//需要指定Gravity，默认情况是center.
+		// popupWindow.showAtLocation(findViewById(R.id.LinearLayoutpopwindows),
+		// Gravity.LEFT
+		// | Gravity.TOP, x, y);//需要指定Gravity，默认情况是center.
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				wordsTextView .setText(words[arg2]);
-				
-					cityId = MainActivity.listArea.get(arg2).getId();
-					Log.e("xxx", "-----城市 ----"+cityId);
-				
-				
-				
+				wordsTextView.setText(words[arg2]);
+
+				// cityId = MainActivity.listArea.get(arg2).getId();
+				Log.e("xxx", "-----城市 ----" + cityId);
+
 				list.clear();
 				getData(0);
 				popupWindow.dismiss();
@@ -330,36 +329,48 @@ public class PopBusinessListActivity extends AbActivity {
 			}
 		});
 	}
-	public void showPopupWindowT(int x, int y){
+
+	public void showPopupWindowT(int x, int y) {
 		Log.e("fragment", "-----点击了全部分类");
-		
-		myPopupWindow.popupWindow.
-		setWidth(PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/7*6);
+
+		myPopupWindow.popupWindow.setWidth(PopBusinessListActivity.this
+				.getWindowManager().getDefaultDisplay().getWidth() / 7 * 6);
 		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutLeft,
-				PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getWidth()/7*3,0);
-		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB,
-				0,PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
-		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight,
-				0,PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
-		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassP,
-				0,PopBusinessListActivity.this.getWindowManager().getDefaultDisplay().getHeight()/5*3);
-		myPopupWindow.popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+				PopBusinessListActivity.this.getWindowManager()
+						.getDefaultDisplay().getWidth() / 7 * 3, 0);
+		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassB, 0,
+				PopBusinessListActivity.this.getWindowManager()
+						.getDefaultDisplay().getHeight() / 5 * 3);
+		displayUtil.setViewLayoutParamsR(myPopupWindow.layoutRight, 0,
+				PopBusinessListActivity.this.getWindowManager()
+						.getDefaultDisplay().getHeight() / 5 * 3);
+		displayUtil.setViewLayoutParamsL(myPopupWindow.listViewClassP, 0,
+				PopBusinessListActivity.this.getWindowManager()
+						.getDefaultDisplay().getHeight() / 5 * 3);
+		myPopupWindow.popupWindow
+				.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 		myPopupWindow.popupWindow.showAsDropDown(wordsTextView, x, 10);
-		myPopupWindow.listViewClassLower.setOnItemClickListener(new OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				keyId= "list-"+myPopupWindow.listLowerCategory.get(arg2).getId();
-				mAbTitleBar.setTitleText(myPopupWindow.listLowerCategory.get(arg2).getName());
-				wordsTextView.setText(myPopupWindow.listLowerCategory.get(arg2).getName());
-				list.clear();
-				getData(0);
-				myPopupWindow.popupWindow.dismiss();
-			}
-			
-		});
-		//myPopupWindow.popupWindow.
+		myPopupWindow.listViewClassLower
+				.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						keyId = "list-"
+								+ myPopupWindow.listLowerCategory.get(arg2)
+										.getId();
+						mAbTitleBar
+								.setTitleText(myPopupWindow.listLowerCategory
+										.get(arg2).getName());
+						wordsTextView.setText(myPopupWindow.listLowerCategory
+								.get(arg2).getName());
+						list.clear();
+						getData(0);
+						myPopupWindow.popupWindow.dismiss();
+					}
+
+				});
+		// myPopupWindow.popupWindow.
 	}
-	
+
 }

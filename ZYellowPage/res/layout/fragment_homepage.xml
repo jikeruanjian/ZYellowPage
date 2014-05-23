@@ -28,9 +28,8 @@
                     <RelativeLayout
                         android:id="@+id/imageButtonFood"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" 
-                        android:background="@drawable/imagebtn_food"
-                        >
+                        android:layout_height="match_parent"
+                        android:background="@drawable/imagebtn_food" >
 
                         <ImageView
                             android:id="@+id/imageButtonFood_x"
@@ -50,14 +49,13 @@
                             android:text="美食"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/imageButtonMovie"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" 
-                        android:background="@drawable/imagebtn_movie">
+                        android:layout_height="match_parent"
+                        android:background="@drawable/imagebtn_movie" >
 
                         <TextView
                             android:id="@+id/mapTextContect"
@@ -77,14 +75,13 @@
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="15dp"
                             android:background="@drawable/movie_l" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/imageButtonHappy"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/imagebtn_happy"  >
+                        android:background="@drawable/imagebtn_happy" >
 
                         <ImageView
                             android:id="@+id/imageButtonHappy_x"
@@ -104,7 +101,6 @@
                             android:text="休闲娱乐"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -131,7 +127,6 @@
                             android:text="酒店"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
-
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -143,8 +138,8 @@
                     <RelativeLayout
                         android:id="@+id/imageButtonNewInfo"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" 
-                         android:background="@drawable/imagebtn_newinfo" >
+                        android:layout_height="match_parent"
+                        android:background="@drawable/imagebtn_newinfo" >
 
                         <ImageView
                             android:id="@+id/imageButtonNewInfo_x"
@@ -164,7 +159,6 @@
                             android:text="生活服务"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -191,7 +185,6 @@
                             android:text="运动健身"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -218,13 +211,12 @@
                             android:text="丽人"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/imageButtonAll"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent" 
+                        android:layout_height="match_parent"
                         android:background="@drawable/imagebtn_all" >
 
                         <ImageView
@@ -245,7 +237,6 @@
                             android:text="全部分类"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
-
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -277,6 +268,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
                         android:background="#EEEEEE" />
+
                     <TextView
                         android:id="@+id/imageView2"
                         android:layout_width="match_parent"
@@ -284,13 +276,12 @@
                         android:background="@color/orange_background" />
 
                     <LinearLayout
-                         android:id="@+id/textViewhotbusiness"
+                        android:id="@+id/textViewhotbusiness"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:cacheColorHint="@android:color/white">
+                        android:cacheColorHint="@android:color/white" >
 
                         <TextView
-                           
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_weight="1"
@@ -306,7 +297,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="更多" />
-
                     </LinearLayout>
 
                     <ListView
@@ -315,10 +305,8 @@
                         android:layout_height="wrap_content"
                         android:cacheColorHint="@android:color/white"
                         android:divider="@drawable/list_divider"
-                        android:dividerHeight="1dip"
-                        android:fastScrollEnabled="true" >
+                        android:dividerHeight="1dip" >
                     </ListView>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -327,11 +315,13 @@
                     android:layout_marginTop="0dp"
                     android:background="#FFFFFF"
                     android:orientation="vertical" >
- 					<TextView
+
+                    <TextView
                         android:id="@+id/imageView2"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
                         android:background="#EEEEEE" />
+
                     <TextView
                         android:id="@+id/imageView2"
                         android:layout_width="match_parent"
@@ -339,18 +329,17 @@
                         android:background="@color/orange_background" />
 
                     <LinearLayout
-                         android:id="@+id/textViewhotperson"
+                        android:id="@+id/textViewhotperson"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" 
-                       android:cacheColorHint="@android:color/white">
+                        android:layout_height="wrap_content"
+                        android:cacheColorHint="@android:color/white" >
 
                         <TextView
-                           
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
+                            android:layout_weight="0.8"
                             android:gravity="center_vertical"
                             android:text="  最新商企"
-                             android:layout_weight="0.8"
                             android:textColor="#9F9F9F"
                             android:textSize="14sp" />
 
@@ -359,7 +348,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="更多" />
-
                     </LinearLayout>
 
                     <ListView
@@ -368,8 +356,7 @@
                         android:layout_height="wrap_content"
                         android:cacheColorHint="@android:color/white"
                         android:divider="@drawable/list_divider"
-                        android:dividerHeight="1dip"
-                        android:fastScrollEnabled="true" >
+                        android:dividerHeight="1dip" >
                     </ListView>
                 </LinearLayout>
             </LinearLayout>
