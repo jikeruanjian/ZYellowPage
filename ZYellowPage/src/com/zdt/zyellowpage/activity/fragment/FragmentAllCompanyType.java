@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.Toast;
+
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
@@ -43,6 +45,7 @@ public class FragmentAllCompanyType extends Fragment {
 		categoryDao.startReadableDatabase(false);
 		List<Category> lisAll = categoryDao.queryList("Type = ? ",
 				new String[] { "0" });
+		//Log.e("FragmentAllCompanyType ", "商家分类数量"+lisAll.size());
 		categoryDao.closeDatabase(false);
 
 		adapter = new CategoryExpandAdapter(lisAll, mActivity);
@@ -60,7 +63,7 @@ public class FragmentAllCompanyType extends Fragment {
 				Category selectedChild = (Category) adapter.getChild(
 						groupPosition, childPosition);
 
-				Toast.makeText(mActivity, "你点击了" + selectedChild.getName(),
+				Toast.makeText(mActivity, "你点击了" + "list-" + selectedChild.getId(),
 						Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(mActivity,
 						PopBusinessListActivity.class);

@@ -386,8 +386,8 @@ public class DisplayUtil {
         }  
   
         ViewGroup.LayoutParams params = listView.getLayoutParams();  
-       // params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1)) + attHeight;  
-        params.height =getActualHeight(1137);
+       params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1)) + attHeight;  
+       // params.height =getActualHeight(1137);
         listView.setLayoutParams(params);  
     }  
 

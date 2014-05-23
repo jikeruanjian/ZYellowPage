@@ -20,12 +20,11 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 	private List<Category> firstLevel = new ArrayList<Category>();
 	private List<List<Category>> secLevel = new ArrayList<List<Category>>();
 	private Context mActivity;
-
 	public CategoryExpandAdapter(List<Category> lisAll, Context mActivity) {
 		this.mActivity = mActivity;
 		if (lisAll != null && lisAll.size() > 0) {
 			for (Category category : lisAll) {
-				if (category.getType().equals("0")) {
+				if (category.getParent().equals("0")) {
 					firstLevel.add(category);
 				}
 			}
@@ -38,6 +37,7 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 					}
 				}
 				secLevel.add(tempSecCategory);
+				//secLevel.add({"正在获取"});
 			}
 		}
 	}
@@ -123,8 +123,6 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.groupNameImageView);
 		if (isExpanded) {
 			parentImageViw.setBackgroundResource(R.drawable.changecity);
-		} else {
-			parentImageViw.setBackgroundResource(R.drawable.changecity_right);
 		}
 
 		return parentLayout;

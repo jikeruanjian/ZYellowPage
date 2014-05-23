@@ -87,7 +87,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	private LinearLayout layout;
 	private ListView listView;
 	private String types[] = { "商家", "个人" };
-	boolean isFirst = false;
+	boolean isFirst = true;
+	boolean isFirstTie =  true;
 	// 区域列表
 	// public static List<Area> listArea;
 	// public static List<String> listAreaName;
@@ -170,7 +171,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		setContentView(R.layout.activity_main);
 		application = (MyApplication) abApplication;
 		initView();
-		this.isShowAnim = false;
+		//this.isShowAnim = false;
 		// initHomePagePullView();
 		// 地图
 		mBMapMan = new BMapManager(getApplication());
@@ -185,11 +186,11 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentHome = new FragmentHomePage();
 		newFragmentUser = new FragmentUser();
-		newFragmentTie = new FragmentTie();
+		//newFragmentTie = new FragmentTie();
 
 		fragmentTransaction.add(R.id.fragmentViewHome, newFragmentHome, "home");
 		fragmentTransaction.add(R.id.fragmentViewUser, newFragmentUser, "user");
-		fragmentTransaction.add(R.id.fragmentViewMore, newFragmentTie, "more");
+		//fragmentTransaction.add(R.id.fragmentViewMore, newFragmentTie, "more");
 
 		fragmentTransaction.commit();
 		// listArea = new ArrayList<Area>();
@@ -264,7 +265,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		return super.onKeyDown(keyCode, event);
 	}
 
-	protected void initOtherFragment() {
+	protected void initMapFragment() {
 
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentNearMap = new FragmentNearMap();
@@ -274,6 +275,14 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 	}
 
+	protected void initTieFragment() {
+		fragmentTransaction = fragmentManager.beginTransaction();
+		newFragmentTie = new FragmentTie();
+		fragmentTransaction.add(R.id.fragmentViewMore, newFragmentTie, "more");
+		fragmentTransaction.commit();
+
+	}
+	
 	protected void initView() {
 		DisplayUtil displayUtil = DisplayUtil.getInstance(this);
 
@@ -358,7 +367,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				.setOnCheckedChangeListener(this);
 		((RadioButton) this.findViewById(R.id.radio_buttonHome))
 				.setChecked(true);
-		isFirst = true;
 
 	}
 
@@ -395,7 +403,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 			}
 			case R.id.radio_buttonNear: {
 				if (isFirst) {
-					initOtherFragment();
+					initMapFragment();
 					isFirst = false;
 				}
 				goneTitileView();
@@ -426,6 +434,10 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				break;
 			}
 			case R.id.radio_buttonMore: {
+				if (isFirstTie) {
+					initTieFragment();
+					isFirstTie = false;
+				}
 				goneTitileView();
 				this.findViewById(R.id.radio_buttonHome).setSelected(false);
 				this.findViewById(R.id.radio_buttonNear).setSelected(false);

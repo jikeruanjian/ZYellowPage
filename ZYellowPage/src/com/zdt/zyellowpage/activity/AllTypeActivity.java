@@ -40,7 +40,7 @@ public class AllTypeActivity extends AbActivity {
 	private FragmentTransaction fragmentTransaction;
 	private FragmentAllCompanyType newFragmentCompany = null;
 	private FragmentAllPersonType newFragmentPerson = null;
-
+    private boolean isFirst =true;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -56,14 +56,13 @@ public class AllTypeActivity extends AbActivity {
 		gridview = (GridView) findViewById(R.id.commonClassGridView);
 
 		newFragmentCompany = new FragmentAllCompanyType();
-		newFragmentPerson = new FragmentAllPersonType();
+		//newFragmentPerson = new FragmentAllPersonType();
 
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.add(R.id.fragmentCompanyType, newFragmentCompany,
 				"Company");
-		fragmentTransaction.add(R.id.fragmentPersonType, newFragmentPerson,
-				"Person");
+		//fragmentTransaction.add(R.id.fragmentPersonType, newFragmentPerson,"Person");
 		fragmentTransaction.commit();
 		this.findViewById(R.id.fragmentPersonType).setVisibility(View.GONE);
 		this.findViewById(R.id.fragmentCompanyType).setVisibility(View.VISIBLE);
@@ -164,6 +163,14 @@ public class AllTypeActivity extends AbActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
+				if(isFirst){
+					newFragmentPerson = new FragmentAllPersonType();
+					fragmentTransaction = fragmentManager.beginTransaction();
+					fragmentTransaction.add(R.id.fragmentPersonType, newFragmentPerson,
+						"Person");
+					fragmentTransaction.commit();
+					isFirst = false;
+				}
 				AllTypeActivity.this.findViewById(R.id.fragmentCompanyType)
 						.setVisibility(View.VISIBLE);
 				AllTypeActivity.this.findViewById(R.id.fragmentPersonType)

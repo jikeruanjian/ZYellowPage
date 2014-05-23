@@ -298,7 +298,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 						// mActivity.removeProgressDialog();
 						myListViewAdapterB.notifyDataSetChanged();
 						displayUtil.setListViewHeightBasedOnChildren(
-								mAbPullListViewB, 10);
+								mAbPullListViewB, 5);
 					}
 				});
 
