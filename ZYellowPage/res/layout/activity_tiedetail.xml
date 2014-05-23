@@ -5,13 +5,13 @@
     android:layout_margin="2dp"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:visibility="gone" >
+    >
 
     <ScrollView
         android:id="@+id/svMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dip" >
+        android:layout_marginBottom="40dip" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -254,21 +254,14 @@
         </LinearLayout>
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="50dip"
-        android:src="@drawable/orange" />
+     
 
     <ImageView
         android:id="@+id/tie_image_phone"
         android:layout_width="35dip"
         android:layout_height="35dip"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
+
         android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/tie_image_center"
         android:src="@drawable/phone" />
@@ -286,7 +279,16 @@
         android:id="@+id/tie_image_center"
         android:layout_width="0dip"
         android:layout_height="35dip"
+        android:layout_marginBottom="5dp"
         android:layout_alignTop="@+id/tie_image_phone"
         android:layout_centerHorizontal="true" />
+
+<TextView
+    android:id="@+id/imageViewOrangeLine"
+    android:layout_width="fill_parent"
+    android:layout_height="2dp"
+    android:layout_alignBottom="@+id/svMain"
+    android:layout_alignParentLeft="true"
+    android:background="@color/orange_background" />
 
 </RelativeLayout>

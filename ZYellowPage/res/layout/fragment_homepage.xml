@@ -283,7 +283,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="40dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:paddingTop="1dp"
@@ -295,8 +295,10 @@
                         <TextView
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:text="更多" />
+
                     </LinearLayout>
 
                     <ListView
@@ -336,7 +338,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="40dp"
                             android:layout_weight="0.8"
                             android:gravity="center_vertical"
                             android:text="  最新商企"
@@ -346,8 +348,10 @@
                         <TextView
                             android:id="@+id/TextView01"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:text="更多" />
+
                     </LinearLayout>
 
                     <ListView

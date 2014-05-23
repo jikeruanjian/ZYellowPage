@@ -4,12 +4,12 @@
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:visibility="gone" >
+     >
 
     <com.ab.view.sample.AbOuterScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginBottom="40dip" >
 
         <LinearLayout
@@ -296,21 +296,13 @@
     </com.ab.view.sample.AbOuterScrollView>
 
     <ImageView
-        android:id="@+id/imageViewOrangeLine"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="false"
-        android:layout_marginBottom="42dp"
-        android:src="@drawable/orange" />
-
-    <ImageView
         android:id="@+id/business_detail_sjdt"
         android:layout_width="35dip"
         android:layout_height="35dip"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_toLeftOf="@+id/busnessmid"
+        android:layout_marginBottom="5dp"
         android:src="@drawable/google_maps" />
 
     <TextView
@@ -345,5 +337,14 @@
         android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/imgCompanyBuySell"
         android:src="@drawable/videos" />
+
+    <TextView
+        android:id="@+id/imageViewOrangeLine"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_alignBottom="@+id/scrollView1"
+        android:layout_alignParentLeft="true"
+      
+        android:background="@color/orange_background"/>
 
 </RelativeLayout>
