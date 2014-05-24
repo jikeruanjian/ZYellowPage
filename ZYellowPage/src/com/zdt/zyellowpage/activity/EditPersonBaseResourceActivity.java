@@ -277,6 +277,8 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 							EditPersonBaseResourceActivity.this,
 							SelectAreaActivity.class);
 					startActivityForResult(intent, 10000);
+					overridePendingTransition(R.anim.push_left_in,
+							R.anim.push_left_out);
 				}
 			});
 
@@ -289,6 +291,8 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 							SelectCategoryActivity.class);
 					intent.putExtra("currentCategory", user.getCategory_name());
 					startActivityForResult(intent, 10001);
+					overridePendingTransition(R.anim.push_left_in,
+							R.anim.push_left_out);
 				}
 			});
 		}

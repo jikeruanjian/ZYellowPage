@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/transparent"
     android:orientation="vertical"
     android:paddingLeft="10dip"
     android:paddingRight="10dip" >
@@ -10,23 +11,24 @@
         android:id="@+id/choose_lookimage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_margin="3dp"
         android:text="查看"
-        android:textSize="20sp" />
+        android:textSize="@dimen/main_text_size_h2" />
 
     <Button
         android:id="@+id/choose_saveimagecode"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="保存"
-        android:textSize="20sp" />
+        android:layout_margin="3dp"
+        android:text="保存到相册"
+        android:textSize="@dimen/main_text_size_h2" />
 
     <Button
         android:id="@+id/choose_cancelimage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_margin="3dp"
         android:text="取消"
-        android:textSize="20sp" />
+        android:textSize="@dimen/main_text_size_h2" />
+
 </LinearLayout>

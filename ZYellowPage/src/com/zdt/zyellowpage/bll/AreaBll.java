@@ -43,7 +43,6 @@ public class AreaBll {
 				List<Area> mAreas = new Gson().fromJson(content.toLowerCase(),
 						new TypeToken<List<Area>>() {
 						}.getType());
-				Log.e("timeTest", "开始插入area");
 				AreaDao areaDao = new AreaDao(context);
 				areaDao.startWritableDatabase(true);
 				areaDao.deleteAll();

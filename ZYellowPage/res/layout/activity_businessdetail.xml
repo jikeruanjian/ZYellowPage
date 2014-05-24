@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
-    android:orientation="vertical"
-     >
+    android:orientation="vertical" >
 
     <com.ab.view.sample.AbOuterScrollView
         android:id="@+id/scrollView1"
@@ -55,7 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/selectclass"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:visibility="gone" >
 
                 <com.ab.view.sliding.AbSlidingPlayView
                     android:id="@+id/mAbSlidingPlayViewB"
@@ -301,8 +301,8 @@
         android:layout_height="35dip"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_toLeftOf="@+id/busnessmid"
         android:layout_marginBottom="5dp"
+        android:layout_toLeftOf="@+id/busnessmid"
         android:src="@drawable/google_maps" />
 
     <TextView
@@ -344,7 +344,6 @@
         android:layout_height="2dp"
         android:layout_alignBottom="@+id/scrollView1"
         android:layout_alignParentLeft="true"
-      
-        android:background="@color/orange_background"/>
+        android:background="@color/orange_background" />
 
 </RelativeLayout>

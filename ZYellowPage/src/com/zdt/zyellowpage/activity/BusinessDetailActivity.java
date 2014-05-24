@@ -21,7 +21,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -234,8 +233,12 @@ public class BusinessDetailActivity extends AbActivity {
 							return;
 						}
 						userCompany = (User) lis.get(0);
+						if (!AbStrUtil.isEmpty(userCompany.getAlbum())) {
+							getImgUrl(userCompany.getMember_id());
+							findViewById(R.id.mAbSlidingPlayViewBLinearLayout)
+									.setVisibility(View.VISIBLE);
+						}
 						getView();
-						getImgUrl(userCompany.getMember_id());
 						getCodeData();
 					}
 
@@ -328,8 +331,7 @@ public class BusinessDetailActivity extends AbActivity {
 						ImageView UserCode = (ImageView) BusinessDetailActivity.this
 								.findViewById(R.id.BCodeTopRightimageView);
 						UserCode.setImageBitmap(codeBitmap);
-						UserCode
-						.setOnClickListener(new View.OnClickListener() {
+						UserCode.setOnClickListener(new View.OnClickListener() {
 
 							@Override
 							public void onClick(View v) {
@@ -674,59 +676,59 @@ public class BusinessDetailActivity extends AbActivity {
 		public void onPageScrollStateChanged(int arg0) {
 		}
 	}
-	
+
 	public void showChosePopWindow() {
-		View mChooseView = BusinessDetailActivity.this.mInflater.inflate(R.layout.choose_lookimage, null);
+		View mChooseView = BusinessDetailActivity.this.mInflater.inflate(
+				R.layout.choose_lookimage, null);
 		BusinessDetailActivity.this.showDialog(1, mChooseView);
-		//查看
-		mChooseView.findViewById(R.id.choose_lookimage).
-		setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mView = BusinessDetailActivity.this.mInflater.inflate(R.layout.code_view, null);
-				ImageView imageUserCode = (ImageView) mView
-						.findViewById(R.id.imageViewCodeCP);
-				imageUserCode.setImageBitmap(codeBitmap);
-				BusinessDetailActivity.this.removeDialog(1);
-				BusinessDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);
-				
-				imageUserCode.setOnClickListener(new OnClickListener() {
+		// 查看
+		mChooseView.findViewById(R.id.choose_lookimage).setOnClickListener(
+				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						BusinessDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
+						mView = BusinessDetailActivity.this.mInflater.inflate(
+								R.layout.code_view, null);
+						ImageView imageUserCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+						imageUserCode.setImageBitmap(codeBitmap);
+						BusinessDetailActivity.this.removeDialog(1);
+						BusinessDetailActivity.this.showDialog(
+								AbConstant.DIALOGCENTER, mView);
+
+						imageUserCode.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								BusinessDetailActivity.this
+										.removeDialog(AbConstant.DIALOGCENTER);
+							}
+
+						});
 					}
 
 				});
-				}
+		// 保存
+		mChooseView.findViewById(R.id.choose_saveimagecode).setOnClickListener(
+				new OnClickListener() {
 
-			});
-		//保存
-		mChooseView.findViewById(R.id.choose_saveimagecode).
-		setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				BusinessDetailActivity.this.removeDialog(1);
-				String imgUrl =  MediaStore.Images.
-						Media.insertImage(getContentResolver(), codeBitmap, "", "");   
+					@Override
+					public void onClick(View v) {
+						BusinessDetailActivity.this.removeDialog(1);
+						String imgUrl = MediaStore.Images.Media.insertImage(
+								getContentResolver(), codeBitmap, "", "");
 						Log.e("save codeimage", imgUrl);
 						removeDialog(AbConstant.DIALOGCENTER);
 						showToast("二维码成功保存到相册！");
-			
-			}
-		});
-		//取消
-		mChooseView.findViewById(R.id.choose_cancelimage).
-		setOnClickListener(new OnClickListener(){
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				BusinessDetailActivity.this.removeDialog(1);
-			
-			}
-		});
+					}
+				});
+		// 取消
+		mChooseView.findViewById(R.id.choose_cancelimage).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						BusinessDetailActivity.this.removeDialog(1);
+					}
+				});
 	}
 }

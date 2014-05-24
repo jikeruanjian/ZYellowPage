@@ -18,7 +18,7 @@ import com.ab.view.ioc.AbIocView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.CategoryBll;
-import com.zdt.zyellowpage.global.Constant;
+import com.zdt.zyellowpage.dao.CategoryDao;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Category;
@@ -35,10 +35,11 @@ public class SelectCategoryActivity extends AbActivity {
 	@AbIocView(id = R.id.btnConfirm)
 	private Button btnConfirm;
 	@AbIocView(id = R.id.tvCurrentCategory)
-	private TextView tvCurrentAreaName;
+	private TextView tvCurrentCategory;
 
 	private ArrayAdapter<Category> adapterMainCategory;
 	private ArrayAdapter<Category> adapterChildCategory;
+	String currentCategoryName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +51,9 @@ public class SelectCategoryActivity extends AbActivity {
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-		// mAbTitleBar.setLogoLine(R.drawable.line);
-
-		tvCurrentAreaName
-				.setText(getIntent().getStringExtra("currentCategory"));
+		// tvCurrentCategory
+		// .setText(getIntent().getStringExtra("currentCategory"));
+		currentCategoryName = getIntent().getStringExtra("currentCategory");
 
 		spiMainCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -104,6 +104,22 @@ public class SelectCategoryActivity extends AbActivity {
 	private void initArea(final String parentId, final Spinner spinner,
 			ArrayAdapter<Category> mAdapter) {
 
+		CategoryDao categoryDao = new CategoryDao(this);
+		categoryDao.startReadableDatabase(true);
+		List<Category> lis = categoryDao
+				.queryList("parent=? and type=?", new String[] { parentId,
+						application.mUser.getType().toString() });
+		categoryDao.closeDatabase(true);
+
+		if (lis != null && lis.size() > 0) {
+			ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(
+					SelectCategoryActivity.this,
+					R.layout.spinner_display_style, lis);
+			adapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
+			spinner.setAdapter(adapter);
+			return;
+		}
+
 		new CategoryBll().getCategoryist(this, parentId,
 				String.valueOf(application.mUser.getType()),
 				new ZzObjectHttpResponseListener<Category>() {
@@ -120,7 +136,7 @@ public class SelectCategoryActivity extends AbActivity {
 
 					@Override
 					public void onStart() {
-						showProgressDialog("请稍候...");
+						showProgressDialog();
 					}
 
 					@Override
@@ -131,18 +147,7 @@ public class SelectCategoryActivity extends AbActivity {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Category> localList) {
-
-						if (content.equals(Constant.NOCONNECT)
-								&& (localList == null || localList.size() == 0)) {
-							showToast(content);
-							return;
-						}
-
-						ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(
-								SelectCategoryActivity.this,
-								android.R.layout.simple_spinner_item, localList);
-
-						spinner.setAdapter(adapter);
+						showToast(content);
 					}
 
 					@Override

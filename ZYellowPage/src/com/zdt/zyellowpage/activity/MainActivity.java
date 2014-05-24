@@ -301,6 +301,8 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				Intent intent = new Intent(MainActivity.this,
 						SelectAreaActivity.class);
 				startActivityForResult(intent, 10000);
+				overridePendingTransition(R.anim.push_left_in,
+						R.anim.push_left_out);
 			}
 
 		});
@@ -768,15 +770,19 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 	// 民生网点的定位牵涉到定位后选择范围，所以定位之后会根据所选择的范围来显示覆盖物（定位接口）
 	class MyLocationListener implements BDLocationListener {
+		int locateTimes = 0;
+
 		@Override
 		// 定位获取经纬度
 		public void onReceiveLocation(BDLocation location) {
-			Log.e("mainAc", "定位信息:");
+			locateTimes++;
 			if (location == null)
 				return;
-			Log.e("mainAc", "定位信息:" + location.getCity());
 			mCityName = location.getCity();
 			if (mCityName == null) {
+				if (locateTimes >= 3) { // 如果定位4次依然没有定位到，就不再定位了
+					mLocationClient.stop();
+				}
 				return;
 			}
 			mLocationClient.stop();

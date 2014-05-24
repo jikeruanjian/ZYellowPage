@@ -15,9 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@color/orange_background"
-            
-            >
+            android:background="@color/orange_background" >
 
             <TextView
                 android:id="@+id/textViewarea"
@@ -25,11 +23,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                 android:drawableLeft="@drawable/changecity1"
+                android:drawableLeft="@drawable/changecity1"
                 android:gravity="center"
                 android:maxLength="3"
                 android:text="昆明"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="15dp" />
 
             <LinearLayout
@@ -41,16 +39,21 @@
 
             <EditText
                 android:id="@+id/et_searchtext_search"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_n"
                 android:drawableLeft="@drawable/sslk_search"
+                android:gravity="center_vertical"
                 android:hint="大家都在找，指点通"
                 android:imeOptions="actionSearch"
-                android:singleLine="true" >
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:textSize="@dimen/main_text_size_h3" >
 
                 <requestFocus />
             </EditText>
@@ -58,19 +61,19 @@
             <TextView
                 android:id="@+id/textViewSearchType"
                 android:layout_width="wrap_content"
-                 android:layout_height="match_parent"
-                
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/abs__spinner_ab_default_holo_light"
                 android:gravity="center"
                 android:text="商家"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/mapTitileLinearLayou"
-             android:layout_width="match_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/orange_background"
             android:visibility="gone" >
@@ -91,8 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/orange_background"
-            android:visibility="gone" 
-            >
+            android:visibility="gone" >
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -117,9 +119,7 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="5dp"
                     android:src="@drawable/saoyisao" />
-
             </RelativeLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -233,15 +233,13 @@
             android:drawableTop="@drawable/main_user_bg"
             android:text="我的"
             android:textColor="@color/crop_background" />
-
-        
     </RadioGroup>
 
-	<TextView
-	    android:id="@+id/imageView2"
-	    android:layout_width="match_parent"
-	    android:layout_height="1dp"
-	    android:layout_alignTop="@+id/main_radio"
-	    android:background="@color/list_divider" />
-    
+    <TextView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignTop="@+id/main_radio"
+        android:background="@color/list_divider" />
+
 </RelativeLayout>

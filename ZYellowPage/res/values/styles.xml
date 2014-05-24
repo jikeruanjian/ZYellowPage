@@ -45,4 +45,13 @@
         <item name="android:textColor">@color/gray_black</item>
     </style>
 
+    <style name="mButtonWhite">
+        <item name="android:background">@drawable/button_selector_white</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmallInverse</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
 </resources>

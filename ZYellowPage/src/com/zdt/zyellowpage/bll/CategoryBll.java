@@ -36,33 +36,32 @@ public class CategoryBll {
 					@Override
 					public void onSuccess(final int statusCode,
 							final String content) {
-//						new Thread(new Runnable() {
-//
-//							@Override
-//							public void run() {
-								Log.e("timeTest", "category开始插入");
-								List<Category> mCategorys = new Gson().fromJson(
-										content.toLowerCase(),
-										new TypeToken<List<Category>>() {
-										}.getType());
+						// new Thread(new Runnable() {
+						//
+						// @Override
+						// public void run() {
+						Log.e("timeTest", "category开始插入");
+						List<Category> mCategorys = new Gson().fromJson(
+								content.toLowerCase(),
+								new TypeToken<List<Category>>() {
+								}.getType());
 
-								CategoryDao categoryDao = new CategoryDao(
-										context);
-								categoryDao.startWritableDatabase(true);
-								categoryDao.deleteAll();
-								if (categoryDao.insertListWithBatch(mCategorys,
-										false) == mCategorys.size()) {
-									categoryDao.setTransactionSuccessful();
-									categoryDao.closeDatabase(true);
-									respListener.onSuccess(statusCode, "更新成功");
-								} else {
-									Log.e("timeTest", "category失败");
-									respListener.onErrorData("数据拆入失败");
-									categoryDao.closeDatabase(true);
-								}
+						CategoryDao categoryDao = new CategoryDao(context);
+						categoryDao.startWritableDatabase(true);
+						categoryDao.deleteAll();
+						if (categoryDao.insertListWithBatch(mCategorys, false) == mCategorys
+								.size()) {
+							categoryDao.setTransactionSuccessful();
+							categoryDao.closeDatabase(true);
+							respListener.onSuccess(statusCode, "更新成功");
+						} else {
+							Log.e("timeTest", "category失败");
+							respListener.onErrorData("数据拆入失败");
+							categoryDao.closeDatabase(true);
+						}
 
-//							}
-//						}).start();
+						// }
+						// }).start();
 					}
 
 					@Override
@@ -115,15 +114,15 @@ public class CategoryBll {
 					}
 
 					CategoryDao categoryDao = new CategoryDao(mContext);
-					categoryDao.startWritableDatabase(false);
+					categoryDao.startWritableDatabase(true);
 
 					categoryDao.delete("parent=? and type=?", new String[] {
 							category_id, type });
 
 					if (mCategory != null) {
-						categoryDao.insertList(mCategory);
+						categoryDao.insertListWithBatch(mCategory, false);
 					}
-					categoryDao.closeDatabase(false);
+					categoryDao.closeDatabase(true);
 					objectResponseListener.onSuccess(statusCode, mCategory);
 				}
 			};
@@ -138,15 +137,9 @@ public class CategoryBll {
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
-				System.out.println("数据请求异常" + content);
-				CategoryDao categoryDao = new CategoryDao(mContext);
-				categoryDao.startReadableDatabase(false);
-				List<Category> lis = categoryDao.queryList(
-						"parentId=? and type=?", new String[] { category_id,
-								type });
-				categoryDao.closeDatabase(false);
+
 				objectResponseListener.onFailure(statusCode, content, error,
-						lis);
+						null);
 			}
 
 			// 完成后调用，失败，成功

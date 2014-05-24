@@ -3,6 +3,7 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
 import com.ab.util.AbStrUtil;
@@ -25,6 +25,7 @@ import com.zdt.zyellowpage.dao.AreaDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
+import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Area;
 
 public class SelectAreaActivity extends AbActivity {
@@ -38,7 +39,7 @@ public class SelectAreaActivity extends AbActivity {
 	private Spinner spiCity;
 	private Spinner spiCoutny;
 	private Button btnConfirm;
-	private TextView tvCurrentAreaName;
+	private Button tvCurrentAreaName;
 	private List<Area> lisCurrentAreas;
 	boolean isInit = true;
 
@@ -58,10 +59,24 @@ public class SelectAreaActivity extends AbActivity {
 		spiCity = (Spinner) findViewById(R.id.spiCity);
 		spiCoutny = (Spinner) findViewById(R.id.spiCoutny);
 		btnConfirm = (Button) findViewById(R.id.selectAreaBtn);
-		tvCurrentAreaName = (TextView) findViewById(R.id.tvCurrentArea);
+		tvCurrentAreaName = (Button) findViewById(R.id.tvCurrentArea);
 		tvCurrentAreaName
 				.setText(AbStrUtil.isEmpty(application.locateCityName) ? "未能定位"
 						: application.locateCityName);
+		if (tvCurrentAreaName.getText().toString().equals("未能定位")
+				|| tvCurrentAreaName.getText().toString()
+						.equals(application.cityName)) {
+			tvCurrentAreaName.setEnabled(false);
+		} else {
+			tvCurrentAreaName.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					changeCity();
+				}
+			});
+		}
+
 		lisCurrentAreas = getAreaParent();
 		initArea("0", spiProvince, adapterProvince);
 
@@ -118,6 +133,9 @@ public class SelectAreaActivity extends AbActivity {
 					if (selectedArea.getId().startsWith("-")) {
 						selectedArea = (Area) spiCity.getSelectedItem();
 					}
+					if (!selectedArea.getId().equals(application.cityid)) {
+						setResult(RESULT_OK, null);
+					}
 					application.cityid = selectedArea.getId();
 					application.cityName = selectedArea.getName().substring(0,
 							2);
@@ -133,32 +151,31 @@ public class SelectAreaActivity extends AbActivity {
 				editor.putString(Constant.CITYID, application.cityid);
 				editor.putString(Constant.CITYNAME, application.cityName);
 				editor.commit();
-				setResult(RESULT_OK, null);
+
 				if (application.firstStart) {
 					SelectAreaActivity.this.startActivity(new Intent(
 							SelectAreaActivity.this, MainActivity.class));
 				}
-
 				application.firstStart = false;
 				SelectAreaActivity.this.finish();
 			}
 		});
 	}
 
-	@Override
-	public void onBackPressed() {
-		if (application.firstStart) {
-			Editor editor = abSharedPreferences.edit();
-			editor.putBoolean(Constant.FIRSTSTART, false);
-			editor.commit();
-			application.firstStart = false;
-			this.startActivity(new Intent(SelectAreaActivity.this,
-					MainActivity.class));
-			this.finish();
-		} else {
-			super.onBackPressed();
-		}
-	}
+	// @Override
+	// public void onBackPressed() {
+	// if (application.firstStart) {
+	// Editor editor = abSharedPreferences.edit();
+	// editor.putBoolean(Constant.FIRSTSTART, false);
+	// editor.commit();
+	// application.firstStart = false;
+	// this.startActivity(new Intent(SelectAreaActivity.this,
+	// MainActivity.class));
+	// this.finish();
+	// } else {
+	// super.onBackPressed();
+	// }
+	// }
 
 	/**
 	 * 如果地区表还比没有数据，需要下载数据
@@ -167,10 +184,10 @@ public class SelectAreaActivity extends AbActivity {
 			ArrayAdapter<Area> mAdapter) {
 
 		AreaDao areaDao = new AreaDao(this);
-		areaDao.startReadableDatabase(false);
+		areaDao.startReadableDatabase(true);
 		List<Area> areas = areaDao.queryList("parent=?",
 				new String[] { parentId });
-		areaDao.closeDatabase(false);
+		areaDao.closeDatabase(true);
 
 		if (areas != null && areas.size() > 0) {
 			if (spinner.equals(spiProvince)) {
@@ -278,6 +295,64 @@ public class SelectAreaActivity extends AbActivity {
 					@Override
 					public void onErrorData(String status_description) {
 						showToast(status_description);
+					}
+				});
+	}
+
+	private void changeCity() {
+		this.showDialog("提示", "确认切换区域到\""
+				+ tvCurrentAreaName.getText().toString() + "\"",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						new AreaBll().getAreaIdByAreaName(
+								SelectAreaActivity.this, tvCurrentAreaName
+										.getText().toString(),
+								new ZzStringHttpResponseListener() {
+
+									@Override
+									public void onSuccess(int statusCode,
+											String content) {
+										if (content == null)
+											return;
+										application.cityid = content;
+										application.cityName = tvCurrentAreaName
+												.getText().toString();
+
+										Editor editor = abSharedPreferences
+												.edit();
+										editor.putString(Constant.CITYID,
+												content);
+										editor.putString(Constant.CITYNAME,
+												tvCurrentAreaName.getText()
+														.toString());
+										editor.commit();
+										setResult(RESULT_OK, null);
+										SelectAreaActivity.this.finish();
+									}
+
+									@Override
+									public void onStart() {
+										showProgressDialog();
+									}
+
+									@Override
+									public void onFailure(int statusCode,
+											String content, Throwable error) {
+										showToast(content);
+									}
+
+									@Override
+									public void onErrorData(
+											String status_description) {
+										showToast(status_description);
+									}
+
+									@Override
+									public void onFinish() {
+										removeProgressDialog();
+									}
+								});
 					}
 				});
 	}

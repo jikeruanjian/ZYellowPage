@@ -18,17 +18,9 @@
             android:layout_marginTop="10dip" >
 
             <TextView
-                android:id="@+id/tvCur"
-                style="@style/h2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="当前行业" />
-
-            <TextView
                 android:id="@+id/tvCurrentCategory"
-                style="@style/mainText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:gravity="center" />

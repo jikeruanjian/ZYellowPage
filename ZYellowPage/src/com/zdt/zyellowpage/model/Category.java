@@ -67,4 +67,9 @@ public class Category implements Serializable {
 	public void setParent(String parent) {
 		this.parent = parent;
 	}
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

@@ -17,27 +17,22 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -56,17 +51,14 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.AddPhotoActivity;
 import com.zdt.zyellowpage.activity.CertificateListActivity;
 import com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity;
-import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.activity.MyConcernActivity;
 import com.zdt.zyellowpage.activity.MyResourceActivity;
 import com.zdt.zyellowpage.activity.NewsContentDetailActivity;
 import com.zdt.zyellowpage.activity.login.ChangePwdActivity;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
-import com.zdt.zyellowpage.bll.NewsContentBll;
 import com.zdt.zyellowpage.bll.VersionBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
-import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
@@ -89,8 +81,9 @@ public class FragmentUser extends Fragment {
 	Bitmap codeBitmap;
 	AbImageDownloader imageLoader;
 
-	//二维码弹出框
+	// 二维码弹出框
 	private View mView;
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_user, container, false);
@@ -131,11 +124,10 @@ public class FragmentUser extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO 多尺寸的二维码，可保存
 				showChosePopWindow();
 			}
 		});
-		//getCodeData();
+		// getCodeData();
 
 		lvMenu.setOnItemClickListener(new OnItemClickListener() {
 
@@ -272,8 +264,7 @@ public class FragmentUser extends Fragment {
 						// 获取数据成功会调用这里
 						@Override
 						public void onSuccess(int statusCode, byte[] content) {
-							codeBitmap = AbImageUtil
-									.bytes2Bimap(content);
+							codeBitmap = AbImageUtil.bytes2Bimap(content);
 							imageQr.setImageBitmap(codeBitmap);
 						}
 
@@ -457,119 +448,121 @@ public class FragmentUser extends Fragment {
 		intent.setDataAndType(uri, "application/vnd.android.package-archive");
 		mActivity.startActivity(intent);
 	}
-	
-	
+
 	public void showChosePopWindow() {
-		View mChooseView = mActivity.mInflater.inflate(R.layout.choose_lookimage, null);
+		View mChooseView = mActivity.mInflater.inflate(
+				R.layout.choose_lookimage, null);
 		mActivity.showDialog(1, mChooseView);
-		//查看
-		mChooseView.findViewById(R.id.choose_lookimage).
-		setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mView = mActivity.mInflater.inflate(R.layout.code_view, null);
-				ImageView imageUserCode = (ImageView) mView
-						.findViewById(R.id.imageViewCodeCP);
-				imageUserCode.setImageBitmap(codeBitmap);
-				mActivity.removeDialog(1);
-				mActivity.showDialog(AbConstant.DIALOGCENTER, mView);
-				
-				imageUserCode.setOnClickListener(new OnClickListener() {
+		// 查看
+		mChooseView.findViewById(R.id.choose_lookimage).setOnClickListener(
+				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						mActivity.removeDialog(AbConstant.DIALOGCENTER);
+						// TODO Auto-generated method stub
+						mView = mActivity.mInflater.inflate(R.layout.code_view,
+								null);
+						ImageView imageUserCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+						imageUserCode.setImageBitmap(codeBitmap);
+						mActivity.removeDialog(1);
+						mActivity.showDialog(AbConstant.DIALOGCENTER, mView);
+
+						imageUserCode.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								mActivity.removeDialog(AbConstant.DIALOGCENTER);
+							}
+
+						});
 					}
 
 				});
-				}
+		// 保存
+		mChooseView.findViewById(R.id.choose_saveimagecode).setOnClickListener(
+				new OnClickListener() {
 
-			});
-		//保存
-		mChooseView.findViewById(R.id.choose_saveimagecode).
-		setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(View v) {
+						mActivity.removeDialog(1);
+						showPopupWindow();
+					}
+				});
+		// 取消
+		mChooseView.findViewById(R.id.choose_cancelimage).setOnClickListener(
+				new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mActivity.removeDialog(1);
-				showPopupWindow();
-			
-			}
-		});
-		//取消
-		mChooseView.findViewById(R.id.choose_cancelimage).
-		setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mActivity.removeDialog(1);
-			
-			}
-		});
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						mActivity.removeDialog(1);
+					}
+				});
 	}
-	
+
 	public void showPopupWindow() {
-		View mAvatarView = mActivity.mInflater.inflate(R.layout.choose_saveimage, null);
+		View mAvatarView = mActivity.mInflater.inflate(
+				R.layout.choose_saveimage, null);
 		mActivity.showDialog(1, mAvatarView);
-		mAvatarView.findViewById(R.id.choose_saveimage4).
-		setOnClickListener(new OnClickListener(){
+		mAvatarView.findViewById(R.id.choose_saveimage4).setOnClickListener(
+				new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				getStringImageUrl("");
-			
-			}
-		});
-		mAvatarView.findViewById(R.id.choose_saveimage8).
-		setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						getStringImageUrl("");
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				getStringImageUrl("s=20&");
-			}	
-		});
-		mAvatarView.findViewById(R.id.choose_saveimage16).
-		setOnClickListener(new OnClickListener(){
+					}
+				});
+		mAvatarView.findViewById(R.id.choose_saveimage8).setOnClickListener(
+				new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-			getStringImageUrl("s=40&");
-			}
-		});
-		mAvatarView.findViewById(R.id.choose_saveimage28).
-		setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						getStringImageUrl("s=20&");
+					}
+				});
+		mAvatarView.findViewById(R.id.choose_saveimage16).setOnClickListener(
+				new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				 getStringImageUrl("s=70&");
-			}
-		});
-		
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						getStringImageUrl("s=40&");
+					}
+				});
+		mAvatarView.findViewById(R.id.choose_saveimage28).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						getStringImageUrl("s=70&");
+					}
+				});
+
 	}
-	
-	public String getStringImageUrl(String size){
-		String saveImageUrl =
-				"http://f.321hy.cn/QR/"+application.mUser.getType()+"/"+application.mUser.getMember_id()+
-				"?"+size+"url=http://f.321hy.cn/Upload/"+application.mUser.getMember_id()
-				+"/Logo/Avatar.jpg&area="+application.cityid;
+
+	public String getStringImageUrl(String size) {
+		String saveImageUrl = "http://f.321hy.cn/QR/"
+				+ application.mUser.getType() + "/"
+				+ application.mUser.getMember_id() + "?" + size
+				+ "url=http://f.321hy.cn/Upload/"
+				+ application.mUser.getMember_id() + "/Logo/Avatar.jpg&area="
+				+ application.cityid;
 		AbHttpUtil.getInstance(mActivity).get(saveImageUrl,
 				new AbBinaryHttpResponseListener() {
 					// 获取数据成功会调用这里
 					@Override
 					public void onSuccess(int statusCode, byte[] content) {
 						Bitmap codeBitmap = AbImageUtil.bytes2Bimap(content);
-						String imgUrl =  MediaStore.Images.
-								Media.insertImage(mActivity.getContentResolver(), codeBitmap, "", "");   
-								Log.e("save codeimage", imgUrl);
-								//mActivity.removeDialog(AbConstant.DIALOGCENTER);
-								mActivity.removeDialog(1);
-								mActivity.showToast("二维码成功保存到相册！");
+						String imgUrl = MediaStore.Images.Media.insertImage(
+								mActivity.getContentResolver(), codeBitmap, "",
+								"");
+						Log.e("save codeimage", imgUrl);
+						// mActivity.removeDialog(AbConstant.DIALOGCENTER);
+						mActivity.removeDialog(1);
+						mActivity.showToast("二维码成功保存到相册！");
 					}
 
 					// 开始执行前
