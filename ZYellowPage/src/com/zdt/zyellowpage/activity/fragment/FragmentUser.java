@@ -17,20 +17,27 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -38,6 +45,7 @@ import android.widget.TextView;
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageCache;
 import com.ab.bitmap.AbImageDownloader;
+import com.ab.global.AbConstant;
 import com.ab.http.AbBinaryHttpResponseListener;
 import com.ab.http.AbHttpUtil;
 import com.ab.util.AbFileUtil;
@@ -48,6 +56,7 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.AddPhotoActivity;
 import com.zdt.zyellowpage.activity.CertificateListActivity;
 import com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity;
+import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.activity.MyConcernActivity;
 import com.zdt.zyellowpage.activity.MyResourceActivity;
 import com.zdt.zyellowpage.activity.NewsContentDetailActivity;
@@ -80,6 +89,8 @@ public class FragmentUser extends Fragment {
 
 	AbImageDownloader imageLoader;
 
+	//二维码弹出框
+	private View mView;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_user, container, false);
@@ -116,14 +127,15 @@ public class FragmentUser extends Fragment {
 				mActivity.startActivity(intent);
 			}
 		});
-		imageQr.setOnClickListener(new OnClickListener() {
+		/*imageQr.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO 多尺寸的二维码，可保存
 				mActivity.showToast("功能正在开发中...");
 			}
-		});
+		});*/
+		getCodeData();
 
 		lvMenu.setOnItemClickListener(new OnItemClickListener() {
 
@@ -444,5 +456,171 @@ public class FragmentUser extends Fragment {
 		intent.setData(uri);
 		intent.setDataAndType(uri, "application/vnd.android.package-archive");
 		mActivity.startActivity(intent);
+	}
+	/**
+	 * 获取二维码图片
+	 */
+	private void getCodeData() {
+		String url = application.mUser.getQr_code() + "&area=" + application.cityid;
+		AbHttpUtil.getInstance(mActivity).get(url,
+				new AbBinaryHttpResponseListener() {
+					// 获取数据成功会调用这里
+					@Override
+					public void onSuccess(int statusCode, byte[] content) {
+						Bitmap codeBitmap = AbImageUtil.bytes2Bimap(content);
+						mView = mActivity.mInflater.inflate(R.layout.code_view, null);
+						ImageView imageUserCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+
+						ImageView UserCode = (ImageView) mActivity
+								.findViewById(R.id.imageQr);
+						UserCode.setImageBitmap(codeBitmap);
+						UserCode
+						.setOnClickListener(new View.OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								mActivity.showDialog(AbConstant.DIALOGCENTER, mView);
+
+							}
+						});
+						imageUserCode.setImageBitmap(codeBitmap);
+						mView.findViewById(R.id.closeCodeImageTextView)
+						//imageUserCode
+						.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								// 点击结束弹出框
+								mActivity.removeDialog(AbConstant.DIALOGCENTER);
+							}
+						});
+						//imageUserCode.setLongClickable(true);
+						mView.findViewById(R.id.saveCodeImageTextView)
+								.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+										// TODO长按保存图片
+										//String imgUrl =  MediaStore.Images.
+										//Media.insertImage(getContentResolver(), codeBitmap, "", "");   
+										//Log.e("save codeimage", imgUrl);
+										
+										mActivity.removeDialog(AbConstant.DIALOGCENTER);
+										//mActivity.showToast("二维码成功保存到相册！");
+										showPopupWindow();
+									}
+
+								});
+
+					}
+
+					// 开始执行前
+					@Override
+					public void onStart() {
+						// 显示进度框
+						mActivity.showProgressDialog();
+					}
+
+					// 失败，调用
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						mActivity.showToast(error.getMessage());
+					}
+
+					// 完成后调用，失败，成功
+					@Override
+					public void onFinish() {
+						// 移除进度框
+						mActivity.removeProgressDialog();
+					};
+
+				});
+	}
+	
+	public void showPopupWindow() {
+		View mAvatarView = mActivity.mInflater.inflate(R.layout.choose_saveimage, null);
+		mActivity.showDialog(1, mAvatarView);
+		mAvatarView.findViewById(R.id.choose_saveimage4).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getStringImageUrl("");
+			
+			}
+		});
+		mAvatarView.findViewById(R.id.choose_saveimage8).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getStringImageUrl("s=20&");
+			}	
+		});
+		mAvatarView.findViewById(R.id.choose_saveimage16).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			getStringImageUrl("s=40&");
+			}
+		});
+		mAvatarView.findViewById(R.id.choose_saveimage28).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				 getStringImageUrl("s=70&");
+			}
+		});
+		
+	}
+	
+	public String getStringImageUrl(String size){
+		String saveImageUrl =
+				"http://f.321hy.cn/QR/"+application.mUser.getType()+"/"+application.mUser.getMember_id()+
+				"?"+size+"url=http://f.321hy.cn/Upload/"+application.mUser.getMember_id()
+				+"/Logo/Avatar.jpg&area="+application.cityid;
+		AbHttpUtil.getInstance(mActivity).get(saveImageUrl,
+				new AbBinaryHttpResponseListener() {
+					// 获取数据成功会调用这里
+					@Override
+					public void onSuccess(int statusCode, byte[] content) {
+						Bitmap codeBitmap = AbImageUtil.bytes2Bimap(content);
+						String imgUrl =  MediaStore.Images.
+								Media.insertImage(mActivity.getContentResolver(), codeBitmap, "", "");   
+								Log.e("save codeimage", imgUrl);
+								//mActivity.removeDialog(AbConstant.DIALOGCENTER);
+								mActivity.removeDialog(1);
+								mActivity.showToast("二维码成功保存到相册！");
+					}
+
+					// 开始执行前
+					@Override
+					public void onStart() {
+						// 显示进度框
+						mActivity.showProgressDialog();
+					}
+
+					// 失败，调用
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						mActivity.showToast(error.getMessage());
+					}
+
+					// 完成后调用，失败，成功
+					@Override
+					public void onFinish() {
+						// 移除进度框
+						mActivity.removeProgressDialog();
+					};
+
+				});
+		return saveImageUrl;
 	}
 }

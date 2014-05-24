@@ -11,10 +11,12 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -315,7 +317,6 @@ public class BusinessDetailActivity extends AbActivity {
 		String url = userCompany.getQr_code() + "&area=" + application.cityid;
 		AbHttpUtil.getInstance(BusinessDetailActivity.this).get(url,
 				new AbBinaryHttpResponseListener() {
-
 					// 获取数据成功会调用这里
 					@Override
 					public void onSuccess(int statusCode, byte[] content) {
@@ -327,7 +328,8 @@ public class BusinessDetailActivity extends AbActivity {
 						ImageView UserCode = (ImageView) BusinessDetailActivity.this
 								.findViewById(R.id.BCodeTopRightimageView);
 						UserCode.setImageBitmap(codeBitmap);
-						UserCode.setOnClickListener(new View.OnClickListener() {
+						UserCode
+						.setOnClickListener(new View.OnClickListener() {
 
 							@Override
 							public void onClick(View v) {
@@ -336,35 +338,26 @@ public class BusinessDetailActivity extends AbActivity {
 							}
 						});
 						imageUserCode.setImageBitmap(codeBitmap);
-						imageUserCode.setOnClickListener(new OnClickListener() {
+						mView.findViewById(R.id.closeCodeImageTextView)
+						//imageUserCode
+						.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								// 点击结束弹出框
 								removeDialog(AbConstant.DIALOGCENTER);
 							}
 						});
-						imageUserCode.setLongClickable(true);
-						imageUserCode
-								.setOnLongClickListener(new OnLongClickListener() {
-
-									@Override
-									public boolean onLongClick(View v) {
+						//imageUserCode.setLongClickable(true);
+						mView.findViewById(R.id.saveCodeImageTextView)
+								.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
 										// TODO长按保存图片
-										/*
-										 * File f = new
-										 * File("/sdcard/zdtimgcard/",
-										 * member_id+"code"); if (f.exists()) {
-										 * f.delete(); } try { FileOutputStream
-										 * out = new FileOutputStream(f);
-										 * codeBitmap
-										 * .compress(Bitmap.CompressFormat.JPEG,
-										 * 90, out); out.flush(); out.close(); }
-										 * catch (FileNotFoundException e) { //
-										 * e.printStackTrace(); } catch
-										 * Auto-generated catch block
-										 * e.printStackTrace(); }
-										 */
-										return false;
+										String imgUrl =  MediaStore.Images.
+										Media.insertImage(getContentResolver(), codeBitmap, "", "");   
+										Log.e("save codeimage", imgUrl);
+										removeDialog(AbConstant.DIALOGCENTER);
+										showToast("二维码成功保存到相册！");
 									}
 
 								});

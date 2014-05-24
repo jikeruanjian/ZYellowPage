@@ -7,7 +7,9 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,16 +20,20 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.ab.activity.AbActivity;
 import com.ab.global.AbConstant;
+import com.ab.http.AbBinaryHttpResponseListener;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbRequestParams;
 import com.ab.http.AbStringHttpResponseListener;
+import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.google.gson.Gson;
 import com.zdt.zyellowpage.R;
+import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.dao.UserInsideDao;
 import com.zdt.zyellowpage.global.Constant;
@@ -57,6 +63,7 @@ public class LoginActivity extends AbActivity {
 
 	private boolean isSuccess = false;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -470,4 +477,6 @@ public class LoginActivity extends AbActivity {
 					});
 		}
 	}
+	
+	
 }

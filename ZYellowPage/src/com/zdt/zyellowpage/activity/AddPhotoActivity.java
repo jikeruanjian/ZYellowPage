@@ -157,11 +157,9 @@ public class AddPhotoActivity extends AbActivity {
 			public void onClick(View v) {
 				removeDialog(AbConstant.DIALOGBOTTOM);
 			}
-
 		});
 
 		mGridView.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {

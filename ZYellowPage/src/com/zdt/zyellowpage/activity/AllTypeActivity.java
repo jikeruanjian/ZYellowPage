@@ -41,6 +41,10 @@ public class AllTypeActivity extends AbActivity {
 	private FragmentAllCompanyType newFragmentCompany = null;
 	private FragmentAllPersonType newFragmentPerson = null;
     private boolean isFirst =true;
+   float scale;
+
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -54,7 +58,7 @@ public class AllTypeActivity extends AbActivity {
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		gridview = (GridView) findViewById(R.id.commonClassGridView);
-
+		 scale = getResources().getDisplayMetrics().density;
 		newFragmentCompany = new FragmentAllCompanyType();
 		//newFragmentPerson = new FragmentAllPersonType();
 
@@ -140,7 +144,7 @@ public class AllTypeActivity extends AbActivity {
 			TextView text = (TextView) convertView.findViewById(R.id.ItemText);
 			text.setText(commonType[position]);
 			convertView.setLayoutParams(new GridView.LayoutParams(
-					GridView.LayoutParams.MATCH_PARENT, 100));
+					GridView.LayoutParams.MATCH_PARENT, (int) (40*scale)));
 			convertView.setPadding(-10, -10, -10, -10);
 			return convertView;
 		}

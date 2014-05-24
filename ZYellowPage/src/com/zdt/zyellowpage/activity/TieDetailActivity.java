@@ -3,14 +3,18 @@ package com.zdt.zyellowpage.activity;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -41,9 +45,8 @@ public class TieDetailActivity extends AbActivity {
 	private String type;
 	private TextView moreTextView;
 	private ImageView imgLogo;
-
-	RelativeLayout layMain;
-
+	private RelativeLayout layMain;
+	private ImageView imageUserCode;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -328,17 +331,38 @@ public class TieDetailActivity extends AbActivity {
 					public void onClick(View v) {
 						View mView = mInflater
 								.inflate(R.layout.code_view, null);
-						ImageView imageUserCode = (ImageView) mView
+						imageUserCode = (ImageView) mView
 								.findViewById(R.id.imageViewCodeCP);
 						new AbImageDownloader(TieDetailActivity.this).display(
 								imageUserCode, mTie.getQr_code());
-						imageUserCode.setOnClickListener(new OnClickListener() {
+						//imageUserCode
+						mView.findViewById(R.id.closeCodeImageTextView)
+						.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								// 点击结束弹出框
 								removeDialog(AbConstant.DIALOGCENTER);
 							}
 						});
+						//imageUserCode.setLongClickable(true);
+						//imageUserCode
+						mView.findViewById(R.id.saveCodeImageTextView)
+							.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+										
+									imageUserCode.setDrawingCacheEnabled(true);
+									Bitmap codeBitmap = Bitmap.createBitmap(imageUserCode.getDrawingCache());
+									imageUserCode.setDrawingCacheEnabled(false);
+									String imgUrl =  MediaStore.Images.
+									Media.insertImage(getContentResolver(), codeBitmap, "", "");   
+									Log.e("save codeimage", imgUrl);
+									removeDialog(AbConstant.DIALOGCENTER);
+									TieDetailActivity.this.showToast("二维码成功保存到相册！");
+									
+								}
+
+								});
 						showDialog(AbConstant.DIALOGCENTER, mView);
 					}
 

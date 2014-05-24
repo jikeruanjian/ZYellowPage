@@ -10,14 +10,15 @@
         android:layout_height="30dp"
         android:background="@color/gray_white"
         android:gravity="center_vertical"
-        android:text="  常用"
+        android:paddingLeft="20dp"
+        android:text="常用"
         android:textColor="@color/propertyname" />
 
     <GridView
         android:id="@+id/commonClassGridView"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:background="#FFFFFF"
+        android:layout_height="200dp"
+        android:background="@color/gray_white"
         android:horizontalSpacing="10dp"
         android:numColumns="3"
         android:verticalSpacing="10dp" >
@@ -40,7 +41,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:background="@color/orange_background"
+        android:background="@drawable/corners_orange"
         android:orientation="horizontal" >
 
         <RadioButton

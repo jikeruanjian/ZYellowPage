@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip" >
+
+    <Button
+        android:id="@+id/choose_saveimage4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="410x410"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/choose_saveimage8"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="820x820"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/choose_saveimage16"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="1640x1640"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/choose_saveimage28"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="2870x2870"
+        android:textSize="20sp" />
+</LinearLayout>
