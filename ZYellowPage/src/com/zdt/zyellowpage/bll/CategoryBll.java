@@ -34,11 +34,13 @@ public class CategoryBll {
 		mAbHttpUtil.get(Constant.ALLCATEGORY,
 				new AbStringHttpResponseListener() {
 					@Override
-					public void onSuccess(final int statusCode, final String content) {
-						new Thread(new Runnable() {
-
-							@Override
-							public void run() {
+					public void onSuccess(final int statusCode,
+							final String content) {
+//						new Thread(new Runnable() {
+//
+//							@Override
+//							public void run() {
+								Log.e("timeTest", "category开始插入");
 								List<Category> mCategorys = new Gson().fromJson(
 										content.toLowerCase(),
 										new TypeToken<List<Category>>() {
@@ -46,13 +48,21 @@ public class CategoryBll {
 
 								CategoryDao categoryDao = new CategoryDao(
 										context);
-								categoryDao.startWritableDatabase(false);
+								categoryDao.startWritableDatabase(true);
 								categoryDao.deleteAll();
-								categoryDao.insertList(mCategorys, false);
-								categoryDao.closeDatabase(false);
-								respListener.onSuccess(statusCode, "更新成功");
-							}
-						}).start();
+								if (categoryDao.insertListWithBatch(mCategorys,
+										false) == mCategorys.size()) {
+									categoryDao.setTransactionSuccessful();
+									categoryDao.closeDatabase(true);
+									respListener.onSuccess(statusCode, "更新成功");
+								} else {
+									Log.e("timeTest", "category失败");
+									respListener.onErrorData("数据拆入失败");
+									categoryDao.closeDatabase(true);
+								}
+
+//							}
+//						}).start();
 					}
 
 					@Override

@@ -17,7 +17,7 @@ public class HotKeyWord {
 	 */
 	@Id
 	@Column(name = "Id")
-	private int id;
+	private Integer id;
 
 	/**
 	 * 关键词
@@ -31,11 +31,11 @@ public class HotKeyWord {
 	@Column(name = "Type")
 	private String type;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

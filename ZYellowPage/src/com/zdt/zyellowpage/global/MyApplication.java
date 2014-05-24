@@ -22,6 +22,8 @@ public class MyApplication extends Application {
 
 	public String cityid = Constant.DEFAULTCITYID;
 	public String cityName = Constant.DEFAULTCITYNAME;
+
+	public String locateCityName;
 	public boolean userPasswordRemember = true;
 	public boolean ad = false;
 	public boolean firstStart = true;
@@ -49,6 +51,7 @@ public class MyApplication extends Application {
 
 		cityid = sp.getString(Constant.CITYID, Constant.DEFAULTCITYID);
 		cityName = sp.getString(Constant.CITYNAME, Constant.DEFAULTCITYNAME);
+		locateCityName = sp.getString(Constant.LOCATECITYNAME, "");
 		firstStart = sp.getBoolean(Constant.FIRSTSTART, true);
 
 		if (userName != null) {

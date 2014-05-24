@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
@@ -36,24 +37,29 @@ public class HotKeyWordBll {
 					@Override
 					public void onSuccess(final int statusCode,
 							final String content) {
-						new Thread(new Runnable() {
+						// new Thread(new Runnable() {
+						//
+						// @Override
+						// public void run() {
+						List<HotKeyWord> mKeyWord = new Gson().fromJson(
+								content.toLowerCase(),
+								new TypeToken<List<HotKeyWord>>() {
+								}.getType());
 
-							@Override
-							public void run() {
-								List<HotKeyWord> mKeyWord = new Gson().fromJson(
-										content.toLowerCase(),
-										new TypeToken<List<HotKeyWord>>() {
-										}.getType());
-
-								HotKeyWorkDao hotKeyWordDao = new HotKeyWorkDao(
-										context);
-								hotKeyWordDao.startWritableDatabase(false);
-								hotKeyWordDao.deleteAll();
-								hotKeyWordDao.insertList(mKeyWord, true);
-								hotKeyWordDao.closeDatabase(false);
-								respListener.onSuccess(statusCode, "更新成功");
-							}
-						}).start();
+						HotKeyWorkDao hotKeyWordDao = new HotKeyWorkDao(context);
+						hotKeyWordDao.startWritableDatabase(true);
+						hotKeyWordDao.deleteAll();
+						if (hotKeyWordDao.insertListWithBatch(mKeyWord, true) == mKeyWord
+								.size()) {
+							hotKeyWordDao.setTransactionSuccessful();
+							hotKeyWordDao.closeDatabase(true);
+							respListener.onSuccess(statusCode, "更新成功");
+						} else {
+							hotKeyWordDao.closeDatabase(true);
+							respListener.onErrorData("插入失败");
+						}
+						// }
+						// }).start();
 					}
 
 					@Override

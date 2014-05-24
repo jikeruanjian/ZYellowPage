@@ -9,15 +9,18 @@ public class Constant {
 	// 页面默认显示南京，登陆后显示注册用户的城市
 	public static final String CITYID = "cityId";
 	public static final String CITYNAME = "cityName";
-	public static final String DEFAULTCITYID = "530100";
-	public static final String DEFAULTCITYNAME = "昆明市";
+	public static final String DEFAULTCITYID = "000000";// 530100
+	public static final String DEFAULTCITYNAME = "全国";// 昆明
 
 	// cookies
 	public static final String USERNAMECOOKIE = "cookieName";
 	public static final String USERPASSWORDCOOKIE = "cookiePassword";
 	public static final String USERPASSWORDREMEMBERCOOKIE = "cookieRemember";
 	public static final String FIRSTSTART = "firstStart";
-	public static final String LASTUPDATETIME = "dataLastUpdateTime";
+	public static final String AREALASTUPDATETIME = "areaDataLastUpdateTime";
+	public static final String CATEGORYLASTUPDATETIME = "categoryDataLastUpdateTime";
+	public static final String HOTKEYLASTUPDATETIME = "hotkeyDataLastUpdateTime";
+	public static final String LOCATECITYNAME = "locateCityName";
 
 	// 连接超时
 	public static final int timeOut = 12000;

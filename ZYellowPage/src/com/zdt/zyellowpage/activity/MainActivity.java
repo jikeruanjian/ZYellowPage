@@ -125,7 +125,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	//
 	// private void showDialog(String title, String msg,
 	// DialogInterface.OnClickListener mOkOnClickListener) {
-	// // TODO Auto-generated method stub
 	// AlertDialog.Builder builder = new Builder(MainActivity.this);
 	// builder.setMessage(msg);
 	// builder.setTitle(title);
@@ -158,8 +157,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		if (requestCode == 10000) {
 			if (resultCode == RESULT_OK) {
 				textViewArea.setText(application.cityName);
-				// MainActivity.getAreaList(MainActivity.this,
-				// application.cityid);
 				newFragmentHome.getData();
 			}
 		}
@@ -171,16 +168,16 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		setContentView(R.layout.activity_main);
 		application = (MyApplication) abApplication;
 		initView();
-		// this.isShowAnim = false;
+		this.isShowAnim = false;
 		// initHomePagePullView();
 		// 地图
-		 mBMapMan = new BMapManager(getApplication());
-//		 E25ED402F8E85C1714F86CC9042EA1B32BE151B2
-		 mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
+		mBMapMan = new BMapManager(getApplication());
+		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
+		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
 		// 导航
-		 BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
-		 mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
-		 mKeyVerifyListener);
+		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
+				mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
+				mKeyVerifyListener);
 
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
@@ -228,7 +225,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 								CaptureActivity.class));
 					}
 				});
-		// getCityNameByLoc();
+		getCityNameByLoc();
 		checkUpdate();
 		// myThread.start();
 	}
@@ -237,12 +234,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	public void onResume() {
 		super.onResume();
 		editRearch.setText("");
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-
 	}
 
 	@Override
@@ -742,14 +733,10 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 		@Override
 		public void onVerifySucc() {
-			// TODO Auto-generated method stub
-			// Toast.makeText(MainActivity.this, "  ",
-			// Toast.LENGTH_LONG).show();
 		}
 
 		@Override
 		public void onVerifyFailed(int arg0, String arg1) {
-			// TODO Auto-generated method stub
 			Toast.makeText(MainActivity.this, "校验失败，无法提供导航功能！",
 					Toast.LENGTH_LONG).show();
 		}
@@ -775,7 +762,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		option.disableCache(true);// 禁止启用缓存定位
 		mLocationClient.setLocOption(option);
 		mLocationClient.start();
-
 		return null;
 
 	}
@@ -785,42 +771,44 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		@Override
 		// 定位获取经纬度
 		public void onReceiveLocation(BDLocation location) {
-			Log.e("xxxx", "-------------------开始定位");
+			Log.e("mainAc", "定位信息:");
 			if (location == null)
 				return;
-
+			Log.e("mainAc", "定位信息:" + location.getCity());
 			mCityName = location.getCity();
 			if (mCityName == null) {
-				mLocationClient.stop();
 				return;
 			}
-			String showCityName = mCityName.substring(0, 2);
+			mLocationClient.stop();
+			final String showCityName = mCityName.substring(0, 2);
 			if (showCityName.equals(textViewArea.getText().toString()
 					.substring(0, 2))) {
-				mLocationClient.stop();
 				return;
 			}
 			Log.e("fragmentmap", "-------------------所在城市：" + showCityName);
-			if (mCityName != null) {
-				mLocationClient.stop();
+			if (showCityName != null
+					&& !showCityName.equals(application.locateCityName)) {
+				application.locateCityName = showCityName;
+				Editor editor = abSharedPreferences.edit();
+				editor.putString(Constant.LOCATECITYNAME, showCityName);
+				editor.commit();
+
 				MainActivity.this.showDialog("位置提醒", "当前定位到您所在的城市是" + mCityName
 						+ ",是否切换城市？", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						showToast("正在切换……");
-						application.cityName = mCityName;
 						new AreaBll().getAreaIdByAreaName(MainActivity.this,
-								mCityName.substring(0, 2),
+								showCityName,
 								new ZzStringHttpResponseListener() {
 
 									@Override
 									public void onSuccess(int statusCode,
 											String content) {
-										// TODO Auto-generated method stub
 										if (content == null)
 											return;
 										application.cityid = content;
+										application.cityName = showCityName;
+
 										textViewArea.setText(mCityName
 												.substring(0, 2));
 										Editor editor = abSharedPreferences
@@ -828,36 +816,31 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 										editor.putString(Constant.CITYID,
 												content);
 										editor.putString(Constant.CITYNAME,
-												mCityName.substring(0, 2));
+												showCityName);
 										editor.commit();
 										newFragmentHome.getData();
-
 									}
 
 									@Override
 									public void onStart() {
-										// TODO Auto-generated method stub
-
+										showProgressDialog();
 									}
 
 									@Override
 									public void onFailure(int statusCode,
 											String content, Throwable error) {
-										// TODO Auto-generated method stub
-
+										showToast(content);
 									}
 
 									@Override
 									public void onErrorData(
 											String status_description) {
-										// TODO Auto-generated method stub
-
+										showToast(status_description);
 									}
 
 									@Override
 									public void onFinish() {
-										// TODO Auto-generated method stub
-
+										removeProgressDialog();
 									}
 								});
 					}

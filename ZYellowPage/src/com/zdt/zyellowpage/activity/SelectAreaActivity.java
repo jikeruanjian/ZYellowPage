@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
+import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.AreaBll;
@@ -58,7 +59,9 @@ public class SelectAreaActivity extends AbActivity {
 		spiCoutny = (Spinner) findViewById(R.id.spiCoutny);
 		btnConfirm = (Button) findViewById(R.id.selectAreaBtn);
 		tvCurrentAreaName = (TextView) findViewById(R.id.tvCurrentArea);
-		tvCurrentAreaName.setText(application.cityName);
+		tvCurrentAreaName
+				.setText(AbStrUtil.isEmpty(application.locateCityName) ? "未能定位"
+						: application.locateCityName);
 		lisCurrentAreas = getAreaParent();
 		initArea("0", spiProvince, adapterProvince);
 
@@ -249,7 +252,9 @@ public class SelectAreaActivity extends AbActivity {
 
 						ArrayAdapter<Area> adapter = new ArrayAdapter<Area>(
 								SelectAreaActivity.this,
-								android.R.layout.simple_spinner_item, lis);
+								R.layout.spinner_display_style, lis);
+
+						adapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
 
 						spinner.setAdapter(adapter);
 					}
@@ -267,26 +272,7 @@ public class SelectAreaActivity extends AbActivity {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Area> localList) {
-
-						if (content.equals(Constant.NOCONNECT)
-								&& (localList == null || localList.size() == 0)) {
-							showToast(content);
-							return;
-						}
-
-						if (spinner.equals(spiCoutny)) {
-							Area area = new Area();
-							area.setId("-" + parentId);
-							area.setParent(parentId);
-							area.setName("全部");
-							localList.add(0, area);
-						}
-
-						ArrayAdapter<Area> adapter = new ArrayAdapter<Area>(
-								SelectAreaActivity.this,
-								android.R.layout.simple_spinner_item, localList);
-
-						spinner.setAdapter(adapter);
+						showToast(content);
 					}
 
 					@Override

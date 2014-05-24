@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.ab.activity.AbActivity;
@@ -23,127 +24,126 @@ public class SplashActivity extends AbActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.splash);
-		this.isShowAnim = false;
+		this.isShowAnim = false; // finish的时候不调动画
+		downData();
 
 		ImageView iv = (ImageView) findViewById(R.id.ivSplash);
-		SharedPreferences sp = getSharedPreferences(AbConstant.SHAREPATH,
-				Context.MODE_PRIVATE);
-		Long lastUpdateTime = sp.getLong(Constant.LASTUPDATETIME, 0);
-		if ((new Date().getTime() - lastUpdateTime) > 86400000) {
-			downData();
-		}
-
 		iv.postDelayed(new Runnable() {
 
 			@Override
 			public void run() {
-				// if (((MyApplication)
-				// SplashActivity.this.getApplication()).firstStart) {
-				// SplashActivity.this.startActivity(new Intent(
-				// SplashActivity.this, SelectAreaActivity.class));
-				// } else {
 				SplashActivity.this.startActivity(new Intent(
 						SplashActivity.this, MainActivity.class));
-				// }
 				SplashActivity.this.finish();
 			}
-		}, 200);
-
+		}, 400);
 	}
 
 	private void downData() {
-		new HotKeyWordBll().downAllKeyWord(this,
-				new ZzStringHttpResponseListener() {
+		SharedPreferences sp = getSharedPreferences(AbConstant.SHAREPATH,
+				Context.MODE_PRIVATE);
+		Long areaLastUpdateTime = sp.getLong(Constant.AREALASTUPDATETIME, 0);
+		Long categoryLastUpdateTime = sp.getLong(
+				Constant.CATEGORYLASTUPDATETIME, 0);
+		Long hotkeyLastUpdateTime = sp
+				.getLong(Constant.HOTKEYLASTUPDATETIME, 0);
+		if ((new Date().getTime() - areaLastUpdateTime) > 86400000) {
+			// 下载区域
+			new AreaBll().downAllArea(SplashActivity.this,
+					new ZzStringHttpResponseListener() {
 
-					@Override
-					public void onSuccess(int statusCode, String content) {
-					}
+						@Override
+						public void onSuccess(int statusCode, String content) {
+							// 记录时间
+							Editor editor = abSharedPreferences.edit();
+							editor.putLong(Constant.AREALASTUPDATETIME,
+									new Date().getTime());
+							editor.commit();
+						}
 
-					@Override
-					public void onStart() {
-					}
+						@Override
+						public void onStart() {
+						}
 
-					@Override
-					public void onFinish() {
-					}
+						@Override
+						public void onFinish() {
+						}
 
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-					}
+						@Override
+						public void onFailure(int statusCode, String content,
+								Throwable error) {
+						}
 
-					@Override
-					public void onErrorData(String status_description) {
-					}
-				});
+						@Override
+						public void onErrorData(String status_description) {
+						}
+					});
+		}
+		if ((new Date().getTime() - categoryLastUpdateTime) > 86400000) {
+			// 下载分类
+			new CategoryBll().downAllCategory(SplashActivity.this,
+					new ZzStringHttpResponseListener() {
 
-		// 下载分类
-		new CategoryBll().downAllCategory(SplashActivity.this,
-				new ZzStringHttpResponseListener() {
+						@Override
+						public void onSuccess(int statusCode, String content) {
+							Editor editor = abSharedPreferences.edit();
+							editor.putLong(Constant.CATEGORYLASTUPDATETIME,
+									new Date().getTime());
+							editor.commit();
+						}
 
-					@Override
-					public void onSuccess(int statusCode, String content) {
+						@Override
+						public void onStart() {
+						}
 
-					}
+						@Override
+						public void onFinish() {
+						}
 
-					@Override
-					public void onStart() {
-					}
+						@Override
+						public void onFailure(int statusCode, String content,
+								Throwable error) {
+						}
 
-					@Override
-					public void onFinish() {
-					}
+						@Override
+						public void onErrorData(String status_description) {
+						}
+					});
+		}
+		// 热门关键
+		if ((new Date().getTime() - hotkeyLastUpdateTime) > 86400000) {
+			Log.e("timeTest", "热门关键词");
+			new HotKeyWordBll().downAllKeyWord(this,
+					new ZzStringHttpResponseListener() {
 
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-					}
+						@Override
+						public void onSuccess(int statusCode, String content) {
+							Editor editor = abSharedPreferences.edit();
+							editor.putLong(Constant.HOTKEYLASTUPDATETIME,
+									new Date().getTime());
+							editor.commit();
+							Log.e("timeTest", "热门关键词插入插入成功");
+						}
 
-					@Override
-					public void onErrorData(String status_description) {
-					}
-				});
+						@Override
+						public void onStart() {
+						}
 
-		// 下载区域
-		new AreaBll().downAllArea(SplashActivity.this,
-				new ZzStringHttpResponseListener() {
+						@Override
+						public void onFinish() {
+						}
 
-					@Override
-					public void onSuccess(int statusCode, String content) {
-						// 记录时间
-						Editor editor = abSharedPreferences.edit();
-						editor.putLong(Constant.LASTUPDATETIME,
-								new Date().getTime());
-						editor.commit();
-					}
+						@Override
+						public void onFailure(int statusCode, String content,
+								Throwable error) {
+						}
 
-					@Override
-					public void onStart() {
-					}
-
-					@Override
-					public void onFinish() {
-						// if (((MyApplication) SplashActivity.this
-						// .getApplication()).firstStart) {
-						// SplashActivity.this.startActivity(new Intent(
-						// SplashActivity.this,
-						// SelectAreaActivity.class));
-						// } else {
-						// SplashActivity.this.startActivity(new Intent(
-						// SplashActivity.this, MainActivity.class));
-						// }
-						// SplashActivity.this.finish();
-					}
-
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-					}
-
-					@Override
-					public void onErrorData(String status_description) {
-					}
-				});
+						@Override
+						public void onErrorData(String status_description) {
+							Log.e("timeTest", "热门关键词插入插入失败");
+						}
+					});
+		}
 
 	}
 }

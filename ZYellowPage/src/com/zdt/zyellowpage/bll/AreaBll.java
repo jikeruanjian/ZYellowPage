@@ -3,6 +3,7 @@ package com.zdt.zyellowpage.bll;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
@@ -35,23 +36,29 @@ public class AreaBll {
 		mAbHttpUtil.get(Constant.ALLAREA, new AbStringHttpResponseListener() {
 			@Override
 			public void onSuccess(final int statusCode, final String content) {
-				new Thread(new Runnable() {
+				// new Thread(new Runnable() {
+				//
+				// @Override
+				// public void run() {
+				List<Area> mAreas = new Gson().fromJson(content.toLowerCase(),
+						new TypeToken<List<Area>>() {
+						}.getType());
+				Log.e("timeTest", "开始插入area");
+				AreaDao areaDao = new AreaDao(context);
+				areaDao.startWritableDatabase(true);
+				areaDao.deleteAll();
+				if (areaDao.insertListWithBatch(mAreas, false) == mAreas.size()) {
+					areaDao.setTransactionSuccessful();
+					areaDao.closeDatabase(true);
+					Log.e("timeTest", "结束插入area");
+					respListener.onSuccess(statusCode, "更新成功");
+				} else {
+					areaDao.closeDatabase(true);
+					respListener.onErrorData("插入失败");
+				}
 
-					@Override
-					public void run() {
-						List<Area> mAreas = new Gson().fromJson(
-								content.toLowerCase(),
-								new TypeToken<List<Area>>() {
-								}.getType());
-
-						AreaDao areaDao = new AreaDao(context);
-						areaDao.startWritableDatabase(true);
-						areaDao.deleteAll();
-						areaDao.insertList(mAreas, false);
-						areaDao.closeDatabase(true);
-						respListener.onSuccess(statusCode, "更新成功");
-					}
-				}).start();
+				// }
+				// }).start();
 			}
 
 			@Override
@@ -109,14 +116,14 @@ public class AreaBll {
 			@Override
 			public void onFailure(int statusCode, String content,
 					Throwable error) {
-				List<Area> areas;
-				AreaDao areaDao = new AreaDao(context);
-				areaDao.startReadableDatabase(false);
-				areas = areaDao
-						.queryList("parent=?", new String[] { parentId });
-				areaDao.closeDatabase(false);
+				// List<Area> areas;
+				// AreaDao areaDao = new AreaDao(context);
+				// areaDao.startReadableDatabase(false);
+				// areas = areaDao
+				// .queryList("parent=?", new String[] { parentId });
+				// areaDao.closeDatabase(false);
 				objectResponseListener.onFailure(statusCode, content, error,
-						areas);
+						null);
 			}
 		});
 	}
