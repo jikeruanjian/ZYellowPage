@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -265,6 +266,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 
 					@Override
 					public void onStart() {
+						mActivity.showProgressDialog();
 					}
 
 					@Override
@@ -365,6 +367,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 
 					@Override
 					public void onFinish() {
+						mActivity.removeProgressDialog();
 						myListViewAdapterP.notifyDataSetChanged();
 						displayUtil.setListViewHeightBasedOnChildren(
 								mAbPullListViewP, 10);

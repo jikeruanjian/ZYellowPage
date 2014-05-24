@@ -88,7 +88,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	private ListView listView;
 	private String types[] = { "商家", "个人" };
 	boolean isFirst = true;
-	boolean isFirstTie =  true;
+	boolean isFirstTie = true;
 	// 区域列表
 	// public static List<Area> listArea;
 	// public static List<String> listAreaName;
@@ -171,26 +171,27 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		setContentView(R.layout.activity_main);
 		application = (MyApplication) abApplication;
 		initView();
-		//this.isShowAnim = false;
+		// this.isShowAnim = false;
 		// initHomePagePullView();
 		// 地图
-		mBMapMan = new BMapManager(getApplication());
-		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
-		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
+		 mBMapMan = new BMapManager(getApplication());
+//		 E25ED402F8E85C1714F86CC9042EA1B32BE151B2
+		 mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
 		// 导航
-		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
-				mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
-				mKeyVerifyListener);
+		 BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
+		 mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
+		 mKeyVerifyListener);
 
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentHome = new FragmentHomePage();
 		newFragmentUser = new FragmentUser();
-		//newFragmentTie = new FragmentTie();
+		// newFragmentTie = new FragmentTie();
 
 		fragmentTransaction.add(R.id.fragmentViewHome, newFragmentHome, "home");
 		fragmentTransaction.add(R.id.fragmentViewUser, newFragmentUser, "user");
-		//fragmentTransaction.add(R.id.fragmentViewMore, newFragmentTie, "more");
+		// fragmentTransaction.add(R.id.fragmentViewMore, newFragmentTie,
+		// "more");
 
 		fragmentTransaction.commit();
 		// listArea = new ArrayList<Area>();
@@ -227,10 +228,9 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 								CaptureActivity.class));
 					}
 				});
-		getCityNameByLoc();
+		// getCityNameByLoc();
 		checkUpdate();
 		// myThread.start();
-
 	}
 
 	@Override
@@ -252,13 +252,12 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				showToast("再按一次退出程序");
 				mExitTime = System.currentTimeMillis();
 			} else {
-				Intent intent = new Intent(Intent.ACTION_MAIN);
-				intent.addCategory(Intent.CATEGORY_HOME);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				android.os.Process.killProcess(android.os.Process.myPid());
-
-				// finish();
+				// Intent intent = new Intent(Intent.ACTION_MAIN);
+				// intent.addCategory(Intent.CATEGORY_HOME);
+				// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				// startActivity(intent);
+				// android.os.Process.killProcess(android.os.Process.myPid());
+				System.exit(0);
 			}
 			return true;
 		}
@@ -282,7 +281,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		fragmentTransaction.commit();
 
 	}
-	
+
 	protected void initView() {
 		DisplayUtil displayUtil = DisplayUtil.getInstance(this);
 
@@ -860,20 +859,15 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 										// TODO Auto-generated method stub
 
 									}
-
 								});
 					}
-
 				});
 			}
-
 		}
 
 		// 获得搜索点
 		@Override
 		public void onReceivePoi(BDLocation poiLocation) {
-
 		}
-
 	}
 }

@@ -34,19 +34,25 @@ public class CategoryBll {
 		mAbHttpUtil.get(Constant.ALLCATEGORY,
 				new AbStringHttpResponseListener() {
 					@Override
-					public void onSuccess(int statusCode, String content) {
+					public void onSuccess(final int statusCode, final String content) {
+						new Thread(new Runnable() {
 
-						List<Category> mCategorys = new Gson().fromJson(
-								content.toLowerCase(),
-								new TypeToken<List<Category>>() {
-								}.getType());
+							@Override
+							public void run() {
+								List<Category> mCategorys = new Gson().fromJson(
+										content.toLowerCase(),
+										new TypeToken<List<Category>>() {
+										}.getType());
 
-						CategoryDao categoryDao = new CategoryDao(context);
-						categoryDao.startWritableDatabase(false);
-						categoryDao.deleteAll();
-						categoryDao.insertList(mCategorys, false);
-						categoryDao.closeDatabase(false);
-						respListener.onSuccess(statusCode, "更新成功");
+								CategoryDao categoryDao = new CategoryDao(
+										context);
+								categoryDao.startWritableDatabase(false);
+								categoryDao.deleteAll();
+								categoryDao.insertList(mCategorys, false);
+								categoryDao.closeDatabase(false);
+								respListener.onSuccess(statusCode, "更新成功");
+							}
+						}).start();
 					}
 
 					@Override

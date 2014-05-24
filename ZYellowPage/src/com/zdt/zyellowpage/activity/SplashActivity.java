@@ -23,6 +23,7 @@ public class SplashActivity extends AbActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.splash);
+		this.isShowAnim = false;
 
 		ImageView iv = (ImageView) findViewById(R.id.ivSplash);
 		SharedPreferences sp = getSharedPreferences(AbConstant.SHAREPATH,
@@ -46,7 +47,7 @@ public class SplashActivity extends AbActivity {
 				// }
 				SplashActivity.this.finish();
 			}
-		}, 500);
+		}, 200);
 
 	}
 
@@ -128,10 +129,10 @@ public class SplashActivity extends AbActivity {
 						// SplashActivity.this,
 						// SelectAreaActivity.class));
 						// } else {
-						SplashActivity.this.startActivity(new Intent(
-								SplashActivity.this, MainActivity.class));
+						// SplashActivity.this.startActivity(new Intent(
+						// SplashActivity.this, MainActivity.class));
 						// }
-						SplashActivity.this.finish();
+						// SplashActivity.this.finish();
 					}
 
 					@Override

@@ -31,38 +31,47 @@ public class HotKeyWordBll {
 	public void downAllKeyWord(final Context context,
 			final ZzStringHttpResponseListener respListener) {
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
-		mAbHttpUtil.get(Constant.ALLHOTKEYWORD, new AbStringHttpResponseListener() {
-			@Override
-			public void onSuccess(int statusCode, String content) {
+		mAbHttpUtil.get(Constant.ALLHOTKEYWORD,
+				new AbStringHttpResponseListener() {
+					@Override
+					public void onSuccess(final int statusCode,
+							final String content) {
+						new Thread(new Runnable() {
 
-				List<HotKeyWord> mKeyWord = new Gson().fromJson(content.toLowerCase(),
-						new TypeToken<List<HotKeyWord>>() {
-						}.getType());
+							@Override
+							public void run() {
+								List<HotKeyWord> mKeyWord = new Gson().fromJson(
+										content.toLowerCase(),
+										new TypeToken<List<HotKeyWord>>() {
+										}.getType());
 
-						HotKeyWorkDao hotKeyWordDao = new HotKeyWorkDao(context);
-				hotKeyWordDao.startWritableDatabase(false);
-				hotKeyWordDao.deleteAll();
-				hotKeyWordDao.insertList(mKeyWord, true);
-				hotKeyWordDao.closeDatabase(false);
-				respListener.onSuccess(statusCode, "更新成功");
-			}
+								HotKeyWorkDao hotKeyWordDao = new HotKeyWorkDao(
+										context);
+								hotKeyWordDao.startWritableDatabase(false);
+								hotKeyWordDao.deleteAll();
+								hotKeyWordDao.insertList(mKeyWord, true);
+								hotKeyWordDao.closeDatabase(false);
+								respListener.onSuccess(statusCode, "更新成功");
+							}
+						}).start();
+					}
 
-			@Override
-			public void onStart() {
-				respListener.onStart();
-			}
+					@Override
+					public void onStart() {
+						respListener.onStart();
+					}
 
-			@Override
-			public void onFinish() {
-				respListener.onFinish();
-			}
+					@Override
+					public void onFinish() {
+						respListener.onFinish();
+					}
 
-			@Override
-			public void onFailure(int statusCode, String content,
-					Throwable error) {
-				respListener.onFailure(statusCode, content, error);
-			}
-		});
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						respListener.onFailure(statusCode, content, error);
+					}
+				});
 	}
 
 }

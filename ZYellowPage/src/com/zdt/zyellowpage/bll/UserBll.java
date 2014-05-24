@@ -259,47 +259,54 @@ public class UserBll {
 									JSONArray dataUser;
 									dataUser = data.getJSONArray("following");
 
-									List<User> tempUser = new Gson().fromJson(
+									final List<User> tempUser = new Gson().fromJson(
 											dataUser.toString(),
 											new TypeToken<List<User>>() {
 											}.getType());
 
-									if (page_number == 0) {
-
-										UserInsideDao userDao = new UserInsideDao(
-												mContext);
-										userDao.startWritableDatabase(true);
-										String dataType = Constant.DataType.MYFOLLOWING;
-										if (Integer.valueOf(type) > 2) {
-											dataType = Constant.DataType.MYFANS;
-										}
-										for (User user : tempUser) {
-											user.setDataType(dataType);
-										}
-										String whereClause = "";
-										String[] whereArgs = null;
-										if (type.equals("2")
-												|| type.equals("5")) {
-											whereClause = "dataType=?";
-											whereArgs = new String[] { dataType };
-										} else if (type.equals("0")
-												|| type.equals("3")) {
-											whereClause = "dataType=? and type=?";
-											whereArgs = new String[] {
-													dataType, "0" };
-										} else if (type.equals("1")
-												|| type.equals("4")) {
-											whereClause = "dataType=? and type=?";
-											whereArgs = new String[] {
-													dataType, "1" };
-										}
-
-										userDao.delete(whereClause, whereArgs);
-										userDao.insertList(tempUser);
-										userDao.closeDatabase(true);
-									}
 									objectResponseListener.onSuccess(
 											statusCode, tempUser);
+
+									if (page_number == 0) {
+										new Thread(new Runnable() {
+
+											@Override
+											public void run() {
+												UserInsideDao userDao = new UserInsideDao(
+														mContext);
+												userDao.startWritableDatabase(true);
+												String dataType = Constant.DataType.MYFOLLOWING;
+												if (Integer.valueOf(type) > 2) {
+													dataType = Constant.DataType.MYFANS;
+												}
+												for (User user : tempUser) {
+													user.setDataType(dataType);
+												}
+												String whereClause = "";
+												String[] whereArgs = null;
+												if (type.equals("2")
+														|| type.equals("5")) {
+													whereClause = "dataType=?";
+													whereArgs = new String[] { dataType };
+												} else if (type.equals("0")
+														|| type.equals("3")) {
+													whereClause = "dataType=? and type=?";
+													whereArgs = new String[] {
+															dataType, "0" };
+												} else if (type.equals("1")
+														|| type.equals("4")) {
+													whereClause = "dataType=? and type=?";
+													whereArgs = new String[] {
+															dataType, "1" };
+												}
+
+												userDao.delete(whereClause,
+														whereArgs);
+												userDao.insertList(tempUser);
+												userDao.closeDatabase(true);
+											}
+										}).start();
+									}
 								} else {
 									objectResponseListener.onErrorData(bre
 											.getStatus_description());
@@ -406,6 +413,11 @@ public class UserBll {
 												.getDataType());
 									}
 
+									List<User> lisUser = new ArrayList<User>();
+									lisUser.add(tempUser);
+									objectResponseListener.onSuccess(
+											statusCode, lisUser);
+
 									if (localUser != null
 											&& localUser.size() > 0
 											&& !localUser.get(0).isLoginUser()) {
@@ -415,11 +427,6 @@ public class UserBll {
 										userDao.insert(tempUser);
 										userDao.closeDatabase(false);
 									}
-
-									List<User> lisUser = new ArrayList<User>();
-									lisUser.add(tempUser);
-									objectResponseListener.onSuccess(
-											statusCode, lisUser);
 								} else {
 									Log.i("UserBll",
 											bre.getStatus_description());
@@ -444,11 +451,6 @@ public class UserBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						// UserInsideDao userDao = new UserInsideDao(mContext);
-						// userDao.startReadableDatabase(false);
-						// List<User> lis = userDao.queryList("member_id=?",
-						// new String[] { mMember_id });
-						// userDao.closeDatabase(false);
 						objectResponseListener.onFailure(statusCode, content,
 								error, null);
 					}
@@ -499,34 +501,42 @@ public class UserBll {
 													.getJSONArray("following");
 										}
 									}
-									List<User> tempUser = new Gson().fromJson(
+									final List<User> tempUser = new Gson().fromJson(
 											dataUser.toString(),
 											new TypeToken<List<User>>() {
 											}.getType());
-									// 缓存下来，同种数据类型的数据，只缓存一页
-									if (!AbStrUtil.isEmpty(dataType)
-											&& page_num == 0) {
-										for (User user : tempUser) {
-											user.setDataType(dataType);
-										}
-
-										UserInsideDao userDao = new UserInsideDao(
-												context);
-										String whereClause = "dataType=?";
-										String[] whereArgs = new String[] { dataType };
-										userDao.startWritableDatabase(false);
-										userDao.delete(whereClause, whereArgs);
-										userDao.insertList(tempUser);
-										userDao.closeDatabase(false);
-									}
 
 									objectResponseListener.onSuccess(
 											statusCode, tempUser);
+									// 缓存下来，同种数据类型的数据，只缓存一页
+									if (!AbStrUtil.isEmpty(dataType)
+											&& page_num == 0) {
+
+										new Thread(new Runnable() {
+
+											@Override
+											public void run() {
+												for (User user : tempUser) {
+													user.setDataType(dataType);
+												}
+												UserInsideDao userDao = new UserInsideDao(
+														context);
+												String whereClause = "dataType=?";
+												String[] whereArgs = new String[] { dataType };
+												userDao.startWritableDatabase(false);
+												userDao.delete(whereClause,
+														whereArgs);
+												userDao.insertList(tempUser);
+												userDao.closeDatabase(false);
+											}
+										}).start();
+
+									}
+
 								} else {
 									objectResponseListener.onErrorData(bre
 											.getStatus_description());
 								}
-
 							} catch (JSONException e) {
 								e.printStackTrace();
 								return;
@@ -537,6 +547,15 @@ public class UserBll {
 					// 开始执行前
 					@Override
 					public void onStart() {
+
+						objectResponseListener.onStart();
+
+					}
+
+					// 失败，调用
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
 						List<User> lis = null;
 						if (!AbStrUtil.isEmpty(dataType) && page_num == 0) {
 							UserInsideDao userDao = new UserInsideDao(mContext);
@@ -545,19 +564,12 @@ public class UserBll {
 							String[] whereArgs = new String[] { dataType };
 							lis = userDao.queryList(whereClause, whereArgs);
 							userDao.closeDatabase(false);
-							objectResponseListener.onFailure(200, null, null,
-									lis);
+							objectResponseListener.onFailure(statusCode,
+									content, error, lis);
 						} else {
-							objectResponseListener.onStart();
+							objectResponseListener.onFailure(statusCode,
+									content, error, null);
 						}
-					}
-
-					// 失败，调用
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-						objectResponseListener.onFailure(statusCode, content,
-								error, null);
 					}
 
 					// 完成后调用，失败，成功

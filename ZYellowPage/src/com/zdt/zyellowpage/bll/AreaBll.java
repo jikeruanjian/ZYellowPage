@@ -34,18 +34,24 @@ public class AreaBll {
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
 		mAbHttpUtil.get(Constant.ALLAREA, new AbStringHttpResponseListener() {
 			@Override
-			public void onSuccess(int statusCode, String content) {
+			public void onSuccess(final int statusCode, final String content) {
+				new Thread(new Runnable() {
 
-				List<Area> mAreas = new Gson().fromJson(content.toLowerCase(),
-						new TypeToken<List<Area>>() {
-						}.getType());
+					@Override
+					public void run() {
+						List<Area> mAreas = new Gson().fromJson(
+								content.toLowerCase(),
+								new TypeToken<List<Area>>() {
+								}.getType());
 
-				AreaDao areaDao = new AreaDao(context);
-				areaDao.startWritableDatabase(true);
-				areaDao.deleteAll();
-				areaDao.insertList(mAreas, false);
-				areaDao.closeDatabase(true);
-				respListener.onSuccess(statusCode, "更新成功");
+						AreaDao areaDao = new AreaDao(context);
+						areaDao.startWritableDatabase(true);
+						areaDao.deleteAll();
+						areaDao.insertList(mAreas, false);
+						areaDao.closeDatabase(true);
+						respListener.onSuccess(statusCode, "更新成功");
+					}
+				}).start();
 			}
 
 			@Override
