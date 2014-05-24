@@ -333,35 +333,10 @@ public class BusinessDetailActivity extends AbActivity {
 
 							@Override
 							public void onClick(View v) {
-								showDialog(AbConstant.DIALOGCENTER, mView);
+								showChosePopWindow();
 
 							}
 						});
-						imageUserCode.setImageBitmap(codeBitmap);
-						mView.findViewById(R.id.closeCodeImageTextView)
-						//imageUserCode
-						.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								// 点击结束弹出框
-								removeDialog(AbConstant.DIALOGCENTER);
-							}
-						});
-						//imageUserCode.setLongClickable(true);
-						mView.findViewById(R.id.saveCodeImageTextView)
-								.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-										// TODO长按保存图片
-										String imgUrl =  MediaStore.Images.
-										Media.insertImage(getContentResolver(), codeBitmap, "", "");   
-										Log.e("save codeimage", imgUrl);
-										removeDialog(AbConstant.DIALOGCENTER);
-										showToast("二维码成功保存到相册！");
-									}
-
-								});
-
 					}
 
 					// 开始执行前
@@ -698,5 +673,60 @@ public class BusinessDetailActivity extends AbActivity {
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
+	}
+	
+	public void showChosePopWindow() {
+		View mChooseView = BusinessDetailActivity.this.mInflater.inflate(R.layout.choose_lookimage, null);
+		BusinessDetailActivity.this.showDialog(1, mChooseView);
+		//查看
+		mChooseView.findViewById(R.id.choose_lookimage).
+		setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mView = BusinessDetailActivity.this.mInflater.inflate(R.layout.code_view, null);
+				ImageView imageUserCode = (ImageView) mView
+						.findViewById(R.id.imageViewCodeCP);
+				imageUserCode.setImageBitmap(codeBitmap);
+				BusinessDetailActivity.this.removeDialog(1);
+				BusinessDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);
+				
+				imageUserCode.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						BusinessDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
+					}
+
+				});
+				}
+
+			});
+		//保存
+		mChooseView.findViewById(R.id.choose_saveimagecode).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				BusinessDetailActivity.this.removeDialog(1);
+				String imgUrl =  MediaStore.Images.
+						Media.insertImage(getContentResolver(), codeBitmap, "", "");   
+						Log.e("save codeimage", imgUrl);
+						removeDialog(AbConstant.DIALOGCENTER);
+						showToast("二维码成功保存到相册！");
+			
+			}
+		});
+		//取消
+		mChooseView.findViewById(R.id.choose_cancelimage).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				BusinessDetailActivity.this.removeDialog(1);
+			
+			}
+		});
 	}
 }

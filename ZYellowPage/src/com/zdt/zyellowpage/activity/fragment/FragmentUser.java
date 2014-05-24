@@ -86,7 +86,7 @@ public class FragmentUser extends Fragment {
 	List<String> commonMenu = new ArrayList<String>();
 	MenuAdapter menuAdapter;
 	DisplayUtil displayUtil;
-
+	Bitmap codeBitmap;
 	AbImageDownloader imageLoader;
 
 	//二维码弹出框
@@ -127,15 +127,15 @@ public class FragmentUser extends Fragment {
 				mActivity.startActivity(intent);
 			}
 		});
-		/*imageQr.setOnClickListener(new OnClickListener() {
+		imageQr.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO 多尺寸的二维码，可保存
-				mActivity.showToast("功能正在开发中...");
+				showChosePopWindow();
 			}
-		});*/
-		getCodeData();
+		});
+		//getCodeData();
 
 		lvMenu.setOnItemClickListener(new OnItemClickListener() {
 
@@ -272,7 +272,7 @@ public class FragmentUser extends Fragment {
 						// 获取数据成功会调用这里
 						@Override
 						public void onSuccess(int statusCode, byte[] content) {
-							Bitmap codeBitmap = AbImageUtil
+							codeBitmap = AbImageUtil
 									.bytes2Bimap(content);
 							imageQr.setImageBitmap(codeBitmap);
 						}
@@ -457,84 +457,57 @@ public class FragmentUser extends Fragment {
 		intent.setDataAndType(uri, "application/vnd.android.package-archive");
 		mActivity.startActivity(intent);
 	}
-	/**
-	 * 获取二维码图片
-	 */
-	private void getCodeData() {
-		String url = application.mUser.getQr_code() + "&area=" + application.cityid;
-		AbHttpUtil.getInstance(mActivity).get(url,
-				new AbBinaryHttpResponseListener() {
-					// 获取数据成功会调用这里
+	
+	
+	public void showChosePopWindow() {
+		View mChooseView = mActivity.mInflater.inflate(R.layout.choose_lookimage, null);
+		mActivity.showDialog(1, mChooseView);
+		//查看
+		mChooseView.findViewById(R.id.choose_lookimage).
+		setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mView = mActivity.mInflater.inflate(R.layout.code_view, null);
+				ImageView imageUserCode = (ImageView) mView
+						.findViewById(R.id.imageViewCodeCP);
+				imageUserCode.setImageBitmap(codeBitmap);
+				mActivity.removeDialog(1);
+				mActivity.showDialog(AbConstant.DIALOGCENTER, mView);
+				
+				imageUserCode.setOnClickListener(new OnClickListener() {
 					@Override
-					public void onSuccess(int statusCode, byte[] content) {
-						Bitmap codeBitmap = AbImageUtil.bytes2Bimap(content);
-						mView = mActivity.mInflater.inflate(R.layout.code_view, null);
-						ImageView imageUserCode = (ImageView) mView
-								.findViewById(R.id.imageViewCodeCP);
-
-						ImageView UserCode = (ImageView) mActivity
-								.findViewById(R.id.imageQr);
-						UserCode.setImageBitmap(codeBitmap);
-						UserCode
-						.setOnClickListener(new View.OnClickListener() {
-
-							@Override
-							public void onClick(View v) {
-								mActivity.showDialog(AbConstant.DIALOGCENTER, mView);
-
-							}
-						});
-						imageUserCode.setImageBitmap(codeBitmap);
-						mView.findViewById(R.id.closeCodeImageTextView)
-						//imageUserCode
-						.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								// 点击结束弹出框
-								mActivity.removeDialog(AbConstant.DIALOGCENTER);
-							}
-						});
-						//imageUserCode.setLongClickable(true);
-						mView.findViewById(R.id.saveCodeImageTextView)
-								.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-										// TODO长按保存图片
-										//String imgUrl =  MediaStore.Images.
-										//Media.insertImage(getContentResolver(), codeBitmap, "", "");   
-										//Log.e("save codeimage", imgUrl);
-										
-										mActivity.removeDialog(AbConstant.DIALOGCENTER);
-										//mActivity.showToast("二维码成功保存到相册！");
-										showPopupWindow();
-									}
-
-								});
-
+					public void onClick(View v) {
+						mActivity.removeDialog(AbConstant.DIALOGCENTER);
 					}
-
-					// 开始执行前
-					@Override
-					public void onStart() {
-						// 显示进度框
-						mActivity.showProgressDialog();
-					}
-
-					// 失败，调用
-					@Override
-					public void onFailure(int statusCode, String content,
-							Throwable error) {
-						mActivity.showToast(error.getMessage());
-					}
-
-					// 完成后调用，失败，成功
-					@Override
-					public void onFinish() {
-						// 移除进度框
-						mActivity.removeProgressDialog();
-					};
 
 				});
+				}
+
+			});
+		//保存
+		mChooseView.findViewById(R.id.choose_saveimagecode).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mActivity.removeDialog(1);
+				showPopupWindow();
+			
+			}
+		});
+		//取消
+		mChooseView.findViewById(R.id.choose_cancelimage).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mActivity.removeDialog(1);
+			
+			}
+		});
 	}
 	
 	public void showPopupWindow() {

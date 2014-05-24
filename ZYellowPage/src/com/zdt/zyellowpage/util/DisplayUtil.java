@@ -1,9 +1,16 @@
 package com.zdt.zyellowpage.util;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
@@ -423,5 +430,30 @@ public class DisplayUtil {
 	public float getRealDensityDpi() {
 		return realDensityDpi;
 	}
-	
+	// 获取指定路径的图片   
+    public static Bitmap getImage(String url)   
+            throws Exception {   
+    	 URL fileUrl = null;  
+         Bitmap bitmap = null;  
+         try {  
+             fileUrl = new URL(url);  
+         } catch (MalformedURLException e) {  
+             e.printStackTrace();  
+         }  
+         try {  
+
+             HttpURLConnection conn = (HttpURLConnection) fileUrl  
+                    .openConnection();  
+            conn.setDoInput(true);  
+            conn.connect();  
+            InputStream is = conn.getInputStream();  
+            bitmap = BitmapFactory.decodeStream(is);  
+             is.close();  
+         } catch (IOException e) {  
+             e.printStackTrace();  
+         }  
+         return bitmap;  
+
+    }  
+
 }

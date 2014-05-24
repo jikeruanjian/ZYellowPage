@@ -1,5 +1,6 @@
 package com.zdt.zyellowpage.activity;
 
+import java.net.URL;
 import java.util.List;
 
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
+import com.ab.bitmap.AbImageCache;
 import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
 import com.ab.util.AbStrUtil;
@@ -46,7 +48,9 @@ public class TieDetailActivity extends AbActivity {
 	private TextView moreTextView;
 	private ImageView imgLogo;
 	private RelativeLayout layMain;
-	private ImageView imageUserCode;
+	private ImageView imageCode ;
+	private View mView;
+	Bitmap codeBitmap;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -247,6 +251,8 @@ public class TieDetailActivity extends AbActivity {
 			ImageView codeImage = (ImageView) this
 					.findViewById(R.id.TCodeTopRightimageView);
 			new AbImageDownloader(this).display(codeImage, mTie.getQr_code());
+		
+			
 		}
 		TextView fullName = (TextView) this.findViewById(R.id.tiefullname);
 		fullName.setText(mTie.getTitle());
@@ -329,41 +335,12 @@ public class TieDetailActivity extends AbActivity {
 
 					@Override
 					public void onClick(View v) {
-						View mView = mInflater
-								.inflate(R.layout.code_view, null);
-						imageUserCode = (ImageView) mView
-								.findViewById(R.id.imageViewCodeCP);
-						new AbImageDownloader(TieDetailActivity.this).display(
-								imageUserCode, mTie.getQr_code());
-						//imageUserCode
-						mView.findViewById(R.id.closeCodeImageTextView)
-						.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								// 点击结束弹出框
-								removeDialog(AbConstant.DIALOGCENTER);
-							}
-						});
-						//imageUserCode.setLongClickable(true);
-						//imageUserCode
-						mView.findViewById(R.id.saveCodeImageTextView)
-							.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-										
-									imageUserCode.setDrawingCacheEnabled(true);
-									Bitmap codeBitmap = Bitmap.createBitmap(imageUserCode.getDrawingCache());
-									imageUserCode.setDrawingCacheEnabled(false);
-									String imgUrl =  MediaStore.Images.
-									Media.insertImage(getContentResolver(), codeBitmap, "", "");   
-									Log.e("save codeimage", imgUrl);
-									removeDialog(AbConstant.DIALOGCENTER);
-									TieDetailActivity.this.showToast("二维码成功保存到相册！");
-									
-								}
-
-								});
+						mView = TieDetailActivity.this.mInflater.inflate(R.layout.code_view, null);
+						imageCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
+						new AbImageDownloader(TieDetailActivity.this).display( imageCode , mTie.getQr_code());
 						showDialog(AbConstant.DIALOGCENTER, mView);
+						removeDialog(AbConstant.DIALOGCENTER);
+						showChosePopWindow();
 					}
 
 				});
@@ -380,6 +357,64 @@ public class TieDetailActivity extends AbActivity {
 					TieDetailActivity.this.findViewById(R.id.tie_more_WebView)
 							.setVisibility(View.VISIBLE);
 				}
+			}
+		});
+	}
+
+	public void showChosePopWindow() {
+		View mChooseView =TieDetailActivity.this.mInflater.inflate(R.layout.choose_lookimage, null);
+		TieDetailActivity.this.showDialog(1, mChooseView);
+		//查看
+		mChooseView.findViewById(R.id.choose_lookimage).
+		setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TieDetailActivity.this.removeDialog(1);
+				TieDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);	
+				imageCode.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						TieDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
+					}
+
+				});
+				}
+
+			});
+		//保存
+		mChooseView.findViewById(R.id.choose_saveimagecode).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TieDetailActivity.this.removeDialog(1);   
+				//String cacheKey = AbImageCache.getCacheKey(mTie.getQr_code(), 0, 0, 0);
+				imageCode.setDrawingCacheEnabled(true);
+				codeBitmap = Bitmap.createBitmap(imageCode.getDrawingCache());   
+				imageCode.setDrawingCacheEnabled(false);
+				
+				if(codeBitmap !=null){
+				String imgUrl =  MediaStore.Images.
+				Media.insertImage(getContentResolver(), codeBitmap, "", "");   
+				Log.e("save codeimage", imgUrl);
+				TieDetailActivity.this.showToast("二维码成功保存到相册！");}
+				else{
+					TieDetailActivity.this.showToast("二维码保存失败！");
+				}
+			
+			}
+		});
+		//取消
+		mChooseView.findViewById(R.id.choose_cancelimage).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TieDetailActivity.this.removeDialog(1);
+			
 			}
 		});
 	}

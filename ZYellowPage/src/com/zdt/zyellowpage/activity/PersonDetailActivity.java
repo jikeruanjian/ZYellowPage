@@ -64,6 +64,8 @@ public class PersonDetailActivity extends AbActivity {
 	View mCodeView;
 	RelativeLayout layMain;
 
+	//二维码弹出框
+	private View mView;
 	// private String[] imageUrls = new String[] { };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -155,45 +157,17 @@ public class PersonDetailActivity extends AbActivity {
 					@Override
 					public void onSuccess(int statusCode, byte[] content) {
 						codeBitmap = AbImageUtil.bytes2Bimap(content);
-						mCodeView = mInflater.inflate(R.layout.code_view, null);
-						ImageView imageUserCode = (ImageView) mCodeView
-								.findViewById(R.id.imageViewCodeCP);
+					
 						ImageView UserCode = (ImageView) PersonDetailActivity.this
 								.findViewById(R.id.codeTopRightimageView);
 						UserCode.setImageBitmap(codeBitmap);
 						UserCode.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
-								PersonDetailActivity.this.showDialog(
-										AbConstant.DIALOGCENTER, mCodeView);
+								//PersonDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mCodeView);
+								showChosePopWindow();
 							}
 						});
-
-						imageUserCode.setImageBitmap(codeBitmap);
-						mCodeView .findViewById(R.id.closeCodeImageTextView)
-					//	imageUserCode
-						.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								removeDialog(AbConstant.DIALOGCENTER);
-							}
-						});
-
-						//imageUserCode.setLongClickable(true);
-						//imageUserCode
-						mCodeView.findViewById(R.id.saveCodeImageTextView)
-								.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-										// TODO长按保存图片
-										String imgUrl =  MediaStore.Images.
-										Media.insertImage(getContentResolver(), codeBitmap, "", "");   
-										Log.e("save codeimage", imgUrl);
-										removeDialog(AbConstant.DIALOGCENTER);
-										showToast("二维码成功保存到相册！");
-									}
-
-								});
 					}
 
 					// 开始执行前
@@ -582,5 +556,60 @@ public class PersonDetailActivity extends AbActivity {
 		@Override
 		public void onPageScrollStateChanged(int arg0) {
 		}
+	}
+	
+	public void showChosePopWindow() {
+		View mChooseView = PersonDetailActivity.this.mInflater.inflate(R.layout.choose_lookimage, null);
+		PersonDetailActivity.this.showDialog(1, mChooseView);
+		//查看
+		mChooseView.findViewById(R.id.choose_lookimage).
+		setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mView = PersonDetailActivity.this.mInflater.inflate(R.layout.code_view, null);
+				ImageView imageUserCode = (ImageView) mView
+						.findViewById(R.id.imageViewCodeCP);
+				imageUserCode.setImageBitmap(codeBitmap);
+				PersonDetailActivity.this.removeDialog(1);
+				PersonDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);
+				
+				imageUserCode.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						PersonDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
+					}
+
+				});
+				}
+
+			});
+		//保存
+		mChooseView.findViewById(R.id.choose_saveimagecode).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				PersonDetailActivity.this.removeDialog(1);
+				String imgUrl =  MediaStore.Images.
+						Media.insertImage(getContentResolver(), codeBitmap, "", "");   
+						Log.e("save codeimage", imgUrl);
+						removeDialog(AbConstant.DIALOGCENTER);
+						showToast("二维码成功保存到相册！");
+			
+			}
+		});
+		//取消
+		mChooseView.findViewById(R.id.choose_cancelimage).
+		setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				PersonDetailActivity.this.removeDialog(1);
+			
+			}
+		});
 	}
 }
