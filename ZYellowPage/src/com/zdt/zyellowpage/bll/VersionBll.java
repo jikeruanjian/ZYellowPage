@@ -43,52 +43,57 @@ public class VersionBll {
 		AbRequestParams params = new AbRequestParams();
 		params.put("id", jo.toString());
 		AbHttpUtil mAbHttpUtil = AbHttpUtil.getInstance(context);
-		mAbHttpUtil.get(Constant.AREAURL, new AbStringHttpResponseListener() {
-			@Override
-			public void onSuccess(int statusCode, String content) {
-				Log.i("VersionBll", content);
-				JSONObject jo = null;
-				BaseResponseEntity bre = new BaseResponseEntity();
-				// 转换数据
-				try {
-					jo = new JSONObject(content);
-					bre.setResult(jo.getString("result"));
-					bre.setSuccess(jo.getBoolean("success"));
-					bre.setStatus(jo.getInt("status"));
-					bre.setStatus_description(jo
-							.getString("status_description"));
+		mAbHttpUtil.post(Constant.BASEURL, params,
+				new AbStringHttpResponseListener() {
+					@Override
+					public void onSuccess(int statusCode, String content) {
+						Log.i("VersionBll", content);
+						JSONObject jo = null;
+						BaseResponseEntity bre = new BaseResponseEntity();
+						// 转换数据
+						try {
+							jo = new JSONObject(content);
+							bre.setResult(jo.getString("result"));
+							bre.setSuccess(jo.getBoolean("success"));
+							bre.setStatus(jo.getInt("status"));
+							bre.setStatus_description(jo
+									.getString("status_description"));
 
-					if (bre.getSuccess()) {
-						JSONObject data = jo.getJSONObject("data");
+							if (bre.getSuccess()) {
+								JSONObject data = jo.getJSONObject("data");
 
-						Version tempVersion = new Gson().fromJson(
-								data.toString(), Version.class);
-						List<Version> lis = new ArrayList<Version>();
-						lis.add(tempVersion);
-						objectResponseListener.onSuccess(statusCode, lis);
+								Version tempVersion = new Gson().fromJson(
+										data.toString(), Version.class);
+								List<Version> lis = new ArrayList<Version>();
+								lis.add(tempVersion);
+								objectResponseListener.onSuccess(statusCode,
+										lis);
+							} else {
+								objectResponseListener.onErrorData(bre
+										.getStatus_description());
+							}
+						} catch (JSONException e) {
+							objectResponseListener.onErrorData("数据请求错误");
+						}
+
 					}
-				} catch (JSONException e) {
-					objectResponseListener.onErrorData("数据请求错误");
-				}
 
-			}
+					@Override
+					public void onStart() {
+						objectResponseListener.onStart();
+					}
 
-			@Override
-			public void onStart() {
-				objectResponseListener.onStart();
-			}
+					@Override
+					public void onFinish() {
+						objectResponseListener.onFinish();
+					}
 
-			@Override
-			public void onFinish() {
-				objectResponseListener.onFinish();
-			}
-
-			@Override
-			public void onFailure(int statusCode, String content,
-					Throwable error) {
-				objectResponseListener.onFailure(statusCode, content, error,
-						null);
-			}
-		});
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						objectResponseListener.onFailure(statusCode, content,
+								error, null);
+					}
+				});
 	}
 }

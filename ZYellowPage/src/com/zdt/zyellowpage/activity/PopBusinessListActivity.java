@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.ab.activity.AbActivity;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
@@ -82,12 +84,13 @@ public class PopBusinessListActivity extends AbActivity {
 		cityId = application.cityid;
 		keyId = typeId;// "list-hot";
 		myPopupWindow = new MyPopupWindowB(PopBusinessListActivity.this, "0");
-		initSpinner();
+		// initSpinner();
+		// 获取ListView对象
+		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListView);
 
 		list = new ArrayList<Map<String, Object>>();
 		newList = new ArrayList<Map<String, Object>>();
 		initPopBusinessView();
-
 	}
 
 	/**
@@ -225,8 +228,6 @@ public class PopBusinessListActivity extends AbActivity {
 	 * 初始化商家列表显示
 	 */
 	protected void initPopBusinessView() {
-		// 获取ListView对象
-		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListView);
 
 		// 打开关闭下拉刷新加载更多功能
 		mAbPullListView.setPullRefreshEnable(true);

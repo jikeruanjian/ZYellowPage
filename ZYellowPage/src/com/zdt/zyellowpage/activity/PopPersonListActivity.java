@@ -82,12 +82,13 @@ public class PopPersonListActivity extends AbActivity {
 		application = (MyApplication) abApplication;
 		cityId = application.cityid;
 		keyId = typeId;// "list-hot";
-		initSpinner();
+		// initSpinner();
+		// 获取ListView对象
+		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListView);
 		myPopupWindow = new MyPopupWindowB(PopPersonListActivity.this, "1");
 		list = new ArrayList<Map<String, Object>>();
 		newList = new ArrayList<Map<String, Object>>();
 		initPopBusinessView();
-
 	}
 
 	/**
@@ -225,8 +226,6 @@ public class PopPersonListActivity extends AbActivity {
 	 * 初始化商家列表显示
 	 */
 	protected void initPopBusinessView() {
-		// 获取ListView对象
-		mAbPullListView = (AbPullListView) this.findViewById(R.id.mListView);
 
 		// 打开关闭下拉刷新加载更多功能
 		mAbPullListView.setPullRefreshEnable(true);

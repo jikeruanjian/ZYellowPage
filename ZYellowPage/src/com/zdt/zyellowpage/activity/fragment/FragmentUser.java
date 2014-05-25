@@ -45,7 +45,6 @@ import com.ab.http.AbHttpUtil;
 import com.ab.util.AbFileUtil;
 import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
-import com.ab.view.sample.AbInnerListView;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.AddPhotoActivity;
 import com.zdt.zyellowpage.activity.CertificateListActivity;
@@ -56,6 +55,7 @@ import com.zdt.zyellowpage.activity.NewsContentDetailActivity;
 import com.zdt.zyellowpage.activity.login.ChangePwdActivity;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.VersionBll;
+import com.zdt.zyellowpage.customView.WrapContentListView;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
@@ -73,7 +73,7 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 	TextView tvUserName;
 	Button btnLogout;
 	View view;
-	AbInnerListView lvMenu;
+	WrapContentListView lvMenu;
 	LinearLayout rllUserInfo; // 用户信息的layout
 	RelativeLayout rllLogin;// 未登录layout
 	ScrollView svMain;
@@ -98,15 +98,15 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 		imageQr = (ImageView) view.findViewById(R.id.imageQr);
 		tvUserName = (TextView) view.findViewById(R.id.tvUserName);
 		btnLogout = (Button) view.findViewById(R.id.btnLogout);
-		lvMenu = (AbInnerListView) view.findViewById(R.id.lvMenu);
+		lvMenu = (WrapContentListView) view.findViewById(R.id.lvMenu);
 		svMain = (ScrollView) view.findViewById(R.id.scMain);
 		rllUserInfo = (LinearLayout) view.findViewById(R.id.rllUserInfo);
 		rllLogin = (RelativeLayout) view.findViewById(R.id.rllLogin);
 		imageLoader = new AbImageDownloader(mActivity);
 
-		lvMenu.setParentScrollView(svMain);
-		lvMenu.setMaxHeight(700);
-		lvMenu.setMinimumHeight(300);
+		// lvMenu.setParentScrollView(svMain);
+		// lvMenu.setMaxHeight(700);
+		// lvMenu.setMinimumHeight(300);
 
 		commonMenu.add("清除缓存");
 		commonMenu.add("版本更新");
@@ -259,7 +259,6 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 				FragmentUser.this.onResume();
 			}
 		});
-
 		return view;
 	}
 

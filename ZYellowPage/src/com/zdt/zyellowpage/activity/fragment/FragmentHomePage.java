@@ -314,6 +314,8 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 				});
 
 		getLatestData();
+		mAbPullListViewB.setFocusable(false);
+		mAbPullListViewP.setFocusable(false);
 	}
 
 	/**
