@@ -41,10 +41,8 @@ public class AllTypeActivity extends AbActivity {
 	private FragmentTransaction fragmentTransaction;
 	private FragmentAllCompanyType newFragmentCompany = null;
 	private FragmentAllPersonType newFragmentPerson = null;
-    private boolean isFirst =true;
-   float scale;
-
-
+	private boolean isFirst = true;
+	float scale;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,19 +57,22 @@ public class AllTypeActivity extends AbActivity {
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		gridview = (GridView) findViewById(R.id.commonClassGridView);
-		 scale = getResources().getDisplayMetrics().density;
+		scale = getResources().getDisplayMetrics().density;
 		newFragmentCompany = new FragmentAllCompanyType();
-		//newFragmentPerson = new FragmentAllPersonType();
-
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.add(R.id.fragmentCompanyType, newFragmentCompany,
 				"Company");
-		//fragmentTransaction.add(R.id.fragmentPersonType, newFragmentPerson,"Person");
 		fragmentTransaction.commit();
 		this.findViewById(R.id.fragmentPersonType).setVisibility(View.GONE);
 		this.findViewById(R.id.fragmentCompanyType).setVisibility(View.VISIBLE);
-		initCommonClassGridView();
+		gridview.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				initCommonClassGridView();
+			}
+		}, 200);
 		initRadioBtn();
 	}
 
@@ -145,7 +146,7 @@ public class AllTypeActivity extends AbActivity {
 			TextView text = (TextView) convertView.findViewById(R.id.ItemText);
 			text.setText(commonType[position]);
 			convertView.setLayoutParams(new GridView.LayoutParams(
-					LayoutParams.MATCH_PARENT, (int) (40*scale)));
+					LayoutParams.MATCH_PARENT, (int) (40 * scale)));
 			convertView.setPadding(-10, -10, -10, -10);
 			return convertView;
 		}
@@ -168,11 +169,11 @@ public class AllTypeActivity extends AbActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
-				if(isFirst){
+				if (isFirst) {
 					newFragmentPerson = new FragmentAllPersonType();
 					fragmentTransaction = fragmentManager.beginTransaction();
-					fragmentTransaction.add(R.id.fragmentPersonType, newFragmentPerson,
-						"Person");
+					fragmentTransaction.add(R.id.fragmentPersonType,
+							newFragmentPerson, "Person");
 					fragmentTransaction.commit();
 					isFirst = false;
 				}

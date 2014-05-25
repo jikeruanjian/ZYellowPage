@@ -13,7 +13,7 @@
     <color name="yellow">#FFFC00</color>
     <color name="pink">#FF87EF</color>
     <color name="orange">#ff6200</color>
-    <color name="list_divider">#D3D3D3</color>
+    <color name="list_divider">#e5e5e5</color>
     <color name="transparent">#00000000</color>
     <color name="window_bg">#FE7C00</color>
     <color name="crop_background">#737373</color>
@@ -33,5 +33,6 @@
     <color name="viewfinder_mask">#60000000</color>
     <color name="result_view">#b0000000</color>
     <color name="sub_title">#9F9F9F</color>
-<color name="possible_result_points">#c0ffff00</color>  
+    <color name="possible_result_points">#c0ffff00</color>
+
 </resources>

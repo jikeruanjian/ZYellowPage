@@ -20,6 +20,7 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 	private List<Category> firstLevel = new ArrayList<Category>();
 	private List<List<Category>> secLevel = new ArrayList<List<Category>>();
 	private Context mActivity;
+
 	public CategoryExpandAdapter(List<Category> lisAll, Context mActivity) {
 		this.mActivity = mActivity;
 		if (lisAll != null && lisAll.size() > 0) {

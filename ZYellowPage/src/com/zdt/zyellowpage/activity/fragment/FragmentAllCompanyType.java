@@ -12,7 +12,6 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
-import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
@@ -33,7 +32,15 @@ public class FragmentAllCompanyType extends Fragment {
 			Bundle savedInstanceState) {
 		mActivity = (AbActivity) this.getActivity();
 		view = inflater.inflate(R.layout.all_companytype_fragment, null);
-		initView();
+		mActivity.showProgressDialog();
+		view.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				initView();
+				mActivity.removeProgressDialog();
+			}
+		}, 300);
 		return view;
 	}
 
@@ -45,7 +52,7 @@ public class FragmentAllCompanyType extends Fragment {
 		categoryDao.startReadableDatabase(false);
 		List<Category> lisAll = categoryDao.queryList("Type = ? ",
 				new String[] { "0" });
-		//Log.e("FragmentAllCompanyType ", "商家分类数量"+lisAll.size());
+		// Log.e("FragmentAllCompanyType ", "商家分类数量"+lisAll.size());
 		categoryDao.closeDatabase(false);
 
 		adapter = new CategoryExpandAdapter(lisAll, mActivity);
@@ -62,9 +69,6 @@ public class FragmentAllCompanyType extends Fragment {
 					int groupPosition, int childPosition, long id) {
 				Category selectedChild = (Category) adapter.getChild(
 						groupPosition, childPosition);
-
-				Toast.makeText(mActivity, "你点击了" + "list-" + selectedChild.getId(),
-						Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(mActivity,
 						PopBusinessListActivity.class);
 				intent.putExtra("Type", selectedChild.getName());

@@ -32,7 +32,14 @@ public class FragmentAllPersonType extends Fragment {
 			Bundle savedInstanceState) {
 		mActivity = (AbActivity) this.getActivity();
 		view = inflater.inflate(R.layout.all_persontype_fragment, null);
-		initView();
+		mActivity.showProgressDialog();
+		view.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				initView();
+				mActivity.removeProgressDialog();
+			}
+		}, 50);
 		return view;
 	}
 
@@ -45,7 +52,7 @@ public class FragmentAllPersonType extends Fragment {
 		List<Category> lisAll = categoryDao.queryList("Type = ? ",
 				new String[] { "1" });
 		categoryDao.closeDatabase(true);
-		//Log.e("FragmentAllPersonType ", "个人分类数量"+lisAll.size());
+		// Log.e("FragmentAllPersonType ", "个人分类数量"+lisAll.size());
 		adapter = new CategoryExpandAdapter(lisAll, mActivity);
 
 		expandableListView = (ExpandableListView) view
@@ -61,7 +68,8 @@ public class FragmentAllPersonType extends Fragment {
 				Category selectedChild = (Category) adapter.getChild(
 						groupPosition, childPosition);
 
-				Toast.makeText(mActivity, "你点击了" + "list-" + selectedChild.getId(),
+				Toast.makeText(mActivity,
+						"你点击了" + "list-" + selectedChild.getId(),
 						Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(mActivity,
 						PopPersonListActivity.class);
