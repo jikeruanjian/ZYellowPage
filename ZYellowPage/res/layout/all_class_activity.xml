@@ -38,29 +38,29 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/corners_orange_left"
             android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/companyRadio_button"
                 style="@style/type_tab_bottom"
                 android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:background="@drawable/testtyperadio"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/radiobutton_left"
                 android:checked="true"
                 android:paddingBottom="8dp"
-                android:paddingTop="10dp"
+                android:paddingTop="8dp"
                 android:text="商企分类"
                 android:textColor="@color/black"
-                
                 android:textSize="@dimen/main_text_size_h2" />
 
             <RadioButton
                 android:id="@+id/personRadio_button"
                 style="@style/type_tab_bottom"
                 android:layout_gravity="center"
-                android:layout_margin="1dp"
-                android:background="@drawable/testtyperadio"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/radiobutton_right"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="个人分类"
