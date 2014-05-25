@@ -27,7 +27,6 @@ import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.activity.MyPopupWindow;
 import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
-import com.zdt.zyellowpage.activity.PopPersonListActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
@@ -433,9 +432,12 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 			mActivity.startActivity(intent);
 			break;
 		case R.id.imageButtonPeople:
-			intent = new Intent(mActivity, PopPersonListActivity.class);
-			intent.putExtra("Type", "个人列表");
-			intent.putExtra("TypeId", "list-hot");
+			// intent = new Intent(mActivity, PopPersonListActivity.class);
+			// intent.putExtra("Type", "个人列表");
+			// intent.putExtra("TypeId", "list-hot");
+			intent = new Intent(mActivity, PopBusinessListActivity.class);
+			intent.putExtra("Type", "丽人");
+			intent.putExtra("TypeId", "丽人");
 			mActivity.startActivity(intent);
 			break;
 		// 热门商家
