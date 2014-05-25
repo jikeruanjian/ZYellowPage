@@ -3,7 +3,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <ExpandableListView
+    <com.zdt.zyellowpage.customView.CustomExpandableListView
         android:id="@+id/companyListExpand"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -12,7 +12,6 @@
         android:childDivider="@drawable/divider_horizontal_dark_opaque"
         android:groupIndicator="@null"
         android:listSelector="#00000000" >
-
-    </ExpandableListView>
+    </com.zdt.zyellowpage.customView.CustomExpandableListView>
 
 </LinearLayout>

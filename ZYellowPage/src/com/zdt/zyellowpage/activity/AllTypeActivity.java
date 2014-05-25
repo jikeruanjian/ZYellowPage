@@ -57,6 +57,8 @@ public class AllTypeActivity extends AbActivity {
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 
 		gridview = (GridView) findViewById(R.id.commonClassGridView);
+		gridview.setFocusableInTouchMode(true);
+		gridview.setFocusable(true);
 		scale = getResources().getDisplayMetrics().density;
 		newFragmentCompany = new FragmentAllCompanyType();
 		fragmentManager = this.getSupportFragmentManager();
@@ -74,6 +76,12 @@ public class AllTypeActivity extends AbActivity {
 			}
 		}, 200);
 		initRadioBtn();
+		this.findViewById(R.id.fragmentCompanyType).setFocusable(true);
+		this.findViewById(R.id.fragmentCompanyType).setFocusableInTouchMode(
+				true);
+		this.findViewById(R.id.fragmentPersonType).setFocusable(true);
+		this.findViewById(R.id.fragmentPersonType)
+				.setFocusableInTouchMode(true);
 	}
 
 	/**
