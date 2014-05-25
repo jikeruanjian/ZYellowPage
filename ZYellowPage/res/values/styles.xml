@@ -34,7 +34,27 @@
         <item name="android:singleLine">true</item>
         <item name="android:layout_weight">1.0</item>
     </style>
-
+	<style name="type_tab_bottom">
+        <item name="android:textSize">@dimen/bottom_tab_font_size</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_horizontal</item>
+        <!-- <item name="android:background">@drawable/home_btn_bg</item> -->
+        <item name="android:paddingTop">@dimen/bottom_tab_padding_up</item>
+        <item name="android:paddingBottom">2.0dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">5.0dip</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:bottomLeftRadius">15dip</item>
+        <item name="android:topLeftRadius">15dip</item>
+        <item name="android:bottomRightRadius">15dip</item>
+        <item name="android:topRightRadius">15dip</item>
+    </style>
+    
+    
     <style name="h2">
         <item name="android:textSize">@dimen/title_text_size</item>
         <item name="android:textColor">@color/window_bg</item>

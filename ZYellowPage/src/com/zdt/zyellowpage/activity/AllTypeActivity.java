@@ -33,7 +33,7 @@ public class AllTypeActivity extends AbActivity {
 	private GridView gridview;
 	private AbTitleBar mAbTitleBar = null;
 	private String[] commonType;
-
+	List<HotKeyWord> list;
 	RadioButton radioBtn;
 	RadioButton radioBtnP;
 
@@ -91,22 +91,16 @@ public class AllTypeActivity extends AbActivity {
 		// 生成动态数组，并且转入数据
 		HotKeyWorkDao hotKeyWorkDao = new HotKeyWorkDao(AllTypeActivity.this);
 		hotKeyWorkDao.startReadableDatabase(false);
-		List<HotKeyWord> list = hotKeyWorkDao.queryList();
+		list = hotKeyWorkDao.queryList();
 		hotKeyWorkDao.closeDatabase(false);
 		if (list == null) {
 			return;
 		}
-		commonType = new String[list.size()];
-		for (int i = 0; i < list.size(); i++) {
+		commonType = new String[16];
+		for (int i = 0; i < 15; i++) {
 			commonType[i] = list.get(i).getName();
 		}
-		ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < list.size(); i++) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("ItemImage", R.drawable.layout_pressimg);// 添加图像资源的ID
-			map.put("ItemText", commonType[i]);// 按序号做ItemText
-			lstImageItem.add(map);
-		}
+		commonType[15] = "更多";
 		// 添加并且显示
 		gridview.setAdapter(new CommonAdapter());
 		// 添加消息处理
@@ -121,11 +115,31 @@ public class AllTypeActivity extends AbActivity {
 				long arg3) {
 			// Toast.makeText(AllTypeActivity.this, commonType[arg2],
 			// Toast.LENGTH_SHORT).show();
-			Intent intent = new Intent(AllTypeActivity.this,
-					PopBusinessListActivity.class);
-			intent.putExtra("Type", commonType[arg2]);
-			intent.putExtra("TypeId", commonType[arg2]);
-			AllTypeActivity.this.startActivity(intent);
+			if(commonType[arg2].equals("更多")){
+				commonType = new String[list.size()+1];
+				for (int i = 0; i < list.size(); i++) {
+					commonType[i] = list.get(i).getName();
+					
+				}
+				commonType[list.size()] = "收起";
+				gridview.setAdapter(new CommonAdapter());
+			}
+			else if(commonType[arg2].equals("收起")){
+				commonType = new String[16];
+				for (int i = 0; i < 15; i++) {
+					commonType[i] = list.get(i).getName();
+				}
+				commonType[15] = "更多";
+				gridview.setAdapter(new CommonAdapter());
+			}
+			else{
+				Intent intent = new Intent(AllTypeActivity.this,
+						PopBusinessListActivity.class);
+				intent.putExtra("Type", commonType[arg2]);
+				intent.putExtra("TypeId", commonType[arg2]);
+				AllTypeActivity.this.startActivity(intent);
+			}
+			
 		}
 
 	}

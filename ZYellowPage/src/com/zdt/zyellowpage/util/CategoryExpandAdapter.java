@@ -132,13 +132,19 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		LinearLayout ll = new LinearLayout(mActivity);
+		/*LinearLayout ll = new LinearLayout(mActivity);
 		ll.setOrientation(0);
 		TextView textView = getTextView();
 		textView.setText(((Category) getChild(groupPosition, childPosition))
 				.getName());
-		ll.addView(textView);
-		return ll;
+		ll.addView(textView);*/
+		LinearLayout childLayout = (LinearLayout) View.inflate(mActivity,
+				R.layout.expandchild_item, null);
+		TextView childTextView = (TextView) childLayout
+				.findViewById(R.id.childNametextView);
+		childTextView.setText(((Category) getChild(groupPosition, childPosition))
+				.getName());
+		return childLayout;
 	}
 
 	@Override
