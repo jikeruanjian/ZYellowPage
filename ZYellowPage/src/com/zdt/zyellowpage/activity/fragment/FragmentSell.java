@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,7 +31,10 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.SupplyDemand;
 
-public class FragmentSell extends Fragment {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+public class FragmentSell extends Fragment implements ISimpleDialogListener {
 	private AbActivity mActivity = null;
 	private List<Map<String, Object>> list = null;
 	private List<SupplyDemand> SupplyDemandList = null;
@@ -50,6 +53,7 @@ public class FragmentSell extends Fragment {
 		member_Id = getArguments().getString("MEMBERID");
 	}
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mActivity = (AbActivity) this.getActivity();
@@ -69,10 +73,9 @@ public class FragmentSell extends Fragment {
 		newList = new ArrayList<SupplyDemand>();
 
 		if (isEdit) {
-			adapter = new SimpleAdapter(mActivity, list,
-					R.layout.text_item, new String[] {
-							"textViewSellBuyItemNames", "time" }, new int[] {
-							R.id.textViewSellBuyItemName, R.id.tvTime });
+			adapter = new SimpleAdapter(mActivity, list, R.layout.text_item,
+					new String[] { "textViewSellBuyItemNames", "time" },
+					new int[] { R.id.textViewSellBuyItemName, R.id.tvTime });
 		} else
 			adapter = new SimpleAdapter(mActivity, list, R.layout.text_item,
 					new String[] { "textViewSellBuyItemNames", "time" },
@@ -169,6 +172,16 @@ public class FragmentSell extends Fragment {
 
 										}
 									});
+							SimpleDialogFragment
+									.createBuilder(
+											mActivity,
+											mActivity
+													.getSupportFragmentManager())
+									.setTitle("确认").setMessage("删除该条记录吗？")
+									.setPositiveButtonText("删除")
+									.setNegativeButtonText("取消")
+									.setRequestCode(position)
+									.setTag("custom-tag").show();
 							return false;
 						}
 					});
@@ -215,7 +228,6 @@ public class FragmentSell extends Fragment {
 
 					@Override
 					public void onSuccess(int statusCode, List<SupplyDemand> lis) {
-						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
 							mActivity.showToast("没有更多数据！");
 							return;
@@ -225,26 +237,23 @@ public class FragmentSell extends Fragment {
 
 					@Override
 					public void onStart() {
-						// TODO Auto-generated method stub
-
+						mActivity.showProgressDialog();
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<SupplyDemand> localList) {
-						// TODO Auto-generated method stub
-
+						mActivity.showToast(content == null ? "数据获取发生错误"
+								: content);
 					}
 
 					@Override
 					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
-
 					}
 
 					@Override
 					public void onFinish() {
-						// TODO Auto-generated method stub
+						mActivity.removeProgressDialog();
 						SupplyDemandList.addAll(newList);
 						int len = newList.size();
 						// mAbPullListView.removeAllViews();
@@ -273,5 +282,49 @@ public class FragmentSell extends Fragment {
 					}
 
 				});
+	}
+
+	@Override
+	public void onPositiveButtonClicked(final int requestCode) {
+		SupplyDemand sd = new SupplyDemand();
+		sd.setItem_id("-" + SupplyDemandList.get(requestCode - 1).getItem_id());
+		new SupplyDemandBll().updateSupplyDemand(mActivity,
+				application.mUser.getToken(), sd,
+				new ZzStringHttpResponseListener() {
+
+					@Override
+					public void onSuccess(int statusCode, String content) {
+						list.remove(requestCode - 1);
+						SupplyDemandList.remove(requestCode - 1);
+						adapter.notifyDataSetChanged();
+						mActivity.showToast(content);
+					}
+
+					@Override
+					public void onStart() {
+						mActivity.showProgressDialog("正在删除...");
+					}
+
+					@Override
+					public void onFinish() {
+						mActivity.removeProgressDialog();
+
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						mActivity.showToast(content);
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+						mActivity.showToast(status_description);
+					}
+				});
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
 	}
 }

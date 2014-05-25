@@ -1,6 +1,5 @@
 package com.zdt.zyellowpage.activity;
 
-import java.net.URL;
 import java.util.List;
 
 import android.content.Intent;
@@ -15,14 +14,12 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
-import com.ab.bitmap.AbImageCache;
 import com.ab.bitmap.AbImageDownloader;
 import com.ab.global.AbConstant;
 import com.ab.util.AbStrUtil;
@@ -131,7 +128,7 @@ public class TieDetailActivity extends AbActivity {
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						mTie = (Tie) lis.get(0);
+						mTie = lis.get(0);
 						initView();
 						// svMain.setVisibility(View.VISIBLE);
 						layMain.setVisibility(View.VISIBLE);

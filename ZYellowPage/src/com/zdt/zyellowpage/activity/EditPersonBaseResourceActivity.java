@@ -276,6 +276,7 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 					Intent intent = new Intent(
 							EditPersonBaseResourceActivity.this,
 							SelectAreaActivity.class);
+					intent.putExtra("isEdit", true);
 					startActivityForResult(intent, 10000);
 					overridePendingTransition(R.anim.push_left_in,
 							R.anim.push_left_out);
@@ -783,10 +784,12 @@ public class EditPersonBaseResourceActivity extends AbActivity {
 		super.onActivityResult(requestCode, resultCode, intent);
 		if (requestCode == 10000) {
 			if (resultCode == RESULT_OK) {
-				btnArea.setText(application.cityName);
-				selectedArea = new Area();
-				selectedArea.setId(application.cityid);
-				selectedArea.setName(application.cityName);
+				// btnArea.setText(application.cityName);
+				// selectedArea = new Area();
+				// selectedArea.setId(application.cityid);
+				// selectedArea.setName(application.cityName);
+				selectedArea = (Area) intent.getExtras().get("selectedArea");
+				btnArea.setText(selectedArea.getName());
 				Log.i("EditPersonbase", selectedArea.getName());
 			}
 		} else if (requestCode == 10001) {

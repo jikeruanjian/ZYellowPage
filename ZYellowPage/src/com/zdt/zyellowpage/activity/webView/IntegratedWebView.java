@@ -31,34 +31,6 @@ import android.widget.VideoView;
 
 import com.zdt.zyellowpage.R;
 
-import java.io.File;
-import java.lang.ref.WeakReference;
-import android.annotation.SuppressLint;
-import android.app.DownloadManager;
-import android.app.DownloadManager.Request;
-import android.content.Context;
-import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
-import android.media.MediaPlayer.OnErrorListener;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.Browser;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.webkit.DownloadListener;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebSettings.RenderPriority;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.VideoView;
-
 public class IntegratedWebView extends LinearLayout implements DownloadListener {
 	WebView wb;
 	private ProgressBar pb;
@@ -73,9 +45,13 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View wbContainer = inflater.inflate(R.layout.wb, null);
 		this.addView(wbContainer, new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.MATCH_PARENT));
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT));
 		wb = (WebView) this.findViewById(R.id.inner_webview);
+		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT);
+		lp.setMargins(0, 0, 0, 0);
+		wb.setLayoutParams(lp);
 		wb.getSettings().setJavaScriptEnabled(true);
 		this.pb = (ProgressBar) this.findViewById(R.id.webview_progressbar);
 		wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -112,6 +88,7 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 		wb.setWebChromeClient(chromeClient);
 	}
 
+	@Override
 	@SuppressLint("NewApi")
 	public void onDownloadStart(String url, String userAgent,
 			String contentDisposition, String mimetype, long contentLength) {
@@ -214,10 +191,12 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 				this.videoViewCallback = callback;
 				if (activityRef.get() == null) {
 					IntegratedWebView.this.removeAllViews();
-					IntegratedWebView.this.addView(this.videoViewContainer,
-							new LinearLayout.LayoutParams(
-									LinearLayout.LayoutParams.MATCH_PARENT,
-									LinearLayout.LayoutParams.WRAP_CONTENT));
+					IntegratedWebView.this
+							.addView(
+									this.videoViewContainer,
+									new LinearLayout.LayoutParams(
+											android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+											android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 					this.videoViewContainer
 							.setOnKeyListener(new OnKeyListener() {
 								@Override

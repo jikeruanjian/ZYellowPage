@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 
-import com.baidu.navisdk.BNaviModuleManager;
 import com.baidu.navisdk.BaiduNaviManager;
 import com.baidu.navisdk.comapi.mapcontrol.BNMapController;
 import com.baidu.navisdk.comapi.routeplan.BNRoutePlaner;
@@ -22,6 +21,7 @@ import com.baidu.nplatform.comapi.map.MapGLSurfaceView;
 
 public class BNavigatorActivity extends Activity{
 
+	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
@@ -157,7 +157,8 @@ public class BNavigatorActivity extends Activity{
         super.onConfigurationChanged(newConfig);
     }
     
-    public void onBackPressed(){
+    @Override
+	public void onBackPressed(){
         BNavigator.getInstance().onBackPressed();
     }
     

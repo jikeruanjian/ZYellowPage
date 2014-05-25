@@ -169,7 +169,7 @@ public class PopPersonListActivity extends AbActivity {
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
-							User u = (User) lis.get(i);
+							User u = lis.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
 							map.put("itemsIcon", u.getLogo());
@@ -286,6 +286,7 @@ public class PopPersonListActivity extends AbActivity {
 		super.onResume();
 	}
 
+	@Override
 	public void onPause() {
 		super.onPause();
 	}
@@ -315,6 +316,7 @@ public class PopPersonListActivity extends AbActivity {
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				wordsTextView.setText(words[arg2]);

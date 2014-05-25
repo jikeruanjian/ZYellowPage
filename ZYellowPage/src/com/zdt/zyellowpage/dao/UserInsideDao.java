@@ -1,7 +1,5 @@
 package com.zdt.zyellowpage.dao;
 
-import java.util.List;
-
 import android.content.Context;
 
 import com.ab.db.orm.dao.AbDBDaoImpl;

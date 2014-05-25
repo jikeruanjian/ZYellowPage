@@ -2,6 +2,7 @@ package com.zdt.zyellowpage.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -46,11 +47,11 @@ public class EditCertificateActivity extends AbActivity {
 			certificate = null;
 		}
 		mAbTitleBar = this.getTitleBar();
-		mAbTitleBar.setTitleText("修改更多联系方式");
+		mAbTitleBar.setTitleText("修改资质");
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
-//		mAbTitleBar.setLogoLine(R.drawable.line);
+		// mAbTitleBar.setLogoLine(R.drawable.line);
 		application = (MyApplication) abApplication;
 		initTitleRightLayout();
 		// 绑定默认数据
@@ -72,6 +73,20 @@ public class EditCertificateActivity extends AbActivity {
 
 			@Override
 			public void onClick(View v) {
+				if (TextUtils.isEmpty(etCertificateName.getText().toString()
+						.trim())) {
+					showToast("请填写资质名称");
+					etCertificateName.setFocusable(true);
+					etCertificateName.requestFocus();
+					return;
+				}
+				if (TextUtils.isEmpty(etCertificateNo.getText().toString()
+						.trim())) {
+					showToast("请填写资质编号");
+					etCertificateNo.setFocusable(true);
+					etCertificateNo.requestFocus();
+					return;
+				}
 				// 开始保存
 				certificate = new Certificate();
 				certificate.setItem_id(item_id);

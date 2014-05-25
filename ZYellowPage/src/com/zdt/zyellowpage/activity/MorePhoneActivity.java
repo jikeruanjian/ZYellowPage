@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,7 +31,11 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Contact;
 
-public class MorePhoneActivity extends AbActivity {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+public class MorePhoneActivity extends AbActivity implements
+		ISimpleDialogListener {
 
 	private MyApplication application;
 	private List<Contact> listContact = null;
@@ -92,68 +95,78 @@ public class MorePhoneActivity extends AbActivity {
 						@Override
 						public boolean onItemLongClick(AdapterView<?> arg0,
 								View arg1, final int position, long arg3) {
-							MorePhoneActivity.this
-									.showDialog(
-											"确认",
-											"确认删除？",
-											new android.content.DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(
-														DialogInterface dialog,
-														int which) {
-													dialog.dismiss();
-													Contact xcontact = new Contact();
-													xcontact.setItem_id("-"
-															+ listContact
-																	.get(position - 1)
-																	.getItem_id());
-													new ContactBll()
-															.updateContact(
-																	MorePhoneActivity.this,
-																	application.mUser
-																			.getToken(),
-																	xcontact,
-																	new ZzStringHttpResponseListener() {
-
-																		@Override
-																		public void onSuccess(
-																				int statusCode,
-																				String content) {
-																			listContact
-																					.remove(position - 1);
-																			adapterEdit
-																					.notifyDataSetChanged();
-																			showToast(content);
-																		}
-
-																		@Override
-																		public void onStart() {
-																			showProgressDialog("正在删除...");
-																		}
-
-																		@Override
-																		public void onFailure(
-																				int statusCode,
-																				String content,
-																				Throwable error) {
-																			showToast(content);
-																		}
-
-																		@Override
-																		public void onErrorData(
-																				String status_description) {
-																			showToast(status_description);
-																		}
-
-																		@Override
-																		public void onFinish() {
-																			removeProgressDialog();
-																		}
-
-																	});
-												}
-
-											});
+							// MorePhoneActivity.this
+							// .showDialog(
+							// "确认",
+							// "确认删除？",
+							// new
+							// android.content.DialogInterface.OnClickListener()
+							// {
+							// @Override
+							// public void onClick(
+							// DialogInterface dialog,
+							// int which) {
+							// dialog.dismiss();
+							// Contact xcontact = new Contact();
+							// xcontact.setItem_id("-"
+							// + listContact
+							// .get(position - 1)
+							// .getItem_id());
+							// new ContactBll()
+							// .updateContact(
+							// MorePhoneActivity.this,
+							// application.mUser
+							// .getToken(),
+							// xcontact,
+							// new ZzStringHttpResponseListener() {
+							//
+							// @Override
+							// public void onSuccess(
+							// int statusCode,
+							// String content) {
+							// listContact
+							// .remove(position - 1);
+							// adapterEdit
+							// .notifyDataSetChanged();
+							// showToast(content);
+							// }
+							//
+							// @Override
+							// public void onStart() {
+							// showProgressDialog("正在删除...");
+							// }
+							//
+							// @Override
+							// public void onFailure(
+							// int statusCode,
+							// String content,
+							// Throwable error) {
+							// showToast(content);
+							// }
+							//
+							// @Override
+							// public void onErrorData(
+							// String status_description) {
+							// showToast(status_description);
+							// }
+							//
+							// @Override
+							// public void onFinish() {
+							// removeProgressDialog();
+							// }
+							//
+							// });
+							// }
+							//
+							// });
+							SimpleDialogFragment
+									.createBuilder(MorePhoneActivity.this,
+											getSupportFragmentManager())
+									.setTitle("确认").setMessage("删除该条记录吗？")
+									.setPositiveButtonText("删除")
+									.setNegativeButtonText("取消")
+									.setRequestCode(position)
+									.setTag("custom-tag").show();
 							return false;
 
 						}
@@ -378,5 +391,48 @@ public class MorePhoneActivity extends AbActivity {
 			}
 		});
 
+	}
+
+	@Override
+	public void onPositiveButtonClicked(final int requestCode) {
+		Contact xcontact = new Contact();
+		xcontact.setItem_id("-" + listContact.get(requestCode - 1).getItem_id());
+		new ContactBll().updateContact(MorePhoneActivity.this,
+				application.mUser.getToken(), xcontact,
+				new ZzStringHttpResponseListener() {
+
+					@Override
+					public void onSuccess(int statusCode, String content) {
+						listContact.remove(requestCode - 1);
+						adapterEdit.notifyDataSetChanged();
+						showToast(content);
+					}
+
+					@Override
+					public void onStart() {
+						showProgressDialog("正在删除...");
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						showToast(content);
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+						showToast(status_description);
+					}
+
+					@Override
+					public void onFinish() {
+						removeProgressDialog();
+					}
+
+				});
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
 	}
 }

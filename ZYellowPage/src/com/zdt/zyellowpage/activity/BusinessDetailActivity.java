@@ -3,7 +3,6 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.DialogInterface;
 //import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -50,7 +49,12 @@ import com.zdt.zyellowpage.model.Album;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
-public class BusinessDetailActivity extends AbActivity {
+import eu.inmite.android.lib.dialogs.ISimpleDialogCancelListener;
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+public class BusinessDetailActivity extends AbActivity implements
+		ISimpleDialogListener, ISimpleDialogCancelListener {
 	private MyApplication application;
 	private AbTitleBar mAbTitleBar = null;
 	private AbSlidingPlayView mSlidingPlayView = null;
@@ -79,12 +83,17 @@ public class BusinessDetailActivity extends AbActivity {
 		if (getIntent().getExtras() != null) {
 			member_id = (String) getIntent().getExtras().get("MEMBER_ID");
 			if (member_id == null) {
-				this.showDialog("错误", "数据获取失败",
-						new android.content.DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface arg0, int arg1) {
-								finish();
-							}
-						});
+				// this.showDialog("错误", "数据获取失败",
+				// new android.content.DialogInterface.OnClickListener() {
+				// @Override
+				// public void onClick(DialogInterface arg0, int arg1) {
+				// finish();
+				// }
+				// });
+				SimpleDialogFragment
+						.createBuilder(this, getSupportFragmentManager())
+						.setTitle("错误").setMessage("参数错误")
+						.setPositiveButtonText("返回").setRequestCode(42).show();
 			} else {
 				application = (MyApplication) abApplication;
 				mAbTitleBar = this.getTitleBar();
@@ -121,7 +130,6 @@ public class BusinessDetailActivity extends AbActivity {
 				// .createDefault(BusinessDetailActivity.this));
 			}
 		}
-
 	}
 
 	private void getView() {
@@ -232,7 +240,7 @@ public class BusinessDetailActivity extends AbActivity {
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
-						userCompany = (User) lis.get(0);
+						userCompany = lis.get(0);
 						if (!AbStrUtil.isEmpty(userCompany.getAlbum())) {
 							getImgUrl(userCompany.getMember_id());
 							findViewById(R.id.mAbSlidingPlayViewBLinearLayout)
@@ -250,22 +258,12 @@ public class BusinessDetailActivity extends AbActivity {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						// if (localList == null || localList.size() == 0) {
-						// BusinessDetailActivity.this
-						// .showDialog(
-						// "错误",
-						// "数据获取失败",
-						// new android.content.DialogInterface.OnClickListener()
-						// {
-						// public void onClick(
-						// DialogInterface arg0,
-						// int arg1) {
-						// finish();
-						// }
-						// });
-						// return;
-						// }
-						showToast(content);
+						SimpleDialogFragment
+								.createBuilder(BusinessDetailActivity.this,
+										getSupportFragmentManager())
+								.setTitle("错误").setMessage("数据获取失败")
+								.setPositiveButtonText("返回").setRequestCode(42)
+								.show();
 					}
 
 					@Override
@@ -325,8 +323,8 @@ public class BusinessDetailActivity extends AbActivity {
 					public void onSuccess(int statusCode, byte[] content) {
 						codeBitmap = AbImageUtil.bytes2Bimap(content);
 						mView = mInflater.inflate(R.layout.code_view, null);
-						ImageView imageUserCode = (ImageView) mView
-								.findViewById(R.id.imageViewCodeCP);
+						// ImageView imageUserCode = (ImageView) mView
+						// .findViewById(R.id.imageViewCodeCP);
 
 						ImageView UserCode = (ImageView) BusinessDetailActivity.this
 								.findViewById(R.id.BCodeTopRightimageView);
@@ -336,7 +334,6 @@ public class BusinessDetailActivity extends AbActivity {
 							@Override
 							public void onClick(View v) {
 								showChosePopWindow();
-
 							}
 						});
 					}
@@ -528,14 +525,16 @@ public class BusinessDetailActivity extends AbActivity {
 
 	public View addTextByText(String text) {
 		LinearLayout lay = new LinearLayout(this);
-		lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT));
+		lay.setLayoutParams(new LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		lay.setOrientation(LinearLayout.VERTICAL);
 		WebView webView = new WebView(this);
 		webView.setFocusable(false);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
-		webView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT));
+		webView.setLayoutParams(new LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		if (AbStrUtil.isEmpty(text)) {
 			text = "用户暂时还未添加该项数据";
 		}
@@ -730,5 +729,21 @@ public class BusinessDetailActivity extends AbActivity {
 						BusinessDetailActivity.this.removeDialog(1);
 					}
 				});
+	}
+
+	@Override
+	public void onCancelled(int requestCode) {
+		if (requestCode == 42)
+			this.finish();
+	}
+
+	@Override
+	public void onPositiveButtonClicked(int requestCode) {
+		if (requestCode == 42)
+			this.finish();
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
 	}
 }

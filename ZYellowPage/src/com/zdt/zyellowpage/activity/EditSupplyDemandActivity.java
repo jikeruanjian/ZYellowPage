@@ -55,7 +55,7 @@ public class EditSupplyDemandActivity extends AbActivity {
 
 		initTitleRightLayout();
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-				this, R.array.sex, android.R.layout.simple_spinner_item);
+				this, R.array.type, R.layout.spinner_display_style);
 		adapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
 		spiType.setAdapter(adapter);
 		bindData();

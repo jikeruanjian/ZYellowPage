@@ -10,7 +10,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,11 +23,13 @@ import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.AllTypeActivity;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
+import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.activity.MyPopupWindow;
 import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
 import com.zdt.zyellowpage.activity.PopPersonListActivity;
 import com.zdt.zyellowpage.bll.UserBll;
+import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
@@ -61,7 +62,9 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 	private ListView mAbPullListViewP = null;
 	private ImageListAdapterC myListViewAdapterP = null;
 	private List<Map<String, Object>> listP = null;
+	private String currentCityId;
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// 获取布局文件
@@ -132,7 +135,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 		DisplayMetrics metric = new DisplayMetrics();
 		mActivity.getWindowManager().getDefaultDisplay().getMetrics(metric);
 		int width = metric.widthPixels / 4;
-		int high = metric.heightPixels / 6;
+		// int high = metric.heightPixels / 6;
 
 		displayUtil.setViewLayoutParamsW(
 				view.findViewById(R.id.imageButtonFood),
@@ -188,7 +191,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 						BusinessDetailActivity.class);
 				intent.putExtra("MEMBER_ID",
 						listB.get(position).get("Member_id").toString());
-				startActivity(intent);
+				mActivity.startActivity(intent);
 			}
 		});
 
@@ -227,7 +230,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 						PersonDetailActivity.class);
 				intent.putExtra("MEMBER_ID",
 						listP.get(position).get("Member_id").toString());
-				startActivity(intent);
+				mActivity.startActivity(intent);
 			}
 		});
 
@@ -239,6 +242,11 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 	 */
 	public void getData() {
 
+		if (application.cityid.equals(currentCityId)) {
+			return;
+		}
+		currentCityId = application.cityid;
+		MainActivity.textViewArea.setText(application.cityName);
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(0, 10,
 				application.cityid, "list-hot");
 
@@ -254,7 +262,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
-							User u = (User) lis.get(i);
+							User u = lis.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
 							map.put("itemsIcon", u.getLogo());
@@ -273,11 +281,13 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
 						if (localList == null || localList.size() == 0) {
+							if (Constant.NOCONNECT.equals(content))
+								mActivity.showToast(content);
 							return;
 						}
 						Map<String, Object> map;
 						for (int i = 0; i < localList.size(); i++) {
-							User u = (User) localList.get(i);
+							User u = localList.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
 							map.put("itemsIcon", u.getLogo());
@@ -325,7 +335,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
-							User u = (User) lis.get(i);
+							User u = lis.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
 							map.put("itemsIcon", u.getLogo());
@@ -347,7 +357,7 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 						}
 						Map<String, Object> map;
 						for (int i = 0; i < localList.size(); i++) {
-							User u = (User) localList.get(i);
+							User u = localList.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
 							map.put("itemsIcon", u.getLogo());
@@ -468,4 +478,10 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 	// myPopupWindow.popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 	// }
 
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		getData();
+	}
 }

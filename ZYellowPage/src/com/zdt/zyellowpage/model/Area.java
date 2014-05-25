@@ -1,11 +1,18 @@
 package com.zdt.zyellowpage.model;
 
+import java.io.Serializable;
+
 import com.ab.db.orm.annotation.Column;
 import com.ab.db.orm.annotation.Id;
 import com.ab.db.orm.annotation.Table;
 
 @Table(name = "area")
-public class Area {
+public class Area implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1053525376387246471L;
+
 	/**
 	 * 地区编号
 	 */

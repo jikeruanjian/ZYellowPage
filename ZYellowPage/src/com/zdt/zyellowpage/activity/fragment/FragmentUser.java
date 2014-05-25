@@ -9,7 +9,6 @@ import android.app.DownloadManager.Query;
 import android.app.DownloadManager.Request;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
@@ -62,7 +61,10 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
-public class FragmentUser extends Fragment {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+public class FragmentUser extends Fragment implements ISimpleDialogListener {
 	AbActivity mActivity;
 	MyApplication application;
 	Button btnLogin;
@@ -83,7 +85,9 @@ public class FragmentUser extends Fragment {
 
 	// 二维码弹出框
 	private View mView;
+	Version version;// 服务器上最新的版本
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_user, container, false);
@@ -146,30 +150,40 @@ public class FragmentUser extends Fragment {
 								@Override
 								public void onSuccess(int statusCode,
 										List<Version> lis) {
-									Version version = lis.get(0);
+									version = lis.get(0);
 
-									final Version tempVersion = version;
 									if (version != null
 											&& !AbStrUtil.isEmpty(version
 													.getApp_url())
 											&& version.getBuild_number() > getVersion()) {
-										mActivity.showDialog(
-												"发现新版本" + version.getVersion(),
-												"是否更新？\r\n"
-														+ version
-																.getVersion_description(),
-												new android.content.DialogInterface.OnClickListener() {
-
-													@Override
-													public void onClick(
-															DialogInterface dialog,
-															int which) {
-														dialog.dismiss();
-														downApk(tempVersion);
-													}
-												});
+										SimpleDialogFragment
+												.createBuilder(
+														mActivity,
+														mActivity
+																.getSupportFragmentManager())
+												.setTitle(
+														"发现新版本"
+																+ version
+																		.getVersion())
+												.setMessage(
+														"是否更新？\r\n"
+																+ version
+																		.getVersion_description())
+												.setPositiveButtonText("立即更新")
+												.setNegativeButtonText("以后再说")
+												.setRequestCode(42)
+												.setTag("custom-tag").show();
 									} else {
-										mActivity.showDialog("升级", "当前已是最新版");
+										SimpleDialogFragment
+												.createBuilder(
+														mActivity,
+														mActivity
+																.getSupportFragmentManager())
+												.setTitle("提示")
+												.setMessage("当前已经是最新版本")
+												.setPositiveButtonText("确定")
+												.setRequestCode(43)
+												.setTag("custom-tag").show();
 									}
 								}
 
@@ -296,7 +310,6 @@ public class FragmentUser extends Fragment {
 			// 增加menu
 			List<String> addMenu = new ArrayList<String>();
 			if (application.mUser.getType() == 0) {
-				// TODO 商家
 				addMenu.add("我的资料");
 				addMenu.add("我的关注");
 				addMenu.add("修改密码");
@@ -458,7 +471,6 @@ public class FragmentUser extends Fragment {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						mView = mActivity.mInflater.inflate(R.layout.code_view,
 								null);
 						ImageView imageUserCode = (ImageView) mView
@@ -493,7 +505,6 @@ public class FragmentUser extends Fragment {
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						mActivity.removeDialog(1);
 					}
 				});
@@ -508,7 +519,6 @@ public class FragmentUser extends Fragment {
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						getStringImageUrl("");
 
 					}
@@ -518,7 +528,6 @@ public class FragmentUser extends Fragment {
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						getStringImageUrl("s=20&");
 					}
 				});
@@ -527,7 +536,6 @@ public class FragmentUser extends Fragment {
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						getStringImageUrl("s=40&");
 					}
 				});
@@ -536,7 +544,6 @@ public class FragmentUser extends Fragment {
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						getStringImageUrl("s=70&");
 					}
 				});
@@ -588,5 +595,16 @@ public class FragmentUser extends Fragment {
 
 				});
 		return saveImageUrl;
+	}
+
+	@Override
+	public void onPositiveButtonClicked(int requestCode) {
+		if (requestCode == 42) {
+			downApk(version);
+		}
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
 	}
 }

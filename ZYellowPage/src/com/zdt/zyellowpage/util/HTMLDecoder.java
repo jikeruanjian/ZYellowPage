@@ -75,7 +75,7 @@ public class HTMLDecoder {
 							if (!isLetterOrDigit(d)) {
 								if (d == ';') {
 									t = s.substring(curPos, tmpPos - 1);
-									ch = (Character) charTable.get(t);
+									ch = charTable.get(t);
 									if (ch != null) {
 										c = ch.charValue();
 										curPos = tmpPos;

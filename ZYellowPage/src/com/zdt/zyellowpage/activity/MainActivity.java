@@ -8,7 +8,6 @@ import android.app.DownloadManager.Query;
 import android.app.DownloadManager.Request;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences.Editor;
@@ -23,7 +22,6 @@ import android.os.Environment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +68,11 @@ import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
-public class MainActivity extends AbActivity implements OnCheckedChangeListener {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+public class MainActivity extends AbActivity implements
+		OnCheckedChangeListener, ISimpleDialogListener {
 
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
@@ -79,7 +81,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	private FragmentUser newFragmentUser = null;
 	private FragmentTie newFragmentTie = null;
 	public static BMapManager mBMapMan = null;
-	private TextView textViewArea;
+	public static TextView textViewArea; // 后面要用，没办法咯
 	private MyApplication application;
 	private EditText editRearch;
 	private TextView textVSearch;
@@ -89,6 +91,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	private String types[] = { "商家", "个人" };
 	boolean isFirst = true;
 	boolean isFirstTie = true;
+	Version version;// 服务器上最新的版本
 	// 区域列表
 	// public static List<Area> listArea;
 	// public static List<String> listAreaName;
@@ -150,17 +153,17 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	// }
 	// });
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == 10000) {
-			if (resultCode == RESULT_OK) {
-				textViewArea.setText(application.cityName);
-				newFragmentHome.getData();
-			}
-		}
-	}
+	// @Override
+	// protected void onActivityResult(int requestCode, int resultCode,
+	// Intent intent) {
+	// super.onActivityResult(requestCode, resultCode, intent);
+	// if (requestCode == 10000) {
+	// if (resultCode == RESULT_OK) {
+	// textViewArea.setText(application.cityName);
+	// newFragmentHome.getData();
+	// }
+	// }
+	// }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -173,10 +176,10 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		// 地图
 		mBMapMan = new BMapManager(getApplication());
 		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
-		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
+		mBMapMan.init("E0vBVTjgP3IvuuZSOSqKmsZu", null);
 		// 导航
 		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
-				mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
+				mNaviEngineInitListener, "E0vBVTjgP3IvuuZSOSqKmsZu",
 				mKeyVerifyListener);
 
 		fragmentManager = this.getSupportFragmentManager();
@@ -227,7 +230,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				});
 		getCityNameByLoc();
 		checkUpdate();
-		// myThread.start();
 	}
 
 	@Override
@@ -339,6 +341,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 	}
 
+	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		if (mBMapMan != null) {
@@ -585,6 +588,7 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				textVSearch.setText(types[arg2]);
@@ -604,24 +608,38 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 						if (version == null)
 							return;
 
-						final Version tempVersion = version;
+						// final Version tempVersion = version;
 						if (version != null
 								&& !AbStrUtil.isEmpty(version.getApp_url())
 								&& version.getBuild_number() > getVersion()) {
-							MainActivity.this.showDialog(
-									"发现新版本" + version.getVersion(),
-									"是否更新？\r\n"
-											+ version.getVersion_description(),
-									new android.content.DialogInterface.OnClickListener() {
-
-										@Override
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											dialog.dismiss();
-											downApk(tempVersion);
-										}
-									});
+							// MainActivity.this.showDialog(
+							// "发现新版本" + version.getVersion(),
+							// "是否更新？\r\n"
+							// + version.getVersion_description(),
+							// new
+							// android.content.DialogInterface.OnClickListener()
+							// {
+							//
+							// @Override
+							// public void onClick(
+							// DialogInterface dialog,
+							// int which) {
+							// dialog.dismiss();
+							// downApk(tempVersion);
+							// }
+							// });
+							SimpleDialogFragment
+									.createBuilder(MainActivity.this,
+											getSupportFragmentManager())
+									.setTitle("发现新版本" + version.getVersion())
+									.setMessage(
+											"是否更新？\r\n"
+													+ version
+															.getVersion_description())
+									.setPositiveButtonText("立即更新")
+									.setNegativeButtonText("以后再说")
+									.setRequestCode(42).setTag("custom-tag")
+									.show();
 						}
 					}
 
@@ -716,15 +734,18 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 	 * 导航初始化
 	 */
 	private NaviEngineInitListener mNaviEngineInitListener = new NaviEngineInitListener() {
+		@Override
 		public void engineInitSuccess() {
 			// mIsEngineInitSuccess = true;
 			// Toast.makeText(MainActivity.this, "初始化导航成功",
 			// Toast.LENGTH_LONG).show();
 		}
 
+		@Override
 		public void engineInitStart() {
 		}
 
+		@Override
 		public void engineInitFail() {
 			// Toast.makeText(MainActivity.this, "初始化导航失败",
 			// Toast.LENGTH_LONG).show();
@@ -791,7 +812,6 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 					.substring(0, 2))) {
 				return;
 			}
-			Log.e("fragmentmap", "-------------------所在城市：" + showCityName);
 			if (showCityName != null
 					&& !showCityName.equals(application.locateCityName)) {
 				application.locateCityName = showCityName;
@@ -799,58 +819,67 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 				editor.putString(Constant.LOCATECITYNAME, showCityName);
 				editor.commit();
 
-				MainActivity.this.showDialog("位置提醒", "当前定位到您所在的城市是" + mCityName
-						+ ",是否切换城市？", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						new AreaBll().getAreaIdByAreaName(MainActivity.this,
-								showCityName,
-								new ZzStringHttpResponseListener() {
+				// MainActivity.this.showDialog("位置提醒", "当前定位到您所在的城市是" +
+				// mCityName
+				// + ",是否切换城市？", new DialogInterface.OnClickListener() {
+				// @Override
+				// public void onClick(DialogInterface dialog, int which) {
+				// new AreaBll().getAreaIdByAreaName(MainActivity.this,
+				// showCityName,
+				// new ZzStringHttpResponseListener() {
+				//
+				// @Override
+				// public void onSuccess(int statusCode,
+				// String content) {
+				// if (content == null)
+				// return;
+				// application.cityid = content;
+				// application.cityName = showCityName;
+				//
+				// textViewArea.setText(mCityName
+				// .substring(0, 2));
+				// Editor editor = abSharedPreferences
+				// .edit();
+				// editor.putString(Constant.CITYID,
+				// content);
+				// editor.putString(Constant.CITYNAME,
+				// showCityName);
+				// editor.commit();
+				// newFragmentHome.getData();
+				// }
+				//
+				// @Override
+				// public void onStart() {
+				// showProgressDialog();
+				// }
+				//
+				// @Override
+				// public void onFailure(int statusCode,
+				// String content, Throwable error) {
+				// showToast(content);
+				// }
+				//
+				// @Override
+				// public void onErrorData(
+				// String status_description) {
+				// showToast(status_description);
+				// }
+				//
+				// @Override
+				// public void onFinish() {
+				// removeProgressDialog();
+				// }
+				// });
+				// }
+				// });
 
-									@Override
-									public void onSuccess(int statusCode,
-											String content) {
-										if (content == null)
-											return;
-										application.cityid = content;
-										application.cityName = showCityName;
-
-										textViewArea.setText(mCityName
-												.substring(0, 2));
-										Editor editor = abSharedPreferences
-												.edit();
-										editor.putString(Constant.CITYID,
-												content);
-										editor.putString(Constant.CITYNAME,
-												showCityName);
-										editor.commit();
-										newFragmentHome.getData();
-									}
-
-									@Override
-									public void onStart() {
-										showProgressDialog();
-									}
-
-									@Override
-									public void onFailure(int statusCode,
-											String content, Throwable error) {
-										showToast(content);
-									}
-
-									@Override
-									public void onErrorData(
-											String status_description) {
-										showToast(status_description);
-									}
-
-									@Override
-									public void onFinish() {
-										removeProgressDialog();
-									}
-								});
-					}
-				});
+				SimpleDialogFragment
+						.createBuilder(MainActivity.this,
+								getSupportFragmentManager()).setTitle("区域提醒")
+						.setMessage("当前定位到您所在的城市是" + mCityName + ",是否切换城市？")
+						.setPositiveButtonText("切换")
+						.setNegativeButtonText("取消").setRequestCode(43)
+						.setTag("custom-tag").show();
 			}
 		}
 
@@ -858,5 +887,59 @@ public class MainActivity extends AbActivity implements OnCheckedChangeListener 
 		@Override
 		public void onReceivePoi(BDLocation poiLocation) {
 		}
+	}
+
+	@Override
+	public void onPositiveButtonClicked(int requestCode) {
+		if (requestCode == 42 && version != null)
+			downApk(version);
+		else if (requestCode == 43) {
+			new AreaBll().getAreaIdByAreaName(MainActivity.this,
+					application.locateCityName,
+					new ZzStringHttpResponseListener() {
+
+						@Override
+						public void onSuccess(int statusCode, String content) {
+							if (content == null)
+								return;
+							application.cityid = content;
+							application.cityName = application.locateCityName;
+
+							textViewArea.setText(mCityName.substring(0, 2));
+							Editor editor = abSharedPreferences.edit();
+							editor.putString(Constant.CITYID, content);
+							editor.putString(Constant.CITYNAME,
+									application.locateCityName);
+							editor.commit();
+							newFragmentHome.getData();
+						}
+
+						@Override
+						public void onStart() {
+							showProgressDialog();
+						}
+
+						@Override
+						public void onFailure(int statusCode, String content,
+								Throwable error) {
+							showToast(content);
+						}
+
+						@Override
+						public void onErrorData(String status_description) {
+							showToast(status_description);
+						}
+
+						@Override
+						public void onFinish() {
+							removeProgressDialog();
+						}
+					});
+		}
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
+		version = null;
 	}
 }

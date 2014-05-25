@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -144,7 +145,7 @@ public class AllTypeActivity extends AbActivity {
 			TextView text = (TextView) convertView.findViewById(R.id.ItemText);
 			text.setText(commonType[position]);
 			convertView.setLayoutParams(new GridView.LayoutParams(
-					GridView.LayoutParams.MATCH_PARENT, (int) (40*scale)));
+					LayoutParams.MATCH_PARENT, (int) (40*scale)));
 			convertView.setPadding(-10, -10, -10, -10);
 			return convertView;
 		}

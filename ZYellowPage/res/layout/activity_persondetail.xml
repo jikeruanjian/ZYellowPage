@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    >
+    android:visibility="gone" >
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -367,72 +367,64 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60.0dip"
+                    android:background="#EEEEEE" >
+
+                    <TextView
+                        android:id="@+id/textjianjie"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="简介"
+                        android:textColor="@color/gray_black"
+                        android:textSize="@dimen/main_text_size_h2" />
+
+                    <TextView
+                        android:id="@+id/textzizhi"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="资质"
+                        android:textColor="@color/gray_black"
+                        android:textSize="@dimen/main_text_size_h2" />
+
+                    <TextView
+                        android:id="@+id/texttechang"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="特长"
+                        android:textColor="@color/gray_black"
+                        android:textSize="@dimen/main_text_size_h2" />
+
+                    <TextView
+                        android:id="@+id/textanli"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:text="案例"
+                        android:textColor="@color/gray_black"
+                        android:textSize="@dimen/main_text_size_h2" />
+                </LinearLayout>
+
+                <com.zdt.zyellowpage.customView.WrapContentHeightViewPager
+                    android:id="@+id/vPager"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="60.0dip"
-                        android:background="#EEEEEE" >
-
-                        <TextView
-                            android:id="@+id/textjianjie"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1.0"
-                            android:gravity="center"
-                            android:text="简介"
-                            android:textColor="@color/gray_black"
-                            android:textSize="@dimen/main_text_size_h2" />
-
-                        <TextView
-                            android:id="@+id/textzizhi"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1.0"
-                            android:gravity="center"
-                            android:text="资质"
-                            android:textColor="@color/gray_black"
-                            android:textSize="@dimen/main_text_size_h2" />
-
-                        <TextView
-                            android:id="@+id/texttechang"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1.0"
-                            android:gravity="center"
-                            android:text="特长"
-                            android:textColor="@color/gray_black"
-                            android:textSize="@dimen/main_text_size_h2" />
-
-                        <TextView
-                            android:id="@+id/textanli"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="1.0"
-                            android:gravity="center"
-                            android:text="案例"
-                            android:textColor="@color/gray_black"
-                            android:textSize="@dimen/main_text_size_h2" />
-                    </LinearLayout>
-
-                    <com.zdt.zyellowpage.customView.WrapContentHeightViewPager
-                        android:id="@+id/vPager"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:background="@color/white"
-                        android:flipInterval="30"
-                        android:persistentDrawingCache="animation" />
-                </LinearLayout>
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:background="@color/white"
+                    android:flipInterval="30"
+                    android:persistentDrawingCache="animation" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-     
 
     <ImageView
         android:id="@+id/person_detail_phone"
@@ -443,13 +435,12 @@
         android:layout_marginBottom="5dp"
         android:src="@drawable/phone" />
 
-<TextView
-    android:id="@+id/imageViewOrangeLine"
-    android:layout_width="fill_parent"
-    android:layout_height="2dp"
-    android:layout_alignBottom="@+id/scrollView1"
-    android:layout_alignParentLeft="true"
-
-    android:background="@color/orange_background" />
+    <TextView
+        android:id="@+id/imageViewOrangeLine"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_alignBottom="@+id/scrollView1"
+        android:layout_alignParentLeft="true"
+        android:background="@color/orange_background" />
 
 </RelativeLayout>

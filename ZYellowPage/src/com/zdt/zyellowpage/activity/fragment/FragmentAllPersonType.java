@@ -5,7 +5,6 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
-import com.zdt.zyellowpage.activity.PopBusinessListActivity;
 import com.zdt.zyellowpage.activity.PopPersonListActivity;
 import com.zdt.zyellowpage.dao.CategoryDao;
 import com.zdt.zyellowpage.model.Category;
@@ -29,6 +27,7 @@ public class FragmentAllPersonType extends Fragment {
 	ExpandableListAdapter adapter;
 	ExpandableListView expandableListView;
 
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mActivity = (AbActivity) this.getActivity();

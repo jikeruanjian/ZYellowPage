@@ -28,6 +28,7 @@
                 android:background="@color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/oldPassword"
+                android:inputType="textPassword"
                 android:maxLength="20"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
@@ -132,26 +133,6 @@
             android:layout_height="1dp"
             android:background="@color/list_divider" >
         </View>
-
-        <LinearLayout
-            android:id="@+id/btnLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginTop="10dip"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/findPwdBtn"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dip"
-                android:background="@drawable/button_selector_green"
-                android:text="@string/okBtn"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

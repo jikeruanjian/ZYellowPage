@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,15 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
-import com.ab.bitmap.AbImageDownloader;
-import com.ab.task.AbTaskItem;
-import com.ab.task.AbTaskListener;
 import com.ab.task.AbTaskQueue;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
@@ -30,7 +22,6 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
-import com.zdt.zyellowpage.jsonEntity.PersonListReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
@@ -139,7 +130,7 @@ public class TypeBusinessListActivity extends AbActivity {
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
-							User u = (User) lis.get(i);
+							User u = lis.get(i);
 							map = new HashMap<String, Object>();
 							map.put("Member_id", u.getMember_id());
 							map.put("itemsIcon", u.getLogo());
@@ -259,6 +250,7 @@ public class TypeBusinessListActivity extends AbActivity {
 		super.onResume();
 	}
 
+	@Override
 	public void onPause() {
 		super.onPause();
 	}

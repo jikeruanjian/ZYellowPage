@@ -3,7 +3,6 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.ab.activity.AbActivity;
@@ -28,7 +28,11 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Area;
 
-public class SelectAreaActivity extends AbActivity {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+public class SelectAreaActivity extends AbActivity implements
+		ISimpleDialogListener {
 	private MyApplication application;
 	private AbTitleBar mAbTitleBar = null;
 
@@ -42,6 +46,8 @@ public class SelectAreaActivity extends AbActivity {
 	private Button tvCurrentAreaName;
 	private List<Area> lisCurrentAreas;
 	boolean isInit = true;
+	boolean isEdit = false; // 判断是不是跳转过来选择区域的，如果为true，将不保存区域到配置文件
+	private RelativeLayout lyLocatedArea;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,12 @@ public class SelectAreaActivity extends AbActivity {
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
+
+		isEdit = getIntent().getBooleanExtra("isEdit", false);
+		lyLocatedArea = (RelativeLayout) findViewById(R.id.lyLocatedArea);
+		if (isEdit) {
+			lyLocatedArea.setVisibility(View.GONE);
+		}
 
 		spiProvince = (Spinner) findViewById(R.id.spiProvince);
 		spiCity = (Spinner) findViewById(R.id.spiCity);
@@ -133,30 +145,39 @@ public class SelectAreaActivity extends AbActivity {
 					if (selectedArea.getId().startsWith("-")) {
 						selectedArea = (Area) spiCity.getSelectedItem();
 					}
-					if (!selectedArea.getId().equals(application.cityid)) {
-						setResult(RESULT_OK, null);
-					}
-					application.cityid = selectedArea.getId();
-					application.cityName = selectedArea.getName().substring(0,
-							2);
-					if (application.firstStart) {
+					if (isEdit) {
+						Intent data = new Intent();
+						Bundle bundle = new Bundle();
+						bundle.putSerializable("selectedArea", selectedArea);
+						data.putExtras(bundle);
+						setResult(RESULT_OK, data);
+					} else {
+						if (!selectedArea.getId().equals(application.cityid)) {
+							setResult(RESULT_OK, null);
+						}
+						application.cityid = selectedArea.getId();
+						application.cityName = selectedArea.getName()
+								.substring(0, 2);
+						// if (application.firstStart) {
+						// Editor editor = abSharedPreferences.edit();
+						// editor.putBoolean(Constant.FIRSTSTART, false);
+						// editor.commit();
+						// }
+
+						// 保存到配置文件
 						Editor editor = abSharedPreferences.edit();
-						editor.putBoolean(Constant.FIRSTSTART, false);
+						editor.putString(Constant.CITYID, application.cityid);
+						editor.putString(Constant.CITYNAME,
+								application.cityName);
 						editor.commit();
 					}
 				}
 
-				// 保存到配置文件
-				Editor editor = abSharedPreferences.edit();
-				editor.putString(Constant.CITYID, application.cityid);
-				editor.putString(Constant.CITYNAME, application.cityName);
-				editor.commit();
-
-				if (application.firstStart) {
-					SelectAreaActivity.this.startActivity(new Intent(
-							SelectAreaActivity.this, MainActivity.class));
-				}
-				application.firstStart = false;
+				// if (application.firstStart) {
+				// SelectAreaActivity.this.startActivity(new Intent(
+				// SelectAreaActivity.this, MainActivity.class));
+				// }
+				// application.firstStart = false;
 				SelectAreaActivity.this.finish();
 			}
 		});
@@ -300,61 +321,68 @@ public class SelectAreaActivity extends AbActivity {
 	}
 
 	private void changeCity() {
-		this.showDialog("提示", "确认切换区域到\""
-				+ tvCurrentAreaName.getText().toString() + "\"",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						new AreaBll().getAreaIdByAreaName(
-								SelectAreaActivity.this, tvCurrentAreaName
-										.getText().toString(),
-								new ZzStringHttpResponseListener() {
-
-									@Override
-									public void onSuccess(int statusCode,
-											String content) {
-										if (content == null)
-											return;
-										application.cityid = content;
-										application.cityName = tvCurrentAreaName
-												.getText().toString();
-
-										Editor editor = abSharedPreferences
-												.edit();
-										editor.putString(Constant.CITYID,
-												content);
-										editor.putString(Constant.CITYNAME,
-												tvCurrentAreaName.getText()
-														.toString());
-										editor.commit();
-										setResult(RESULT_OK, null);
-										SelectAreaActivity.this.finish();
-									}
-
-									@Override
-									public void onStart() {
-										showProgressDialog();
-									}
-
-									@Override
-									public void onFailure(int statusCode,
-											String content, Throwable error) {
-										showToast(content);
-									}
-
-									@Override
-									public void onErrorData(
-											String status_description) {
-										showToast(status_description);
-									}
-
-									@Override
-									public void onFinish() {
-										removeProgressDialog();
-									}
-								});
-					}
-				});
+		// this.showDialog("提示", "确认切换区域到\""
+		// + tvCurrentAreaName.getText().toString() + "\"",
+		// new DialogInterface.OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		// new AreaBll().getAreaIdByAreaName(
+		// SelectAreaActivity.this, tvCurrentAreaName
+		// .getText().toString(),
+		// new ZzStringHttpResponseListener() {
+		//
+		// @Override
+		// public void onSuccess(int statusCode,
+		// String content) {
+		// if (content == null)
+		// return;
+		// application.cityid = content;
+		// application.cityName = tvCurrentAreaName
+		// .getText().toString();
+		//
+		// Editor editor = abSharedPreferences
+		// .edit();
+		// editor.putString(Constant.CITYID,
+		// content);
+		// editor.putString(Constant.CITYNAME,
+		// tvCurrentAreaName.getText()
+		// .toString());
+		// editor.commit();
+		// setResult(RESULT_OK, null);
+		// SelectAreaActivity.this.finish();
+		// }
+		//
+		// @Override
+		// public void onStart() {
+		// showProgressDialog();
+		// }
+		//
+		// @Override
+		// public void onFailure(int statusCode,
+		// String content, Throwable error) {
+		// showToast(content);
+		// }
+		//
+		// @Override
+		// public void onErrorData(
+		// String status_description) {
+		// showToast(status_description);
+		// }
+		//
+		// @Override
+		// public void onFinish() {
+		// removeProgressDialog();
+		// }
+		// });
+		// }
+		// });
+		SimpleDialogFragment
+				.createBuilder(this, getSupportFragmentManager())
+				.setTitle("提示")
+				.setMessage(
+						"确认切换区域到\"" + tvCurrentAreaName.getText().toString()
+								+ "\"").setPositiveButtonText("切换")
+				.setNegativeButtonText("取消").setRequestCode(42).show();
 	}
 
 	private List<Area> getAreaParent() {
@@ -376,5 +404,55 @@ public class SelectAreaActivity extends AbActivity {
 		ad.closeDatabase(false);
 		lisArea.add(area);
 		return lisArea;
+	}
+
+	@Override
+	public void onPositiveButtonClicked(int requestCode) {
+		new AreaBll().getAreaIdByAreaName(SelectAreaActivity.this,
+				tvCurrentAreaName.getText().toString(),
+				new ZzStringHttpResponseListener() {
+
+					@Override
+					public void onSuccess(int statusCode, String content) {
+						if (content == null)
+							return;
+						application.cityid = content;
+						application.cityName = tvCurrentAreaName.getText()
+								.toString();
+
+						Editor editor = abSharedPreferences.edit();
+						editor.putString(Constant.CITYID, content);
+						editor.putString(Constant.CITYNAME, tvCurrentAreaName
+								.getText().toString());
+						editor.commit();
+						setResult(RESULT_OK, null);
+						SelectAreaActivity.this.finish();
+					}
+
+					@Override
+					public void onStart() {
+						showProgressDialog();
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						showToast(content);
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+						showToast(status_description);
+					}
+
+					@Override
+					public void onFinish() {
+						removeProgressDialog();
+					}
+				});
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
 	}
 }

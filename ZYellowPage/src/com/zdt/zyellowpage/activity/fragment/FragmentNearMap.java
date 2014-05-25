@@ -1,23 +1,13 @@
 package com.zdt.zyellowpage.activity.fragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
-import com.ab.http.AbHttpUtil;
-import com.ab.http.AbRequestParams;
-import com.ab.http.AbStringHttpResponseListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.GraphicsOverlay;
 import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.LocationData;
@@ -47,25 +37,16 @@ import com.baidu.navisdk.BaiduNaviManager;
 import com.baidu.navisdk.BaiduNaviManager.OnStartNavigationListener;
 import com.baidu.navisdk.comapi.routeplan.RoutePlanParams.NE_RoutePlan_Mode;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BNavigatorActivity;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
-import com.zdt.zyellowpage.activity.CompanyMapActiviy;
 import com.zdt.zyellowpage.activity.MainActivity;
-import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.bll.UserBll;
-import com.zdt.zyellowpage.global.Constant;
-import com.zdt.zyellowpage.jsonEntity.BaseResponseEntity;
-import com.zdt.zyellowpage.jsonEntity.CompanyListReqEntity;
 import com.zdt.zyellowpage.jsonEntity.NearCompanyReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
-import com.zdt.zyellowpage.model.NearEnterprise;
 import com.zdt.zyellowpage.model.User;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -73,10 +54,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -136,6 +115,7 @@ public class FragmentNearMap extends Fragment {
 	boolean expandVisable = true;
 	TextView textViewDes = null;
 	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mActivity = (AbActivity) getActivity();
@@ -157,6 +137,7 @@ public class FragmentNearMap extends Fragment {
 		return view;
 	}
 
+	@Override
 	public void onDestroy() {
 		mMapView.destroy();
 		if (MainActivity.mBMapMan != null) {
@@ -218,6 +199,7 @@ public class FragmentNearMap extends Fragment {
 
 		view.findViewById(R.id.btnLocStartNear).setOnClickListener(
 				new OnClickListener() {
+					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						mLocationClient.start();
@@ -405,7 +387,7 @@ public class FragmentNearMap extends Fragment {
 						newList.clear();
 						Log.e("xxxx", "------" + lis.size());
 						for (int i = 0; i < lis.size(); i++) {
-							newList.add((User) lis.get(i));
+							newList.add(lis.get(i));
 						}
 					}
 
@@ -927,7 +909,7 @@ public void DrawTransitRoute( int n ){
 	//这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
 	BaiduNaviManager.getInstance().launchNavigator(mActivity, 
 			locData.latitude,locData.longitude,"起点", 
-			(double)(poiPoint.getLatitudeE6()/1E6), (double)(poiPoint.getLongitudeE6()/1E6),"终点",
+			poiPoint.getLatitudeE6()/1E6, poiPoint.getLongitudeE6()/1E6,"终点",
 			NE_RoutePlan_Mode.ROUTE_PLAN_MOD_MIN_TIME, 		 //算路方式
 			true, 									   		 //真实导航
 			BaiduNaviManager.STRATEGY_FORCE_ONLINE_PRIORITY, //在离线策略

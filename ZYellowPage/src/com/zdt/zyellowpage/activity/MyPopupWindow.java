@@ -222,6 +222,7 @@ public class MyPopupWindow {
 		// return MainActivity.listCategory.size();
 		// }
 
+		@Override
 		public int getCount() {
 			// // TODO Auto-generated method stub
 			return 0;

@@ -32,6 +32,7 @@ public class FragmentTie extends Fragment {
 	View[] tieViews = new View[5];
 	int loadCount = 0;
 
+	@Override
 	public View onCreateView(final LayoutInflater inflater,
 			final ViewGroup container, Bundle savedInstanceState) {
 		mActivity = (AbActivity) getActivity();

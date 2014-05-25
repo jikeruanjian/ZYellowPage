@@ -3,7 +3,6 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -19,14 +18,13 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.LinearLayout.LayoutParams;
 
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
@@ -46,7 +44,12 @@ import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Certificate;
 import com.zdt.zyellowpage.model.User;
 
-public class PersonDetailActivity extends AbActivity {
+import eu.inmite.android.lib.dialogs.ISimpleDialogCancelListener;
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
+public class PersonDetailActivity extends AbActivity implements
+		ISimpleDialogListener, ISimpleDialogCancelListener {
 	private MyApplication application;
 	private AbTitleBar mAbTitleBar = null;
 	private String member_id;
@@ -64,8 +67,9 @@ public class PersonDetailActivity extends AbActivity {
 	View mCodeView;
 	RelativeLayout layMain;
 
-	//二维码弹出框
+	// 二维码弹出框
 	private View mView;
+
 	// private String[] imageUrls = new String[] { };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +88,10 @@ public class PersonDetailActivity extends AbActivity {
 		if (getIntent().getExtras() != null) {
 			member_id = (String) getIntent().getExtras().get("MEMBER_ID");
 			if (member_id == null) {
-				this.showDialog("错误", "数据获取失败",
-						new android.content.DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface arg0, int arg1) {
-								finish();
-							}
-						});
+				SimpleDialogFragment
+						.createBuilder(this, getSupportFragmentManager())
+						.setTitle("错误").setMessage("参数错误")
+						.setPositiveButtonText("返回").setRequestCode(42).show();
 			} else {
 				getData();
 				// 姓名、性别、年龄、所在地、民族、电话、电子邮箱、编号、QQ、学校、专业、行业、
@@ -115,7 +117,7 @@ public class PersonDetailActivity extends AbActivity {
 							PersonDetailActivity.this.showToast("获取详细信息失败！");
 							return;
 						}
-						userPerson = (User) lis.get(0);
+						userPerson = lis.get(0);
 						layMain.setVisibility(View.VISIBLE);
 						getDataCertificate();
 						getView();
@@ -130,7 +132,12 @@ public class PersonDetailActivity extends AbActivity {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						showToast(content);
+						SimpleDialogFragment
+								.createBuilder(PersonDetailActivity.this,
+										getSupportFragmentManager())
+								.setTitle("错误").setMessage("数据获取失败")
+								.setPositiveButtonText("返回").setRequestCode(42)
+								.show();
 					}
 
 					@Override
@@ -157,14 +164,15 @@ public class PersonDetailActivity extends AbActivity {
 					@Override
 					public void onSuccess(int statusCode, byte[] content) {
 						codeBitmap = AbImageUtil.bytes2Bimap(content);
-					
+
 						ImageView UserCode = (ImageView) PersonDetailActivity.this
 								.findViewById(R.id.codeTopRightimageView);
 						UserCode.setImageBitmap(codeBitmap);
 						UserCode.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
-								//PersonDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mCodeView);
+								// PersonDetailActivity.this.showDialog(AbConstant.DIALOGCENTER,
+								// mCodeView);
 								showChosePopWindow();
 							}
 						});
@@ -409,14 +417,16 @@ public class PersonDetailActivity extends AbActivity {
 
 	public View addTextByText(String text) {
 		LinearLayout lay = new LinearLayout(this);
-		lay.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT));
+		lay.setLayoutParams(new LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		lay.setOrientation(LinearLayout.VERTICAL);
 		WebView webView = new WebView(this);
 		webView.setFocusable(false);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
-		webView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.WRAP_CONTENT));
+		webView.setLayoutParams(new LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		if (AbStrUtil.isEmpty(text)) {
 			text = "用户暂时还未添加该项数据";
 		}
@@ -557,59 +567,79 @@ public class PersonDetailActivity extends AbActivity {
 		public void onPageScrollStateChanged(int arg0) {
 		}
 	}
-	
+
 	public void showChosePopWindow() {
-		View mChooseView = PersonDetailActivity.this.mInflater.inflate(R.layout.choose_lookimage, null);
+		View mChooseView = PersonDetailActivity.this.mInflater.inflate(
+				R.layout.choose_lookimage, null);
 		PersonDetailActivity.this.showDialog(1, mChooseView);
-		//查看
-		mChooseView.findViewById(R.id.choose_lookimage).
-		setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mView = PersonDetailActivity.this.mInflater.inflate(R.layout.code_view, null);
-				ImageView imageUserCode = (ImageView) mView
-						.findViewById(R.id.imageViewCodeCP);
-				imageUserCode.setImageBitmap(codeBitmap);
-				PersonDetailActivity.this.removeDialog(1);
-				PersonDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);
-				
-				imageUserCode.setOnClickListener(new OnClickListener() {
+		// 查看
+		mChooseView.findViewById(R.id.choose_lookimage).setOnClickListener(
+				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						PersonDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
+						// TODO Auto-generated method stub
+						mView = PersonDetailActivity.this.mInflater.inflate(
+								R.layout.code_view, null);
+						ImageView imageUserCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+						imageUserCode.setImageBitmap(codeBitmap);
+						PersonDetailActivity.this.removeDialog(1);
+						PersonDetailActivity.this.showDialog(
+								AbConstant.DIALOGCENTER, mView);
+
+						imageUserCode.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								PersonDetailActivity.this
+										.removeDialog(AbConstant.DIALOGCENTER);
+							}
+
+						});
 					}
 
 				});
-				}
+		// 保存
+		mChooseView.findViewById(R.id.choose_saveimagecode).setOnClickListener(
+				new OnClickListener() {
 
-			});
-		//保存
-		mChooseView.findViewById(R.id.choose_saveimagecode).
-		setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				PersonDetailActivity.this.removeDialog(1);
-				String imgUrl =  MediaStore.Images.
-						Media.insertImage(getContentResolver(), codeBitmap, "", "");   
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						PersonDetailActivity.this.removeDialog(1);
+						String imgUrl = MediaStore.Images.Media.insertImage(
+								getContentResolver(), codeBitmap, "", "");
 						Log.e("save codeimage", imgUrl);
 						removeDialog(AbConstant.DIALOGCENTER);
 						showToast("二维码成功保存到相册！");
-			
-			}
-		});
-		//取消
-		mChooseView.findViewById(R.id.choose_cancelimage).
-		setOnClickListener(new OnClickListener(){
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				PersonDetailActivity.this.removeDialog(1);
-			
-			}
-		});
+					}
+				});
+		// 取消
+		mChooseView.findViewById(R.id.choose_cancelimage).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						PersonDetailActivity.this.removeDialog(1);
+
+					}
+				});
+	}
+
+	@Override
+	public void onCancelled(int requestCode) {
+		if (requestCode == 42)
+			this.finish();
+	}
+
+	@Override
+	public void onPositiveButtonClicked(int requestCode) {
+		if (requestCode == 42)
+			this.finish();
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
 	}
 }

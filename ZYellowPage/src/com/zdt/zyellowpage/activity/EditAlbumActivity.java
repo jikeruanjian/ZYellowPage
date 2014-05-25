@@ -2,7 +2,6 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.List;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
@@ -22,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -44,13 +42,17 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Album;
 
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
+
 /**
  * 编辑相册
  * 
  * @author Kevin
  * 
  */
-public class EditAlbumActivity extends AbActivity {
+public class EditAlbumActivity extends AbActivity implements
+		ISimpleDialogListener {
 	private static final String TAG = "EditAlbumActivity";
 	private static final String STATE_POSITION = "STATE_POSITION";
 	private static final int ADD_ALBUM = 10001;
@@ -284,13 +286,13 @@ public class EditAlbumActivity extends AbActivity {
 				.getMeasuredHeight()) / 2;
 
 		popupWindow = new PopupWindow(view, popWidth,
-				LayoutParams.WRAP_CONTENT, true);
+				android.view.ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
 		// int[] location = new int[2];
 		// parent.getLocationInWindow(location);
 		// int startX = location[0] - parent.getLeft();
 		// if (startX + popWidth >= diaplayWidth) {
-		int startX = diaplayWidth - popWidth - 5;
+		// int startX = diaplayWidth - popWidth - 5;
 		// }
 
 		// 使其聚集
@@ -304,6 +306,7 @@ public class EditAlbumActivity extends AbActivity {
 		popupWindow.showAsDropDown(parent, -2, popMargin + 2);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				popupWindow.dismiss();
@@ -316,69 +319,77 @@ public class EditAlbumActivity extends AbActivity {
 							EditAlbumActivity.this, AddAlbumActivity.class),
 							ADD_ALBUM);
 				} else {
-					EditAlbumActivity.this
-							.showDialog(
-									"确认",
-									"确认删除？",
-									new android.content.DialogInterface.OnClickListener() {
+					// EditAlbumActivity.this
+					// .showDialog(
+					// "确认",
+					// "确认删除？",
+					// new android.content.DialogInterface.OnClickListener() {
+					//
+					// @Override
+					// public void onClick(
+					// DialogInterface dialog,
+					// int which) {
+					// Album entity = ((ImagePagerAdapter) pager
+					// .getAdapter())
+					// .getCurrentAlbum(pager
+					// .getCurrentItem());
+					// Album tempEntity = new Album();
+					// tempEntity.setItem_id("-"
+					// + entity.getItem_id());
+					//
+					// new AlbumBll()
+					// .updateAlbum(
+					// EditAlbumActivity.this,
+					// application.mUser
+					// .getToken(),
+					// tempEntity,
+					// new ZzStringHttpResponseListener() {
+					//
+					// @Override
+					// public void onSuccess(
+					// int statusCode,
+					// String content) {
+					// showToast(content);
+					// getData();
+					// }
+					//
+					// @Override
+					// public void onStart() {
+					// showProgressDialog("正在删除...");
+					//
+					// }
+					//
+					// @Override
+					// public void onFinish() {
+					// removeProgressDialog();
+					// }
+					//
+					// @Override
+					// public void onFailure(
+					// int statusCode,
+					// String content,
+					// Throwable error) {
+					// showToast(content);
+					//
+					// }
+					//
+					// @Override
+					// public void onErrorData(
+					// String status_description) {
+					// showToast(status_description);
+					// }
+					// });
+					// }
+					//
+					// });
 
-										@Override
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											Album entity = ((ImagePagerAdapter) pager
-													.getAdapter())
-													.getCurrentAlbum(pager
-															.getCurrentItem());
-											Album tempEntity = new Album();
-											tempEntity.setItem_id("-"
-													+ entity.getItem_id());
-
-											new AlbumBll()
-													.updateAlbum(
-															EditAlbumActivity.this,
-															application.mUser
-																	.getToken(),
-															tempEntity,
-															new ZzStringHttpResponseListener() {
-
-																@Override
-																public void onSuccess(
-																		int statusCode,
-																		String content) {
-																	showToast(content);
-																	getData();
-																}
-
-																@Override
-																public void onStart() {
-																	showProgressDialog("正在删除...");
-
-																}
-
-																@Override
-																public void onFinish() {
-																	removeProgressDialog();
-																}
-
-																@Override
-																public void onFailure(
-																		int statusCode,
-																		String content,
-																		Throwable error) {
-																	showToast(content);
-
-																}
-
-																@Override
-																public void onErrorData(
-																		String status_description) {
-																	showToast(status_description);
-																}
-															});
-										}
-
-									});
+					SimpleDialogFragment
+							.createBuilder(EditAlbumActivity.this,
+									getSupportFragmentManager()).setTitle("确认")
+							.setMessage("删除该张图片吗？").setPositiveButtonText("删除")
+							.setNegativeButtonText("取消")
+							.setRequestCode(position).setTag("custom-tag")
+							.show();
 				}
 			}
 		});
@@ -399,5 +410,52 @@ public class EditAlbumActivity extends AbActivity {
 			pager.notifyAll();
 			break;
 		}
+	}
+
+	@Override
+	public void onPositiveButtonClicked(final int requestCode) {
+		Album entity = ((ImagePagerAdapter) pager.getAdapter())
+				.getCurrentAlbum(pager.getCurrentItem());
+		Album tempEntity = new Album();
+		tempEntity.setItem_id("-" + entity.getItem_id());
+
+		new AlbumBll().updateAlbum(EditAlbumActivity.this,
+				application.mUser.getToken(), tempEntity,
+				new ZzStringHttpResponseListener() {
+
+					@Override
+					public void onSuccess(int statusCode, String content) {
+						showToast(content);
+						getData();
+					}
+
+					@Override
+					public void onStart() {
+						showProgressDialog("正在删除...");
+
+					}
+
+					@Override
+					public void onFinish() {
+						removeProgressDialog();
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						showToast(content);
+
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+						showToast(status_description);
+					}
+				});
+
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
 	}
 }

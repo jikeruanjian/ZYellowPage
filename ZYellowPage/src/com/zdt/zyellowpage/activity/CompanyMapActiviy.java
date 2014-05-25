@@ -1,7 +1,5 @@
 package com.zdt.zyellowpage.activity;
 
-import java.util.List;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -10,7 +8,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -23,7 +20,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.GraphicsOverlay;
 import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MKEvent;
@@ -54,7 +50,6 @@ import com.baidu.navisdk.comapi.routeplan.RoutePlanParams.NE_RoutePlan_Mode;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.global.MyApplication;
-import com.zdt.zyellowpage.model.User;
 
 public class CompanyMapActiviy extends AbActivity {
 
@@ -175,6 +170,7 @@ public class CompanyMapActiviy extends AbActivity {
 		
 		this.findViewById(R.id.btnCompanyLocStart).setOnClickListener(
 				new OnClickListener() {
+					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						mLocationClient.start();
@@ -581,12 +577,14 @@ public class CompanyMapActiviy extends AbActivity {
 	    public OverlayTest(Drawable mark,MapView mapView){  
 	            super(mark,mapView);  
 	    }  
-	    protected boolean onTap(int index) {  
+	    @Override
+		protected boolean onTap(int index) {  
 	        //在此处理item点击事件  
 	        System.out.println("item onTap: "+index);  
 	        return true;  
 	    }  
-	        public boolean onTap(GeoPoint pt, MapView mapView){  
+	        @Override
+			public boolean onTap(GeoPoint pt, MapView mapView){  
 	                //在此处理MapView的点击事件，当返回 true时  
 	                super.onTap(pt,mapView);  
 	                return false;  

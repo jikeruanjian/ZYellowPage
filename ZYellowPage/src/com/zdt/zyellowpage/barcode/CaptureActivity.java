@@ -220,6 +220,7 @@ public class CaptureActivity extends AbActivity implements Callback {
 	 * When the beep has finished playing, rewind to queue up another one.
 	 */
 	private final OnCompletionListener beepListener = new OnCompletionListener() {
+		@Override
 		public void onCompletion(MediaPlayer mediaPlayer) {
 			mediaPlayer.seekTo(0);
 		}

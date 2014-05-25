@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -31,15 +30,19 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Certificate;
 
-public class CertificateListActivity extends AbActivity {
+import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
+import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
-	private MyApplication application;
+public class CertificateListActivity extends AbActivity implements
+		ISimpleDialogListener {
+	MyApplication application;
 	private List<Certificate> listCertificate = null;
 	private AbPullListView mAbPullListView = null;
 	private AbTitleBar mAbTitleBar;
 	private MyAdapterCertificateEdit adapter;
 	private String member_Id;
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.activity_morephone);
@@ -86,65 +89,75 @@ public class CertificateListActivity extends AbActivity {
 					public boolean onItemLongClick(AdapterView<?> arg0,
 							View arg1, final int position, long arg3) {
 
-						CertificateListActivity.this
-								.showDialog(
-										"确认",
-										"确认删除？",
-										new android.content.DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int which) {
-												dialog.dismiss();
-												Certificate cer = new Certificate();
-												cer.setItem_id("-"
-														+ listCertificate.get(
-																position - 1)
-																.getItem_id());
-												new CertificateBll()
-														.updateCertificate(
-																CertificateListActivity.this,
-																application.mUser
-																		.getToken(),
-																cer,
-																new ZzStringHttpResponseListener() {
-
-																	@Override
-																	public void onSuccess(
-																			int statusCode,
-																			String content) {
-																		listCertificate
-																				.remove(position - 1);
-																		adapter.notifyDataSetChanged();
-																		showToast(content);
-																	}
-
-																	@Override
-																	public void onStart() {
-																		showProgressDialog("正在删除...");
-																	}
-
-																	@Override
-																	public void onFailure(
-																			int statusCode,
-																			String content,
-																			Throwable error) {
-																		showToast(content);
-																	}
-
-																	@Override
-																	public void onErrorData(
-																			String status_description) {
-																		showToast(status_description);
-																	}
-
-																	@Override
-																	public void onFinish() {
-																		removeProgressDialog();
-																	}
-
-																});
-											}
-										});
+						// CertificateListActivity.this
+						// .showDialog(
+						// "确认",
+						// "确认删除？",
+						// new android.content.DialogInterface.OnClickListener()
+						// {
+						// @Override
+						// public void onClick(
+						// DialogInterface dialog,
+						// int which) {
+						// dialog.dismiss();
+						// Certificate cer = new Certificate();
+						// cer.setItem_id("-"
+						// + listCertificate.get(
+						// position - 1)
+						// .getItem_id());
+						// new CertificateBll()
+						// .updateCertificate(
+						// CertificateListActivity.this,
+						// application.mUser
+						// .getToken(),
+						// cer,
+						// new ZzStringHttpResponseListener() {
+						//
+						// @Override
+						// public void onSuccess(
+						// int statusCode,
+						// String content) {
+						// listCertificate
+						// .remove(position - 1);
+						// adapter.notifyDataSetChanged();
+						// showToast(content);
+						// }
+						//
+						// @Override
+						// public void onStart() {
+						// showProgressDialog("正在删除...");
+						// }
+						//
+						// @Override
+						// public void onFailure(
+						// int statusCode,
+						// String content,
+						// Throwable error) {
+						// showToast(content);
+						// }
+						//
+						// @Override
+						// public void onErrorData(
+						// String status_description) {
+						// showToast(status_description);
+						// }
+						//
+						// @Override
+						// public void onFinish() {
+						// removeProgressDialog();
+						// }
+						//
+						// });
+						// }
+						// });
+						SimpleDialogFragment
+								.createBuilder(CertificateListActivity.this,
+										getSupportFragmentManager())
+								.setTitle("确认").setMessage("删除该条记录吗？")
+								.setPositiveButtonText("删除")
+								.setNegativeButtonText("取消")
+								.setRequestCode(position).setTag("custom-tag")
+								.show();
 						return false;
 					}
 				});
@@ -293,5 +306,48 @@ public class CertificateListActivity extends AbActivity {
 			}
 		});
 
+	}
+
+	@Override
+	public void onPositiveButtonClicked(final int requestCode) {
+		Certificate cer = new Certificate();
+		cer.setItem_id("-" + listCertificate.get(requestCode - 1).getItem_id());
+		new CertificateBll().updateCertificate(CertificateListActivity.this,
+				application.mUser.getToken(), cer,
+				new ZzStringHttpResponseListener() {
+
+					@Override
+					public void onSuccess(int statusCode, String content) {
+						listCertificate.remove(requestCode - 1);
+						adapter.notifyDataSetChanged();
+						showToast(content);
+					}
+
+					@Override
+					public void onStart() {
+						showProgressDialog("正在删除...");
+					}
+
+					@Override
+					public void onFailure(int statusCode, String content,
+							Throwable error) {
+						showToast(content);
+					}
+
+					@Override
+					public void onErrorData(String status_description) {
+						showToast(status_description);
+					}
+
+					@Override
+					public void onFinish() {
+						removeProgressDialog();
+					}
+				});
+
+	}
+
+	@Override
+	public void onNegativeButtonClicked(int requestCode) {
 	}
 }
