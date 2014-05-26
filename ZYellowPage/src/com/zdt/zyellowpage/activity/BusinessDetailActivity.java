@@ -55,6 +55,7 @@ import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
 public class BusinessDetailActivity extends AbActivity implements
 		ISimpleDialogListener, ISimpleDialogCancelListener {
+	public static String TAG = "BusinessDetailActivity";
 	private MyApplication application;
 	private AbTitleBar mAbTitleBar = null;
 	private AbSlidingPlayView mSlidingPlayView = null;
@@ -93,7 +94,8 @@ public class BusinessDetailActivity extends AbActivity implements
 				SimpleDialogFragment
 						.createBuilder(this, getSupportFragmentManager())
 						.setTitle("错误").setMessage("参数错误")
-						.setPositiveButtonText("返回").setRequestCode(42).show();
+						.setPositiveButtonText("返回").setTag(TAG)
+						.setRequestCode(42).show();
 			} else {
 				application = (MyApplication) abApplication;
 				mAbTitleBar = this.getTitleBar();
@@ -263,7 +265,7 @@ public class BusinessDetailActivity extends AbActivity implements
 										getSupportFragmentManager())
 								.setTitle("错误").setMessage("数据获取失败")
 								.setPositiveButtonText("返回").setRequestCode(42)
-								.show();
+								.setTag(TAG).show();
 					}
 
 					@Override

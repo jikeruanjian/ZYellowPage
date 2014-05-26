@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zdt.zyellowpage"
-    android:versionCode="1"
-    android:versionName="1.0.3" >
+    android:versionCode="2"
+    android:versionName="2.0.1" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -129,7 +129,7 @@
         android:theme="@style/myTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="RjlfVWfEcAecRGc5qG8xyLoX"/>
+            android:value="E0vBVTjgP3IvuuZSOSqKmsZu" />
 
         <service
             android:name="com.baidu.location.f"
@@ -151,78 +151,114 @@
         <activity
             android:name="com.zdt.zyellowpage.activity.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.login.LoginActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.login.FindPwdActivity"
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.login.RegisterActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.PopPersonListActivity"
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.PopBusinessListActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.BusinessDetailActivity"
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.PersonDetailActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.SelectAreaActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.login.ChangePwdActivity"
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.TypeBusinessListActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.ImagePagerActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.CompanyBuySellActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.MyConcernActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.VideoListActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.webView.MyWebViewActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.BuySellContentActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.MyResourceActivity" 
-                        android:screenOrientation="portrait"/>
-        <activity android:name="com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity"
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.EditCompanyBaseResourceActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.SelectCategoryActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.RichTextEditorActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.EditCoordinateAcitivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.MorePhoneActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.AddPhotoActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.CropImageActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.EditAlbumActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.EditSupplyDemandActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.EditMorePhoneAcitivity"
-                        android:screenOrientation="portrait"  />
-        <activity android:name="com.zdt.zyellowpage.activity.CertificateListActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.EditCertificateActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.TieListActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.TieDetailActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.EditTieMessageActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.AddAlbumActivity" 
-                        android:screenOrientation="portrait" />
-        <activity android:name="com.zdt.zyellowpage.activity.NewsContentDetailActivity" 
-                        android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.login.FindPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.login.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.PopPersonListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.PopBusinessListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.BusinessDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.PersonDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.SelectAreaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.login.ChangePwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.TypeBusinessListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.ImagePagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.CompanyBuySellActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.MyConcernActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.VideoListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.webView.MyWebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.BuySellContentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.MyResourceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.EditCompanyBaseResourceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.SelectCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.RichTextEditorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.EditCoordinateAcitivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.MorePhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.AddPhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.CropImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.EditAlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.EditSupplyDemandActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.EditMorePhoneAcitivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.CertificateListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.EditCertificateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.TieListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.TieDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.EditTieMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.AddAlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zdt.zyellowpage.activity.NewsContentDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.zdt.zyellowpage.barcode.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"

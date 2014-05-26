@@ -74,6 +74,7 @@ import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 public class MainActivity extends AbActivity implements
 		OnCheckedChangeListener, ISimpleDialogListener {
 
+	public static String TAG = "MainActivity";
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
 	private FragmentHomePage newFragmentHome = null;
@@ -193,7 +194,7 @@ public class MainActivity extends AbActivity implements
 		// fragmentTransaction.add(R.id.fragmentViewMore, newFragmentTie,
 		// "more");
 
-		fragmentTransaction.commit();
+		fragmentTransaction.commitAllowingStateLoss();
 		// listArea = new ArrayList<Area>();
 		// listCategory = new ArrayList<Category>();
 		// listAreaName = new ArrayList<String>();
@@ -263,7 +264,7 @@ public class MainActivity extends AbActivity implements
 		newFragmentNearMap = new FragmentNearMap();
 		fragmentTransaction.add(R.id.fragmentViewNear, newFragmentNearMap,
 				"near");
-		fragmentTransaction.commit();
+		fragmentTransaction.commitAllowingStateLoss();
 
 	}
 
@@ -271,7 +272,7 @@ public class MainActivity extends AbActivity implements
 		fragmentTransaction = fragmentManager.beginTransaction();
 		newFragmentTie = new FragmentTie();
 		fragmentTransaction.add(R.id.fragmentViewMore, newFragmentTie, "more");
-		fragmentTransaction.commit();
+		fragmentTransaction.commitAllowingStateLoss();
 
 	}
 
@@ -629,7 +630,9 @@ public class MainActivity extends AbActivity implements
 							// }
 							// });
 							SimpleDialogFragment
-									.createBuilder(MainActivity.this,
+									.createBuilder(
+											MainActivity.this
+													.getApplicationContext(),
 											getSupportFragmentManager())
 									.setTitle("发现新版本" + version.getVersion())
 									.setMessage(
@@ -638,8 +641,7 @@ public class MainActivity extends AbActivity implements
 															.getVersion_description())
 									.setPositiveButtonText("立即更新")
 									.setNegativeButtonText("以后再说")
-									.setRequestCode(42).setTag("custom-tag")
-									.show();
+									.setRequestCode(42).setTag(TAG).show();
 						}
 					}
 
@@ -844,7 +846,7 @@ public class MainActivity extends AbActivity implements
 				// content);
 				// editor.putString(Constant.CITYNAME,
 				// showCityName);
-				// editor.commit();
+				// editor.commitAllowingStateLoss();
 				// newFragmentHome.getData();
 				// }
 				//
@@ -874,12 +876,13 @@ public class MainActivity extends AbActivity implements
 				// });
 
 				SimpleDialogFragment
-						.createBuilder(MainActivity.this,
+						.createBuilder(
+								MainActivity.this.getApplicationContext(),
 								getSupportFragmentManager()).setTitle("区域提醒")
 						.setMessage("当前定位到您所在的城市是" + mCityName + ",是否切换城市？")
 						.setPositiveButtonText("切换")
 						.setNegativeButtonText("取消").setRequestCode(43)
-						.setTag("custom-tag").show();
+						.setTag(TAG).show();
 			}
 		}
 

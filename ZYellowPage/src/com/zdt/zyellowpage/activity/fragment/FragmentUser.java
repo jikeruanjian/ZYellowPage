@@ -49,6 +49,7 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.AddPhotoActivity;
 import com.zdt.zyellowpage.activity.CertificateListActivity;
 import com.zdt.zyellowpage.activity.EditPersonBaseResourceActivity;
+import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.activity.MyConcernActivity;
 import com.zdt.zyellowpage.activity.MyResourceActivity;
 import com.zdt.zyellowpage.activity.NewsContentDetailActivity;
@@ -172,7 +173,8 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 												.setPositiveButtonText("立即更新")
 												.setNegativeButtonText("以后再说")
 												.setRequestCode(42)
-												.setTag("custom-tag").show();
+												.setTag(MainActivity.TAG)
+												.show();
 									} else {
 										SimpleDialogFragment
 												.createBuilder(
@@ -183,7 +185,8 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 												.setMessage("当前已经是最新版本")
 												.setPositiveButtonText("确定")
 												.setRequestCode(43)
-												.setTag("custom-tag").show();
+												.setTag(MainActivity.TAG)
+												.show();
 									}
 								}
 

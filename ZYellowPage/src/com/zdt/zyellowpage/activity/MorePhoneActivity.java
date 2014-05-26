@@ -36,7 +36,7 @@ import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
 public class MorePhoneActivity extends AbActivity implements
 		ISimpleDialogListener {
-
+	public static String TAG = "MorePhoneActivity";
 	private MyApplication application;
 	private List<Contact> listContact = null;
 	private AbPullListView mAbPullListView = null;
@@ -165,8 +165,8 @@ public class MorePhoneActivity extends AbActivity implements
 									.setTitle("确认").setMessage("删除该条记录吗？")
 									.setPositiveButtonText("删除")
 									.setNegativeButtonText("取消")
-									.setRequestCode(position)
-									.setTag("custom-tag").show();
+									.setRequestCode(position).setTag(TAG)
+									.show();
 							return false;
 
 						}

@@ -388,7 +388,7 @@ public class EditAlbumActivity extends AbActivity implements
 									getSupportFragmentManager()).setTitle("确认")
 							.setMessage("删除该张图片吗？").setPositiveButtonText("删除")
 							.setNegativeButtonText("取消")
-							.setRequestCode(position).setTag("custom-tag")
+							.setRequestCode(position).setTag(TAG)
 							.show();
 				}
 			}

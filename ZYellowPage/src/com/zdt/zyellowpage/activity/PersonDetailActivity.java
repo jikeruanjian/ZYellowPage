@@ -50,6 +50,7 @@ import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
 public class PersonDetailActivity extends AbActivity implements
 		ISimpleDialogListener, ISimpleDialogCancelListener {
+	public static String TAG = "PersonDetailActivity";
 	private MyApplication application;
 	private AbTitleBar mAbTitleBar = null;
 	private String member_id;
@@ -91,7 +92,8 @@ public class PersonDetailActivity extends AbActivity implements
 				SimpleDialogFragment
 						.createBuilder(this, getSupportFragmentManager())
 						.setTitle("错误").setMessage("参数错误")
-						.setPositiveButtonText("返回").setRequestCode(42).show();
+						.setPositiveButtonText("返回").setTag(TAG)
+						.setRequestCode(42).show();
 			} else {
 				getData();
 				// 姓名、性别、年龄、所在地、民族、电话、电子邮箱、编号、QQ、学校、专业、行业、
@@ -136,8 +138,8 @@ public class PersonDetailActivity extends AbActivity implements
 								.createBuilder(PersonDetailActivity.this,
 										getSupportFragmentManager())
 								.setTitle("错误").setMessage("数据获取失败")
-								.setPositiveButtonText("返回").setRequestCode(42)
-								.show();
+								.setPositiveButtonText("返回").setTag(TAG)
+								.setRequestCode(42).show();
 					}
 
 					@Override

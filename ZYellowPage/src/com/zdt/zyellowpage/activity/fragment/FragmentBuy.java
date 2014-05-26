@@ -22,6 +22,7 @@ import com.ab.view.pullview.AbPullListView;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BuySellContentActivity;
 import com.zdt.zyellowpage.activity.EditSupplyDemandActivity;
+import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.bll.SupplyDemandBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.SupplyDemandReqEntity;
@@ -178,8 +179,7 @@ public class FragmentBuy extends Fragment implements ISimpleDialogListener {
 									.setTitle("确认").setMessage("删除该条记录吗？")
 									.setPositiveButtonText("删除")
 									.setNegativeButtonText("取消")
-									.setRequestCode(position)
-									.setTag("custom-tag").show();
+									.setRequestCode(position).show();
 							return false;
 						}
 					});

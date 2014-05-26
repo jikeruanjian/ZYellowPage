@@ -1,5 +1,7 @@
 package eu.inmite.android.lib.dialogs;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -7,8 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 /**
- * Internal base builder that holds common values for all dialog fragment builders.
- *
+ * Internal base builder that holds common values for all dialog fragment
+ * builders.
+ * 
  * @author Tomas Vondracek
  */
 abstract class BaseDialogBuilder<T extends BaseDialogBuilder<T>> {
@@ -29,7 +32,8 @@ abstract class BaseDialogBuilder<T extends BaseDialogBuilder<T>> {
 	private String mTag = DEFAULT_TAG;
 	private int mRequestCode = DEFAULT_REQUEST_CODE;
 
-	public BaseDialogBuilder(Context context, FragmentManager fragmentManager, Class<? extends BaseDialogFragment> clazz) {
+	public BaseDialogBuilder(Context context, FragmentManager fragmentManager,
+			Class<? extends BaseDialogFragment> clazz) {
 		mFragmentManager = fragmentManager;
 		mContext = context.getApplicationContext();
 		mClass = clazz;
@@ -43,7 +47,7 @@ abstract class BaseDialogBuilder<T extends BaseDialogBuilder<T>> {
 		mCancelable = cancelable;
 		return self();
 	}
-	
+
 	public T setCancelableOnTouchOutside(boolean cancelable) {
 		mCancelableOnTouchOutside = cancelable;
 		if (cancelable) {
@@ -68,22 +72,43 @@ abstract class BaseDialogBuilder<T extends BaseDialogBuilder<T>> {
 		return self();
 	}
 
-
 	public DialogFragment show() {
 		final Bundle args = prepareArguments();
 
-		final BaseDialogFragment fragment = (BaseDialogFragment) Fragment.instantiate(mContext, mClass.getName(), args);
-	
-		args.putBoolean(ARG_CANCELABLE_ON_TOUCH_OUTSIDE, mCancelableOnTouchOutside);
-		
+		final BaseDialogFragment fragment = (BaseDialogFragment) Fragment
+				.instantiate(mContext, mClass.getName(), args);
+
+		args.putBoolean(ARG_CANCELABLE_ON_TOUCH_OUTSIDE,
+				mCancelableOnTouchOutside);
+
 		if (mTargetFragment != null) {
 			fragment.setTargetFragment(mTargetFragment, mRequestCode);
 		} else {
 			args.putInt(ARG_REQUEST_CODE, mRequestCode);
 		}
 		fragment.setCancelable(mCancelable);
-		fragment.show(mFragmentManager, mTag);
-		
+		if (isTopActivity()) {
+			try {
+				fragment.show(mFragmentManager, mTag);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return fragment;
+	}
+
+	private boolean isTopActivity() {
+		boolean isTop = false;
+		ActivityManager am = (ActivityManager) mContext
+				.getSystemService("activity");
+		ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+		// DebugLog.d(TAG, "isTopActivity = " + cn.getClassName());
+		if (mTag == null || mTag.equals(DEFAULT_TAG)
+				|| cn.getClassName().contains(mTag)) {
+			isTop = true;
+		} else {
+		}
+		// DebugLog.d(TAG, "isTop = " + isTop);
+		return isTop;
 	}
 }

@@ -33,6 +33,7 @@ import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
 public class SelectAreaActivity extends AbActivity implements
 		ISimpleDialogListener {
+	public static String TAG = "SelectAreaActivity";
 	private MyApplication application;
 	private AbTitleBar mAbTitleBar = null;
 
@@ -382,7 +383,8 @@ public class SelectAreaActivity extends AbActivity implements
 				.setMessage(
 						"确认切换区域到\"" + tvCurrentAreaName.getText().toString()
 								+ "\"").setPositiveButtonText("切换")
-				.setNegativeButtonText("取消").setRequestCode(42).show();
+				.setNegativeButtonText("取消").setTag(TAG).setRequestCode(42)
+				.show();
 	}
 
 	private List<Area> getAreaParent() {

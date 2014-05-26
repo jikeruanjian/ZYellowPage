@@ -180,8 +180,7 @@ public class FragmentSell extends Fragment implements ISimpleDialogListener {
 									.setTitle("确认").setMessage("删除该条记录吗？")
 									.setPositiveButtonText("删除")
 									.setNegativeButtonText("取消")
-									.setRequestCode(position)
-									.setTag("custom-tag").show();
+									.setRequestCode(position).show();
 							return false;
 						}
 					});
