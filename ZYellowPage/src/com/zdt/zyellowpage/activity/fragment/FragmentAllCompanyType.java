@@ -40,7 +40,7 @@ public class FragmentAllCompanyType extends Fragment {
 				initView();
 				mActivity.removeProgressDialog();
 			}
-		}, 300);
+		}, 150);
 		return view;
 	}
 

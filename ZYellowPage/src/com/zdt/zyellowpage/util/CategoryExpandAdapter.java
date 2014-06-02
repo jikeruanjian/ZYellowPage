@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,7 +36,6 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 					}
 				}
 				secLevel.add(tempSecCategory);
-				//secLevel.add({"正在获取"});
 			}
 		}
 	}
@@ -64,20 +61,6 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 	@Override
 	public long getChildId(int groupPosition, int childPosition) {
 		return childPosition;
-	}
-
-	// 自己定义一个获得文字信息的方法
-	TextView getTextView() {
-		AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT, 64);
-		TextView textView = new TextView(mActivity);
-		textView.setLayoutParams(lp);
-		textView.setGravity(Gravity.CENTER_VERTICAL);
-		textView.setPadding(50, 0, 0, 0);
-		textView.setTextSize(16);
-		textView.setTextColor(mActivity.getResources().getColor(
-				R.color.propertyvalue));
-		return textView;
 	}
 
 	// 重写ExpandableListAdapter中的各个方法
@@ -115,36 +98,48 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
-		LinearLayout parentLayout = (LinearLayout) View.inflate(mActivity,
-				R.layout.expandgroup_item, null);
-		TextView parentTextView = (TextView) parentLayout
-				.findViewById(R.id.groupNametextView);
-		parentTextView.setText(((Category) getGroup(groupPosition)).getName());
-		ImageView parentImageViw = (ImageView) parentLayout
-				.findViewById(R.id.groupNameImageView);
-		if (isExpanded) {
-			parentImageViw.setBackgroundResource(R.drawable.changecity);
+
+		final FirstLevViewHolder viewHolder;
+		if (convertView == null) {
+			convertView = (LinearLayout) View.inflate(mActivity,
+					R.layout.expandgroup_item, null);
+			viewHolder = new FirstLevViewHolder();
+			viewHolder.itemsTitle = (TextView) convertView
+					.findViewById(R.id.groupNametextView);
+			viewHolder.itemsIcon = (ImageView) convertView
+					.findViewById(R.id.groupNameImageView);
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (FirstLevViewHolder) convertView.getTag();
 		}
 
-		return parentLayout;
+		viewHolder.itemsTitle.setText(((Category) getGroup(groupPosition))
+				.getName());
+		if (isExpanded) {
+			viewHolder.itemsIcon.setBackgroundResource(R.drawable.changecity);
+		}else{
+			viewHolder.itemsIcon.setBackgroundResource(R.drawable.changecity_right);
+		}
+		return convertView;
 	}
 
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		/*LinearLayout ll = new LinearLayout(mActivity);
-		ll.setOrientation(0);
-		TextView textView = getTextView();
-		textView.setText(((Category) getChild(groupPosition, childPosition))
-				.getName());
-		ll.addView(textView);*/
-		LinearLayout childLayout = (LinearLayout) View.inflate(mActivity,
-				R.layout.expandchild_item, null);
-		TextView childTextView = (TextView) childLayout
-				.findViewById(R.id.childNametextView);
-		childTextView.setText(((Category) getChild(groupPosition, childPosition))
-				.getName());
-		return childLayout;
+		final SeclevViewHolder viewHolder;
+		if (convertView == null) {
+			convertView = (LinearLayout) View.inflate(mActivity,
+					R.layout.expandchild_item, null);
+			viewHolder = new SeclevViewHolder();
+			viewHolder.itemsTitle = (TextView) convertView
+					.findViewById(R.id.childNametextView);
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (SeclevViewHolder) convertView.getTag();
+		}
+		viewHolder.itemsTitle.setText(((Category) getChild(groupPosition,
+				childPosition)).getName());
+		return convertView;
 	}
 
 	@Override
@@ -155,5 +150,20 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 	@Override
 	public boolean hasStableIds() {
 		return true;
+	}
+
+	/**
+	 * 第一级View元素
+	 */
+	static class FirstLevViewHolder {
+		ImageView itemsIcon;
+		TextView itemsTitle;
+	}
+
+	/**
+	 * 第二级View元素
+	 */
+	static class SeclevViewHolder {
+		TextView itemsTitle;
 	}
 }

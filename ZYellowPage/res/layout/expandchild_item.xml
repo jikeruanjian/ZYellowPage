@@ -3,24 +3,18 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/childNametextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="45dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/propertyvalue"
+        android:textSize="@dimen/main_text_size_h4" />
 
-        <TextView
-            android:id="@+id/childNametextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="45dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/propertyvalue"
-            android:textSize="@dimen/main_text_size_h4" />
-    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

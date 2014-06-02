@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -147,8 +148,8 @@ public class CaptureActivity extends AbActivity implements Callback {
 		inactivityTimer.onActivity();
 		viewfinderView.drawResultBitmap(barcode);
 		playBeepSoundAndVibrate();
-		// txtResult.setText(obj.getBarcodeFormat().toString() + ":"
-		// + obj.getText());
+		txtResult.setText(obj.getBarcodeFormat().toString() + ":"
+				+ obj.getText());
 		// TODO 开始处理
 		String[] values = obj.getText().split("/");
 		String type = null;
@@ -176,7 +177,16 @@ public class CaptureActivity extends AbActivity implements Callback {
 			startActivity(intent);
 			this.finish();
 		} else {
-			Toast.makeText(this, "此信息暂时为处理", Toast.LENGTH_LONG).show();
+			try {
+				Uri uri = Uri.parse("http://" + obj.getText());
+				Intent data = new Intent();
+				data.setAction("android.intent.action.VIEW");
+				data.setData(uri);
+				startActivity(data);
+				this.finish();
+			} catch (Exception e) {
+				Toast.makeText(this, "此信息暂时不能处理", Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 

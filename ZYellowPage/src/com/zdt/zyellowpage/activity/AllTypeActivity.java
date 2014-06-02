@@ -1,7 +1,5 @@
 package com.zdt.zyellowpage.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
@@ -19,9 +17,11 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
+import com.ab.view.ioc.AbIocView;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.fragment.FragmentAllCompanyType;
@@ -43,6 +43,9 @@ public class AllTypeActivity extends AbActivity {
 	private FragmentAllPersonType newFragmentPerson = null;
 	private boolean isFirst = true;
 	float scale;
+
+	@AbIocView(id = R.id.scMain)
+	ScrollView scMain;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -74,14 +77,8 @@ public class AllTypeActivity extends AbActivity {
 			public void run() {
 				initCommonClassGridView();
 			}
-		}, 200);
+		}, 100);
 		initRadioBtn();
-		this.findViewById(R.id.fragmentCompanyType).setFocusable(true);
-		this.findViewById(R.id.fragmentCompanyType).setFocusableInTouchMode(
-				true);
-		this.findViewById(R.id.fragmentPersonType).setFocusable(true);
-		this.findViewById(R.id.fragmentPersonType)
-				.setFocusableInTouchMode(true);
 	}
 
 	/**
@@ -105,6 +102,7 @@ public class AllTypeActivity extends AbActivity {
 		gridview.setAdapter(new CommonAdapter());
 		// 添加消息处理
 		gridview.setOnItemClickListener(new ItemClickListener());
+		scMain.setVisibility(View.VISIBLE);
 	}
 
 	// 当AdapterView被单击(触摸屏或者键盘)，则返回的Item单击事件
@@ -115,31 +113,29 @@ public class AllTypeActivity extends AbActivity {
 				long arg3) {
 			// Toast.makeText(AllTypeActivity.this, commonType[arg2],
 			// Toast.LENGTH_SHORT).show();
-			if(commonType[arg2].equals("更多")){
-				commonType = new String[list.size()+1];
+			if (commonType[arg2].equals("更多")) {
+				commonType = new String[list.size() + 1];
 				for (int i = 0; i < list.size(); i++) {
 					commonType[i] = list.get(i).getName();
-					
+
 				}
 				commonType[list.size()] = "收起";
 				gridview.setAdapter(new CommonAdapter());
-			}
-			else if(commonType[arg2].equals("收起")){
+			} else if (commonType[arg2].equals("收起")) {
 				commonType = new String[16];
 				for (int i = 0; i < 15; i++) {
 					commonType[i] = list.get(i).getName();
 				}
 				commonType[15] = "更多";
 				gridview.setAdapter(new CommonAdapter());
-			}
-			else{
+			} else {
 				Intent intent = new Intent(AllTypeActivity.this,
 						PopBusinessListActivity.class);
 				intent.putExtra("Type", commonType[arg2]);
 				intent.putExtra("TypeId", commonType[arg2]);
 				AllTypeActivity.this.startActivity(intent);
 			}
-			
+
 		}
 
 	}

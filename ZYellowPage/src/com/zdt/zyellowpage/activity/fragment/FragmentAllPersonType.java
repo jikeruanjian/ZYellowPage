@@ -12,7 +12,6 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
-import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
@@ -52,7 +51,6 @@ public class FragmentAllPersonType extends Fragment {
 		List<Category> lisAll = categoryDao.queryList("Type = ? ",
 				new String[] { "1" });
 		categoryDao.closeDatabase(true);
-		// Log.e("FragmentAllPersonType ", "个人分类数量"+lisAll.size());
 		adapter = new CategoryExpandAdapter(lisAll, mActivity);
 
 		expandableListView = (ExpandableListView) view
@@ -68,9 +66,6 @@ public class FragmentAllPersonType extends Fragment {
 				Category selectedChild = (Category) adapter.getChild(
 						groupPosition, childPosition);
 
-				Toast.makeText(mActivity,
-						"你点击了" + "list-" + selectedChild.getId(),
-						Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(mActivity,
 						PopPersonListActivity.class);
 				intent.putExtra("Type", selectedChild.getName());

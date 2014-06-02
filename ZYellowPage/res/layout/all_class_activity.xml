@@ -2,7 +2,8 @@
     android:id="@+id/scMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_white" >
+    android:background="@color/gray_white"
+    android:visibility="gone" >
 
     <LinearLayout
         android:layout_width="fill_parent"
