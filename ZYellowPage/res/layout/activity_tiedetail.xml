@@ -273,7 +273,7 @@
         android:layout_alignTop="@+id/tie_image_center"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/tie_image_phone"
-        android:src="@drawable/locmark1" />
+       android:src="@drawable/google_maps" />
 
     <ImageView
         android:id="@+id/tie_image_center"
