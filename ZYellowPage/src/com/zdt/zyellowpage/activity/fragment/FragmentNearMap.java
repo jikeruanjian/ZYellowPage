@@ -2,6 +2,7 @@ package com.zdt.zyellowpage.activity.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
 import com.baidu.location.BDLocation;
@@ -42,6 +43,7 @@ import com.zdt.zyellowpage.activity.BNavigatorActivity;
 import com.zdt.zyellowpage.activity.BusinessDetailActivity;
 import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.bll.UserBll;
+import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.NearCompanyReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
@@ -84,7 +86,7 @@ public class FragmentNearMap extends Fragment {
 	boolean isFirstLoc = true;// 是否首次定位
 	boolean isLocationClientStop = false;
 	GraphicsOverlay graphicsOverlay;// 范围覆盖
-
+	private String mCityName = null;
 	// 兴趣点相关
 	MKSearch mMKSearch = null;
 	public View popView;// 点击兴趣点弹出泡泡
@@ -126,6 +128,7 @@ public class FragmentNearMap extends Fragment {
 		myListener = new MyLocationListener();
 		
 		mMapView = (MapView) view.findViewById(R.id.bmapsView);
+		mCityName = ((MyApplication)mActivity.abApplication).locateCityName;
 		initPoiDistantsBtn();
 		initMapView();
 		initMapLoc();
@@ -525,8 +528,9 @@ public class FragmentNearMap extends Fragment {
 					MKPlanNode end = new MKPlanNode();
 					if(poiPoint != null){
 					end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
-					mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
-					mMKSearch.walkingSearch("昆明", start, "昆明", end);  
+					mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST); 
+					mMKSearch.walkingSearch(mCityName, start,mCityName, end);
+					//mMKSearch.walkingSearch("昆明", start, "昆明", end);  
 					}
 					else{
 						Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
@@ -547,7 +551,8 @@ public class FragmentNearMap extends Fragment {
 					if(poiPoint != null){
 					end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
 					mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
-					mMKSearch.transitSearch("昆明", start, end);
+					mMKSearch.transitSearch(mCityName, start, end);
+					//mMKSearch.transitSearch("昆明", start, end);
 					}
 					else{
 						Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
@@ -568,7 +573,8 @@ public class FragmentNearMap extends Fragment {
 							if(poiPoint != null){
 							end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
 							mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
-							mMKSearch.walkingSearch("昆明", start, "昆明", end);  
+							mMKSearch.drivingSearch( mCityName,start,  mCityName, end);
+							//mMKSearch.walkingSearch("昆明", start, "昆明", end);  
 							}
 							else{
 								Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  

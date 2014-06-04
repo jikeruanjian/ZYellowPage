@@ -71,7 +71,7 @@ public class CompanyMapActiviy extends AbActivity {
 	boolean isRequest = false;// 是否手动触发请求定位
 	boolean isFirstLoc = true;// 是否首次定位
 	boolean isLocationClientStop = false;
-
+	private String mCityName = null;
 	// 兴趣点相关
 	MKSearch mMKSearch = null;
 	public View popView;// 点击兴趣点弹出泡泡
@@ -118,6 +118,7 @@ public class CompanyMapActiviy extends AbActivity {
 		//mAbTitleBar.setLogoLine(R.drawable.line);
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		mMapView = (MapView) this.findViewById(R.id.bmapsView);
+		mCityName = application.locateCityName;
 		initMapView();
 		initMapLoc();
 		initMKSearch();
@@ -312,7 +313,8 @@ public class CompanyMapActiviy extends AbActivity {
 			if (poiPoint != null) {
 				end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
 				mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
-				mMKSearch.walkingSearch("昆明", start, "昆明", end);
+				mMKSearch.walkingSearch(mCityName, start,mCityName, end);
+				//mMKSearch.walkingSearch("昆明", start, "昆明", end);
 			} else {
 				Toast.makeText(CompanyMapActiviy.this, "请选择目的地！",
 						Toast.LENGTH_LONG).show();
@@ -329,7 +331,8 @@ public class CompanyMapActiviy extends AbActivity {
 			if (poiPoint != null) {
 				end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
 				mMKSearch.setTransitPolicy(MKSearch.ECAR_TIME_FIRST);
-				mMKSearch.transitSearch("昆明", start, end);
+				mMKSearch.transitSearch( mCityName, start, end);
+				//mMKSearch.transitSearch("昆明", start, end);
 			} else {
 				Toast.makeText(CompanyMapActiviy.this, "请选择目的地！",
 						Toast.LENGTH_LONG).show();
@@ -345,7 +348,8 @@ public class CompanyMapActiviy extends AbActivity {
 			if (poiPoint != null) {
 				end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
 				mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
-				mMKSearch.drivingSearch("昆明", start, "昆明", end);
+				mMKSearch.drivingSearch( mCityName,start,  mCityName, end);
+				//mMKSearch.drivingSearch("昆明", start, "昆明", end);
 			} else {
 				Toast.makeText(CompanyMapActiviy.this, "请选择目的地！",
 						Toast.LENGTH_LONG).show();
@@ -399,7 +403,7 @@ public class CompanyMapActiviy extends AbActivity {
 				return;
 
 			// -------虚拟机测试时注释
-			
+			  mCityName	=location.getCity();
 			  locData.latitude = location.getLatitude(); locData.longitude =
 			  location.getLongitude(); //如果不显示定位精度圈，将accuracy赋值为0即可
 			  locData.accuracy = location.getRadius(); locData.direction =
@@ -419,10 +423,6 @@ public class CompanyMapActiviy extends AbActivity {
 				mMapController.animateTo(new GeoPoint(
 						(int) (locData.latitude * 1e6),
 						(int) (locData.longitude * 1e6)));
-				// 将搜索附近点放到定位里，定位根据现有经纬度和选择的范围值进行检索兴趣点，以下是百度接口
-				// mMKSearch.poiSearchNearBy("民生银行",new
-				// GeoPoint((int)(locData.latitude* 1e6),
-				// (int)(locData.longitude * 1e6)), poiDistance);
 				mMapView.refresh();
 				isRequest = false;
 				mLocationClient.stop();
