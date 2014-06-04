@@ -306,7 +306,7 @@ public class BusinessDetailActivity extends AbActivity implements
 			TextView mPlayText = (TextView) mPlayView
 					.findViewById(R.id.mPlayText);
 			new AbImageDownloader(BusinessDetailActivity.this).display(
-					mPlayImage, imageUrls[i]);
+					mPlayImage, imageUrls[(imageUrls.length -1 -i)]);
 			mPlayText.setText("");
 			mSlidingPlayView.addView(mPlayView);
 		}
