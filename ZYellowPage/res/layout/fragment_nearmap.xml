@@ -1,96 +1,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/cc_bg640"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1"
-        >
-		<LinearLayout
-		    android:id="@+id/layoutMap"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/layoutMap"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical" >
-        
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/bmapsView"
-            android:layout_weight="1"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:clickable="true" >
-        </com.baidu.mapapi.map.MapView>
+
+            <com.baidu.mapapi.map.MapView
+                android:id="@+id/bmapsView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:clickable="true" >
+            </com.baidu.mapapi.map.MapView>
         </LinearLayout>
 
-		<LinearLayout
-		    android:id="@+id/Layout_PioAllLife"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="0"
-		    android:background="#FFFFFF" >
+        <LinearLayout
+            android:id="@+id/Layout_PioAllLife"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="#FFFFFF" >
 
-		    <Button
-		        android:id="@+id/btn_PioAllDistance"
-		        android:layout_width="wrap_content"
-		        android:layout_height="fill_parent"
-		        android:layout_gravity="center_vertical"
-		        android:layout_marginBottom="5px"
-		        android:layout_marginTop="5px"
-		        android:layout_weight="1"
-		        android:background="@color/transparent"
-		        android:text="全部"
-		        android:textColor="#000000" />
+            <Button
+                android:id="@+id/btn_PioAllDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5px"
+                android:layout_marginTop="5px"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:text="全部"
+                android:textColor="#000000" />
 
-		    <Button
-		        android:id="@+id/btn_Pio500"
-		        android:layout_width="wrap_content"
-		        android:layout_height="fill_parent"
-		        android:layout_gravity="center_vertical"
-		        android:layout_marginBottom="5px"
-		        android:layout_marginTop="5px"
-		        android:layout_weight="1"
-		        android:background="@color/transparent"
-		        android:text="0.5公里"
-		        android:textColor="#000000" />
+            <Button
+                android:id="@+id/btn_Pio500"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5px"
+                android:layout_marginTop="5px"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:text="0.5公里"
+                android:textColor="#000000" />
 
-		    <Button
-		        android:id="@+id/btn_Pio1000"
-		        android:layout_width="wrap_content"
-		        android:layout_height="fill_parent"
-		        android:layout_gravity="center_vertical"
-		        android:layout_marginBottom="5px"
-		        android:layout_marginTop="5px"
-		        android:layout_weight="1"
-		        android:background="@color/transparent"
-		        android:text="1公里"
-		        android:textColor="#000000" />
+            <Button
+                android:id="@+id/btn_Pio1000"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5px"
+                android:layout_marginTop="5px"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:text="1公里"
+                android:textColor="#000000" />
 
-		    <Button
-		        android:id="@+id/btn_Pio1500"
-		        android:layout_width="wrap_content"
-		        android:layout_height="fill_parent"
-		        android:layout_gravity="center_vertical"
-		        android:layout_marginBottom="5px"
-		        android:layout_marginTop="5px"
-		        android:layout_weight="1"
-		        android:background="@color/transparent"
-		        android:text="1.5公里"
-		        android:textColor="#000000" />
-		</LinearLayout>
+            <Button
+                android:id="@+id/btn_Pio1500"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="5px"
+                android:layout_marginTop="5px"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:text="1.5公里"
+                android:textColor="#000000" />
+        </LinearLayout>
 
-		<ImageButton
-		    android:id="@+id/btnLocStartNear"
-		    android:layout_width="40dp"
-		    android:layout_height="40dp"
-		    android:layout_alignRight="@+id/Layout_PioAllLife"
-		    android:layout_below="@+id/Layout_PioAllLife"
-		    android:layout_margin="10dp"
-		    android:background="@drawable/locmark"
-		    android:text="Button" />
-
+        <ImageButton
+            android:id="@+id/btnLocStartNear"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignRight="@+id/Layout_PioAllLife"
+            android:layout_below="@+id/Layout_PioAllLife"
+            android:layout_margin="10dp"
+            android:background="@drawable/locmark"
+            android:text="Button" />
     </RelativeLayout>
 
-    
- </LinearLayout>
+</LinearLayout>
