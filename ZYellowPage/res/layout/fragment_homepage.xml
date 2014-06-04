@@ -168,7 +168,7 @@
                         android:layout_height="59dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:background="@drawable/cash_l" />
+                        android:background="@drawable/sports_l" />
 
                     <TextView
                         android:id="@+id/mapTextContect"
