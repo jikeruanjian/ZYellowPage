@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.zdt.zyellowpage.crash.CrashHandler;
 import com.zdt.zyellowpage.dao.UserInsideDao;
 import com.zdt.zyellowpage.model.User;
 
@@ -74,6 +75,11 @@ public class MyApplication extends Application {
 			// userPasswordRemember = userPwdRemember;
 		}
 		initImageLoader(getApplicationContext());
+
+		// 初始化异常接受
+		CrashHandler crashHandler = CrashHandler.getInstance(); // 注册crashHandler
+		crashHandler.init(getApplicationContext()); // 发送以前没发送的报告(可选)
+		// crashHandler.sendPreviousReportsToServer();
 	}
 
 	/**

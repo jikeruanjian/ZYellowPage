@@ -419,7 +419,7 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 		final DownloadManager downloadManager = (DownloadManager) mActivity
 				.getSystemService(serviceString);
 		File file = new File(Environment.DIRECTORY_DOWNLOADS + "YellowPage"
-				+ version.getVersion_description() + ".apk");
+				+ version.getVersion() + ".apk");
 		if (file.exists()) {
 			file.delete();
 		}
@@ -427,7 +427,7 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 				.getApp_url()));
 		request.setDestinationInExternalPublicDir(
 				Environment.DIRECTORY_DOWNLOADS,
-				"YellowPage" + version.getVersion_description() + ".apk");
+				"YellowPage" + version.getVersion() + ".apk");
 		final long reference = downloadManager.enqueue(request);
 
 		IntentFilter filter = new IntentFilter(
@@ -601,7 +601,7 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 
 	@Override
 	public void onPositiveButtonClicked(int requestCode) {
-		if (requestCode == 42) {
+		if (requestCode == 42 && version != null) {
 			downApk(version);
 		}
 	}
