@@ -169,19 +169,21 @@ public class MainActivity extends AbActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// 地图RjlfVWfEcAecRGc5qG8xyLoX\E0vBVTjgP3IvuuZSOSqKmsZu
+		mBMapMan = new BMapManager(getApplication());
+		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
+		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
+		// 导航RjlfVWfEcAecRGc5qG8xyLoX
+		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
+						mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
+						mKeyVerifyListener);
+		
 		setContentView(R.layout.activity_main);
 		application = (MyApplication) abApplication;
 		initView();
 		this.isShowAnim = false;
 		// initHomePagePullView();
-		// 地图
-		mBMapMan = new BMapManager(getApplication());
-		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
-		mBMapMan.init("E0vBVTjgP3IvuuZSOSqKmsZu", null);
-		// 导航
-		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
-				mNaviEngineInitListener, "E0vBVTjgP3IvuuZSOSqKmsZu",
-				mKeyVerifyListener);
+		
 
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
