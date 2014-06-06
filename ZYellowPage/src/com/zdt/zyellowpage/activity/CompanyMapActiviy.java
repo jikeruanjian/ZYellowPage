@@ -20,6 +20,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MKEvent;
@@ -61,7 +62,7 @@ public class CompanyMapActiviy extends AbActivity {
 	// 地图显示
 	MapView mMapView = null;
 	MapController mMapController = null;
-
+	public static BMapManager mBMapMan = null;
 	// 定位相关
 	Button btnLoc;
 	public LocationClient mLocationClient = null;
@@ -100,6 +101,10 @@ public class CompanyMapActiviy extends AbActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// 地图RjlfVWfEcAecRGc5qG8xyLoX\E0vBVTjgP3IvuuZSOSqKmsZu
+		mBMapMan = new BMapManager(getApplication());
+		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
+		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
 		setAbContentView(R.layout.activity_companymap);
 		if (getIntent().getExtras() != null) {
 			userCompanyFullName = (String) getIntent().getExtras().get("FUllNAME");
@@ -124,6 +129,15 @@ public class CompanyMapActiviy extends AbActivity {
 		initMKSearch();
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mBMapMan != null) {
+			mBMapMan.stop();
+			mBMapMan.destroy();
+			mBMapMan = null;
+		}
+	}
 	/**
 	 * 初始化地图显示
 	 */
