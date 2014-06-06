@@ -3,7 +3,6 @@ package com.zdt.zyellowpage.bll;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
@@ -49,7 +48,6 @@ public class AreaBll {
 				if (areaDao.insertListWithBatch(mAreas, false) == mAreas.size()) {
 					areaDao.setTransactionSuccessful();
 					areaDao.closeDatabase(true);
-					Log.e("timeTest", "结束插入area");
 					respListener.onSuccess(statusCode, "更新成功");
 				} else {
 					areaDao.closeDatabase(true);

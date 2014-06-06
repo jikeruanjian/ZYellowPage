@@ -206,6 +206,7 @@ public class MainActivity extends AbActivity implements
 		// listChildCategoryP = new ArrayList<List<Category>>();
 		// listChildCategory = new ArrayList<List<Category>>();
 		mContext = this;
+
 		initChangeEvent();
 
 		// MainActivity.getAreaList(MainActivity.this, application.cityid);
@@ -248,11 +249,6 @@ public class MainActivity extends AbActivity implements
 				showToast("再按一次退出程序");
 				mExitTime = System.currentTimeMillis();
 			} else {
-				// Intent intent = new Intent(Intent.ACTION_MAIN);
-				// intent.addCategory(Intent.CATEGORY_HOME);
-				// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				// startActivity(intent);
-				// android.os.Process.killProcess(android.os.Process.myPid());
 				System.exit(0);
 			}
 			return true;
@@ -607,7 +603,7 @@ public class MainActivity extends AbActivity implements
 
 					@Override
 					public void onSuccess(int statusCode, List<Version> lis) {
-						Version version = lis.get(0);
+						version = lis.get(0);
 						if (version == null)
 							return;
 
@@ -632,9 +628,7 @@ public class MainActivity extends AbActivity implements
 							// }
 							// });
 							SimpleDialogFragment
-									.createBuilder(
-											MainActivity.this
-													.getApplicationContext(),
+									.createBuilder(MainActivity.this,
 											getSupportFragmentManager())
 									.setTitle("发现新版本" + version.getVersion())
 									.setMessage(
@@ -689,7 +683,7 @@ public class MainActivity extends AbActivity implements
 		final DownloadManager downloadManager = (DownloadManager) MainActivity.this
 				.getSystemService(serviceString);
 		File file = new File(Environment.DIRECTORY_DOWNLOADS + "YellowPage"
-				+ version.getVersion_description() + ".apk");
+				+ version.getVersion() + ".apk");
 		if (file.exists()) {
 			file.delete();
 		}
@@ -697,7 +691,7 @@ public class MainActivity extends AbActivity implements
 				.getApp_url()));
 		request.setDestinationInExternalPublicDir(
 				Environment.DIRECTORY_DOWNLOADS,
-				"YellowPage" + version.getVersion_description() + ".apk");
+				"YellowPage" + version.getVersion() + ".apk");
 		final long reference = downloadManager.enqueue(request);
 
 		IntentFilter filter = new IntentFilter(

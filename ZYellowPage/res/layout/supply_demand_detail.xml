@@ -19,14 +19,14 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:text="标题:"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h3" />
 
             <TextView
                 android:id="@+id/title"
@@ -36,8 +36,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tvTitle"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/propertyvalue"
+                android:textSize="@dimen/main_text_size_h3" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -50,14 +50,14 @@
 
             <TextView
                 android:id="@+id/tvTime"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:text="发布时间:"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h3" />
 
             <TextView
                 android:id="@+id/time"
@@ -67,8 +67,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tvTime"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" />
+                android:textColor="@color/propertyvalue"
+                android:textSize="@dimen/main_text_size_h3" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -81,14 +81,14 @@
 
             <TextView
                 android:id="@+id/tvType"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:text="类别:"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h3" />
 
             <TextView
                 android:id="@+id/type"
@@ -98,12 +98,12 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tvType"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="18sp" >
+                android:textColor="@color/propertyvalue"
+                android:textSize="@dimen/main_text_size_h3" >
             </TextView>
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/layout05"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -114,21 +114,25 @@
 
             <TextView
                 android:id="@+id/tvContent"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:text="详细信息:"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textColor="@color/propertyname"
+                android:textSize="@dimen/main_text_size_h3" />
 
-            <WebView
+            <TextView
                 android:id="@+id/content"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_white"
-                android:singleLine="true"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tvContent"
+                android:textColor="@color/propertyvalue"
+                android:textSize="@dimen/main_text_size_h3" />
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>

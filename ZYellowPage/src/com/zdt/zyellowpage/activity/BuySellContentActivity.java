@@ -18,7 +18,7 @@ import com.zdt.zyellowpage.model.SupplyDemand;
 public class BuySellContentActivity extends AbActivity {
 	private AbTitleBar mAbTitleBar = null;
 	private String Item_id = null;
-	private WebView webContent;
+	private TextView tvContent;
 	private TextView tvTitle;
 	private TextView tvTime;
 	private TextView tvType;
@@ -38,7 +38,7 @@ public class BuySellContentActivity extends AbActivity {
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		// mAbTitleBar.setLogoLine(R.drawable.line);
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
-		webContent = (WebView) this.findViewById(R.id.content);
+		tvContent = (TextView) this.findViewById(R.id.content);
 		tvTitle = (TextView) this.findViewById(R.id.title);
 		tvTime = (TextView) this.findViewById(R.id.time);
 		tvType = (TextView) this.findViewById(R.id.type);
@@ -63,14 +63,16 @@ public class BuySellContentActivity extends AbActivity {
 						tvType.setText("0".equals(lis.get(0).getType()) ? "供应信息"
 								: "求购信息");
 
-						webContent.getSettings().setDefaultTextEncodingName(
-								"UTF-8");
-						String text = lis.get(0).getContent();
-						if (AbStrUtil.isEmpty(text)) {
-							text = "用户暂时还未添加该项数据";
-						}
-						webContent.loadDataWithBaseURL(null, text, "text/html",
-								"utf-8", null);
+						// tvContent.getSettings().setDefaultTextEncodingName(
+						// "UTF-8");
+						// String text = lis.get(0).getContent();
+						// if (AbStrUtil.isEmpty(text)) {
+						// text = "用户暂时还未添加该项数据";
+						// }
+						// tvContent.loadDataWithBaseURL(null, text,
+						// "text/html",
+						// "utf-8", null);
+						tvContent.setText(lis.get(0).getContent());
 						BuySellContentActivity.this.removeProgressDialog();
 					}
 
