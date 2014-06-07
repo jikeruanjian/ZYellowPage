@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -57,6 +58,7 @@ import com.zdt.zyellowpage.activity.login.ChangePwdActivity;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.VersionBll;
 import com.zdt.zyellowpage.customView.WrapContentListView;
+import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
@@ -157,6 +159,12 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 											&& !AbStrUtil.isEmpty(version
 													.getApp_url())
 											&& version.getBuild_number() > getVersion()) {
+										Editor editor = mActivity.abSharedPreferences
+												.edit();
+										editor.putInt(
+												Constant.LOCATEVERSIONCODE,
+												version.getBuild_number());
+										editor.commit();
 										SimpleDialogFragment
 												.createBuilder(
 														mActivity,

@@ -21,6 +21,7 @@ public class Constant {
 	public static final String CATEGORYLASTUPDATETIME = "categoryDataLastUpdateTime";
 	public static final String HOTKEYLASTUPDATETIME = "hotkeyDataLastUpdateTime";
 	public static final String LOCATECITYNAME = "locateCityName";
+	public static final String LOCATEVERSIONCODE = "locateVersionCode";
 
 	// 连接超时
 	public static final int timeOut = 12000;
