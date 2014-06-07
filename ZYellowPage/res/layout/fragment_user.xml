@@ -24,12 +24,13 @@
                 android:layout_centerInParent="false"
                 android:gravity="center_horizontal" >
 
-                <ImageView
+                <com.zdt.zyellowpage.customView.CircularImage
                     android:id="@+id/ivTieLogo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
                     android:src="@drawable/center_gr" />
 
                 <TextView
@@ -37,7 +38,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/ivTieLogo"
-                    android:layout_marginTop="19dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/ivTieLogo"
                     android:text="未登录"
                     android:textColor="@color/black"
@@ -52,7 +54,7 @@
                     android:layout_toRightOf="@+id/ivTieLogo"
                     android:singleLine="true"
                     android:text="欢迎来到指点通手机黄页"
-                    android:textColor="@color/gray_black"
+                    android:textColor="@color/gray_light"
                     android:textSize="16dp" />
             </RelativeLayout>
 
