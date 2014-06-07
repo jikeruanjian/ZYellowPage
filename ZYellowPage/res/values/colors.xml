@@ -8,6 +8,7 @@
     <color name="black">#000000</color>
     <color name="gray">#7c7c7c</color>
     <color name="gray_white">#ebebeb</color>
+    <color name="radio_white">#f7f4f4</color>
     <color name="gray_light">#887c7c7c</color>
     <color name="gray_black">#2e2e2e</color>
     <color name="yellow">#FFFC00</color>

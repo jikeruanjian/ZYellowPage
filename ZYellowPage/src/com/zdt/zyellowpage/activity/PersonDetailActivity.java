@@ -397,6 +397,31 @@ public class PersonDetailActivity extends AbActivity implements
 						startActivity(intent);
 					}
 				});
+		
+		this.findViewById(R.id.person_detail_photo).setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						mView = PersonDetailActivity.this.mInflater.inflate(
+								R.layout.code_view, null);
+						ImageView imageUserCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+						new AbImageDownloader(PersonDetailActivity.this).
+						display(imageUserCode, userPerson.getLogo());
+						PersonDetailActivity.this.removeDialog(1);
+						PersonDetailActivity.this.showDialog(
+								AbConstant.DIALOGCENTER, mView);
+						imageUserCode.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								PersonDetailActivity.this
+										.removeDialog(AbConstant.DIALOGCENTER);
+							}
+
+						});
+					}
+				});
 	}
 
 	/**

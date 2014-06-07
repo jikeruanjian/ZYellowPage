@@ -129,33 +129,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="102dp"
                 android:layout_gravity="center_horizontal" >
-
-                <RelativeLayout
-                    android:id="@+id/imageButtonNewInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/imagebtn_newinfo" >
-
-                    <ImageView
-                        android:id="@+id/imageButtonNewInfo_x"
-                        android:layout_width="59dp"
-                        android:layout_height="59dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/newinfo_l" />
-
-                    <TextView
-                        android:id="@+id/mapTextContect"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageButtonNewInfo_x"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="5dp"
-                        android:text="生活服务"
-                        android:textColor="#9F9F9F"
-                        android:textSize="14sp" />
-                </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/imageButtonCash"
                     android:layout_width="wrap_content"
@@ -181,7 +154,32 @@
                         android:textColor="#9F9F9F"
                         android:textSize="14sp" />
                 </RelativeLayout>
+  				<RelativeLayout
+                    android:id="@+id/imageButtonNewInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/imagebtn_newinfo" >
 
+                    <ImageView
+                        android:id="@+id/imageButtonNewInfo_x"
+                        android:layout_width="59dp"
+                        android:layout_height="59dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/cash_l" />
+
+                    <TextView
+                        android:id="@+id/mapTextContect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageButtonNewInfo_x"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="5dp"
+                        android:text="生活服务"
+                        android:textColor="#9F9F9F"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+                
                 <RelativeLayout
                     android:id="@+id/imageButtonPeople"
                     android:layout_width="wrap_content"
@@ -203,7 +201,7 @@
                         android:layout_below="@+id/imageButtonPeople_x"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="5dp"
-                        android:text="丽人"
+                        android:text="个人列表"
                         android:textColor="#9F9F9F"
                         android:textSize="14sp" />
                 </RelativeLayout>

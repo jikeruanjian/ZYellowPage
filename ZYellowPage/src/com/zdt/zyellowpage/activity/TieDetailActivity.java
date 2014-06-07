@@ -327,6 +327,30 @@ public class TieDetailActivity extends AbActivity {
 					}
 
 				});
+		imgLogo.setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						mView = TieDetailActivity.this.mInflater.inflate(
+								R.layout.code_view, null);
+						ImageView imageUserCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+						new AbImageDownloader(TieDetailActivity.this).
+						display(imageUserCode, mTie.getLogo());
+						TieDetailActivity.this.removeDialog(1);
+						TieDetailActivity.this.showDialog(
+								AbConstant.DIALOGCENTER, mView);
+						imageUserCode.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								TieDetailActivity.this
+										.removeDialog(AbConstant.DIALOGCENTER);
+							}
+
+						});
+					}
+				});
 		this.findViewById(R.id.TCodeTopRightimageView).setOnClickListener(
 				new OnClickListener() {
 

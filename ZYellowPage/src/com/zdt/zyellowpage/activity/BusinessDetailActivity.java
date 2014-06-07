@@ -460,7 +460,7 @@ public class BusinessDetailActivity extends AbActivity implements
 					}
 
 				});
-		// 商家二维码
+		// 
 		this.findViewById(R.id.imgBussnissPhone).setOnClickListener(
 				new View.OnClickListener() {
 
@@ -471,6 +471,31 @@ public class BusinessDetailActivity extends AbActivity implements
 						intent.setData(Uri.parse("tel:"
 								+ userCompany.getTelephone()));
 						startActivity(intent);
+					}
+				});
+		//商家logo
+		imgLogo.setOnClickListener(
+				new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						mView = BusinessDetailActivity.this.mInflater.inflate(
+								R.layout.code_view, null);
+						ImageView imageUserCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+						new AbImageDownloader(BusinessDetailActivity.this).
+						display(imageUserCode, userCompany.getLogo());
+						BusinessDetailActivity.this.removeDialog(1);
+						BusinessDetailActivity.this.showDialog(
+								AbConstant.DIALOGCENTER, mView);
+						imageUserCode.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								BusinessDetailActivity.this
+										.removeDialog(AbConstant.DIALOGCENTER);
+							}
+
+						});
 					}
 				});
 

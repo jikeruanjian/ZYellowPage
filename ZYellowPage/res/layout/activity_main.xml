@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/abs__spinner_ab_default_holo_light"
+                android:background="@drawable/abs__spinner_right"
                 android:gravity="center"
                 android:text="商家"
                 android:textColor="@color/white"
@@ -195,7 +195,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:background="@color/gray_white"
+        android:background="@color/radio_white"
         android:orientation="horizontal" >
 
         <RadioButton
