@@ -157,7 +157,7 @@ public class TieListActivity extends AbActivity {
 									myListViewAdapter.notifyDataSetChanged();
 								newList.clear();
 							}
-						} else {
+						} else if (i != 0 && content != null) {
 							showToast(content);
 						}
 					}

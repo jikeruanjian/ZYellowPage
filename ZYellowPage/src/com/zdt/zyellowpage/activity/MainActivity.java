@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -44,6 +45,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
+import com.ab.global.AbConstant;
 import com.ab.util.AbStrUtil;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -175,15 +177,14 @@ public class MainActivity extends AbActivity implements
 		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
 		// 导航RjlfVWfEcAecRGc5qG8xyLoX
 		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
-						mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
-						mKeyVerifyListener);
-		
+				mNaviEngineInitListener, "RjlfVWfEcAecRGc5qG8xyLoX",
+				mKeyVerifyListener);
+
 		setContentView(R.layout.activity_main);
 		application = (MyApplication) abApplication;
 		initView();
 		this.isShowAnim = false;
 		// initHomePagePullView();
-		
 
 		fragmentManager = this.getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
@@ -627,6 +628,11 @@ public class MainActivity extends AbActivity implements
 							// downApk(tempVersion);
 							// }
 							// });
+							Editor editor = abSharedPreferences.edit();
+							editor.putInt(Constant.LOCATEVERSIONCODE,
+									version.getBuild_number());
+							editor.commit();
+
 							SimpleDialogFragment
 									.createBuilder(MainActivity.this,
 											getSupportFragmentManager())
@@ -664,6 +670,12 @@ public class MainActivity extends AbActivity implements
 	}
 
 	private int getVersion() {
+		// 先获取之前提示过的版本
+		SharedPreferences sp = getSharedPreferences(AbConstant.SHAREPATH,
+				Context.MODE_PRIVATE);
+		int locateVersionCode = sp.getInt(Constant.LOCATEVERSIONCODE, 0);
+		if (locateVersionCode != 0)
+			return locateVersionCode;
 		PackageManager packageManager = MainActivity.this.getPackageManager();
 		// getPackageName()是你当前类的包名，0代表是获取版本信息
 		PackageInfo packInfo = null;
