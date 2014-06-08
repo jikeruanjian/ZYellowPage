@@ -441,6 +441,7 @@ public class CompanyMapActiviy extends AbActivity {
 				isRequest = false;
 				mLocationClient.stop();
 			}
+			mMapController.setCenter(poiPoint);// 设置地图中心点
 			isFirstLoc = false;
 		}
 

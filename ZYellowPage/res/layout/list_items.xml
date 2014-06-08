@@ -47,33 +47,40 @@
         android:textColor="@color/propertyvalue"
         android:textSize="18dip" />
 
-    <TextView
-        android:id="@+id/itemsText"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/itemsTitle"
-        android:layout_margin="5dp"
-        android:layout_toRightOf="@+id/itemsImage"
-        android:ellipsize="end"
-        android:gravity="left"
-        android:lines="1"
-        android:paddingBottom="2dip"
-        android:paddingLeft="10dip"
-        android:singleLine="true"
-        android:textColor="@color/propertyname"
-        android:textSize="15dip" />
-
-    <Button
-        android:id="@+id/itemsBtnConcern"
+	<RelativeLayout
+        android:id="@+id/LinearLayoutitemsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="5dp"
-        android:background="@color/orange_background"
-        android:focusable="false"
-        android:padding="3dp"
-        android:text="+关注"
-        android:textColor="#FFFFFF" />
+        android:layout_alignBottom="@+id/itemsImage"
+        android:layout_toRightOf="@+id/itemsImage"  >
+
+        <TextView
+            android:id="@+id/itemsText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:lines="1"
+            android:paddingBottom="2dip"
+            android:paddingLeft="10dip"
+            android:singleLine="true"
+            android:textColor="@color/propertyname"
+            android:textSize="15dip" />
+
+        <Button
+            android:id="@+id/itemsBtnConcern"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="@color/orange_background"
+            android:focusable="false"
+            android:padding="3dp"
+            android:text="+关注"
+            android:textColor="#FFFFFF" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
