@@ -86,6 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip"
                         android:background="@drawable/border_bottom"
+                        android:layerType="software"
                         android:orientation="vertical" >
 
                         <TextView
@@ -231,6 +232,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip"
+                        android:layout_marginBottom="10dip"
                         android:background="@drawable/border_bottom"
                         android:orientation="vertical" >
 

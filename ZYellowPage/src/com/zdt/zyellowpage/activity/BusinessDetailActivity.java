@@ -153,6 +153,10 @@ public class BusinessDetailActivity extends AbActivity implements
 				.findViewById(R.id.user_company_email);
 		TextView qq = (TextView) BusinessDetailActivity.this
 				.findViewById(R.id.user_company_qq);
+		TextView wifiUser = (TextView) BusinessDetailActivity.this
+				.findViewById(R.id.user_company_wifiUser);
+		TextView wifiPW = (TextView) BusinessDetailActivity.this
+				.findViewById(R.id.user_company_wifiPW);
 
 		name.setText(userCompany.getFullname());
 		num.setText(userCompany.getMember_id());
@@ -162,9 +166,10 @@ public class BusinessDetailActivity extends AbActivity implements
 		address.setText(userCompany.getAddress());
 		email.setText(userCompany.getEmail());
 		qq.setText(userCompany.getQq());
-
+		wifiUser.setText(userCompany.getWifi_username());
+		wifiPW.setText(userCompany.getWifi_password());
+		imgLogo = (ImageView) this.findViewById(R.id.companyLogoImage);
 		if (userCompany.getLogo() != null) {
-			imgLogo = (ImageView) this.findViewById(R.id.companyLogoImage);
 			new AbImageDownloader(this).display(imgLogo, userCompany.getLogo());
 		}
 		InitTextView();

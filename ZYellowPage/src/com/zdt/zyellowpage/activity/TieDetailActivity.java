@@ -239,8 +239,9 @@ public class TieDetailActivity extends AbActivity {
 			more.loadDataWithBaseURL(null, mTie.getMore(), "text/html",
 					"utf-8", null);
 		}
+		imgLogo = (ImageView) this.findViewById(R.id.tieLogoImage);
 		if (mTie.getLogo() != null) {
-			imgLogo = (ImageView) this.findViewById(R.id.tieLogoImage);
+			
 			new AbImageDownloader(this).display(imgLogo, mTie.getLogo());
 		}
 
