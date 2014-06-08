@@ -62,7 +62,7 @@ public class CompanyMapActiviy extends AbActivity {
 	// 地图显示
 	MapView mMapView = null;
 	MapController mMapController = null;
-	public static BMapManager mBMapMan = null;
+	BMapManager mBMapManC = null;
 	// 定位相关
 	Button btnLoc;
 	public LocationClient mLocationClient = null;
@@ -102,9 +102,9 @@ public class CompanyMapActiviy extends AbActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// 地图RjlfVWfEcAecRGc5qG8xyLoX\E0vBVTjgP3IvuuZSOSqKmsZu
-		mBMapMan = new BMapManager(getApplication());
+		mBMapManC = new BMapManager(getApplication());
 		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
-		mBMapMan.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
+		mBMapManC.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
 		setAbContentView(R.layout.activity_companymap);
 		if (getIntent().getExtras() != null) {
 			userCompanyFullName = (String) getIntent().getExtras().get("FUllNAME");
@@ -132,11 +132,11 @@ public class CompanyMapActiviy extends AbActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if (mBMapMan != null) {
-			mBMapMan.stop();
-			mBMapMan.destroy();
-			mBMapMan = null;
-		}
+		/*if (mBMapManC != null) {
+			mBMapManC.stop();
+			mBMapManC.destroy();
+			mBMapManC = null;
+		}*/
 	}
 	/**
 	 * 初始化地图显示
