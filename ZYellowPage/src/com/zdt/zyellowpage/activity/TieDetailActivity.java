@@ -382,7 +382,7 @@ public class TieDetailActivity extends AbActivity {
 			}
 		});
 		
-		//
+		//分享
 		this.findViewById(R.id.tie_image_share).setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -390,7 +390,8 @@ public class TieDetailActivity extends AbActivity {
 						Intent intent=new Intent(Intent.ACTION_SEND);   
 			            intent.setType("image/*");   
 			            intent.putExtra(Intent.EXTRA_SUBJECT, "Share");   
-			            intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message through my app (分享自city丽人馆)");       
+			            intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message "
+			            		+ "through my app (分享自指点通)");       
 			            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
 			            startActivity(Intent.createChooser(intent, getTitle())); 
 					}
