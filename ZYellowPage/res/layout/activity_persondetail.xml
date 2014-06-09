@@ -431,10 +431,25 @@
         android:layout_width="35dip"
         android:layout_height="35dip"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
+        android:layout_toLeftOf="@+id/busnessmid"
         android:src="@drawable/phone" />
-
+    
+	<TextView
+        android:id="@+id/busnessmid"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="" />
+	
+	 <ImageView
+        android:id="@+id/person_detail_Share"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/person_detail_phone"
+        android:layout_toRightOf="@+id/busnessmid"
+        android:src ="@drawable/ic_share" />
+	 
     <TextView
         android:id="@+id/imageViewOrangeLine"
         android:layout_width="fill_parent"

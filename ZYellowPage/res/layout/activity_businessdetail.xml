@@ -346,15 +346,18 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
-        android:layout_toLeftOf="@+id/busnessmid"
+        android:layout_marginRight="30dp"
+        android:layout_toLeftOf="@+id/imgbusnessshare"
         android:src="@drawable/google_maps" />
 
-    <TextView
-        android:id="@+id/busnessmid"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imgbusnessshare"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignTop="@+id/business_detail_sjdt"
         android:layout_centerHorizontal="true"
-        android:text="" />
+        android:src="@drawable/ic_share" />
 
     <ImageView
         android:id="@+id/imgBussnissPhone"
@@ -370,7 +373,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignTop="@+id/business_detail_sjdt"
-        android:layout_toRightOf="@id/busnessmid"
+        android:layout_toRightOf="@id/imgbusnessshare"
         android:src="@drawable/tasks" />
 
     <ImageView

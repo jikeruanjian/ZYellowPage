@@ -531,6 +531,19 @@ public class BusinessDetailActivity extends AbActivity implements
 						startActivity(intent);
 					}
 				});
+		//
+		this.findViewById(R.id.imgbusnessshare).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent=new Intent(Intent.ACTION_SEND);   
+			            intent.setType("image/*");   
+			            intent.putExtra(Intent.EXTRA_SUBJECT, "Share");   
+			            intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message through my app (分享自city丽人馆)");       
+			            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
+			            startActivity(Intent.createChooser(intent, getTitle())); 
+					}
+				});
 	}
 
 	/**
