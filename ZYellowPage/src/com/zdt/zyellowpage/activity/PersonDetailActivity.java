@@ -1,5 +1,6 @@
 package com.zdt.zyellowpage.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class PersonDetailActivity extends AbActivity implements
 	Bitmap codeBitmap;
 	View mCodeView;
 	RelativeLayout layMain;
-
+	ImageView imageUserLogo;
 	// 二维码弹出框
 	private View mView;
 
@@ -248,7 +249,7 @@ public class PersonDetailActivity extends AbActivity implements
 	}
 
 	protected void getView() {
-		ImageView imageUserLogo = (ImageView) PersonDetailActivity.this
+		imageUserLogo = (ImageView) PersonDetailActivity.this
 				.findViewById(R.id.person_detail_photo);
 		new AbImageDownloader(PersonDetailActivity.this).display(imageUserLogo,
 				userPerson.getLogo());
@@ -428,12 +429,43 @@ public class PersonDetailActivity extends AbActivity implements
 					@Override
 					public void onClick(View v) {
 						Intent intent=new Intent(Intent.ACTION_SEND);   
-			            intent.setType("image/*");   
-			            intent.putExtra(Intent.EXTRA_SUBJECT, "Share");   
-			            intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message"
-			            		+ " through my app (分享自指点通)");       
+						intent.setType("text/plain");
+			            intent.putExtra(Intent.EXTRA_SUBJECT, userPerson.getFullname());    
+						  intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/"+application.cityid+
+								  "/person/detail/"+userPerson.getMember_id());     
 			            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
 			            startActivity(Intent.createChooser(intent, getTitle())); 
+					/*	imageUserLogo.setDrawingCacheEnabled(true);
+						Bitmap logoBitmap = Bitmap.createBitmap(imageUserLogo.getDrawingCache());   
+						imageUserLogo.setDrawingCacheEnabled(false);
+						
+						if(logoBitmap !=null){
+							String imgUrl =  MediaStore.Images.
+							Media.insertImage(getContentResolver(), logoBitmap, "", "");   
+							//BusinessDetailActivity.this.showToast("二维码成功保存到相册！");
+							Intent intent = new Intent(Intent.ACTION_SEND);    
+							intent.setType("image/*");
+							 if (imgUrl== null || imgUrl.equals("")) {    
+								 //intent.setType("text/plain"); // 纯文本     
+							    } 
+							  else {    
+								  File f = new File(imgUrl);    
+								  if (f != null && f.exists() && f.isFile()) {    
+									  //intent.setType("image/*");    
+									  Uri u = Uri.fromFile(f);    
+									  intent.putExtra(Intent.EXTRA_STREAM, u);    
+								  }    
+							  	}    
+							  intent.putExtra(Intent.EXTRA_SUBJECT, "Share");    
+							  intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/"+application.cityid+
+									  "/person/detail/"+userPerson.getMember_id());    
+							  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    
+							  startActivity(Intent.createChooser(intent, getTitle()));    
+						}
+						else{
+								//BusinessDetailActivity.this.showToast("二维码保存失败！");
+						}*/
+						
 					}
 				});
 	}

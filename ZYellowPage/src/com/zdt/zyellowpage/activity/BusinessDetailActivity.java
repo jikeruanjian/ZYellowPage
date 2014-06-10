@@ -1,7 +1,10 @@
 package com.zdt.zyellowpage.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 //import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -76,7 +79,7 @@ public class BusinessDetailActivity extends AbActivity implements
 	Bitmap codeBitmap;
 	private DisplayUtil displayUtil;
 	RelativeLayout layMain;
-
+	ImageView imageUserLogo;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -486,14 +489,14 @@ public class BusinessDetailActivity extends AbActivity implements
 					public void onClick(View v) {
 						mView = BusinessDetailActivity.this.mInflater.inflate(
 								R.layout.code_view, null);
-						ImageView imageUserCode = (ImageView) mView
+						imageUserLogo = (ImageView) mView
 								.findViewById(R.id.imageViewCodeCP);
 						new AbImageDownloader(BusinessDetailActivity.this).
-						display(imageUserCode, userCompany.getLogo());
+						display(imageUserLogo, userCompany.getLogo());
 						BusinessDetailActivity.this.removeDialog(1);
 						BusinessDetailActivity.this.showDialog(
 								AbConstant.DIALOGCENTER, mView);
-						imageUserCode.setOnClickListener(new OnClickListener() {
+						imageUserLogo.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								BusinessDetailActivity.this
@@ -537,12 +540,53 @@ public class BusinessDetailActivity extends AbActivity implements
 					@Override
 					public void onClick(View v) {
 						Intent intent=new Intent(Intent.ACTION_SEND);   
-			            intent.setType("image/*");   
-			            intent.putExtra(Intent.EXTRA_SUBJECT, "Share");   
-			            intent.putExtra(Intent.EXTRA_TEXT, "I have successfully share my message "
-			            		+ "through my app (分享自指点通)");       
+						intent.setType("text/plain");
+			            intent.putExtra(Intent.EXTRA_SUBJECT, userCompany.getFullname());    
+						  intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/"+application.cityid+
+								  "/enterprise/detail/"+userCompany.getMember_id());  
 			            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
 			            startActivity(Intent.createChooser(intent, getTitle())); 
+						
+						
+						/*mView = BusinessDetailActivity.this.mInflater.inflate(
+								R.layout.code_view, null);
+						imageUserLogo = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+						new AbImageDownloader(BusinessDetailActivity.this).
+						display(imageUserLogo, userCompany.getLogo());
+						showDialog(AbConstant.DIALOGCENTER, mView);
+						removeDialog(AbConstant.DIALOGCENTER);
+						
+					/*	imgLogo.setDrawingCacheEnabled(true);
+						Bitmap logoBitmap = Bitmap.createBitmap(imgLogo.getDrawingCache());   
+						imgLogo.setDrawingCacheEnabled(false);
+						
+						if(logoBitmap !=null){
+							String imgUrl =  MediaStore.Images.
+							Media.insertImage(getContentResolver(), logoBitmap, "", "");   
+							//BusinessDetailActivity.this.showToast("二维码成功保存到相册！");
+							Intent intent = new Intent(Intent.ACTION_SEND);    
+							intent.setType("image/*");
+							  if (imgUrl== null || imgUrl.equals("")) {    
+								 // intent.setType("text/plain"); // 纯文本     
+							    } 
+							  else {    
+								  File f = new File(imgUrl);    
+								  if (f != null && f.exists() && f.isFile()) {    
+									//  intent.setType("image/*");    
+									  Uri u = Uri.fromFile(f);    
+									  intent.putExtra(Intent.EXTRA_STREAM, u);    
+								  }    
+							  	}    
+							  intent.putExtra(Intent.EXTRA_SUBJECT, "Share");    
+							  intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/"+application.cityid+
+									  "/enterprise/detail/"+userCompany.getMember_id());    
+							  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    
+							  startActivity(Intent.createChooser(intent, getTitle()));    
+						}
+						else{
+								//BusinessDetailActivity.this.showToast("二维码保存失败！");
+						}*/
 					}
 				});
 	}
