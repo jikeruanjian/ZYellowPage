@@ -104,7 +104,7 @@ public class CompanyMapActiviy extends AbActivity {
 		// 地图RjlfVWfEcAecRGc5qG8xyLoX\E0vBVTjgP3IvuuZSOSqKmsZu
 		mBMapManC = new BMapManager(getApplication());
 		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
-		mBMapManC.init("RjlfVWfEcAecRGc5qG8xyLoX", null);
+		mBMapManC.init("E0vBVTjgP3IvuuZSOSqKmsZu", null);
 		setAbContentView(R.layout.activity_companymap);
 		if (getIntent().getExtras() != null) {
 			userCompanyFullName = (String) getIntent().getExtras().get("FUllNAME");

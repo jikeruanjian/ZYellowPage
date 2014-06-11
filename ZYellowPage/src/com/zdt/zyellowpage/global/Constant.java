@@ -68,12 +68,6 @@ public class Constant {
 	public static final String CATEGORYURL = "http://service.321hy.cn/generic/category";
 
 	public static final String PICTUREUPLOADURL = "http://service.321hy.cn/api/upload";
-	// 应用的key
-	// 1512528
-	public final static String APPID = "1512528";
-
-	// jfa97P4HIhjxrAgfUdq1NoKC
-	public final static String APIKEY = "jfa97P4HIhjxrAgfUdq1NoKC";
 
 	public static final String NOCONNECT = "无法连接到网络";
 
@@ -99,6 +93,10 @@ public class Constant {
 		 * 最新企业
 		 */
 		public static final String LASTEDCOMPANY = "lastedCompany";
+	}
+
+	public class UMentData {
+		public static final String DESCRIPTOR = "com.umeng.share";
 	}
 
 }

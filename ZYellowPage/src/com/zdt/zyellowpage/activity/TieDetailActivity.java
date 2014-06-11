@@ -45,9 +45,10 @@ public class TieDetailActivity extends AbActivity {
 	private TextView moreTextView;
 	private ImageView imgLogo;
 	private RelativeLayout layMain;
-	private ImageView imageCode ;
+	private ImageView imageCode;
 	private View mView;
 	Bitmap codeBitmap;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,7 +63,6 @@ public class TieDetailActivity extends AbActivity {
 				showToast("参数错误");
 				this.finish();
 			} else {
-				getData();
 				mAbTitleBar = this.getTitleBar();
 				mAbTitleBar.setTitleText("详细信息");
 				mAbTitleBar.setLogo(R.drawable.button_selector_back);
@@ -111,6 +111,8 @@ public class TieDetailActivity extends AbActivity {
 				int width = metric.widthPixels / 4 * 3;
 				displayUtil.setViewLayoutParamsL(mSlidingPlayView, 0, width);
 				mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
+
+				getData();
 			}
 		} else {
 			showToast("参数错误");
@@ -241,7 +243,7 @@ public class TieDetailActivity extends AbActivity {
 		}
 		imgLogo = (ImageView) this.findViewById(R.id.tieLogoImage);
 		if (mTie.getLogo() != null) {
-			
+
 			new AbImageDownloader(this).display(imgLogo, mTie.getLogo());
 		}
 
@@ -249,8 +251,7 @@ public class TieDetailActivity extends AbActivity {
 			ImageView codeImage = (ImageView) this
 					.findViewById(R.id.TCodeTopRightimageView);
 			new AbImageDownloader(this).display(codeImage, mTie.getQr_code());
-		
-			
+
 		}
 		TextView fullName = (TextView) this.findViewById(R.id.tiefullname);
 		fullName.setText(mTie.getTitle());
@@ -328,38 +329,40 @@ public class TieDetailActivity extends AbActivity {
 					}
 
 				});
-		imgLogo.setOnClickListener(
-				new View.OnClickListener() {
+		imgLogo.setOnClickListener(new View.OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				mView = TieDetailActivity.this.mInflater.inflate(
+						R.layout.code_view, null);
+				ImageView imageUserCode = (ImageView) mView
+						.findViewById(R.id.imageViewCodeCP);
+				new AbImageDownloader(TieDetailActivity.this).display(
+						imageUserCode, mTie.getLogo());
+				TieDetailActivity.this.removeDialog(1);
+				TieDetailActivity.this.showDialog(AbConstant.DIALOGCENTER,
+						mView);
+				imageUserCode.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						mView = TieDetailActivity.this.mInflater.inflate(
-								R.layout.code_view, null);
-						ImageView imageUserCode = (ImageView) mView
-								.findViewById(R.id.imageViewCodeCP);
-						new AbImageDownloader(TieDetailActivity.this).
-						display(imageUserCode, mTie.getLogo());
-						TieDetailActivity.this.removeDialog(1);
-						TieDetailActivity.this.showDialog(
-								AbConstant.DIALOGCENTER, mView);
-						imageUserCode.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								TieDetailActivity.this
-										.removeDialog(AbConstant.DIALOGCENTER);
-							}
-
-						});
+						TieDetailActivity.this
+								.removeDialog(AbConstant.DIALOGCENTER);
 					}
+
 				});
+			}
+		});
 		this.findViewById(R.id.TCodeTopRightimageView).setOnClickListener(
 				new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-						mView = TieDetailActivity.this.mInflater.inflate(R.layout.code_view, null);
-						imageCode = (ImageView) mView.findViewById(R.id.imageViewCodeCP);
-						new AbImageDownloader(TieDetailActivity.this).display( imageCode , mTie.getQr_code());
+						mView = TieDetailActivity.this.mInflater.inflate(
+								R.layout.code_view, null);
+						imageCode = (ImageView) mView
+								.findViewById(R.id.imageViewCodeCP);
+						new AbImageDownloader(TieDetailActivity.this).display(
+								imageCode, mTie.getQr_code());
 						showDialog(AbConstant.DIALOGCENTER, mView);
 						removeDialog(AbConstant.DIALOGCENTER);
 						showChosePopWindow();
@@ -381,78 +384,85 @@ public class TieDetailActivity extends AbActivity {
 				}
 			}
 		});
-		
-		//分享
+
+		// 分享
 		this.findViewById(R.id.tie_image_share).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent=new Intent(Intent.ACTION_SEND);   
-						intent.setType("text/plain");  
-			            intent.putExtra(Intent.EXTRA_SUBJECT, mTie.getTitle());   
-			            intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/t"
-			            		+ mTie.getItem_id());       
-			            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
-			            startActivity(Intent.createChooser(intent, getTitle())); 
+						Intent intent = new Intent(Intent.ACTION_SEND);
+						intent.setType("text/plain");
+						intent.putExtra(Intent.EXTRA_SUBJECT, "张三");
+						String url = "http://m.321hy.cn/t" + mTie.getItem_id();
+						intent.putExtra(Intent.EXTRA_TEXT, "<a href='" + url
+								+ "'>" + url + "</a>");
+						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(Intent.createChooser(intent, getTitle()));
 					}
 				});
 	}
 
 	public void showChosePopWindow() {
-		View mChooseView =TieDetailActivity.this.mInflater.inflate(R.layout.choose_lookimage, null);
+		View mChooseView = TieDetailActivity.this.mInflater.inflate(
+				R.layout.choose_lookimage, null);
 		TieDetailActivity.this.showDialog(1, mChooseView);
-		//查看
-		mChooseView.findViewById(R.id.choose_lookimage).
-		setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				TieDetailActivity.this.removeDialog(1);
-				TieDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);	
-				imageCode.setOnClickListener(new OnClickListener() {
+		// 查看
+		mChooseView.findViewById(R.id.choose_lookimage).setOnClickListener(
+				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						TieDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
+						// TODO Auto-generated method stub
+						TieDetailActivity.this.removeDialog(1);
+						TieDetailActivity.this.showDialog(
+								AbConstant.DIALOGCENTER, mView);
+						imageCode.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								TieDetailActivity.this
+										.removeDialog(AbConstant.DIALOGCENTER);
+							}
+
+						});
 					}
 
 				});
-				}
+		// 保存
+		mChooseView.findViewById(R.id.choose_saveimagecode).setOnClickListener(
+				new OnClickListener() {
 
-			});
-		//保存
-		mChooseView.findViewById(R.id.choose_saveimagecode).
-		setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						TieDetailActivity.this.removeDialog(1);
+						// String cacheKey =
+						// AbImageCache.getCacheKey(mTie.getQr_code(), 0, 0, 0);
+						imageCode.setDrawingCacheEnabled(true);
+						codeBitmap = Bitmap.createBitmap(imageCode
+								.getDrawingCache());
+						imageCode.setDrawingCacheEnabled(false);
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				TieDetailActivity.this.removeDialog(1);   
-				//String cacheKey = AbImageCache.getCacheKey(mTie.getQr_code(), 0, 0, 0);
-				imageCode.setDrawingCacheEnabled(true);
-				codeBitmap = Bitmap.createBitmap(imageCode.getDrawingCache());   
-				imageCode.setDrawingCacheEnabled(false);
-				
-				if(codeBitmap !=null){
-				String imgUrl =  MediaStore.Images.
-				Media.insertImage(getContentResolver(), codeBitmap, "", "");   
-				Log.e("save codeimage", imgUrl);
-				TieDetailActivity.this.showToast("二维码成功保存到相册！");}
-				else{
-					TieDetailActivity.this.showToast("二维码保存失败！");
-				}
-			
-			}
-		});
-		//取消
-		mChooseView.findViewById(R.id.choose_cancelimage).
-		setOnClickListener(new OnClickListener(){
+						if (codeBitmap != null) {
+							String imgUrl = MediaStore.Images.Media
+									.insertImage(getContentResolver(),
+											codeBitmap, "", "");
+							Log.e("save codeimage", imgUrl);
+							TieDetailActivity.this.showToast("二维码成功保存到相册！");
+						} else {
+							TieDetailActivity.this.showToast("二维码保存失败！");
+						}
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				TieDetailActivity.this.removeDialog(1);
-			
-			}
-		});
+					}
+				});
+		// 取消
+		mChooseView.findViewById(R.id.choose_cancelimage).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						TieDetailActivity.this.removeDialog(1);
+
+					}
+				});
 	}
 }

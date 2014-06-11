@@ -1,6 +1,5 @@
 package com.zdt.zyellowpage.activity;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +34,16 @@ import com.ab.http.AbHttpUtil;
 import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
+import com.umeng.socialize.controller.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.UMWXHandler;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.bll.UserBll;
+import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
@@ -71,6 +76,8 @@ public class PersonDetailActivity extends AbActivity implements
 	ImageView imageUserLogo;
 	// 二维码弹出框
 	private View mView;
+	// sdk controller
+	private UMSocialService mController = null;
 
 	// private String[] imageUrls = new String[] { };
 	@Override
@@ -398,7 +405,7 @@ public class PersonDetailActivity extends AbActivity implements
 						startActivity(intent);
 					}
 				});
-		
+
 		this.findViewById(R.id.person_detail_photo).setOnClickListener(
 				new View.OnClickListener() {
 
@@ -408,8 +415,8 @@ public class PersonDetailActivity extends AbActivity implements
 								R.layout.code_view, null);
 						ImageView imageUserCode = (ImageView) mView
 								.findViewById(R.id.imageViewCodeCP);
-						new AbImageDownloader(PersonDetailActivity.this).
-						display(imageUserCode, userPerson.getLogo());
+						new AbImageDownloader(PersonDetailActivity.this)
+								.display(imageUserCode, userPerson.getLogo());
 						PersonDetailActivity.this.removeDialog(1);
 						PersonDetailActivity.this.showDialog(
 								AbConstant.DIALOGCENTER, mView);
@@ -423,49 +430,61 @@ public class PersonDetailActivity extends AbActivity implements
 						});
 					}
 				});
-		//分享
+		// 分享
 		this.findViewById(R.id.person_detail_Share).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent=new Intent(Intent.ACTION_SEND);   
-						intent.setType("text/plain");
-			            intent.putExtra(Intent.EXTRA_SUBJECT, userPerson.getFullname());    
-						  intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/"+application.cityid+
-								  "/person/detail/"+userPerson.getMember_id());     
-			            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
-			            startActivity(Intent.createChooser(intent, getTitle())); 
-					/*	imageUserLogo.setDrawingCacheEnabled(true);
-						Bitmap logoBitmap = Bitmap.createBitmap(imageUserLogo.getDrawingCache());   
-						imageUserLogo.setDrawingCacheEnabled(false);
-						
-						if(logoBitmap !=null){
-							String imgUrl =  MediaStore.Images.
-							Media.insertImage(getContentResolver(), logoBitmap, "", "");   
-							//BusinessDetailActivity.this.showToast("二维码成功保存到相册！");
-							Intent intent = new Intent(Intent.ACTION_SEND);    
-							intent.setType("image/*");
-							 if (imgUrl== null || imgUrl.equals("")) {    
-								 //intent.setType("text/plain"); // 纯文本     
-							    } 
-							  else {    
-								  File f = new File(imgUrl);    
-								  if (f != null && f.exists() && f.isFile()) {    
-									  //intent.setType("image/*");    
-									  Uri u = Uri.fromFile(f);    
-									  intent.putExtra(Intent.EXTRA_STREAM, u);    
-								  }    
-							  	}    
-							  intent.putExtra(Intent.EXTRA_SUBJECT, "Share");    
-							  intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/"+application.cityid+
-									  "/person/detail/"+userPerson.getMember_id());    
-							  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    
-							  startActivity(Intent.createChooser(intent, getTitle()));    
+						if (mController == null) {
+							mController = UMServiceFactory.getUMSocialService(
+									Constant.UMentData.DESCRIPTOR,
+									RequestType.SOCIAL);
+							// qq
+							mController.getConfig().supportQQPlatform(
+									PersonDetailActivity.this,
+									getResources()
+											.getString(R.string.QQ_APP_ID),
+									getResources().getString(
+											R.string.QQ_APP_KEY),
+									"http://www.321hy.cn");
+
+							// weixin
+							// 微信图文分享必须设置一个url
+							// 添加微信平台，参数1为当前Activity, 参数2为用户申请的AppID,
+							// 参数3为点击分享内容跳转到的目标url
+							UMWXHandler wxHandler = mController.getConfig()
+									.supportWXPlatform(
+											PersonDetailActivity.this,
+											getResources().getString(
+													R.string.Weixin_APP_ID),
+											"http://www.321hy.cn");
+							// 设置分享标题
+							wxHandler.setWXTitle(userPerson.getFullname());
+							// 支持微信朋友圈
+							UMWXHandler circleHandler = mController.getConfig()
+									.supportWXCirclePlatform(
+											PersonDetailActivity.this,
+											getResources().getString(
+													R.string.Weixin_APP_ID),
+											"http://www.321hy.cn");
+							circleHandler.setCircleTitle(userPerson
+									.getFullname() + "http://www.321hy.cn");
+
 						}
-						else{
-								//BusinessDetailActivity.this.showToast("二维码保存失败！");
-						}*/
-						
+						UMImage mImage = new UMImage(PersonDetailActivity.this,
+								userPerson.getLogo());
+						mImage.setTitle(userPerson.getFullname());
+						// http://m.321hy.cn/530100/person/detail/609417
+						mImage.setTargetUrl("http://www.321hy.cn/"
+								+ application.cityid + "/person/detail/"
+								+ userPerson.getMember_id());
+
+						// 设置分享内容
+						mController.setShareContent(userPerson.getFullname()
+								+ "。http://www.321hy.cn");
+						// 设置分享图片, 参数2为图片的url地址
+						mController.setShareMedia(mImage);
+						mController.openShare(PersonDetailActivity.this, false);
 					}
 				});
 	}
