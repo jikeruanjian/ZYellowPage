@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/popl_bg"
       
-        android:divider="@drawable/list_divider"
+        android:divider="@color/orange_background"
         android:dividerHeight="1dip"
         android:drawSelectorOnTop="true"
         android:focusable="true"

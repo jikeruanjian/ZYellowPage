@@ -6,6 +6,8 @@ import java.util.List;
 
 
 
+
+
 //import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -79,7 +81,7 @@ public class BusinessDetailActivity extends AbActivity implements
 	Bitmap codeBitmap;
 	private DisplayUtil displayUtil;
 	RelativeLayout layMain;
-	ImageView imageUserLogo;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -489,7 +491,7 @@ public class BusinessDetailActivity extends AbActivity implements
 					public void onClick(View v) {
 						mView = BusinessDetailActivity.this.mInflater.inflate(
 								R.layout.code_view, null);
-						imageUserLogo = (ImageView) mView
+						ImageView imageUserLogo = (ImageView) mView
 								.findViewById(R.id.imageViewCodeCP);
 						new AbImageDownloader(BusinessDetailActivity.this).
 						display(imageUserLogo, userCompany.getLogo());
@@ -506,7 +508,6 @@ public class BusinessDetailActivity extends AbActivity implements
 						});
 					}
 				});
-
 		imgCompanyVideos.setOnClickListener(new OnClickListener() {
 
 			@Override
