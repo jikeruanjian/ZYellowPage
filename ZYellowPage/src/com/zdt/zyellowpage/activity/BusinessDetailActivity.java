@@ -1,10 +1,7 @@
 package com.zdt.zyellowpage.activity;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 //import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -40,10 +37,17 @@ import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
 import com.ab.view.sliding.AbSlidingPlayView;
 import com.ab.view.titlebar.AbTitleBar;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.UMWXHandler;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.AlbumBll;
 import com.zdt.zyellowpage.bll.UserBll;
+import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.AlbumReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
@@ -80,6 +84,10 @@ public class BusinessDetailActivity extends AbActivity implements
 	private DisplayUtil displayUtil;
 	RelativeLayout layMain;
 	ImageView imageUserLogo;
+
+	// sdk controller
+	private UMSocialService mController = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -314,7 +322,7 @@ public class BusinessDetailActivity extends AbActivity implements
 			TextView mPlayText = (TextView) mPlayView
 					.findViewById(R.id.mPlayText);
 			new AbImageDownloader(BusinessDetailActivity.this).display(
-					mPlayImage, imageUrls[(imageUrls.length -1 -i)]);
+					mPlayImage, imageUrls[(imageUrls.length - 1 - i)]);
 			mPlayText.setText("");
 			mSlidingPlayView.addView(mPlayView);
 		}
@@ -468,7 +476,7 @@ public class BusinessDetailActivity extends AbActivity implements
 					}
 
 				});
-		// 
+		//
 		this.findViewById(R.id.imgBussnissPhone).setOnClickListener(
 				new View.OnClickListener() {
 
@@ -481,31 +489,30 @@ public class BusinessDetailActivity extends AbActivity implements
 						startActivity(intent);
 					}
 				});
-		//商家logo
-		imgLogo.setOnClickListener(
-				new View.OnClickListener() {
+		// 商家logo
+		imgLogo.setOnClickListener(new View.OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				mView = BusinessDetailActivity.this.mInflater.inflate(
+						R.layout.code_view, null);
+				imageUserLogo = (ImageView) mView
+						.findViewById(R.id.imageViewCodeCP);
+				new AbImageDownloader(BusinessDetailActivity.this).display(
+						imageUserLogo, userCompany.getLogo());
+				BusinessDetailActivity.this.removeDialog(1);
+				BusinessDetailActivity.this.showDialog(AbConstant.DIALOGCENTER,
+						mView);
+				imageUserLogo.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						mView = BusinessDetailActivity.this.mInflater.inflate(
-								R.layout.code_view, null);
-						imageUserLogo = (ImageView) mView
-								.findViewById(R.id.imageViewCodeCP);
-						new AbImageDownloader(BusinessDetailActivity.this).
-						display(imageUserLogo, userCompany.getLogo());
-						BusinessDetailActivity.this.removeDialog(1);
-						BusinessDetailActivity.this.showDialog(
-								AbConstant.DIALOGCENTER, mView);
-						imageUserLogo.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								BusinessDetailActivity.this
-										.removeDialog(AbConstant.DIALOGCENTER);
-							}
-
-						});
+						BusinessDetailActivity.this
+								.removeDialog(AbConstant.DIALOGCENTER);
 					}
+
 				});
+			}
+		});
 
 		imgCompanyVideos.setOnClickListener(new OnClickListener() {
 
@@ -534,59 +541,67 @@ public class BusinessDetailActivity extends AbActivity implements
 						startActivity(intent);
 					}
 				});
-		//分享
+		// TODO 分享
 		this.findViewById(R.id.imgbusnessshare).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent intent=new Intent(Intent.ACTION_SEND);   
-						intent.setType("text/plain");
-			            intent.putExtra(Intent.EXTRA_SUBJECT, userCompany.getFullname());    
-						  intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/"+application.cityid+
-								  "/enterprise/detail/"+userCompany.getMember_id());  
-			            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
-			            startActivity(Intent.createChooser(intent, getTitle())); 
-						
-						
-						/*mView = BusinessDetailActivity.this.mInflater.inflate(
-								R.layout.code_view, null);
-						imageUserLogo = (ImageView) mView
-								.findViewById(R.id.imageViewCodeCP);
-						new AbImageDownloader(BusinessDetailActivity.this).
-						display(imageUserLogo, userCompany.getLogo());
-						showDialog(AbConstant.DIALOGCENTER, mView);
-						removeDialog(AbConstant.DIALOGCENTER);
-						
-					/*	imgLogo.setDrawingCacheEnabled(true);
-						Bitmap logoBitmap = Bitmap.createBitmap(imgLogo.getDrawingCache());   
-						imgLogo.setDrawingCacheEnabled(false);
-						
-						if(logoBitmap !=null){
-							String imgUrl =  MediaStore.Images.
-							Media.insertImage(getContentResolver(), logoBitmap, "", "");   
-							//BusinessDetailActivity.this.showToast("二维码成功保存到相册！");
-							Intent intent = new Intent(Intent.ACTION_SEND);    
-							intent.setType("image/*");
-							  if (imgUrl== null || imgUrl.equals("")) {    
-								 // intent.setType("text/plain"); // 纯文本     
-							    } 
-							  else {    
-								  File f = new File(imgUrl);    
-								  if (f != null && f.exists() && f.isFile()) {    
-									//  intent.setType("image/*");    
-									  Uri u = Uri.fromFile(f);    
-									  intent.putExtra(Intent.EXTRA_STREAM, u);    
-								  }    
-							  	}    
-							  intent.putExtra(Intent.EXTRA_SUBJECT, "Share");    
-							  intent.putExtra(Intent.EXTRA_TEXT, "http://m.321hy.cn/"+application.cityid+
-									  "/enterprise/detail/"+userCompany.getMember_id());    
-							  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    
-							  startActivity(Intent.createChooser(intent, getTitle()));    
+						if (mController == null) {
+							mController = UMServiceFactory.getUMSocialService(
+									Constant.UMentData.DESCRIPTOR,
+									RequestType.SOCIAL);
+							// qq
+							mController.getConfig().supportQQPlatform(
+									BusinessDetailActivity.this,
+									getResources()
+											.getString(R.string.QQ_APP_ID),
+									getResources().getString(
+											R.string.QQ_APP_KEY),
+									"http://www.321hy.cn");
+
+							// weixin
+							// 微信图文分享必须设置一个url
+							// 添加微信平台，参数1为当前Activity, 参数2为用户申请的AppID,
+							// 参数3为点击分享内容跳转到的目标url
+							UMWXHandler wxHandler = mController.getConfig()
+									.supportWXPlatform(
+											BusinessDetailActivity.this,
+											getResources().getString(
+													R.string.Weixin_APP_ID),
+											"http://www.321hy.cn");
+							// 设置分享标题
+							wxHandler.setWXTitle(userCompany.getFullname());
+							// 支持微信朋友圈
+							UMWXHandler circleHandler = mController.getConfig()
+									.supportWXCirclePlatform(
+											BusinessDetailActivity.this,
+											getResources().getString(
+													R.string.Weixin_APP_ID),
+											"http://www.321hy.cn");
+							circleHandler.setCircleTitle(userCompany
+									.getFullname() + "http://www.321hy.cn");
+
 						}
-						else{
-								//BusinessDetailActivity.this.showToast("二维码保存失败！");
-						}*/
+
+						mController.setAppWebSite(SHARE_MEDIA.RENREN,
+								"http://www.321hy.cn/");
+
+						UMImage mImage = new UMImage(
+								BusinessDetailActivity.this, userCompany
+										.getLogo());
+						mImage.setTitle(userCompany.getFullname());
+						// http://m.321hy.cn/530100/enterprise/detail/167776
+						mImage.setTargetUrl("http://www.321hy.cn/"
+								+ application.cityid + "/enterprise/detail/"
+								+ userCompany.getMember_id());
+
+						// 设置分享内容
+						mController.setShareContent(userCompany.getFullname()
+								+ "。http://www.321hy.cn");
+						// 设置分享图片, 参数2为图片的url地址
+						mController.setShareMedia(mImage);
+						mController.openShare(BusinessDetailActivity.this,
+								false);
 					}
 				});
 	}
