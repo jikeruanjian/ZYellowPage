@@ -34,10 +34,16 @@ import com.ab.http.AbHttpUtil;
 import com.ab.util.AbImageUtil;
 import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.CircleShareContent;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.WeiXinShareContent;
+import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMWXHandler;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
@@ -74,6 +80,7 @@ public class PersonDetailActivity extends AbActivity implements
 	View mCodeView;
 	RelativeLayout layMain;
 	ImageView imageUserLogo;
+	ImageView imageUserCode;
 	// 二维码弹出框
 	private View mView;
 	// sdk controller
@@ -258,8 +265,9 @@ public class PersonDetailActivity extends AbActivity implements
 	protected void getView() {
 		imageUserLogo = (ImageView) PersonDetailActivity.this
 				.findViewById(R.id.person_detail_photo);
-		new AbImageDownloader(PersonDetailActivity.this).display(imageUserLogo,
-				userPerson.getLogo());
+		if (!AbStrUtil.isEmpty(userPerson.getLogo()))
+			new AbImageDownloader(PersonDetailActivity.this).display(
+					imageUserLogo, userPerson.getLogo());
 		TextView nametitle = (TextView) PersonDetailActivity.this
 				.findViewById(R.id.personFullNametextView);
 		TextView name = (TextView) PersonDetailActivity.this
@@ -411,26 +419,31 @@ public class PersonDetailActivity extends AbActivity implements
 
 					@Override
 					public void onClick(View v) {
-						mView = PersonDetailActivity.this.mInflater.inflate(
-								R.layout.code_view, null);
-						ImageView imageUserCode = (ImageView) mView
-								.findViewById(R.id.imageViewCodeCP);
-						new AbImageDownloader(PersonDetailActivity.this)
-								.display(imageUserCode, userPerson.getLogo());
+						if (mView == null) {
+							mView = PersonDetailActivity.this.mInflater
+									.inflate(R.layout.code_view, null);
+							imageUserCode = (ImageView) mView
+									.findViewById(R.id.imageViewCodeCP);
+							mView
+									.setOnClickListener(new OnClickListener() {
+										@Override
+										public void onClick(View v) {
+											PersonDetailActivity.this
+													.removeDialog(AbConstant.DIALOGCENTER);
+										}
+									});
+						}
+						if (!AbStrUtil.isEmpty(userPerson.getLogo()))
+							new AbImageDownloader(PersonDetailActivity.this)
+									.display(imageUserCode,
+											userPerson.getLogo());
 						PersonDetailActivity.this.removeDialog(1);
 						PersonDetailActivity.this.showDialog(
 								AbConstant.DIALOGCENTER, mView);
-						imageUserCode.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								PersonDetailActivity.this
-										.removeDialog(AbConstant.DIALOGCENTER);
-							}
-
-						});
 					}
 				});
-		// 分享
+
+		// TODO 分享
 		this.findViewById(R.id.person_detail_Share).setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -439,6 +452,17 @@ public class PersonDetailActivity extends AbActivity implements
 							mController = UMServiceFactory.getUMSocialService(
 									Constant.UMentData.DESCRIPTOR,
 									RequestType.SOCIAL);
+							mController.getConfig().setSsoHandler(
+									new SinaSsoHandler());
+							mController.getConfig().setSsoHandler(
+									new TencentWBSsoHandler());
+							mController.getConfig().setSsoHandler(
+									new QZoneSsoHandler(
+											PersonDetailActivity.this,
+											getResources().getString(
+													R.string.QQ_APP_ID),
+											getResources().getString(
+													R.string.QQ_APP_KEY)));
 							// qq
 							mController.getConfig().supportQQPlatform(
 									PersonDetailActivity.this,
@@ -446,7 +470,7 @@ public class PersonDetailActivity extends AbActivity implements
 											.getString(R.string.QQ_APP_ID),
 									getResources().getString(
 											R.string.QQ_APP_KEY),
-									"http://www.321hy.cn");
+									"http://m.321hy.cn");
 
 							// weixin
 							// 微信图文分享必须设置一个url
@@ -457,7 +481,7 @@ public class PersonDetailActivity extends AbActivity implements
 											PersonDetailActivity.this,
 											getResources().getString(
 													R.string.Weixin_APP_ID),
-											"http://www.321hy.cn");
+											"http://m.321hy.cn");
 							// 设置分享标题
 							wxHandler.setWXTitle(userPerson.getFullname());
 							// 支持微信朋友圈
@@ -466,24 +490,51 @@ public class PersonDetailActivity extends AbActivity implements
 											PersonDetailActivity.this,
 											getResources().getString(
 													R.string.Weixin_APP_ID),
-											"http://www.321hy.cn");
+											"http://m.321hy.cn");
 							circleHandler.setCircleTitle(userPerson
-									.getFullname() + "http://www.321hy.cn");
+									.getFullname() + "http://m.321hy.cn");
 
+							// 人人
+							mController.setAppWebSite(SHARE_MEDIA.RENREN,
+									"http://m.321hy.cn/");
+
+							// 通用内容
+							UMImage mImage = new UMImage(
+									PersonDetailActivity.this, userPerson
+											.getLogo());
+							mImage.setTitle(userPerson.getFullname());
+							// http://m.321hy.cn/530100/person/detail/167776
+							mImage.setTargetUrl("http://m.321hy.cn/"
+									+ application.cityid + "/person/detail/"
+									+ userPerson.getMember_id());
+
+							WeiXinShareContent weixinContent = new WeiXinShareContent();
+							weixinContent.setShareContent(userPerson
+									.getFullname() + "。http://m.321hy.cn");
+							weixinContent.setTitle(userPerson.getFullname());
+							weixinContent.setTargetUrl("http://m.321hy.cn/"
+									+ application.cityid + "/person/detail/"
+									+ userPerson.getMember_id());
+							weixinContent.setShareImage(mImage);
+							mController.setShareMedia(weixinContent);
+
+							// 设置朋友圈分享的内容
+							CircleShareContent circleMedia = new CircleShareContent();
+							circleMedia.setShareContent(userPerson
+									.getFullname() + "。http://m.321hy.cn");
+							circleMedia.setTitle(userPerson.getFullname());
+							circleMedia.setTargetUrl("http://m.321hy.cn/"
+									+ application.cityid + "/person/detail/"
+									+ userPerson.getMember_id());
+							circleMedia.setShareImage(mImage);
+							mController.setShareMedia(circleMedia);
+
+							// 设置分享内容
+							mController.setShareContent(userPerson
+									.getFullname() + "。http://m.321hy.cn");
+							// 设置分享图片, 参数2为图片的url地址
+							mController.setShareMedia(mImage);
 						}
-						UMImage mImage = new UMImage(PersonDetailActivity.this,
-								userPerson.getLogo());
-						mImage.setTitle(userPerson.getFullname());
-						// http://m.321hy.cn/530100/person/detail/609417
-						mImage.setTargetUrl("http://www.321hy.cn/"
-								+ application.cityid + "/person/detail/"
-								+ userPerson.getMember_id());
-
-						// 设置分享内容
-						mController.setShareContent(userPerson.getFullname()
-								+ "。http://www.321hy.cn");
-						// 设置分享图片, 参数2为图片的url地址
-						mController.setShareMedia(mImage);
 						mController.openShare(PersonDetailActivity.this, false);
 					}
 				});
@@ -669,7 +720,6 @@ public class PersonDetailActivity extends AbActivity implements
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						mView = PersonDetailActivity.this.mInflater.inflate(
 								R.layout.code_view, null);
 						ImageView imageUserCode = (ImageView) mView

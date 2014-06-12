@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:gesture-image="http://schemas.polites.com/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical" >
 
     <com.polites.android.GestureImageView
         android:id="@+id/imageViewCodeCP"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerInside"
+        android:src="@drawable/nopic"
         gesture-image:max-scale="10.0"
-        gesture-image:min-scale="0.75" 
-        android:src="@drawable/nopic" />
+        gesture-image:min-scale="0.75" />
 
 </LinearLayout>

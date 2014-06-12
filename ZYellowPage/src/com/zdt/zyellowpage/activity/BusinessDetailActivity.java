@@ -41,7 +41,12 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.CircleShareContent;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.WeiXinShareContent;
+import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMWXHandler;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
@@ -84,6 +89,7 @@ public class BusinessDetailActivity extends AbActivity implements
 	private DisplayUtil displayUtil;
 	RelativeLayout layMain;
 	ImageView imageUserLogo;
+	AbImageDownloader imageLoader = null;
 
 	// sdk controller
 	private UMSocialService mController = null;
@@ -127,6 +133,8 @@ public class BusinessDetailActivity extends AbActivity implements
 				int width = metric.widthPixels / 4 * 3;
 				displayUtil.setViewLayoutParamsL(mSlidingPlayView, 0, width);
 				mSlidingPlayView.setPageLineHorizontalGravity(Gravity.RIGHT);
+
+				imageLoader = new AbImageDownloader(BusinessDetailActivity.this);
 
 				InitTitleView();
 				getData();
@@ -181,7 +189,7 @@ public class BusinessDetailActivity extends AbActivity implements
 		wifiPW.setText(userCompany.getWifi_password());
 		imgLogo = (ImageView) this.findViewById(R.id.companyLogoImage);
 		if (userCompany.getLogo() != null) {
-			new AbImageDownloader(this).display(imgLogo, userCompany.getLogo());
+			imageLoader.display(imgLogo, userCompany.getLogo());
 		}
 		InitTextView();
 		InitViewPager();
@@ -321,8 +329,9 @@ public class BusinessDetailActivity extends AbActivity implements
 			});
 			TextView mPlayText = (TextView) mPlayView
 					.findViewById(R.id.mPlayText);
-			new AbImageDownloader(BusinessDetailActivity.this).display(
-					mPlayImage, imageUrls[(imageUrls.length - 1 - i)]);
+			imageLoader.setAnimation(true);
+			imageLoader.display(mPlayImage,
+					imageUrls[(imageUrls.length - 1 - i)]);
 			mPlayText.setText("");
 			mSlidingPlayView.addView(mPlayView);
 		}
@@ -341,8 +350,6 @@ public class BusinessDetailActivity extends AbActivity implements
 					public void onSuccess(int statusCode, byte[] content) {
 						codeBitmap = AbImageUtil.bytes2Bimap(content);
 						mView = mInflater.inflate(R.layout.code_view, null);
-						// ImageView imageUserCode = (ImageView) mView
-						// .findViewById(R.id.imageViewCodeCP);
 
 						ImageView UserCode = (ImageView) BusinessDetailActivity.this
 								.findViewById(R.id.BCodeTopRightimageView);
@@ -494,23 +501,26 @@ public class BusinessDetailActivity extends AbActivity implements
 
 			@Override
 			public void onClick(View v) {
-				mView = BusinessDetailActivity.this.mInflater.inflate(
+				mView = mInflater.inflate(
 						R.layout.code_view, null);
+
 				imageUserLogo = (ImageView) mView
 						.findViewById(R.id.imageViewCodeCP);
-				new AbImageDownloader(BusinessDetailActivity.this).display(
-						imageUserLogo, userCompany.getLogo());
-				BusinessDetailActivity.this.removeDialog(1);
-				BusinessDetailActivity.this.showDialog(AbConstant.DIALOGCENTER,
-						mView);
+
 				imageUserLogo.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						BusinessDetailActivity.this
-								.removeDialog(AbConstant.DIALOGCENTER);
+						removeDialog(AbConstant.DIALOGCENTER);
 					}
-
 				});
+
+				if (!AbStrUtil.isEmpty(userCompany.getLogo())) {
+					imageLoader.setAnimation(true);
+					imageLoader.display(imageUserLogo, userCompany.getLogo());
+				}
+				removeDialog(1);
+				setDialogPadding(0);
+				showDialog(AbConstant.DIALOGCENTER, mView);
 			}
 		});
 
@@ -550,6 +560,17 @@ public class BusinessDetailActivity extends AbActivity implements
 							mController = UMServiceFactory.getUMSocialService(
 									Constant.UMentData.DESCRIPTOR,
 									RequestType.SOCIAL);
+							mController.getConfig().setSsoHandler(
+									new SinaSsoHandler());
+							mController.getConfig().setSsoHandler(
+									new TencentWBSsoHandler());
+							mController.getConfig().setSsoHandler(
+									new QZoneSsoHandler(
+											BusinessDetailActivity.this,
+											getResources().getString(
+													R.string.QQ_APP_ID),
+											getResources().getString(
+													R.string.QQ_APP_KEY)));
 							// qq
 							mController.getConfig().supportQQPlatform(
 									BusinessDetailActivity.this,
@@ -557,7 +578,7 @@ public class BusinessDetailActivity extends AbActivity implements
 											.getString(R.string.QQ_APP_ID),
 									getResources().getString(
 											R.string.QQ_APP_KEY),
-									"http://www.321hy.cn");
+									"http://m.321hy.cn");
 
 							// weixin
 							// 微信图文分享必须设置一个url
@@ -568,7 +589,7 @@ public class BusinessDetailActivity extends AbActivity implements
 											BusinessDetailActivity.this,
 											getResources().getString(
 													R.string.Weixin_APP_ID),
-											"http://www.321hy.cn");
+											"http://m.321hy.cn");
 							// 设置分享标题
 							wxHandler.setWXTitle(userCompany.getFullname());
 							// 支持微信朋友圈
@@ -577,29 +598,55 @@ public class BusinessDetailActivity extends AbActivity implements
 											BusinessDetailActivity.this,
 											getResources().getString(
 													R.string.Weixin_APP_ID),
-											"http://www.321hy.cn");
+											"http://m.321hy.cn");
 							circleHandler.setCircleTitle(userCompany
-									.getFullname() + "http://www.321hy.cn");
+									.getFullname() + "http://m.321hy.cn");
+
+							// 人人
+							mController.setAppWebSite(SHARE_MEDIA.RENREN,
+									"http://m.321hy.cn/");
+
+							// 通用内容
+							UMImage mImage = new UMImage(
+									BusinessDetailActivity.this, userCompany
+											.getLogo());
+							mImage.setTitle(userCompany.getFullname());
+							// http://m.321hy.cn/530100/enterprise/detail/167776
+							mImage.setTargetUrl("http://m.321hy.cn/"
+									+ application.cityid
+									+ "/enterprise/detail/"
+									+ userCompany.getMember_id());
+
+							WeiXinShareContent weixinContent = new WeiXinShareContent();
+							weixinContent.setShareContent(userCompany
+									.getFullname() + "。http://m.321hy.cn");
+							weixinContent.setTitle(userCompany.getFullname());
+							weixinContent.setTargetUrl("http://m.321hy.cn/"
+									+ application.cityid
+									+ "/enterprise/detail/"
+									+ userCompany.getMember_id());
+							weixinContent.setShareImage(mImage);
+							mController.setShareMedia(weixinContent);
+
+							// 设置朋友圈分享的内容
+							CircleShareContent circleMedia = new CircleShareContent();
+							circleMedia.setShareContent(userCompany
+									.getFullname() + "。http://m.321hy.cn");
+							circleMedia.setTitle(userCompany.getFullname());
+							circleMedia.setTargetUrl("http://m.321hy.cn/"
+									+ application.cityid
+									+ "/enterprise/detail/"
+									+ userCompany.getMember_id());
+							circleMedia.setShareImage(mImage);
+							mController.setShareMedia(circleMedia);
+
+							// 设置分享内容
+							mController.setShareContent(userCompany
+									.getFullname() + "。http://m.321hy.cn");
+							// 设置分享图片, 参数2为图片的url地址
+							mController.setShareMedia(mImage);
 
 						}
-
-						mController.setAppWebSite(SHARE_MEDIA.RENREN,
-								"http://www.321hy.cn/");
-
-						UMImage mImage = new UMImage(
-								BusinessDetailActivity.this, userCompany
-										.getLogo());
-						mImage.setTitle(userCompany.getFullname());
-						// http://m.321hy.cn/530100/enterprise/detail/167776
-						mImage.setTargetUrl("http://www.321hy.cn/"
-								+ application.cityid + "/enterprise/detail/"
-								+ userCompany.getMember_id());
-
-						// 设置分享内容
-						mController.setShareContent(userCompany.getFullname()
-								+ "。http://www.321hy.cn");
-						// 设置分享图片, 参数2为图片的url地址
-						mController.setShareMedia(mImage);
 						mController.openShare(BusinessDetailActivity.this,
 								false);
 					}
