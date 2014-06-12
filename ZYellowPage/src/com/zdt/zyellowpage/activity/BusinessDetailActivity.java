@@ -3,6 +3,8 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 //import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -497,30 +499,34 @@ public class BusinessDetailActivity extends AbActivity implements
 					}
 				});
 		// 商家logo
-		imgLogo.setOnClickListener(new View.OnClickListener() {
+		this.findViewById(R.id.companyLogoImage).setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				mView = mInflater.inflate(
+		@Override
+		public void onClick(View v) {
+			if (!AbStrUtil.isEmpty(userCompany.getLogo())) {
+			Intent intent = new Intent(BusinessDetailActivity.this,
+					ImagePagerActivity.class);
+			intent.putExtra("imageUrls", new String[]{userCompany.getLogo()});
+			startActivity(intent);
+			}
+			/*
+			mView = BusinessDetailActivity.this.mInflater.inflate(
 						R.layout.code_view, null);
-
-				imageUserLogo = (ImageView) mView
-						.findViewById(R.id.imageViewCodeCP);
-
-				imageUserLogo.setOnClickListener(new OnClickListener() {
+			ImageView imageUser = (ImageView) mView.
+					findViewById(R.id.imageViewCodeCP);
+			if (!AbStrUtil.isEmpty(userCompany.getLogo())) {
+				new AbImageDownloader(BusinessDetailActivity.this).
+				    display(imageUser, userCompany.getLogo());
+			}
+			BusinessDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);
+			BusinessDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
+			imageUser.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						removeDialog(AbConstant.DIALOGCENTER);
+						BusinessDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
 					}
-				});
-
-				if (!AbStrUtil.isEmpty(userCompany.getLogo())) {
-					imageLoader.setAnimation(true);
-					imageLoader.display(imageUserLogo, userCompany.getLogo());
-				}
-				removeDialog(1);
-				setDialogPadding(0);
-				showDialog(AbConstant.DIALOGCENTER, mView);
+			});
+			BusinessDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);*/
 			}
 		});
 

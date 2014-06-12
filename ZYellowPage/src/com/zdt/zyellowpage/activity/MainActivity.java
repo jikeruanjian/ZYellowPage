@@ -174,12 +174,12 @@ public class MainActivity extends AbActivity implements
 		// 地图RjlfVWfEcAecRGc5qG8xyLoX\E0vBVTjgP3IvuuZSOSqKmsZu
 		mBMapMan = new BMapManager(getApplication());
 		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
-		mBMapMan.init("E0vBVTjgP3IvuuZSOSqKmsZu", null);
+		mBMapMan.init(getResources().getString(R.string.BaiDuMap_Key), null);
 		// 导航RjlfVWfEcAecRGc5qG8xyLoX
 		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
-				mNaviEngineInitListener, "E0vBVTjgP3IvuuZSOSqKmsZu",
+				mNaviEngineInitListener, getResources().getString(R.string.BaiDuMap_Key),
 				mKeyVerifyListener);
-
+		
 		setContentView(R.layout.activity_main);
 		application = (MyApplication) abApplication;
 		initView();

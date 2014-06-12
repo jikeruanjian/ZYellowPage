@@ -329,11 +329,18 @@ public class TieDetailActivity extends AbActivity {
 					}
 
 				});
-		imgLogo.setOnClickListener(new View.OnClickListener() {
+		this.findViewById(R.id.tieLogoImage).setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				mView = TieDetailActivity.this.mInflater.inflate(
+				if (!AbStrUtil.isEmpty(mTie.getLogo())){
+					Intent intent = new Intent(TieDetailActivity.this,
+							ImagePagerActivity.class);
+					intent.putExtra("imageUrls", new String[]{mTie.getLogo()});
+					startActivity(intent);
+					}
+					/*mView = PersonD
+			/*	mView = TieDetailActivity.this.mInflater.inflate(
 						R.layout.code_view, null);
 				ImageView imageUserCode = (ImageView) mView
 						.findViewById(R.id.imageViewCodeCP);
@@ -349,7 +356,7 @@ public class TieDetailActivity extends AbActivity {
 								.removeDialog(AbConstant.DIALOGCENTER);
 					}
 
-				});
+				});*/
 			}
 		});
 		this.findViewById(R.id.TCodeTopRightimageView).setOnClickListener(

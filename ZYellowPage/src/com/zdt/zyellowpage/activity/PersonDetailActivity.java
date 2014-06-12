@@ -419,27 +419,27 @@ public class PersonDetailActivity extends AbActivity implements
 
 					@Override
 					public void onClick(View v) {
-						if (mView == null) {
-							mView = PersonDetailActivity.this.mInflater
+						if (!AbStrUtil.isEmpty(userPerson.getLogo())){
+						Intent intent = new Intent(PersonDetailActivity.this,
+								ImagePagerActivity.class);
+						intent.putExtra("imageUrls", new String[]{userPerson.getLogo()});
+						startActivity(intent);
+						}
+						/*mView = PersonDetailActivity.this.mInflater
 									.inflate(R.layout.code_view, null);
-							imageUserCode = (ImageView) mView
+						ImageView imageUser = (ImageView) mView
 									.findViewById(R.id.imageViewCodeCP);
-							mView
-									.setOnClickListener(new OnClickListener() {
-										@Override
-										public void onClick(View v) {
-											PersonDetailActivity.this
-													.removeDialog(AbConstant.DIALOGCENTER);
+						if (!AbStrUtil.isEmpty(userPerson.getLogo())){
+								new AbImageDownloader(PersonDetailActivity.this)
+										.display( imageUser,userPerson.getLogo());
+							}
+						imageUser.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+											PersonDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
 										}
 									});
-						}
-						if (!AbStrUtil.isEmpty(userPerson.getLogo()))
-							new AbImageDownloader(PersonDetailActivity.this)
-									.display(imageUserCode,
-											userPerson.getLogo());
-						PersonDetailActivity.this.removeDialog(1);
-						PersonDetailActivity.this.showDialog(
-								AbConstant.DIALOGCENTER, mView);
+						PersonDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);*/
 					}
 				});
 
