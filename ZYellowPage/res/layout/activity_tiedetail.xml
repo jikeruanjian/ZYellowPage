@@ -5,14 +5,13 @@
     android:layout_margin="2dp"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:visibility="gone"
-    >
+    android:visibility="gone" >
 
     <ScrollView
         android:id="@+id/svMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dip" >
+        android:layout_marginBottom="41dip" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,8 +48,8 @@
                     android:layout_height="60dp"
                     android:layout_gravity="right|center_vertical"
                     android:layout_marginRight="10dp"
-                    android:visibility="gone"
-                    android:src="@drawable/companycode" />
+                    android:src="@drawable/companycode"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -71,9 +70,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
+                android:layout_margin="10dip"
                 android:orientation="vertical" >
 
                 <LinearLayout
@@ -234,7 +231,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dip"
-                        android:layout_marginBottom="10dip"
                         android:background="@drawable/border_bottom"
                         android:orientation="vertical" >
 
@@ -242,7 +238,7 @@
                             android:id="@+id/tie_more_TextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
+                            android:padding="5dp"
                             android:text="更多▼"
                             android:textColor="@color/sub_title"
                             android:textSize="@dimen/main_text_size_h3" />
@@ -250,15 +246,13 @@
                         <WebView
                             android:id="@+id/tie_more_WebView"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_margin="6dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-     
 
     <ImageView
         android:id="@+id/tie_image_phone"
@@ -275,27 +269,23 @@
         android:layout_height="35dip"
         android:layout_alignTop="@+id/tie_image_share"
         android:layout_toRightOf="@+id/tie_image_share"
-       android:src="@drawable/google_maps" />
-	
-	
+        android:src="@drawable/google_maps" />
+
     <ImageView
         android:id="@+id/tie_image_share"
         android:layout_width="0dip"
         android:layout_height="35dip"
-        android:layout_marginBottom="5dp"
         android:layout_alignTop="@+id/tie_image_phone"
-         android:layout_marginRight="15dp"
         android:layout_centerHorizontal="true"
-        
-        
-        />
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="15dp" />
 
-<TextView
-    android:id="@+id/imageViewOrangeLine"
-    android:layout_width="fill_parent"
-    android:layout_height="2dp"
-    android:layout_alignBottom="@+id/svMain"
-    android:layout_alignParentLeft="true"
-    android:background="@color/orange_background" />
+    <TextView
+        android:id="@+id/imageViewOrangeLine"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_alignBottom="@+id/svMain"
+        android:layout_alignParentLeft="true"
+        android:background="@color/orange_background" />
 
 </RelativeLayout>

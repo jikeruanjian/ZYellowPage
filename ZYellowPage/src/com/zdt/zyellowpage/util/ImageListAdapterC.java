@@ -157,7 +157,6 @@ public class ImageListAdapterC extends BaseAdapter{
         }  
         @Override  
         public void onClick(View v) {  
-            // TODO Auto-generated method stub   
         	if (application.mUser != null && application.mUser.getToken() != null) {
         		  
         		UserBll bll = new UserBll();
@@ -166,27 +165,21 @@ public class ImageListAdapterC extends BaseAdapter{
 
 							@Override
 							public void onSuccess(int statusCode, String content) {
-								// TODO Auto-generated method stub
 								Toast.makeText(mContext,content, Toast.LENGTH_SHORT).show();
 							}
 
 							@Override
 							public void onStart() {
-								// TODO Auto-generated method stub
-								
 							}
 
 							@Override
 							public void onFailure(int statusCode,
 									String content, Throwable error) {
-								// TODO Auto-generated method stub
 								Toast.makeText(mContext, "关注失败！", Toast.LENGTH_SHORT).show();
 							}
 
 							@Override
 							public void onErrorData(String status_description) {
-								// TODO Auto-generated method stub
-								
 							}
 
 							@Override

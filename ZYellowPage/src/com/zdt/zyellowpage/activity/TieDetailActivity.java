@@ -48,6 +48,7 @@ public class TieDetailActivity extends AbActivity {
 	private ImageView imageCode;
 	private View mView;
 	Bitmap codeBitmap;
+	WebView more;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -231,7 +232,7 @@ public class TieDetailActivity extends AbActivity {
 					"utf-8", null);
 		}
 
-		WebView more = (WebView) this.findViewById(R.id.tie_more_WebView);
+		more = (WebView) this.findViewById(R.id.tie_more_WebView);
 		// more.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 		// height));
 		if (AbStrUtil.isEmpty(mTie.getMore())) {
@@ -385,15 +386,13 @@ public class TieDetailActivity extends AbActivity {
 		moreTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (TieDetailActivity.this.findViewById(R.id.tie_more_WebView)
-						.getVisibility() == View.VISIBLE) {
+				if (more.getVisibility() == View.VISIBLE) {
 					moreTextView.setText("更多▼");
-					TieDetailActivity.this.findViewById(R.id.tie_more_WebView)
-							.setVisibility(View.GONE);
+					more.setVisibility(View.GONE);
+
 				} else {
 					moreTextView.setText("更多▲");
-					TieDetailActivity.this.findViewById(R.id.tie_more_WebView)
-							.setVisibility(View.VISIBLE);
+					more.setVisibility(View.VISIBLE);
 				}
 			}
 		});
