@@ -487,6 +487,6 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 
-		getData();
+		//getData();
 	}
 }

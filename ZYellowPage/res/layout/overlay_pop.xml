@@ -30,7 +30,7 @@ android:paddingBottom="20px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="导航"
-            android:textColor="@color/yellow" />
+            android:textColor="#000000" />
 
     </LinearLayout>
     
@@ -54,7 +54,7 @@ android:paddingBottom="20px"
             android:id="@+id/textView2adr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
 	   		android:paddingTop="5px"
             android:text="地址:" />
 
@@ -63,7 +63,7 @@ android:paddingBottom="20px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5px"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:text="电话:" />
 
     </LinearLayout>
@@ -88,7 +88,7 @@ android:paddingBottom="20px"
            android:paddingTop="5px"
            android:singleLine="true"
            android:text=" "
-           android:textColor="#FFFFFF"
+           android:textColor="#000000"
            android:textSize="20dp" />
 
        <!--style="@style/map_BubblePrimary"  style可以没有,我这里第一个TextView表示标题,用的是大字体-->
@@ -106,7 +106,7 @@ android:paddingBottom="20px"
  	    android:paddingRight="5px"
  	    android:singleLine="true"
  	    android:text=" "
- 	    android:textColor="#FFFFFF" 
+ 	    android:textColor="#000000" 
  	    android:visibility="gone"/>
     
     <TextView
@@ -118,7 +118,7 @@ android:paddingBottom="20px"
         android:paddingRight="5px"
         android:singleLine="false"
         android:text=" "
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,7 +131,7 @@ android:paddingBottom="20px"
             android:layout_height="wrap_content"
             android:text="步行"
             
-            android:textColor="@color/yellow" />
+            android:textColor="#000000" />
         
         <TextView
             android:id="@+id/mapPopTextBus"
@@ -139,14 +139,14 @@ android:paddingBottom="20px"
             android:layout_height="wrap_content"
             android:text="公交"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/yellow" />
+            android:textColor="#000000" />
         <TextView
             android:id="@+id/mapPopTextDrive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="驾车"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/yellow" />
+            android:textColor="#000000" />
         
         <TextView
             android:id="@+id/textViewClosePop"
@@ -154,7 +154,7 @@ android:paddingBottom="20px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="关闭"
-            android:textColor="@color/splash_bg" />
+            android:textColor="#000000" />
 
     </LinearLayout>
         

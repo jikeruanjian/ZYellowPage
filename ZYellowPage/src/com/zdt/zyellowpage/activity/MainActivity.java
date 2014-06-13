@@ -156,17 +156,17 @@ public class MainActivity extends AbActivity implements
 	// }
 	// });
 
-	// @Override
-	// protected void onActivityResult(int requestCode, int resultCode,
-	// Intent intent) {
-	// super.onActivityResult(requestCode, resultCode, intent);
-	// if (requestCode == 10000) {
-	// if (resultCode == RESULT_OK) {
-	// textViewArea.setText(application.cityName);
-	// newFragmentHome.getData();
-	// }
-	// }
-	// }
+	@Override
+	 protected void onActivityResult(int requestCode, int resultCode,
+	 Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+		if (requestCode == 10000) {
+			if (resultCode == RESULT_OK) {
+				textViewArea.setText(application.cityName);
+				newFragmentHome.getData();
+			}	
+		}
+	 }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
