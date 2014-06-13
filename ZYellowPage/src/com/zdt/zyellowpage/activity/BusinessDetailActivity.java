@@ -3,8 +3,6 @@ package com.zdt.zyellowpage.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 //import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -499,36 +497,44 @@ public class BusinessDetailActivity extends AbActivity implements
 					}
 				});
 		// 商家logo
-		this.findViewById(R.id.companyLogoImage).setOnClickListener(new View.OnClickListener() {
+		this.findViewById(R.id.companyLogoImage).setOnClickListener(
+				new View.OnClickListener() {
 
-		@Override
-		public void onClick(View v) {
-			if (!AbStrUtil.isEmpty(userCompany.getLogo())) {
-			Intent intent = new Intent(BusinessDetailActivity.this,
-					ImagePagerActivity.class);
-			intent.putExtra("imageUrls", new String[]{userCompany.getLogo()});
-			startActivity(intent);
-			}
-			/*
-			mView = BusinessDetailActivity.this.mInflater.inflate(
-						R.layout.code_view, null);
-			ImageView imageUser = (ImageView) mView.
-					findViewById(R.id.imageViewCodeCP);
-			if (!AbStrUtil.isEmpty(userCompany.getLogo())) {
-				new AbImageDownloader(BusinessDetailActivity.this).
-				    display(imageUser, userCompany.getLogo());
-			}
-			BusinessDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);
-			BusinessDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
-			imageUser.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						BusinessDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
+						if (!AbStrUtil.isEmpty(userCompany.getLogo())) {
+							Intent intent = new Intent(
+									BusinessDetailActivity.this,
+									ImagePagerActivity.class);
+							intent.putExtra("imageUrls",
+									new String[] { userCompany.getLogo() });
+							startActivity(intent);
+						} else {
+							showToast("该用户没有设置Logo");
+						}
+						/*
+						 * mView =
+						 * BusinessDetailActivity.this.mInflater.inflate(
+						 * R.layout.code_view, null); ImageView imageUser =
+						 * (ImageView) mView.
+						 * findViewById(R.id.imageViewCodeCP); if
+						 * (!AbStrUtil.isEmpty(userCompany.getLogo())) { new
+						 * AbImageDownloader(BusinessDetailActivity.this).
+						 * display(imageUser, userCompany.getLogo()); }
+						 * BusinessDetailActivity
+						 * .this.showDialog(AbConstant.DIALOGCENTER, mView);
+						 * BusinessDetailActivity
+						 * .this.removeDialog(AbConstant.DIALOGCENTER);
+						 * imageUser.setOnClickListener(new OnClickListener() {
+						 * 
+						 * @Override public void onClick(View v) {
+						 * BusinessDetailActivity
+						 * .this.removeDialog(AbConstant.DIALOGCENTER); } });
+						 * BusinessDetailActivity
+						 * .this.showDialog(AbConstant.DIALOGCENTER, mView);
+						 */
 					}
-			});
-			BusinessDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);*/
-			}
-		});
+				});
 
 		imgCompanyVideos.setOnClickListener(new OnClickListener() {
 

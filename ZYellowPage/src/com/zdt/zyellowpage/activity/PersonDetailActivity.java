@@ -419,27 +419,32 @@ public class PersonDetailActivity extends AbActivity implements
 
 					@Override
 					public void onClick(View v) {
-						if (!AbStrUtil.isEmpty(userPerson.getLogo())){
-						Intent intent = new Intent(PersonDetailActivity.this,
-								ImagePagerActivity.class);
-						intent.putExtra("imageUrls", new String[]{userPerson.getLogo()});
-						startActivity(intent);
+						if (!AbStrUtil.isEmpty(userPerson.getLogo())) {
+							Intent intent = new Intent(
+									PersonDetailActivity.this,
+									ImagePagerActivity.class);
+							intent.putExtra("imageUrls",
+									new String[] { userPerson.getLogo() });
+							startActivity(intent);
+						} else {
+							showToast("该用户没有设置Logo");
 						}
-						/*mView = PersonDetailActivity.this.mInflater
-									.inflate(R.layout.code_view, null);
-						ImageView imageUser = (ImageView) mView
-									.findViewById(R.id.imageViewCodeCP);
-						if (!AbStrUtil.isEmpty(userPerson.getLogo())){
-								new AbImageDownloader(PersonDetailActivity.this)
-										.display( imageUser,userPerson.getLogo());
-							}
-						imageUser.setOnClickListener(new OnClickListener() {
-								@Override
-								public void onClick(View v) {
-											PersonDetailActivity.this.removeDialog(AbConstant.DIALOGCENTER);
-										}
-									});
-						PersonDetailActivity.this.showDialog(AbConstant.DIALOGCENTER, mView);*/
+						/*
+						 * mView = PersonDetailActivity.this.mInflater
+						 * .inflate(R.layout.code_view, null); ImageView
+						 * imageUser = (ImageView) mView
+						 * .findViewById(R.id.imageViewCodeCP); if
+						 * (!AbStrUtil.isEmpty(userPerson.getLogo())){ new
+						 * AbImageDownloader(PersonDetailActivity.this)
+						 * .display( imageUser,userPerson.getLogo()); }
+						 * imageUser.setOnClickListener(new OnClickListener() {
+						 * 
+						 * @Override public void onClick(View v) {
+						 * PersonDetailActivity
+						 * .this.removeDialog(AbConstant.DIALOGCENTER); } });
+						 * PersonDetailActivity
+						 * .this.showDialog(AbConstant.DIALOGCENTER, mView);
+						 */
 					}
 				});
 

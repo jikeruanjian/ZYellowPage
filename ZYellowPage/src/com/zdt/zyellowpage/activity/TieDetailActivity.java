@@ -329,36 +329,42 @@ public class TieDetailActivity extends AbActivity {
 					}
 
 				});
-		this.findViewById(R.id.tieLogoImage).setOnClickListener(new View.OnClickListener() {
+		this.findViewById(R.id.tieLogoImage).setOnClickListener(
+				new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				if (!AbStrUtil.isEmpty(mTie.getLogo())){
-					Intent intent = new Intent(TieDetailActivity.this,
-							ImagePagerActivity.class);
-					intent.putExtra("imageUrls", new String[]{mTie.getLogo()});
-					startActivity(intent);
-					}
-					/*mView = PersonD
-			/*	mView = TieDetailActivity.this.mInflater.inflate(
-						R.layout.code_view, null);
-				ImageView imageUserCode = (ImageView) mView
-						.findViewById(R.id.imageViewCodeCP);
-				new AbImageDownloader(TieDetailActivity.this).display(
-						imageUserCode, mTie.getLogo());
-				TieDetailActivity.this.removeDialog(1);
-				TieDetailActivity.this.showDialog(AbConstant.DIALOGCENTER,
-						mView);
-				imageUserCode.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						TieDetailActivity.this
-								.removeDialog(AbConstant.DIALOGCENTER);
+						if (!AbStrUtil.isEmpty(mTie.getLogo())) {
+							Intent intent = new Intent(TieDetailActivity.this,
+									ImagePagerActivity.class);
+							intent.putExtra("imageUrls",
+									new String[] { mTie.getLogo() });
+							startActivity(intent);
+						} else {
+							showToast("该贴没有设置Logo");
+						}
+						/*
+						 * mView = PersonD /* mView =
+						 * TieDetailActivity.this.mInflater.inflate(
+						 * R.layout.code_view, null); ImageView imageUserCode =
+						 * (ImageView) mView
+						 * .findViewById(R.id.imageViewCodeCP); new
+						 * AbImageDownloader(TieDetailActivity.this).display(
+						 * imageUserCode, mTie.getLogo());
+						 * TieDetailActivity.this.removeDialog(1);
+						 * TieDetailActivity
+						 * .this.showDialog(AbConstant.DIALOGCENTER, mView);
+						 * imageUserCode.setOnClickListener(new
+						 * OnClickListener() {
+						 * 
+						 * @Override public void onClick(View v) {
+						 * TieDetailActivity.this
+						 * .removeDialog(AbConstant.DIALOGCENTER); }
+						 * 
+						 * });
+						 */
 					}
-
-				});*/
-			}
-		});
+				});
 		this.findViewById(R.id.TCodeTopRightimageView).setOnClickListener(
 				new OnClickListener() {
 
