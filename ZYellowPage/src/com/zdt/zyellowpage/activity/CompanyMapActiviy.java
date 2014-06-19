@@ -443,8 +443,11 @@ public class CompanyMapActiviy extends AbActivity {
 				mMapView.refresh();
 				isRequest = false;
 				mLocationClient.stop();
+				if(isFirstLoc){
+				mMapController.setCenter(poiPoint);
+				}
 			}
-			mMapController.setCenter(poiPoint);// 设置地图中心点
+			// 设置地图中心点
 			isFirstLoc = false;
 		}
 
