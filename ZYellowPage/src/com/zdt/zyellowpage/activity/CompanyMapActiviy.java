@@ -193,6 +193,9 @@ public class CompanyMapActiviy extends AbActivity {
 						mLocationClient.requestLocation();
 						Toast.makeText(CompanyMapActiviy.this, "正在定位…",
 								Toast.LENGTH_SHORT).show();
+						mMapController.animateTo(new GeoPoint(
+								(int) (locData.latitude * 1e6),
+								(int) (locData.longitude * 1e6)));// 设置地图中心点
 					}
 
 				});
