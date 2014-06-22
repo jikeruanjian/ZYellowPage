@@ -268,9 +268,12 @@ public class BusinessDetailActivity extends AbActivity implements
 						}
 						userCompany = lis.get(0);
 						if (!AbStrUtil.isEmpty(userCompany.getAlbum())) {
-							getImgUrl(userCompany.getMember_id());
+							// TODO 加载图片
+							// getImgUrl(userCompany.getMember_id());
+							imageUrls = userCompany.getAlbum().split(",");
 							findViewById(R.id.mAbSlidingPlayViewBLinearLayout)
 									.setVisibility(View.VISIBLE);
+							initImageView();
 						}
 						getView();
 						getCodeData();
@@ -278,7 +281,7 @@ public class BusinessDetailActivity extends AbActivity implements
 
 					@Override
 					public void onStart() {
-						showProgressDialog("正在获取企业详细信息...");
+						showProgressDialog("正在获取详细信息...");
 					}
 
 					@Override
@@ -311,8 +314,7 @@ public class BusinessDetailActivity extends AbActivity implements
 					.setVisibility(View.GONE);
 			return;
 		}
-		for (int i = 0; i < imageUrls.length; i++) {
-			// Log.e("tie", "------"+imageUrl[i]);
+		for (int i = imageUrls.length - 1; i >= 0; i--) {
 			View mPlayView = new View(BusinessDetailActivity.this);
 			mPlayView = mInflater.inflate(R.layout.play_view_item, null);
 			ImageView mPlayImage = (ImageView) mPlayView
@@ -320,10 +322,61 @@ public class BusinessDetailActivity extends AbActivity implements
 			mPlayImage.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Intent intent = new Intent(BusinessDetailActivity.this,
-							ImagePagerActivity.class);
-					intent.putExtra("imageUrls", imageUrls);
-					startActivity(intent);
+					AlbumBll imgBll = new AlbumBll();
+					imgBll.getAlbumList(
+							BusinessDetailActivity.this,
+							new AlbumReqEntity(0, 200, userCompany
+									.getMember_id()),
+							new ZzObjectHttpResponseListener<Album>() {
+
+								@Override
+								public void onSuccess(int statusCode,
+										List<Album> lis) {
+									if (lis == null || lis.size() == 0) {
+										return;
+									}
+									List<String> imgs = new ArrayList<String>();
+									for (Album a : lis) {
+										imgs.add(a.getUrl());
+									}
+									String[] allImageUrls = imgs
+											.toArray(new String[] {});
+
+									Intent intent = new Intent(
+											BusinessDetailActivity.this,
+											ImagePagerActivity.class);
+									intent.putExtra("imageUrls", allImageUrls);
+									startActivity(intent);
+								}
+
+								@Override
+								public void onStart() {
+									showProgressDialog("请稍后...");
+								}
+
+								@Override
+								public void onFailure(int statusCode,
+										String content, Throwable error,
+										List<Album> localList) {
+									if (AbStrUtil.isEmpty(content))
+										content = "获取数据失败";
+									showToast(content);
+								}
+
+								@Override
+								public void onErrorData(
+										String status_description) {
+									if (AbStrUtil.isEmpty(status_description))
+										status_description = "获取数据失败";
+									showToast(status_description);
+								}
+
+								@Override
+								public void onFinish() {
+									removeProgressDialog();
+								}
+
+							});
 				}
 
 			});
@@ -563,7 +616,7 @@ public class BusinessDetailActivity extends AbActivity implements
 						startActivity(intent);
 					}
 				});
-		// TODO 分享
+		// 分享
 		this.findViewById(R.id.imgbusnessshare).setOnClickListener(
 				new OnClickListener() {
 					@Override
