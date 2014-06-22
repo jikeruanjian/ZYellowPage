@@ -94,7 +94,7 @@ public class MainActivity extends AbActivity implements
 	private String types[] = { "商家", "个人" };
 	boolean isFirst = true;
 	boolean isFirstTie = true;
-	Version version;// 服务器上最新的版本
+	public Version version;// 服务器上最新的版本
 	// 区域列表
 	// public static List<Area> listArea;
 	// public static List<String> listAreaName;
@@ -157,16 +157,16 @@ public class MainActivity extends AbActivity implements
 	// });
 
 	@Override
-	 protected void onActivityResult(int requestCode, int resultCode,
-	 Intent intent) {
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 		if (requestCode == 10000) {
 			if (resultCode == RESULT_OK) {
 				textViewArea.setText(application.cityName);
 				newFragmentHome.getData();
-			}	
+			}
 		}
-	 }
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -177,9 +177,10 @@ public class MainActivity extends AbActivity implements
 		mBMapMan.init(getResources().getString(R.string.BaiDuMap_Key), null);
 		// 导航RjlfVWfEcAecRGc5qG8xyLoX
 		BaiduNaviManager.getInstance().initEngine(this, getSdcardDir(),
-				mNaviEngineInitListener, getResources().getString(R.string.BaiDuMap_Key),
+				mNaviEngineInitListener,
+				getResources().getString(R.string.BaiDuMap_Key),
 				mKeyVerifyListener);
-		
+
 		setContentView(R.layout.activity_main);
 		application = (MyApplication) abApplication;
 		initView();
@@ -902,7 +903,7 @@ public class MainActivity extends AbActivity implements
 
 	@Override
 	public void onPositiveButtonClicked(int requestCode) {
-		if (requestCode == 42 && version != null)
+		if ((requestCode == 42 || requestCode == 52) && version != null)
 			downApk(version);
 		else if (requestCode == 43) {
 			new AreaBll().getAreaIdByAreaName(MainActivity.this,
@@ -951,6 +952,7 @@ public class MainActivity extends AbActivity implements
 
 	@Override
 	public void onNegativeButtonClicked(int requestCode) {
-		version = null;
+		if (requestCode == 42 || requestCode == 53)
+			version = null;
 	}
 }

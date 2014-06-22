@@ -64,10 +64,9 @@ import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.Version;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
-import eu.inmite.android.lib.dialogs.ISimpleDialogListener;
 import eu.inmite.android.lib.dialogs.SimpleDialogFragment;
 
-public class FragmentUser extends Fragment implements ISimpleDialogListener {
+public class FragmentUser extends Fragment {
 	AbActivity mActivity;
 	MyApplication application;
 	Button btnLogin;
@@ -165,6 +164,8 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 												Constant.LOCATEVERSIONCODE,
 												version.getBuild_number());
 										editor.commit();
+
+										((MainActivity) mActivity).version = version;
 										SimpleDialogFragment
 												.createBuilder(
 														mActivity,
@@ -180,7 +181,7 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 																		.getVersion_description())
 												.setPositiveButtonText("立即更新")
 												.setNegativeButtonText("以后再说")
-												.setRequestCode(42)
+												.setRequestCode(52)
 												.setTag(MainActivity.TAG)
 												.show();
 									} else {
@@ -192,7 +193,7 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 												.setTitle("提示")
 												.setMessage("当前已经是最新版本")
 												.setPositiveButtonText("确定")
-												.setRequestCode(43)
+												.setRequestCode(53)
 												.setTag(MainActivity.TAG)
 												.show();
 									}
@@ -605,16 +606,5 @@ public class FragmentUser extends Fragment implements ISimpleDialogListener {
 
 				});
 		return saveImageUrl;
-	}
-
-	@Override
-	public void onPositiveButtonClicked(int requestCode) {
-		if (requestCode == 42 && version != null) {
-			downApk(version);
-		}
-	}
-
-	@Override
-	public void onNegativeButtonClicked(int requestCode) {
 	}
 }
