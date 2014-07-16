@@ -127,21 +127,8 @@ public class VideoBll {
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error) {
-						System.out.println("数据请求异常" + content);
-						VideoDao videoDao = new VideoDao(mContext);
-						videoDao.startReadableDatabase(false);
-						List<Video> localList = videoDao
-								.rawQuery(
-										"select * from video order by _id desc limit ? offset ?*?",
-										new String[] {
-												String.valueOf(mVideoParams
-														.getMax_size()),
-												String.valueOf(mVideoParams
-														.getPage_number()) },
-										Video.class);
-						videoDao.closeDatabase(false);
 						objectResponseListener.onFailure(statusCode, content,
-								error, localList);
+								error, null);
 					}
 
 					// 完成后调用，失败，成功

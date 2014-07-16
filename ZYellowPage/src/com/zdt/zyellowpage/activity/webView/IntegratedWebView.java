@@ -33,6 +33,7 @@ import com.zdt.zyellowpage.R;
 
 public class IntegratedWebView extends LinearLayout implements DownloadListener {
 	WebView wb;
+	LinearLayout layMain;
 	private ProgressBar pb;
 	private VideoEnabledWebChromeClient chromeClient;
 
@@ -45,13 +46,10 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View wbContainer = inflater.inflate(R.layout.wb, null);
 		this.addView(wbContainer, new LinearLayout.LayoutParams(
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT));
+		layMain = (LinearLayout) this.findViewById(R.id.layMain);
 		wb = (WebView) this.findViewById(R.id.inner_webview);
-		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
-		lp.setMargins(0, 0, 0, 0);
-		wb.setLayoutParams(lp);
 		wb.getSettings().setJavaScriptEnabled(true);
 		this.pb = (ProgressBar) this.findViewById(R.id.webview_progressbar);
 		wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -88,7 +86,6 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 		wb.setWebChromeClient(chromeClient);
 	}
 
-	@Override
 	@SuppressLint("NewApi")
 	public void onDownloadStart(String url, String userAgent,
 			String contentDisposition, String mimetype, long contentLength) {
@@ -107,7 +104,7 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 			String path = uri.getPath();
 			int indexOf = path.lastIndexOf("/");
 			request.setDestinationUri(Uri.fromFile(new File(Environment
-					.getExternalStorageState(), path.substring(indexOf + 1,
+					.getExternalStorageDirectory(), path.substring(indexOf + 1,
 					path.length()))));
 
 			request.setTitle("下载数据");
@@ -123,20 +120,11 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
 		context.startActivity(intent);
-
-	}
-
-	/**
-	 * 清空WebView
-	 */
-	public void destroyWebView() {
-		wb.removeAllViews();
-		wb.destroy();
-
 	}
 
 	public void onResume() {
 		if (wb != null) {
+			wb.resumeTimers();
 			wb.onResume();
 		}
 	}
@@ -150,7 +138,8 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 
 	public void onDestroy() {
 		wb.stopLoading();
-		this.removeView(wb);
+		wb.loadData("<a></a>", "text/html", "utf-8");
+		layMain.removeView(wb);
 		if (chromeClient != null) {
 			chromeClient.onHideCustomView();
 		}
@@ -191,12 +180,10 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 				this.videoViewCallback = callback;
 				if (activityRef.get() == null) {
 					IntegratedWebView.this.removeAllViews();
-					IntegratedWebView.this
-							.addView(
-									this.videoViewContainer,
-									new LinearLayout.LayoutParams(
-											android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-											android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+					IntegratedWebView.this.addView(this.videoViewContainer,
+							new LinearLayout.LayoutParams(
+									LinearLayout.LayoutParams.MATCH_PARENT,
+									LinearLayout.LayoutParams.WRAP_CONTENT));
 					this.videoViewContainer
 							.setOnKeyListener(new OnKeyListener() {
 								@Override
@@ -216,6 +203,8 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 
 								@Override
 								public void onPressBack() {
+									wb.loadData("", "text/html; charset=UTF-8",
+											null);
 									onHideCustomView();
 								}
 							});
@@ -261,7 +250,6 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 			IntegratedWebView.this.post(new Runnable() {
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					onHideCustomView();
 				}
 			});
@@ -349,6 +337,5 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 
 	public void loadUrl(String url) {
 		wb.loadUrl(url);
-
 	}
 }

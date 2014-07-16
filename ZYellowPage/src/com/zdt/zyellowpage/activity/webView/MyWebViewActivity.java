@@ -3,6 +3,7 @@ package com.zdt.zyellowpage.activity.webView;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,12 +25,21 @@ public class MyWebViewActivity extends Activity implements
 		this.setContentView(contentView);
 
 		url = getIntent().getStringExtra("url");
+		// url = "http://player.youku.com/embed/XNzI5MTk2OTYw";
 		if (AbStrUtil.isEmpty(url)) {
 			Toast.makeText(this, "视频地址错误", Toast.LENGTH_LONG).show();
 			this.finish();
 		}
+		// http://player.youku.com/player.php/sid/XNzI5MTk2OTYw/v.swf
+		String[] tempIDs = url.split("/");
+		if (tempIDs.length > 2) {
+			String tempID = tempIDs[tempIDs.length - 2];
+			url = "http://player.youku.com/embed/" + tempID;
+		} else {
+			Toast.makeText(this, "不能解析该视频地址", Toast.LENGTH_LONG).show();
+			this.finish();
+		}
 		contentView.setVideoPlayerClient(this);
-		url = "http://player.youku.com/embed/XNzEwMzgzOTQ4";
 		try {
 			contentView.loadUrl(url);
 		} catch (Exception e) {
@@ -79,18 +89,20 @@ public class MyWebViewActivity extends Activity implements
 			return;
 		}
 		super.onBackPressed();
+		this.finish();
 	}
 
 	@Override
 	protected void onDestroy() {
 		contentView.onDestroy();
+		contentView = null;
 		super.onDestroy();
+		System.gc();
 	}
-	
+
 	@Override
 	public void finish() {
 		super.finish();
-
 		this.overridePendingTransition(R.anim.push_right_out,
 				R.anim.push_right_in);
 	}

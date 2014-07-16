@@ -112,7 +112,6 @@ public class SplashActivity extends AbActivity {
 		}
 		// 热门关键
 		if ((new Date().getTime() - hotkeyLastUpdateTime) > 86400000) {
-			Log.e("timeTest", "热门关键词");
 			new HotKeyWordBll().downAllKeyWord(this,
 					new ZzStringHttpResponseListener() {
 
@@ -122,7 +121,6 @@ public class SplashActivity extends AbActivity {
 							editor.putLong(Constant.HOTKEYLASTUPDATETIME,
 									new Date().getTime());
 							editor.commit();
-							Log.e("timeTest", "热门关键词插入插入成功");
 						}
 
 						@Override
@@ -140,7 +138,6 @@ public class SplashActivity extends AbActivity {
 
 						@Override
 						public void onErrorData(String status_description) {
-							Log.e("timeTest", "热门关键词插入插入失败");
 						}
 					});
 		}

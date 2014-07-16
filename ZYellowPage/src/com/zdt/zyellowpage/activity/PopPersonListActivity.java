@@ -54,8 +54,8 @@ public class PopPersonListActivity extends AbActivity {
 	private MyApplication application;
 	private String type = "热门关注";
 	private String typeId = "list-hot";
-	private String[] KeyWords;
-	private String[] Areas;
+	// private String[] KeyWords;
+	// private String[] Areas;
 	private String[] NewOrPops;
 	private String[] words;
 	private String cityId;
@@ -101,7 +101,6 @@ public class PopPersonListActivity extends AbActivity {
 		typeTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
 				int x = typeTextView.getLeft() + 10;
 				// words = MainActivity.listCategoryNameP.toArray(new
@@ -117,7 +116,6 @@ public class PopPersonListActivity extends AbActivity {
 		areaTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
 				int x = typeTextView.getLeft() - 10;
 				// words = MainActivity.listAreaName.toArray(new String[0]);
@@ -132,7 +130,6 @@ public class PopPersonListActivity extends AbActivity {
 		newOrPoTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
 				int x = typeTextView.getLeft() - 10;
 				words = NewOrPops;
@@ -161,7 +158,6 @@ public class PopPersonListActivity extends AbActivity {
 
 					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
-						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
 							showToast("没有更多数据！");
 							return;
@@ -179,19 +175,16 @@ public class PopPersonListActivity extends AbActivity {
 							newList.add(map);
 						}
 
-						Log.e("xxxx11", "-----" + newList.size());
 					}
 
 					@Override
 					public void onStart() {
-						// TODO Auto-generated method stub
 						showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						// TODO Auto-generated method stub
 						showToast(error.getMessage());
 					}
 
@@ -202,7 +195,6 @@ public class PopPersonListActivity extends AbActivity {
 
 					@Override
 					public void onFinish() {
-						// TODO Auto-generated method stub
 						list.addAll(newList);
 						myListViewAdapter.notifyDataSetChanged();
 						int len = newList.size();
@@ -361,7 +353,6 @@ public class PopPersonListActivity extends AbActivity {
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
-						// TODO Auto-generated method stub
 						keyId = "list-"
 								+ myPopupWindow.listLowerCategory.get(arg2)
 										.getId();

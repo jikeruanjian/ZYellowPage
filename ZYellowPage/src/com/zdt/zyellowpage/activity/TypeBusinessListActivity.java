@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
-import com.ab.task.AbTaskQueue;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
 import com.ab.view.titlebar.AbTitleBar;
@@ -34,25 +33,25 @@ public class TypeBusinessListActivity extends AbActivity {
 	private AbPullListView mAbPullListView = null;
 	private int currentPage = 0;
 	private boolean isRefresh = true;
-	private AbTaskQueue mAbTaskQueue = null;
-	private ArrayList<String> mPhotoList = new ArrayList<String>();
-	private AbTitleBar mAbTitleBar = null;
+	// private AbTaskQueue mAbTaskQueue = null;
+	// private ArrayList<String> mPhotoList = new ArrayList<String>();
+	// private AbTitleBar mAbTitleBar = null;
 	private ImageListAdapterC myListViewAdapter = null;
 	private DisplayUtil displayUtil;
-	private String type="商家";
-	private String typeId="商家";
+	private String type = "商家";
+	// private String typeId = "商家";
 	private MyApplication application;
 	private TextView typeTextView;
 	private TextView areaTextView;
 	private TextView newOrPoTextView;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setAbContentView(R.layout.popbusinesspull_list);
 		if (getIntent().getExtras() != null) {
 			type = (String) getIntent().getExtras().get("Type");
-			typeId = (String) getIntent().getExtras().get("TypeId");
+			// typeId = (String) getIntent().getExtras().get("TypeId");
 		}
 		// 初始化标题栏
 		AbTitleBar mAbTitleBar = this.getTitleBar();
@@ -74,33 +73,31 @@ public class TypeBusinessListActivity extends AbActivity {
 	 * 初始化三个下拉框
 	 */
 	void initSpinner() {
-		String[] KeyWords = { "美食", "电影", "休闲娱乐", "酒店", "其他" };
-		String[] Areas = { "五华区", "官渡区", "西山区", "盘龙区", "呈贡新区" };
-		String[] NewOrPops = { "热门", "最新" };
-		typeTextView = (TextView)this.findViewById(R.id.spinnerKeyWord);
-		areaTextView = (TextView)this.findViewById(R.id.spinnerArea);
-		newOrPoTextView = (TextView)this.findViewById(R.id.spinnerNewOrPop);
-		/*ArrayAdapter<String> adapter;
-		Spinner spinnerKeyWord = (Spinner) this
-				.findViewById(R.id.spinnerKeyWord);
-		adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, KeyWords);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerKeyWord.setAdapter(adapter);
-
-		Spinner spinnerKeyArea = (Spinner) this.findViewById(R.id.spinnerArea);
-		adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, Areas);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerKeyArea.setAdapter(adapter);
-
-		Spinner spinnerNewOrPop = (Spinner) this
-				.findViewById(R.id.spinnerNewOrPop);
-		adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, NewOrPops);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerNewOrPop.setAdapter(adapter);
-      */
+		// String[] KeyWords = { "美食", "电影", "休闲娱乐", "酒店", "其他" };
+		// String[] Areas = { "五华区", "官渡区", "西山区", "盘龙区", "呈贡新区" };
+		// String[] NewOrPops = { "热门", "最新" };
+		typeTextView = (TextView) this.findViewById(R.id.spinnerKeyWord);
+		areaTextView = (TextView) this.findViewById(R.id.spinnerArea);
+		newOrPoTextView = (TextView) this.findViewById(R.id.spinnerNewOrPop);
+		/*
+		 * ArrayAdapter<String> adapter; Spinner spinnerKeyWord = (Spinner) this
+		 * .findViewById(R.id.spinnerKeyWord); adapter = new
+		 * ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+		 * KeyWords); adapter.setDropDownViewResource(android.R.layout.
+		 * simple_spinner_dropdown_item); spinnerKeyWord.setAdapter(adapter);
+		 * 
+		 * Spinner spinnerKeyArea = (Spinner)
+		 * this.findViewById(R.id.spinnerArea); adapter = new
+		 * ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+		 * Areas); adapter.setDropDownViewResource(android.R.layout.
+		 * simple_spinner_dropdown_item); spinnerKeyArea.setAdapter(adapter);
+		 * 
+		 * Spinner spinnerNewOrPop = (Spinner) this
+		 * .findViewById(R.id.spinnerNewOrPop); adapter = new
+		 * ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
+		 * NewOrPops); adapter.setDropDownViewResource(android.R.layout.
+		 * simple_spinner_dropdown_item); spinnerNewOrPop.setAdapter(adapter);
+		 */
 		displayUtil = DisplayUtil.getInstance(this);
 		DisplayMetrics metric = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -110,23 +107,21 @@ public class TypeBusinessListActivity extends AbActivity {
 		displayUtil.setViewLayoutParamsByX(newOrPoTextView, 3, width);
 	}
 
-	
 	void getData(int i) {
 		UserBll bll = new UserBll();
 
 		CompanyListReqEntity companyParams = new CompanyListReqEntity(i, 10,
 				application.cityid, type);
-		bll.getListCompany(TypeBusinessListActivity.this, companyParams,null,
+		bll.getListCompany(TypeBusinessListActivity.this, companyParams, null,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
-						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
 							showToast("没有更多数据！");
 							return;
 						}
-						
+
 						Map<String, Object> map;
 						for (int i = 0; i < lis.size(); i++) {
 
@@ -138,44 +133,37 @@ public class TypeBusinessListActivity extends AbActivity {
 							map.put("itemsText", u.getKeyword());
 							newList.add(map);
 						}
-						Log.e("xxxx11", "-----" + newList.size());
 					}
 
 					@Override
 					public void onStart() {
-						// TODO Auto-generated method stub
 						showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						// TODO Auto-generated method stub
 						showToast(error.getMessage());
 					}
 
 					@Override
 					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
 						showToast(status_description);
 					}
 
 					@Override
 					public void onFinish() {
-						// TODO Auto-generated method stub
 						list.addAll(newList);
 						myListViewAdapter.notifyDataSetChanged();
 						int len = newList.size();
 						newList.clear();
 						removeProgressDialog();
-						if(isRefresh){
+						if (isRefresh) {
 							mAbPullListView.stopRefresh();
-						}
-						else{
-							if(len == 10){
+						} else {
+							if (len == 10) {
 								mAbPullListView.stopLoadMore(true);
-							}
-							else{
+							} else {
 								mAbPullListView.stopLoadMore(false);
 							}
 						}
@@ -198,7 +186,7 @@ public class TypeBusinessListActivity extends AbActivity {
 		// ListView数据
 
 		// 使用自定义的Adapter
-		myListViewAdapter = new ImageListAdapterC(this, application,list,
+		myListViewAdapter = new ImageListAdapterC(this, application, list,
 				R.layout.list_items, new String[] { "itemsIcon", "itemsTitle",
 						"itemsText" }, new int[] { R.id.itemsIcon,
 						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
@@ -208,15 +196,16 @@ public class TypeBusinessListActivity extends AbActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-			//TypeBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
+				// TypeBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
 				Intent intent = new Intent(TypeBusinessListActivity.this,
-						 BusinessDetailActivity.class);
-				 intent.putExtra("MEMBER_ID", list.get(position-1).get("Member_id").toString());
-				 startActivity(intent);
+						BusinessDetailActivity.class);
+				intent.putExtra("MEMBER_ID",
+						list.get(position - 1).get("Member_id").toString());
+				startActivity(intent);
 			}
 		});
 
-		currentPage= 0;
+		currentPage = 0;
 
 		/**
 		 * 添加事件
@@ -225,8 +214,8 @@ public class TypeBusinessListActivity extends AbActivity {
 
 			@Override
 			public void onRefresh() {
-				//改写成执行查询
-				//mAbTaskQueue.execute(item1);
+				// 改写成执行查询
+				// mAbTaskQueue.execute(item1);
 				isRefresh = true;
 				list.clear();
 				getData(0);
@@ -234,7 +223,7 @@ public class TypeBusinessListActivity extends AbActivity {
 
 			@Override
 			public void onLoadMore() {
-				//mAbTaskQueue.execute(item2);
+				// mAbTaskQueue.execute(item2);
 				isRefresh = false;
 				getData(++currentPage);
 			}
@@ -244,7 +233,6 @@ public class TypeBusinessListActivity extends AbActivity {
 		getData(0);
 	}
 
-	
 	@Override
 	protected void onResume() {
 		super.onResume();

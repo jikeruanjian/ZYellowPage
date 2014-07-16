@@ -76,17 +76,10 @@ public class VideoListActivity extends AbActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String url = list.get(position - 1).get("url").toString();
-				// if (!AbStrUtil.isEmpty(url)
-				// && url.toLowerCase().endsWith(".mp4")) {
 				Intent intent = new Intent(VideoListActivity.this,
 						MyWebViewActivity.class);
 				intent.putExtra("url", url);
 				startActivity(intent);
-				// } else if (!url.toLowerCase().endsWith(".mp4")) {
-				// showToast("当前仅支持MP4格式的视频播放");
-				// } else if (AbStrUtil.isEmpty(url)) {
-				// showToast("该视频地址有误，无法播放");
-				// }
 			}
 		});
 
@@ -141,30 +134,17 @@ public class VideoListActivity extends AbActivity {
 
 					@Override
 					public void onStart() {
+						showProgressDialog("请稍候...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<Video> localList) {
 						// 如果网络链接有问题，而且本地数据又没有，就需要提示出来
-						if (content.equals(Constant.NOCONNECT)
-								&& (localList == null || localList.size() == 0)) {
-							showToast(content);
-							return;
+						if (content == null) {
+							content = "数据获取失败！";
 						}
-
-						if (localList == null || localList.size() == 0) {
-							newList = null;
-							return;
-						}
-						newList = new ArrayList<Map<String, Object>>();
-						Map<String, Object> map = null;
-						for (Video video : localList) {
-							map = new HashMap<String, Object>();
-							map.put("itemsTitle", video.getTitle());
-							map.put("url", video.getUrl());
-							newList.add(map);
-						}
+						showToast(content);
 					}
 
 					@Override
@@ -174,6 +154,7 @@ public class VideoListActivity extends AbActivity {
 
 					@Override
 					public void onFinish() {
+						removeProgressDialog();
 						if (newList != null && newList.size() > 0) {
 							list.addAll(newList);
 							adapter.notifyDataSetChanged();

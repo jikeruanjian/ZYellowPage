@@ -90,14 +90,24 @@ public class AllTypeActivity extends AbActivity {
 		hotKeyWorkDao.startReadableDatabase(false);
 		list = hotKeyWorkDao.queryList();
 		hotKeyWorkDao.closeDatabase(false);
-		if (list == null) {
+		if (list == null || list.size() <= 0) {
 			return;
 		}
-		commonType = new String[16];
-		for (int i = 0; i < 15; i++) {
-			commonType[i] = list.get(i).getName();
+
+		int commonSize = 16;
+		if (list.size() <= 16)
+			commonSize = list.size();
+		commonType = new String[commonSize];
+		if (list.size() > 16) {
+			for (int i = 0; i < 15; i++) {
+				commonType[i] = list.get(i).getName();
+			}
+			commonType[15] = "更多";
+		}else{
+			for (int i = 0; i < commonSize; i++) {
+				commonType[i] = list.get(i).getName();
+			}
 		}
-		commonType[15] = "更多";
 		// 添加并且显示
 		gridview.setAdapter(new CommonAdapter());
 		// 添加消息处理

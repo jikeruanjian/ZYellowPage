@@ -824,7 +824,7 @@ public class MainActivity extends AbActivity implements
 				return;
 			}
 			if (showCityName != null
-					&& !showCityName.equals(application.locateCityName)) {
+					&& !showCityName.equals(application.cityName)) {
 				application.locateCityName = showCityName;
 				Editor editor = abSharedPreferences.edit();
 				editor.putString(Constant.LOCATECITYNAME, showCityName);

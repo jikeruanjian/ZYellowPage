@@ -40,7 +40,6 @@ public class CategoryBll {
 						//
 						// @Override
 						// public void run() {
-						Log.e("timeTest", "category开始插入");
 						List<Category> mCategorys = new Gson().fromJson(
 								content.toLowerCase(),
 								new TypeToken<List<Category>>() {
@@ -55,13 +54,9 @@ public class CategoryBll {
 							categoryDao.closeDatabase(true);
 							respListener.onSuccess(statusCode, "更新成功");
 						} else {
-							Log.e("timeTest", "category失败");
 							respListener.onErrorData("数据拆入失败");
 							categoryDao.closeDatabase(true);
 						}
-
-						// }
-						// }).start();
 					}
 
 					@Override

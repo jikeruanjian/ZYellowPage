@@ -135,7 +135,6 @@ public class MyConcernActivity extends AbActivity {
 					map.put("itemsText", u.getKeyword());
 					newList.add(map);
 				}
-				Log.e("xxxx11", "-----" + newList.size());
 			}
 
 			@Override

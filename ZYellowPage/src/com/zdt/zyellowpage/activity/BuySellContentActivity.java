@@ -5,10 +5,10 @@ import java.util.List;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.webkit.WebView;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
-import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.SupplyDemandBll;
@@ -18,7 +18,7 @@ import com.zdt.zyellowpage.model.SupplyDemand;
 public class BuySellContentActivity extends AbActivity {
 	private AbTitleBar mAbTitleBar = null;
 	private String Item_id = null;
-	private TextView tvContent;
+	private WebView tvContent;
 	private TextView tvTitle;
 	private TextView tvTime;
 	private TextView tvType;
@@ -38,7 +38,7 @@ public class BuySellContentActivity extends AbActivity {
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		// mAbTitleBar.setLogoLine(R.drawable.line);
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
-		tvContent = (TextView) this.findViewById(R.id.content);
+		tvContent = (WebView) this.findViewById(R.id.content);
 		tvTitle = (TextView) this.findViewById(R.id.title);
 		tvTime = (TextView) this.findViewById(R.id.time);
 		tvType = (TextView) this.findViewById(R.id.type);
@@ -72,7 +72,13 @@ public class BuySellContentActivity extends AbActivity {
 						// tvContent.loadDataWithBaseURL(null, text,
 						// "text/html",
 						// "utf-8", null);
-						tvContent.setText(lis.get(0).getContent());
+						//tvContent.setText(lis.get(0).getContent());
+						tvContent.setFocusable(false);
+						tvContent.getSettings().setDefaultTextEncodingName("UTF-8");
+//						tvContent.setLayoutParams(new LayoutParams(
+//								android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+//								android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+						tvContent.loadDataWithBaseURL(null, lis.get(0).getContent(), "text/html", "utf-8", null);
 						BuySellContentActivity.this.removeProgressDialog();
 					}
 

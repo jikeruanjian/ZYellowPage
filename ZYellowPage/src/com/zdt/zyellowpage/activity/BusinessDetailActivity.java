@@ -268,7 +268,7 @@ public class BusinessDetailActivity extends AbActivity implements
 						}
 						userCompany = lis.get(0);
 						if (!AbStrUtil.isEmpty(userCompany.getAlbum())) {
-							// TODO 加载图片
+							// 加载图片
 							// getImgUrl(userCompany.getMember_id());
 							imageUrls = userCompany.getAlbum().split(",");
 							findViewById(R.id.mAbSlidingPlayViewBLinearLayout)
@@ -420,7 +420,7 @@ public class BusinessDetailActivity extends AbActivity implements
 					@Override
 					public void onStart() {
 						// 显示进度框
-						showProgressDialog();
+						//showProgressDialog();
 					}
 
 					// 失败，调用
@@ -434,7 +434,7 @@ public class BusinessDetailActivity extends AbActivity implements
 					@Override
 					public void onFinish() {
 						// 移除进度框
-						removeProgressDialog();
+						//removeProgressDialog();
 					};
 
 				});
