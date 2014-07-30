@@ -3,6 +3,8 @@ package com.zdt.zyellowpage.customView;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -10,42 +12,60 @@ import android.view.View;
  */
 public class WrapContentHeightViewPager extends ViewPager {
 
-	/**
-	 * Constructor
-	 * 
-	 * @param context
-	 *            the context
-	 */
-	public WrapContentHeightViewPager(Context context) {
-		super(context);
-	}
+	/** The m gesture detector. */
+	private GestureDetector mGestureDetector;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param context
-	 *            the context
-	 * @param attrs
-	 *            the attribute set
-	 */
+	// private float xDistance, yDistance, xLast, yLast;
+
 	public WrapContentHeightViewPager(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		mGestureDetector = new GestureDetector(context, new XScrollDetector());
+		setFadingEdgeLength(0);
+	}
+
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		// switch (ev.getAction()) {
+		// case MotionEvent.ACTION_DOWN:
+		// xDistance = yDistance = 0f;
+		// xLast = ev.getX();
+		// yLast = ev.getY();
+		// break;
+		// case MotionEvent.ACTION_MOVE:
+		// final float curX = ev.getX();
+		// final float curY = ev.getY();
+		//
+		// xDistance += Math.abs(curX - xLast);
+		// yDistance += Math.abs(curY - yLast);
+		// xLast = curX;
+		// yLast = curY;
+		//
+		// if (xDistance > yDistance) {
+		// return true;
+		// }
+		// }
+		// return false;
+		// boolean result = false;
+		// if (mGestureDetector.onTouchEvent(ev)) {
+		// result = super.onInterceptTouchEvent(ev);
+		// }
+		// Log.e("test", "ViewPager" + result);
+		// return result;
+		return mGestureDetector.onTouchEvent(ev)
+				&& super.onInterceptTouchEvent(ev);
 	}
 
 	// @Override
-	// protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-	// super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	//
-	// // find the first child view
-	// View view = getChildAt(0);
-	// if (view != null) {
-	// // measure the first child view with the specified measure spec
-	// view.measure(widthMeasureSpec, heightMeasureSpec);
+	// public boolean onTouchEvent(MotionEvent ev) {
+	// boolean result = false;
+	// if (mGestureDetector.onTouchEvent(ev)) {
+	// Log.e("test", "ViewPageronTouch左右");
+	// result = super.onTouchEvent(ev);
 	// }
-	//
-	// setMeasuredDimension(getMeasuredWidth(), measureHeight(heightMeasureSpec,
-	// view));
+	// Log.e("test", "ViewPageronTouch" + result);
+	// return result;
 	// }
+
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
@@ -63,34 +83,5 @@ public class WrapContentHeightViewPager extends ViewPager {
 				MeasureSpec.EXACTLY);
 
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	}
-
-	/**
-	 * Determines the height of this view
-	 * 
-	 * @param measureSpec
-	 *            A measureSpec packed into an int
-	 * @param view
-	 *            the base view with already measured height
-	 * 
-	 * @return The height of the view, honoring constraints from measureSpec
-	 */
-	private int measureHeight(int measureSpec, View view) {
-		int result = 0;
-		int specMode = MeasureSpec.getMode(measureSpec);
-		int specSize = MeasureSpec.getSize(measureSpec);
-
-		if (specMode == MeasureSpec.EXACTLY) {
-			result = specSize;
-		} else {
-			// set the height from the base view if available
-			if (view != null) {
-				result = view.getMeasuredHeight();
-			}
-			if (specMode == MeasureSpec.AT_MOST) {
-				result = Math.min(result, specSize);
-			}
-		}
-		return result;
 	}
 }

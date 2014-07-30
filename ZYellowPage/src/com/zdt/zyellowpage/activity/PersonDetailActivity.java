@@ -49,6 +49,7 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.bll.UserBll;
+import com.zdt.zyellowpage.customView.WrapContentHeightWebView;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
@@ -569,7 +570,7 @@ public class PersonDetailActivity extends AbActivity implements
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		lay.setOrientation(LinearLayout.VERTICAL);
-		WebView webView = new WebView(this);
+		WrapContentHeightWebView webView = new WrapContentHeightWebView(this);
 		webView.setFocusable(false);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
 		webView.setLayoutParams(new LayoutParams(

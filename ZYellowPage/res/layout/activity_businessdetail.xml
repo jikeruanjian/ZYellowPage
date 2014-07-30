@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:visibility="gone" >
 
-    <com.ab.view.sample.AbOuterScrollView
+    <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -180,7 +180,6 @@
                     android:layout_marginTop="10dip" >
 
                     <TextView
-                        android:id="@+id/TextView05"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="邮箱："
@@ -224,7 +223,6 @@
                     android:layout_marginTop="10dip" >
 
                     <TextView
-                        android:id="@+id/TextView04"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="QQ："
@@ -245,7 +243,6 @@
                     android:layout_marginTop="10dip" >
 
                     <TextView
-                        android:id="@+id/TextView04"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="wifi账号："
@@ -267,7 +264,6 @@
                     android:layout_marginTop="10dip" >
 
                     <TextView
-                        android:id="@+id/TextView04"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="wifi密码："
@@ -337,7 +333,7 @@
                     android:persistentDrawingCache="animation" />
             </LinearLayout>
         </LinearLayout>
-    </com.ab.view.sample.AbOuterScrollView>
+    </ScrollView>
 
     <ImageView
         android:id="@+id/business_detail_sjdt"

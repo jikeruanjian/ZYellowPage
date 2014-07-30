@@ -20,7 +20,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -52,6 +51,7 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.AlbumBll;
 import com.zdt.zyellowpage.bll.UserBll;
+import com.zdt.zyellowpage.customView.WrapContentHeightWebView;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.AlbumReqEntity;
@@ -420,7 +420,7 @@ public class BusinessDetailActivity extends AbActivity implements
 					@Override
 					public void onStart() {
 						// 显示进度框
-						//showProgressDialog();
+						// showProgressDialog();
 					}
 
 					// 失败，调用
@@ -434,7 +434,7 @@ public class BusinessDetailActivity extends AbActivity implements
 					@Override
 					public void onFinish() {
 						// 移除进度框
-						//removeProgressDialog();
+						// removeProgressDialog();
 					};
 
 				});
@@ -746,8 +746,7 @@ public class BusinessDetailActivity extends AbActivity implements
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		lay.setOrientation(LinearLayout.VERTICAL);
-		WebView webView = new WebView(this);
-		webView.setFocusable(false);
+		WrapContentHeightWebView webView = new WrapContentHeightWebView(this);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
 		webView.setLayoutParams(new LayoutParams(
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
