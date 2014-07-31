@@ -216,6 +216,9 @@
             android:name="com.zdt.zyellowpage.activity.NewsContentDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.zdt.zyellowpage.activity.webView.MyBrowserActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.zdt.zyellowpage.barcode.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
@@ -226,22 +229,7 @@
             android:name="com.zdt.zyellowpage.activity.BNavigatorActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
         <activity android:name="com.zdt.zyellowpage.activity.AllTypeActivity" />
-        <activity
-            android:name="com.zdt.zyellowpage.htmlViewer.HTMLViewerActivity"
-            android:label="HTMLViewer" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
 
-                <action android:name="android.intent.action.VIEW" />
-
-                <data android:scheme="file" />
-                <data android:scheme="content" />
-                <data android:mimeType="text/html" />
-                <data android:mimeType="text/plain" />
-                <data android:mimeType="application/xhtml+xml" />
-                <data android:mimeType="application/vnd.wap.xhtml+xml" />
-            </intent-filter>
-        </activity>
         <!-- ###################注册SDK使用的Activity###################### -->
         <!-- 分享编辑页 -->
         <activity

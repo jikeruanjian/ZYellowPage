@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -82,7 +82,6 @@
                     android:layout_marginTop="10dip" >
 
                     <TextView
-                        android:id="@+id/TextView08"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="编号："
@@ -91,6 +90,22 @@
 
                     <TextView
                         android:id="@+id/user_company_nummber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="@color/propertyvalue"
+                        android:textSize="@dimen/main_text_size_h3" />
+                    
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="35dp"
+                        android:text="点击量："
+                        android:textColor="@color/propertyname"
+                        android:textSize="@dimen/main_text_size_h3" />
+
+                    <TextView
+                        android:id="@+id/tvClick"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "

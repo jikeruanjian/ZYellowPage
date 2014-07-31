@@ -20,6 +20,7 @@ public class Constant {
 	public static final String AREALASTUPDATETIME = "areaDataLastUpdateTime";
 	public static final String CATEGORYLASTUPDATETIME = "categoryDataLastUpdateTime";
 	public static final String HOTKEYLASTUPDATETIME = "hotkeyDataLastUpdateTime";
+	public static final String HOTWordLASTUPDATETIME = "hotwordDataLastUpdateTime";
 	public static final String LOCATECITYNAME = "locateCityName";
 	public static final String LOCATEVERSIONCODE = "locateVersionCode";
 
@@ -59,6 +60,11 @@ public class Constant {
 	 * 热门关键词
 	 */
 	public static final String ALLHOTKEYWORD = "http://service.321hy.cn/generic/keyword";
+	
+	/**
+	 * 热门关键词
+	 */
+	public static final String HOTWORD = "http://service.321hy.cn/generic/hotword/";
 
 	/**
 	 * 区域反查接口

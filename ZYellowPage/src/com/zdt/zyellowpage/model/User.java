@@ -242,6 +242,20 @@ public class User implements Serializable {
 	 */
 	@Column(name = "album")
 	private String album;
+	
+	/**
+	 * 点击量
+	 */
+	@Column(name = "click")
+	private int click;
+
+	public int getClick() {
+		return click;
+	}
+
+	public void setClick(int click) {
+		this.click = click;
+	}
 
 	public String getAlbum() {
 		return album;

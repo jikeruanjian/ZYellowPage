@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.ab.activity.AbActivity;
@@ -16,6 +15,7 @@ import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.bll.AreaBll;
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.bll.HotKeyWordBll;
+import com.zdt.zyellowpage.bll.HotWordBll;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 
@@ -47,6 +47,8 @@ public class SplashActivity extends AbActivity {
 				Constant.CATEGORYLASTUPDATETIME, 0);
 		Long hotkeyLastUpdateTime = sp
 				.getLong(Constant.HOTKEYLASTUPDATETIME, 0);
+		Long hotwordLastUpdateTime = sp.getLong(Constant.HOTWordLASTUPDATETIME,
+				0);
 		if ((new Date().getTime() - areaLastUpdateTime) > 86400000) {
 			// 下载区域
 			new AreaBll().downAllArea(SplashActivity.this,
@@ -140,6 +142,41 @@ public class SplashActivity extends AbActivity {
 						public void onErrorData(String status_description) {
 						}
 					});
+		}
+
+		// 热词 ， 间隔1个月
+		if ((new Date().getTime() - hotwordLastUpdateTime) > 2592000000L) {
+			int[] types = new int[] { 1, 2, 3, 5, 6, 7 };
+			for (int i : types) {
+				new HotWordBll().downHotWord(i, this,
+						new ZzStringHttpResponseListener() {
+
+							@Override
+							public void onSuccess(int statusCode, String content) {
+								Editor editor = abSharedPreferences.edit();
+								editor.putLong(Constant.HOTWordLASTUPDATETIME,
+										new Date().getTime());
+								editor.commit();
+							}
+
+							@Override
+							public void onStart() {
+							}
+
+							@Override
+							public void onFinish() {
+							}
+
+							@Override
+							public void onFailure(int statusCode,
+									String content, Throwable error) {
+							}
+
+							@Override
+							public void onErrorData(String status_description) {
+							}
+						});
+			}
 		}
 
 	}

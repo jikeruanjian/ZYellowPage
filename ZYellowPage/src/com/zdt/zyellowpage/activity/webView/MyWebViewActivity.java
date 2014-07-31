@@ -3,7 +3,6 @@ package com.zdt.zyellowpage.activity.webView;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 

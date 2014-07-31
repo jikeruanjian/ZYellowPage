@@ -2,6 +2,8 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -52,12 +54,14 @@ import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.AlbumBll;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.customView.WrapContentHeightWebView;
+import com.zdt.zyellowpage.dao.HotWorkDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.AlbumReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Album;
+import com.zdt.zyellowpage.model.HotWord;
 import com.zdt.zyellowpage.model.User;
 import com.zdt.zyellowpage.util.DisplayUtil;
 
@@ -93,6 +97,8 @@ public class BusinessDetailActivity extends AbActivity implements
 
 	// sdk controller
 	private UMSocialService mController = null;
+
+	private List<String> lisHotWord = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +183,9 @@ public class BusinessDetailActivity extends AbActivity implements
 		TextView wifiPW = (TextView) BusinessDetailActivity.this
 				.findViewById(R.id.user_company_wifiPW);
 
+		TextView clickCount = (TextView) BusinessDetailActivity.this
+				.findViewById(R.id.tvClick);
+
 		name.setText(userCompany.getFullname());
 		num.setText(userCompany.getMember_id());
 		userName.setText(userCompany.getContact());
@@ -187,6 +196,7 @@ public class BusinessDetailActivity extends AbActivity implements
 		qq.setText(userCompany.getQq());
 		wifiUser.setText(userCompany.getWifi_username());
 		wifiPW.setText(userCompany.getWifi_password());
+		clickCount.setText("" + userCompany.getClick());
 		imgLogo = (ImageView) this.findViewById(R.id.companyLogoImage);
 		if (userCompany.getLogo() != null) {
 			imageLoader.display(imgLogo, userCompany.getLogo());
@@ -740,7 +750,7 @@ public class BusinessDetailActivity extends AbActivity implements
 		mPager.setOnPageChangeListener(new MyOnPageChangeListener());
 	}
 
-	public View addTextByText(String text) {
+	private View addTextByText(String text) {
 		LinearLayout lay = new LinearLayout(this);
 		lay.setLayoutParams(new LayoutParams(
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
@@ -758,6 +768,40 @@ public class BusinessDetailActivity extends AbActivity implements
 
 		lay.addView(webView);
 		return lay;
+	}
+
+	private void findHotWord() {
+		if (userCompany != null) {
+			lisHotWord = new ArrayList<String>();
+			HotWorkDao hotWordDao = new HotWorkDao(this);
+			// 处理姓名的热词
+			List<HotWord> hotwordOfName = hotWordDao.queryList("type=?",
+					new String[] { "1" });
+			for (HotWord hotWord : hotwordOfName) {
+				Pattern p = Pattern.compile(hotWord.getHotword());
+				Matcher m = p.matcher(userCompany.getFullname()); // 商家名称
+				if (m.find()) {
+					lisHotWord.add(hotWord.getHotword());
+				} else {
+					Matcher m1 = p.matcher(userCompany.getContact()); // 地址
+					if (m1.find()) {
+						lisHotWord.add(hotWord.getHotword());
+					}
+				}
+			}
+			hotwordOfName = null;
+
+			// 处理地址的热词
+			List<HotWord> hotwordOfAddress = hotWordDao.queryList("type=?",
+					new String[] { "5" });
+			for (HotWord hotWord : hotwordOfAddress) {
+				Pattern p = Pattern.compile(hotWord.getHotword());
+				Matcher m = p.matcher(userCompany.getAddress()); // 商家名称
+				if (m.find()) {
+					lisHotWord.add(hotWord.getHotword());
+				}
+			}
+		}
 	}
 
 	/**

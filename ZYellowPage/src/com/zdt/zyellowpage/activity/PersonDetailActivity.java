@@ -2,6 +2,8 @@ package com.zdt.zyellowpage.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,7 +20,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -50,11 +51,13 @@ import com.zdt.zyellowpage.activity.login.LoginActivity;
 import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.customView.WrapContentHeightWebView;
+import com.zdt.zyellowpage.dao.HotWorkDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 import com.zdt.zyellowpage.model.Certificate;
+import com.zdt.zyellowpage.model.HotWord;
 import com.zdt.zyellowpage.model.User;
 
 import eu.inmite.android.lib.dialogs.ISimpleDialogCancelListener;
@@ -86,6 +89,8 @@ public class PersonDetailActivity extends AbActivity implements
 	private View mView;
 	// sdk controller
 	private UMSocialService mController = null;
+
+	private List<String> lisHotWord = null;
 
 	// private String[] imageUrls = new String[] { };
 	@Override
@@ -449,7 +454,7 @@ public class PersonDetailActivity extends AbActivity implements
 					}
 				});
 
-		// TODO 分享
+		// 分享
 		this.findViewById(R.id.person_detail_Share).setOnClickListener(
 				new OnClickListener() {
 					@Override
@@ -582,6 +587,89 @@ public class PersonDetailActivity extends AbActivity implements
 		webView.loadDataWithBaseURL(null, text, "text/html", "utf-8", null);
 		lay.addView(webView);
 		return lay;
+	}
+
+	private void findHotWord() {
+		if (userPerson != null) {
+			lisHotWord = new ArrayList<String>();
+			HotWorkDao hotWordDao = new HotWorkDao(this);
+			// 处理姓名的热词
+			List<HotWord> hotwordOfName = hotWordDao.queryList("type=?",
+					new String[] { "1" });
+			for (HotWord hotWord : hotwordOfName) {
+				Pattern p = Pattern.compile(hotWord.getHotword());
+				Matcher m = p.matcher(userPerson.getFullname()); // 用户姓名
+				if (m.find()) {
+					lisHotWord.add(hotWord.getHotword());
+				}
+			}
+			hotwordOfName = null;
+
+			// 处理地址的热词
+			if (!AbStrUtil.isEmpty(userPerson.getAddress())) {
+				List<HotWord> hotwordOfAddress = hotWordDao.queryList("type=?",
+						new String[] { "5" });
+				for (HotWord hotWord : hotwordOfAddress) {
+					Pattern p = Pattern.compile(hotWord.getHotword());
+					Matcher m = p.matcher(userPerson.getAddress()); // 地址
+					if (m.find()) {
+						lisHotWord.add(hotWord.getHotword());
+					}
+				}
+			}
+
+			// 处理民族的热词
+			if (!AbStrUtil.isEmpty(userPerson.getNation())) {
+				List<HotWord> hotwordOfNation = hotWordDao.queryList("type=?",
+						new String[] { "7" });
+				for (HotWord hotWord : hotwordOfNation) {
+					Pattern p = Pattern.compile(hotWord.getHotword());
+					Matcher m = p.matcher(userPerson.getNation()); // 地址
+					if (m.find()) {
+						lisHotWord.add(hotWord.getHotword());
+					}
+				}
+			}
+
+			// 处理学校的热词
+			if (!AbStrUtil.isEmpty(userPerson.getSchool())) {
+				List<HotWord> hotwordOfNation = hotWordDao.queryList("type=?",
+						new String[] { "2" });
+				for (HotWord hotWord : hotwordOfNation) {
+					Pattern p = Pattern.compile(hotWord.getHotword());
+					Matcher m = p.matcher(userPerson.getSchool()); // 地址
+					if (m.find()) {
+						lisHotWord.add(hotWord.getHotword());
+					}
+				}
+			}
+
+			// 处理专业的热词
+			if (!AbStrUtil.isEmpty(userPerson.getProfessional())) {
+				List<HotWord> hotwordOfNation = hotWordDao.queryList("type=?",
+						new String[] { "3" });
+				for (HotWord hotWord : hotwordOfNation) {
+					Pattern p = Pattern.compile(hotWord.getHotword());
+					Matcher m = p.matcher(userPerson.getProfessional()); // 地址
+					if (m.find()) {
+						lisHotWord.add(hotWord.getHotword());
+					}
+				}
+			}
+
+			// 处理证书的热词
+			if (!AbStrUtil.isEmpty(certificateStr)) {
+				List<HotWord> hotwordOfNation = hotWordDao.queryList("type=?",
+						new String[] { "6" });
+				for (HotWord hotWord : hotwordOfNation) {
+					Pattern p = Pattern.compile(hotWord.getHotword());
+					Matcher m = p.matcher(certificateStr); // 地址
+					if (m.find()) {
+						lisHotWord.add(hotWord.getHotword());
+					}
+				}
+			}
+		}
 	}
 
 	/**

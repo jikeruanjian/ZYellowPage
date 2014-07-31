@@ -13,12 +13,11 @@
         android:layout_height="2dp"
         android:layout_gravity="center_vertical"
         android:max="100"
-        android:progress="0"
-        android:visibility="gone" />
+        android:progress="0" />
 
     <WebView
         android:id="@+id/inner_webview"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent" />
 
 </LinearLayout>
