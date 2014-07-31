@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
@@ -28,6 +29,7 @@ import com.zdt.zyellowpage.activity.MyPopupWindow;
 import com.zdt.zyellowpage.activity.PersonDetailActivity;
 import com.zdt.zyellowpage.activity.PopBusinessListActivity;
 import com.zdt.zyellowpage.activity.PopPersonListActivity;
+import com.zdt.zyellowpage.activity.webView.MyBrowserActivity;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
@@ -105,6 +107,32 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 		RelativeLayout imgBAllClass = (RelativeLayout) view
 				.findViewById(R.id.imageButtonAll);
 		imgBAllClass.setOnClickListener(this);
+		
+		//-----快捷生活
+		RelativeLayout LayoutBus = (RelativeLayout) view
+				.findViewById(R.id.RelativeLayoutBus);
+		LayoutBus.setOnClickListener(this);
+		
+		RelativeLayout LayoutTrain  = (RelativeLayout) view
+				.findViewById(R.id.RelativeLayoutTrain);
+		LayoutTrain.setOnClickListener(this);
+		
+		RelativeLayout LayoutFlight  = (RelativeLayout) view
+				.findViewById(R.id.RelativeLayoutFlight);
+		LayoutFlight.setOnClickListener(this);
+		
+		
+		RelativeLayout LayoutSubway  = (RelativeLayout) view
+				.findViewById(R.id.RelativeLayoutSubway);
+		LayoutSubway.setOnClickListener(this);
+		
+		RelativeLayout LayoutWeather  = (RelativeLayout) view
+				.findViewById(R.id.RelativeLayoutWeather);
+		LayoutWeather.setOnClickListener(this);
+		
+		RelativeLayout LayoutDelivery  = (RelativeLayout) view
+				.findViewById(R.id.RelativeLayoutDelivery);
+		LayoutDelivery.setOnClickListener(this);
 
 		// 热门商家列表
 		view.findViewById(R.id.textViewhotbusiness).setOnClickListener(this);
@@ -455,6 +483,36 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 			intent.putExtra("Type", "热门商企");
 			intent.putExtra("TypeId", "list-latest");
 			mActivity.startActivity(intent);
+			break;
+		case R.id.RelativeLayoutBus://公交
+			intent = new Intent(mActivity,MyBrowserActivity.class);
+			intent.putExtra("url", "http://m.8684.cn/kunming_bus");
+			startActivity(intent);
+			break;
+		case R.id.RelativeLayoutTrain://火车
+			intent = new Intent(mActivity,MyBrowserActivity.class);
+			intent.putExtra("url", "http://touch.qunar.com/h5/train/?from=touchindex");
+			startActivity(intent);
+			break;
+		case R.id.RelativeLayoutFlight://机票
+			intent = new Intent(mActivity,MyBrowserActivity.class);
+			intent.putExtra("url", "http://touch.qunar.com/h5/flight/");
+			startActivity(intent);
+			break;
+		case R.id.RelativeLayoutSubway://地铁
+			intent = new Intent(mActivity,MyBrowserActivity.class);
+			intent.putExtra("url", "http://m.8684.cn/dt_switch");
+			startActivity(intent);
+			break;
+		case R.id.RelativeLayoutWeather://天气
+			intent = new Intent(mActivity,MyBrowserActivity.class);
+			intent.putExtra("url", "http://www.weixinguanjia.cn/links.html?t=6");
+			startActivity(intent);
+			break;
+		case R.id.RelativeLayoutDelivery://快递
+			intent = new Intent(mActivity,MyBrowserActivity.class);
+			intent.putExtra("url", "http://m.kuaidi100.com/#input");
+			startActivity(intent);
 			break;
 		default:
 			break;
