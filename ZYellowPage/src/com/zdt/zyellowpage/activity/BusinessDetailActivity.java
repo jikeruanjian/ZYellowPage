@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -190,6 +191,7 @@ public class BusinessDetailActivity extends AbActivity implements
 		userName.setText(userCompany.getContact());
 		tel.setText(userCompany.getTelephone());
 		url.setText(userCompany.getWebsite());
+		url.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);// 下划线
 		address.setText(userCompany.getAddress());
 		email.setText(userCompany.getEmail());
 		qq.setText(userCompany.getQq());
@@ -200,6 +202,18 @@ public class BusinessDetailActivity extends AbActivity implements
 		if (userCompany.getLogo() != null) {
 			imageLoader.display(imgLogo, userCompany.getLogo());
 		}
+
+		url.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(BusinessDetailActivity.this,
+						MyBrowserActivity.class);
+				intent.putExtra("url", ((TextView) v).getText());
+				startActivity(intent);
+			}
+		});
+
 		InitTextView();
 		InitViewPager();
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
@@ -279,7 +293,6 @@ public class BusinessDetailActivity extends AbActivity implements
 						userCompany = lis.get(0);
 						if (!AbStrUtil.isEmpty(userCompany.getAlbum())) {
 							// 加载图片
-							// getImgUrl(userCompany.getMember_id());
 							imageUrls = userCompany.getAlbum().split(",");
 							findViewById(R.id.mAbSlidingPlayViewBLinearLayout)
 									.setVisibility(View.VISIBLE);

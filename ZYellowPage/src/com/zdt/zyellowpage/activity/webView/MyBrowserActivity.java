@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
@@ -11,6 +12,7 @@ import com.ab.util.AbStrUtil;
 import com.ab.view.titlebar.AbTitleBar;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.webView.IntegratedWebView.OnPressBackListener;
+import com.zdt.zyellowpage.activity.webView.IntegratedWebView.OnReceivedTitle;
 import com.zdt.zyellowpage.activity.webView.IntegratedWebView.OritationChangeActivity;
 
 public class MyBrowserActivity extends AbActivity implements
@@ -18,6 +20,7 @@ public class MyBrowserActivity extends AbActivity implements
 	private IntegratedWebView contentView;
 	String url;
 	private String title;
+	AbTitleBar mAbTitleBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +28,7 @@ public class MyBrowserActivity extends AbActivity implements
 		contentView = new IntegratedWebView(this);
 		setAbContentView(contentView);
 		title = getIntent().getStringExtra("title");
-		AbTitleBar mAbTitleBar = this.getTitleBar();
+		mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText(title);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);
 		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
@@ -41,6 +44,15 @@ public class MyBrowserActivity extends AbActivity implements
 		}
 
 		contentView.setVideoPlayerClient(this);
+		contentView.onReceivedTitle = new OnReceivedTitle() {
+
+			@Override
+			public void onReceivedTitle(WebView view, String title2) {
+				if (AbStrUtil.isEmpty(title)) {
+					mAbTitleBar.setTitleText(title2);
+				}
+			}
+		};
 		try {
 			contentView.loadUrl(url);
 		} catch (Exception e) {
@@ -48,7 +60,7 @@ public class MyBrowserActivity extends AbActivity implements
 			this.finish();
 		}
 	}
-	
+
 	@Override
 	public void resetOritation() {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -68,7 +80,7 @@ public class MyBrowserActivity extends AbActivity implements
 		this.setContentView(view);
 
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		if (mPressBackListener != null) {

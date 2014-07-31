@@ -37,6 +37,8 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 	private ProgressBar pb;
 	private VideoEnabledWebChromeClient chromeClient;
 
+	public OnReceivedTitle onReceivedTitle;
+
 	public IntegratedWebView(Context context) {
 		super(context);
 		init(context);
@@ -161,6 +163,13 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 		public VideoEnabledWebChromeClient(OritationChangeActivity activity) {
 			this.activityRef = new WeakReference<OritationChangeActivity>(
 					activity);
+		}
+
+		@Override
+		public void onReceivedTitle(WebView view, String title) {
+			if (onReceivedTitle != null) {
+				onReceivedTitle.onReceivedTitle(view, title);
+			}
 		}
 
 		@Override
@@ -333,6 +342,10 @@ public class IntegratedWebView extends LinearLayout implements DownloadListener 
 
 	public static interface OnPressBackListener {
 		void onPressBack();
+	}
+
+	public interface OnReceivedTitle {
+		public void onReceivedTitle(WebView view, String title);
 	}
 
 	public void loadUrl(String url) {

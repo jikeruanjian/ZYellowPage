@@ -264,6 +264,25 @@ public class PersonDetailActivity extends AbActivity implements
 					@Override
 					public void onFinish() {
 						InitViewPager();
+						HotWordDao hotWordDao = new HotWordDao(
+								PersonDetailActivity.this);
+						hotWordDao.startReadableDatabase(false);
+						List<String> tempLis = new ArrayList<String>();
+						// 处理证书的热词
+						if (!AbStrUtil.isEmpty(certificateStr)) {
+							List<HotWord> hotwordOfNation = hotWordDao
+									.queryList("type=?", new String[] { "6" });
+							for (HotWord hotWord : hotwordOfNation) {
+								Pattern p = Pattern.compile(hotWord
+										.getHotword());
+								Matcher m = p.matcher(certificateStr); // 地址
+								if (m.find()) {
+									tempLis.add(hotWord.getHotword());
+								}
+							}
+						}
+						hotWordDao.closeDatabase(false);
+						createHotWordButton(tempLis);
 					}
 
 				});
@@ -427,22 +446,6 @@ public class PersonDetailActivity extends AbActivity implements
 						} else {
 							showToast("该用户没有设置Logo");
 						}
-						/*
-						 * mView = PersonDetailActivity.this.mInflater
-						 * .inflate(R.layout.code_view, null); ImageView
-						 * imageUser = (ImageView) mView
-						 * .findViewById(R.id.imageViewCodeCP); if
-						 * (!AbStrUtil.isEmpty(userPerson.getLogo())){ new
-						 * AbImageDownloader(PersonDetailActivity.this)
-						 * .display( imageUser,userPerson.getLogo()); }
-						 * imageUser.setOnClickListener(new OnClickListener() {
-						 * 
-						 * @Override public void onClick(View v) {
-						 * PersonDetailActivity
-						 * .this.removeDialog(AbConstant.DIALOGCENTER); } });
-						 * PersonDetailActivity
-						 * .this.showDialog(AbConstant.DIALOGCENTER, mView);
-						 */
 					}
 				});
 
@@ -653,29 +656,15 @@ public class PersonDetailActivity extends AbActivity implements
 				}
 				hotwordOfNation = null;
 			}
-
-			// 处理证书的热词
-			if (!AbStrUtil.isEmpty(certificateStr)) {
-				List<HotWord> hotwordOfNation = hotWordDao.queryList("type=?",
-						new String[] { "6" });
-				for (HotWord hotWord : hotwordOfNation) {
-					Pattern p = Pattern.compile(hotWord.getHotword());
-					Matcher m = p.matcher(certificateStr); // 地址
-					if (m.find()) {
-						lisHotWord.add(hotWord.getHotword());
-					}
-				}
-			}
-			hotWordDao.closeDatabase(false);
 		}
 
-		createHotWordButton();
+		createHotWordButton(lisHotWord);
 	}
 
-	private void createHotWordButton() {
-		if (lisHotWord != null && lisHotWord.size() > 0) {
+	private void createHotWordButton(List<String> lis) {
+		if (lis != null && lis.size() > 0) {
 			llyHotWord.setVisibility(View.VISIBLE);
-			for (String hotWord : lisHotWord) {
+			for (String hotWord : lis) {
 				Button hotWordBtn = new Button(this);
 				hotWordBtn
 						.setBackgroundResource(R.drawable.button_selector_blue_light);
@@ -686,7 +675,6 @@ public class PersonDetailActivity extends AbActivity implements
 				hotWordBtn.setLayoutParams(lp);
 				hotWordBtn.setPadding(10, 2, 10, 2);
 				hotWordBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-				// hotWordBtn.setTextColor(R.id);
 				hotWordBtn.setText(hotWord);
 				hotWordBtn.setOnClickListener(new OnClickListener() {
 
