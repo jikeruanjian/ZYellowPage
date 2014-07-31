@@ -487,31 +487,37 @@ public class FragmentHomePage extends Fragment implements OnClickListener {
 		case R.id.RelativeLayoutBus://公交
 			intent = new Intent(mActivity,MyBrowserActivity.class);
 			intent.putExtra("url", "http://m.8684.cn/kunming_bus");
+			intent.putExtra("title", "公交查询");
 			startActivity(intent);
 			break;
 		case R.id.RelativeLayoutTrain://火车
 			intent = new Intent(mActivity,MyBrowserActivity.class);
 			intent.putExtra("url", "http://touch.qunar.com/h5/train/?from=touchindex");
+			intent.putExtra("title", "火车票查询");
 			startActivity(intent);
 			break;
 		case R.id.RelativeLayoutFlight://机票
 			intent = new Intent(mActivity,MyBrowserActivity.class);
 			intent.putExtra("url", "http://touch.qunar.com/h5/flight/");
+			intent.putExtra("title", "机票查询");
 			startActivity(intent);
 			break;
 		case R.id.RelativeLayoutSubway://地铁
 			intent = new Intent(mActivity,MyBrowserActivity.class);
 			intent.putExtra("url", "http://m.8684.cn/dt_switch");
+			intent.putExtra("title", "地铁查询");
 			startActivity(intent);
 			break;
 		case R.id.RelativeLayoutWeather://天气
 			intent = new Intent(mActivity,MyBrowserActivity.class);
 			intent.putExtra("url", "http://www.weixinguanjia.cn/links.html?t=6");
+			intent.putExtra("title", "天气查询");
 			startActivity(intent);
 			break;
 		case R.id.RelativeLayoutDelivery://快递
 			intent = new Intent(mActivity,MyBrowserActivity.class);
 			intent.putExtra("url", "http://m.kuaidi100.com/#input");
+			intent.putExtra("title", "快递查询");
 			startActivity(intent);
 			break;
 		default:
