@@ -6,8 +6,8 @@ import com.ab.db.orm.dao.AbDBDaoImpl;
 import com.zdt.zyellowpage.db.DBInsideHelper;
 import com.zdt.zyellowpage.model.HotWord;
 
-public class HotWorkDao extends AbDBDaoImpl<HotWord> {
-	public HotWorkDao(Context context) {
+public class HotWordDao extends AbDBDaoImpl<HotWord> {
+	public HotWordDao(Context context) {
 		super(new DBInsideHelper(context), HotWord.class);
 	}
 }

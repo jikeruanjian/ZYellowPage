@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,10 +52,11 @@ import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMWXHandler;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
+import com.zdt.zyellowpage.activity.webView.MyBrowserActivity;
 import com.zdt.zyellowpage.bll.AlbumBll;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.customView.WrapContentHeightWebView;
-import com.zdt.zyellowpage.dao.HotWorkDao;
+import com.zdt.zyellowpage.dao.HotWordDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.AlbumReqEntity;
@@ -100,6 +102,8 @@ public class BusinessDetailActivity extends AbActivity implements
 
 	private List<String> lisHotWord = null;
 
+	private LinearLayout llyHotWord;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -107,13 +111,6 @@ public class BusinessDetailActivity extends AbActivity implements
 		if (getIntent().getExtras() != null) {
 			member_id = (String) getIntent().getExtras().get("MEMBER_ID");
 			if (member_id == null) {
-				// this.showDialog("错误", "数据获取失败",
-				// new android.content.DialogInterface.OnClickListener() {
-				// @Override
-				// public void onClick(DialogInterface arg0, int arg1) {
-				// finish();
-				// }
-				// });
 				SimpleDialogFragment
 						.createBuilder(this, getSupportFragmentManager())
 						.setTitle("错误").setMessage("参数错误")
@@ -186,6 +183,8 @@ public class BusinessDetailActivity extends AbActivity implements
 		TextView clickCount = (TextView) BusinessDetailActivity.this
 				.findViewById(R.id.tvClick);
 
+		llyHotWord = (LinearLayout) findViewById(R.id.llyHotWord);
+
 		name.setText(userCompany.getFullname());
 		num.setText(userCompany.getMember_id());
 		userName.setText(userCompany.getContact());
@@ -204,6 +203,7 @@ public class BusinessDetailActivity extends AbActivity implements
 		InitTextView();
 		InitViewPager();
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
+		findHotWord();
 	}
 
 	private void InitTitleView() {
@@ -575,27 +575,6 @@ public class BusinessDetailActivity extends AbActivity implements
 						} else {
 							showToast("该用户没有设置Logo");
 						}
-						/*
-						 * mView =
-						 * BusinessDetailActivity.this.mInflater.inflate(
-						 * R.layout.code_view, null); ImageView imageUser =
-						 * (ImageView) mView.
-						 * findViewById(R.id.imageViewCodeCP); if
-						 * (!AbStrUtil.isEmpty(userCompany.getLogo())) { new
-						 * AbImageDownloader(BusinessDetailActivity.this).
-						 * display(imageUser, userCompany.getLogo()); }
-						 * BusinessDetailActivity
-						 * .this.showDialog(AbConstant.DIALOGCENTER, mView);
-						 * BusinessDetailActivity
-						 * .this.removeDialog(AbConstant.DIALOGCENTER);
-						 * imageUser.setOnClickListener(new OnClickListener() {
-						 * 
-						 * @Override public void onClick(View v) {
-						 * BusinessDetailActivity
-						 * .this.removeDialog(AbConstant.DIALOGCENTER); } });
-						 * BusinessDetailActivity
-						 * .this.showDialog(AbConstant.DIALOGCENTER, mView);
-						 */
 					}
 				});
 
@@ -734,13 +713,6 @@ public class BusinessDetailActivity extends AbActivity implements
 	private void InitViewPager() {
 		mPager = (ViewPager) findViewById(R.id.vPager);
 		listViews = new ArrayList<View>();
-		// LayoutInflater mInflater = getLayoutInflater();
-		// listViews.add(mInflater.inflate(R.layout.business_detail_info,
-		// null));
-		// listViews.add(mInflater.inflate(R.layout.business_detail_info,
-		// null));
-		// listViews.add(mInflater.inflate(R.layout.business_detail_info,
-		// null));
 		listViews.add(addTextByText(userCompany.getSummary()));
 		listViews.add(addTextByText(userCompany.getDiscount()));
 		listViews.add(addTextByText(userCompany.getScope()));
@@ -773,21 +745,19 @@ public class BusinessDetailActivity extends AbActivity implements
 	private void findHotWord() {
 		if (userCompany != null) {
 			lisHotWord = new ArrayList<String>();
-			HotWorkDao hotWordDao = new HotWorkDao(this);
+			HotWordDao hotWordDao = new HotWordDao(this);
+			hotWordDao.startReadableDatabase(false);
 			// 处理姓名的热词
 			List<HotWord> hotwordOfName = hotWordDao.queryList("type=?",
 					new String[] { "1" });
 			for (HotWord hotWord : hotwordOfName) {
 				Pattern p = Pattern.compile(hotWord.getHotword());
-				Matcher m = p.matcher(userCompany.getFullname()); // 商家名称
-				if (m.find()) {
+
+				Matcher m1 = p.matcher(userCompany.getContact()); // 用户名称
+				if (m1.find()) {
 					lisHotWord.add(hotWord.getHotword());
-				} else {
-					Matcher m1 = p.matcher(userCompany.getContact()); // 地址
-					if (m1.find()) {
-						lisHotWord.add(hotWord.getHotword());
-					}
 				}
+
 			}
 			hotwordOfName = null;
 
@@ -796,10 +766,47 @@ public class BusinessDetailActivity extends AbActivity implements
 					new String[] { "5" });
 			for (HotWord hotWord : hotwordOfAddress) {
 				Pattern p = Pattern.compile(hotWord.getHotword());
-				Matcher m = p.matcher(userCompany.getAddress()); // 商家名称
+				Matcher m = p.matcher(userCompany.getAddress()); // 地址
 				if (m.find()) {
 					lisHotWord.add(hotWord.getHotword());
 				}
+			}
+			hotWordDao.closeDatabase(false);
+		}
+
+		createHotWordButton();
+	}
+
+	private void createHotWordButton() {
+		if (lisHotWord != null && lisHotWord.size() > 0) {
+			llyHotWord.setVisibility(View.VISIBLE);
+			for (String hotWord : lisHotWord) {
+				Button hotWordBtn = new Button(this);
+				hotWordBtn
+						.setBackgroundResource(R.drawable.button_selector_blue_light);
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT,
+						LinearLayout.LayoutParams.WRAP_CONTENT);
+				lp.setMargins(10, 2, 10, 2);
+				hotWordBtn.setLayoutParams(lp);
+				hotWordBtn.setPadding(10, 2, 10, 2);
+				hotWordBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				// hotWordBtn.setTextColor(R.id);
+				hotWordBtn.setText(hotWord);
+				hotWordBtn.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(BusinessDetailActivity.this,
+								MyBrowserActivity.class);
+						intent.putExtra("title", ((Button) v).getText());
+						intent.putExtra("url",
+								"http://wapbaike.baidu.com/search/?word="
+										+ ((Button) v).getText());
+						startActivity(intent);
+					}
+				});
+				llyHotWord.addView(hotWordBtn);
 			}
 		}
 	}

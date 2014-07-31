@@ -16,6 +16,7 @@ import com.zdt.zyellowpage.bll.AreaBll;
 import com.zdt.zyellowpage.bll.CategoryBll;
 import com.zdt.zyellowpage.bll.HotKeyWordBll;
 import com.zdt.zyellowpage.bll.HotWordBll;
+import com.zdt.zyellowpage.dao.HotWordDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.listenser.ZzStringHttpResponseListener;
 
@@ -145,7 +146,12 @@ public class SplashActivity extends AbActivity {
 		}
 
 		// 热词 ， 间隔1个月
-		if ((new Date().getTime() - hotwordLastUpdateTime) > 2592000000L) {
+		HotWordDao hotWordDao = new HotWordDao(this);
+		hotWordDao.startReadableDatabase(false);
+		int count = hotWordDao.queryCount(null, null);
+		hotWordDao.closeDatabase(false);
+		if (count == 0
+				|| (new Date().getTime() - hotwordLastUpdateTime) > 2592000000L) {
 			int[] types = new int[] { 1, 2, 3, 5, 6, 7 };
 			for (int i : types) {
 				new HotWordBll().downHotWord(i, this,

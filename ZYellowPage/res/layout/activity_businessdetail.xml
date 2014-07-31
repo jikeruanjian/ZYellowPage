@@ -295,9 +295,21 @@
                 </LinearLayout>
             </LinearLayout>
 
+            
+            <LinearLayout
+                android:id="@+id/llyHotWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_menu_bg" 
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+            </LinearLayout>
+            
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dip"
                 android:orientation="vertical" >
 
                 <LinearLayout

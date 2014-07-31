@@ -19,16 +19,12 @@ public class MyBrowserActivity extends AbActivity implements
 	String url;
 	private String title;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		contentView = new IntegratedWebView(this);
 		setAbContentView(contentView);
-
+		title = getIntent().getStringExtra("title");
 		AbTitleBar mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText(title);
 		mAbTitleBar.setLogo(R.drawable.button_selector_back);

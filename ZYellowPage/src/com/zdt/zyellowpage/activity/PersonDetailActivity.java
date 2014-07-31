@@ -20,6 +20,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -48,10 +49,11 @@ import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMWXHandler;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.login.LoginActivity;
+import com.zdt.zyellowpage.activity.webView.MyBrowserActivity;
 import com.zdt.zyellowpage.bll.CertificateBll;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.customView.WrapContentHeightWebView;
-import com.zdt.zyellowpage.dao.HotWorkDao;
+import com.zdt.zyellowpage.dao.HotWordDao;
 import com.zdt.zyellowpage.global.Constant;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
@@ -77,7 +79,6 @@ public class PersonDetailActivity extends AbActivity implements
 	private List<View> listViews; // Tab页面列表
 	private TextView t1, t2, t3, t4;// 页卡头标
 	private int offset = 0;// 动画图片偏移量
-	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private String certificateStr = "";
 	Bitmap codeBitmap;
@@ -92,7 +93,8 @@ public class PersonDetailActivity extends AbActivity implements
 
 	private List<String> lisHotWord = null;
 
-	// private String[] imageUrls = new String[] { };
+	private LinearLayout llyHotWord;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -123,7 +125,6 @@ public class PersonDetailActivity extends AbActivity implements
 				// .createDefault(PersonDetailActivity.this));
 			}
 		}
-
 	}
 
 	/**
@@ -300,22 +301,16 @@ public class PersonDetailActivity extends AbActivity implements
 				.findViewById(R.id.person_detail_zy);
 		TextView hy = (TextView) PersonDetailActivity.this
 				.findViewById(R.id.person_detail_hy);
-		// TextView gjc=
-		// (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_gjc);
 		TextView dz = (TextView) PersonDetailActivity.this
 				.findViewById(R.id.person_detail_dz);
-		// TextView grewm=
-		// (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_grewm);
-		// TextView fjdz=
-		// (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_fjdz);
-		// TextView info=
-		// (TextView)PersonDetailActivity.this.findViewById(R.id.person_detail_INFO);
+		llyHotWord = (LinearLayout) findViewById(R.id.llyHotWord);
+
 		nametitle.setText(userPerson.getFullname());
 		name.setText(userPerson.getFullname());
 		sex.setText(userPerson.getSex_name());
 		num.setText(userPerson.getArea_id());
 		tel.setText(userPerson.getTelephone());
-		adress.setText(userPerson.getCity());
+		adress.setText(userPerson.getArea_name());
 		email.setText(userPerson.getEmail());
 		age.setText(userPerson.getAge());
 		mz.setText(userPerson.getNation());
@@ -323,14 +318,11 @@ public class PersonDetailActivity extends AbActivity implements
 		school.setText(userPerson.getSchool());
 		zy.setText(userPerson.getProfessional());
 		hy.setText(userPerson.getCategory_name());
-		// gjc.setText(userPerson.getKeyword());
 		dz.setText(userPerson.getAddress());
-		// grewm.setText(userPerson.getQr_code());
-		// fjdz.setText(userPerson.getSchool());
 
-		// info.setText(userPerson.getSummary());
+		findHotWord();
+
 		InitTextView();
-		// InitViewPager();
 	}
 
 	private void InitTitleView() {
@@ -592,9 +584,10 @@ public class PersonDetailActivity extends AbActivity implements
 	private void findHotWord() {
 		if (userPerson != null) {
 			lisHotWord = new ArrayList<String>();
-			HotWorkDao hotWordDao = new HotWorkDao(this);
+			HotWordDao hotWordDao = new HotWordDao(this);
+			hotWordDao.startReadableDatabase(false);
 			// 处理姓名的热词
-			List<HotWord> hotwordOfName = hotWordDao.queryList("type=?",
+			List<HotWord> hotwordOfName = hotWordDao.queryList("Type=?",
 					new String[] { "1" });
 			for (HotWord hotWord : hotwordOfName) {
 				Pattern p = Pattern.compile(hotWord.getHotword());
@@ -616,6 +609,7 @@ public class PersonDetailActivity extends AbActivity implements
 						lisHotWord.add(hotWord.getHotword());
 					}
 				}
+				hotwordOfAddress = null;
 			}
 
 			// 处理民族的热词
@@ -629,6 +623,7 @@ public class PersonDetailActivity extends AbActivity implements
 						lisHotWord.add(hotWord.getHotword());
 					}
 				}
+				hotwordOfNation = null;
 			}
 
 			// 处理学校的热词
@@ -642,6 +637,7 @@ public class PersonDetailActivity extends AbActivity implements
 						lisHotWord.add(hotWord.getHotword());
 					}
 				}
+				hotwordOfNation = null;
 			}
 
 			// 处理专业的热词
@@ -655,6 +651,7 @@ public class PersonDetailActivity extends AbActivity implements
 						lisHotWord.add(hotWord.getHotword());
 					}
 				}
+				hotwordOfNation = null;
 			}
 
 			// 处理证书的热词
@@ -668,6 +665,43 @@ public class PersonDetailActivity extends AbActivity implements
 						lisHotWord.add(hotWord.getHotword());
 					}
 				}
+			}
+			hotWordDao.closeDatabase(false);
+		}
+
+		createHotWordButton();
+	}
+
+	private void createHotWordButton() {
+		if (lisHotWord != null && lisHotWord.size() > 0) {
+			llyHotWord.setVisibility(View.VISIBLE);
+			for (String hotWord : lisHotWord) {
+				Button hotWordBtn = new Button(this);
+				hotWordBtn
+						.setBackgroundResource(R.drawable.button_selector_blue_light);
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT,
+						LinearLayout.LayoutParams.WRAP_CONTENT);
+				lp.setMargins(10, 2, 10, 2);
+				hotWordBtn.setLayoutParams(lp);
+				hotWordBtn.setPadding(10, 2, 10, 2);
+				hotWordBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				// hotWordBtn.setTextColor(R.id);
+				hotWordBtn.setText(hotWord);
+				hotWordBtn.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(PersonDetailActivity.this,
+								MyBrowserActivity.class);
+						intent.putExtra("title", ((Button) v).getText());
+						intent.putExtra("url",
+								"http://wapbaike.baidu.com/search/?word="
+										+ ((Button) v).getText());
+						startActivity(intent);
+					}
+				});
+				llyHotWord.addView(hotWordBtn);
 			}
 		}
 	}
@@ -747,8 +781,6 @@ public class PersonDetailActivity extends AbActivity implements
 
 		@Override
 		public void onPageSelected(int arg0) {
-			// Animation animation = null;
-
 			t1.setTextColor(getResources().getColor(R.color.black));
 			t3.setTextColor(getResources().getColor(R.color.black));
 			t2.setTextColor(getResources().getColor(R.color.black));
@@ -756,44 +788,21 @@ public class PersonDetailActivity extends AbActivity implements
 			switch (arg0) {
 			case 0: {
 				t1.setTextColor(getResources().getColor(R.color.orange));
-				if (currIndex == 1) {
-					// animation = new TranslateAnimation(one, 0, 0, 0);
-				} else if (currIndex == 2) {
-					// animation = new TranslateAnimation(two, 0, 0, 0);
-				}
 				break;
 			}
 			case 1: {
 				t2.setTextColor(getResources().getColor(R.color.orange));
-				if (currIndex == 0) {
-					// animation = new TranslateAnimation(offset, one, 0, 0);
-				} else if (currIndex == 2) {
-					// animation = new TranslateAnimation(two, one, 0, 0);
-				}
 				break;
 			}
 			case 2: {
 				t3.setTextColor(getResources().getColor(R.color.orange));
-				if (currIndex == 0) {
-					// animation = new TranslateAnimation(offset, two, 0, 0);
-				} else if (currIndex == 1) {
-					// animation = new TranslateAnimation(one, two, 0, 0);
-				}
 				break;
 			}
 			case 3: {
 				t4.setTextColor(getResources().getColor(R.color.orange));
-				if (currIndex == 0) {
-					// animation = new TranslateAnimation(offset, two, 0, 0);
-				} else if (currIndex == 1) {
-					// animation = new TranslateAnimation(one, two, 0, 0);
-				}
 				break;
 			}
 			}
-			currIndex = arg0;
-			// animation.setFillAfter(true);// True:图片停在动画结束位置
-			// animation.setDuration(300);
 		}
 
 		@Override
@@ -840,7 +849,6 @@ public class PersonDetailActivity extends AbActivity implements
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						PersonDetailActivity.this.removeDialog(1);
 						String imgUrl = MediaStore.Images.Media.insertImage(
 								getContentResolver(), codeBitmap, "", "");
@@ -856,9 +864,7 @@ public class PersonDetailActivity extends AbActivity implements
 
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						PersonDetailActivity.this.removeDialog(1);
-
 					}
 				});
 	}
