@@ -840,7 +840,7 @@ public class PersonDetailActivity extends AbActivity implements
 						PersonDetailActivity.this.removeDialog(1);
 						String imgUrl = MediaStore.Images.Media.insertImage(
 								getContentResolver(), codeBitmap, "", "");
-						Log.e("save codeimage", imgUrl);
+						//Log.e("save codeimage", imgUrl);
 						removeDialog(AbConstant.DIALOGCENTER);
 						showToast("二维码成功保存到相册！");
 

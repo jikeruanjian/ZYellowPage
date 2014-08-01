@@ -140,10 +140,10 @@ public class MyConcernActivity extends AbActivity {
 					map.put("itemsTitle", u.getFullname());
 					map.put("itemsText", u.getKeyword());
 					newList.add(map);
-					Log.e("----chun---1", u.getFullname());
+					/*Log.e("----chun---1", u.getFullname());
 					if(u.getKeyword() != null){
 					Log.e("----chun---2", u.getKeyword());
-					}
+					}*/
 				}
 			}
 
