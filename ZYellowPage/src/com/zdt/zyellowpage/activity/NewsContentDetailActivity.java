@@ -2,6 +2,7 @@ package com.zdt.zyellowpage.activity;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -39,13 +40,13 @@ public class NewsContentDetailActivity extends AbActivity {
 		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
 		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		application = (MyApplication) abApplication;
-
+		findViewById(R.id.webview_progressbar).setVisibility(View.GONE);
 		mWebView = (WebView) findViewById(R.id.inner_webview);
 		// 设置支持JavaScript脚本
 		WebSettings webSettings = mWebView.getSettings();
 
 		webSettings.setDefaultTextEncodingName("UTF-8");
-//		mWebView.setInitialScale(100);
+		// mWebView.setInitialScale(100);
 
 		new NewsContentBll().getNewsContent(this, item_id,
 				new ZzStringHttpResponseListener() {

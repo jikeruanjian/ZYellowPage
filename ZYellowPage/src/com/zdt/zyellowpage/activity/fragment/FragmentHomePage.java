@@ -18,8 +18,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.ab.activity.AbActivity;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.AllTypeActivity;

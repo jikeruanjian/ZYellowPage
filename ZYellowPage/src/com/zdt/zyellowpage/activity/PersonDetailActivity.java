@@ -669,8 +669,8 @@ public class PersonDetailActivity extends AbActivity implements
 				hotWordBtn
 						.setBackgroundResource(R.drawable.button_selector_blue_light);
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.WRAP_CONTENT,
-						LinearLayout.LayoutParams.WRAP_CONTENT);
+						android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+						android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 				lp.setMargins(10, 2, 10, 2);
 				hotWordBtn.setLayoutParams(lp);
 				hotWordBtn.setPadding(10, 2, 10, 2);

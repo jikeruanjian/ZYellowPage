@@ -35,7 +35,6 @@
                         android:background="@drawable/food_l" />
 
                     <TextView
-                       
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageButtonFood_x"
@@ -53,7 +52,6 @@
                     android:background="@drawable/imagebtn_movie" >
 
                     <TextView
-                     
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageButtonMovie_x"
@@ -87,7 +85,6 @@
                         android:background="@drawable/happy_l" />
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageButtonHappy_x"
@@ -113,7 +110,6 @@
                         android:background="@drawable/hotel_l" />
 
                     <TextView
-                      
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageButtonHotel_x"
@@ -129,6 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="102dp"
                 android:layout_gravity="center_horizontal" >
+
                 <RelativeLayout
                     android:id="@+id/imageButtonCash"
                     android:layout_width="wrap_content"
@@ -144,7 +141,6 @@
                         android:background="@drawable/sports_l" />
 
                     <TextView
-                       
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageButtonCash_x"
@@ -154,7 +150,8 @@
                         android:textColor="#9F9F9F"
                         android:textSize="14sp" />
                 </RelativeLayout>
-  				<RelativeLayout
+
+                <RelativeLayout
                     android:id="@+id/imageButtonNewInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -169,7 +166,6 @@
                         android:background="@drawable/cash_l" />
 
                     <TextView
-                        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageButtonNewInfo_x"
@@ -179,7 +175,7 @@
                         android:textColor="#9F9F9F"
                         android:textSize="14sp" />
                 </RelativeLayout>
-                
+
                 <RelativeLayout
                     android:id="@+id/imageButtonPeople"
                     android:layout_width="wrap_content"
@@ -195,7 +191,6 @@
                         android:background="@drawable/people_l" />
 
                     <TextView
-                        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageButtonPeople_x"
@@ -221,7 +216,6 @@
                         android:background="@drawable/all_l" />
 
                     <TextView
-                        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageButtonAll_x"
@@ -233,175 +227,162 @@
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
-    
-    <LinearLayout
-    	android:layout_width="fill_parent"
-    	android:layout_height="fill_parent"
-    	android:orientation="vertical" >
-   		<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:layout_marginTop="10dp" >
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayoutBus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_life_bg"
-            android:layout_margin="1dp"
-            >
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_bus"
-                android:gravity="center_vertical"
-                android:textColor="#9F9F9F"
-                android:textSize="18sp"
-                android:layout_margin="10dp"
-                android:text="公交" />
+                android:layout_marginTop="10dp" >
 
-        </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutBus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_life_bg" >
 
-        <RelativeLayout
-             android:id="@+id/RelativeLayoutTrain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-             android:background="@drawable/button_life_bg"
-            android:layout_margin="1dp" >
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:drawableLeft="@drawable/ic_bus"
+                        android:gravity="center_vertical"
+                        android:text="公交"
+                        android:textColor="#9F9F9F"
+                        android:textSize="18sp" />
+                </RelativeLayout>
 
-       
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_train"
-                android:gravity="center_vertical"
-                android:textColor="#9F9F9F"
-                android:textSize="18sp"
-                android:layout_margin="10dp"
-                android:text="火车票" />
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutTrain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_life_bg" >
 
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:drawableLeft="@drawable/ic_train"
+                        android:gravity="center_vertical"
+                        android:text="火车票"
+                        android:textColor="#9F9F9F"
+                        android:textSize="18sp" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayoutFlight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_life_bg"
-            android:layout_margin="1dp" >
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutFlight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_life_bg" >
 
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:drawableLeft="@drawable/ic_flight"
+                        android:gravity="center_vertical"
+                        android:text="机票"
+                        android:textColor="#9F9F9F"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_flight"
-                android:gravity="center_vertical"
-                android:textColor="#9F9F9F"
-                android:textSize="18sp"
-                android:layout_margin="10dp"
-                android:text="机票" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-        </RelativeLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutSubway"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_life_bg" >
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayoutSubway"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_life_bg"
-            android:layout_margin="1dp" >
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:drawableLeft="@drawable/ic_subway"
+                        android:gravity="center_vertical"
+                        android:text="地铁"
+                        android:textColor="#9F9F9F"
+                        android:textSize="18sp" />
+                </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView4"
-               android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-				android:drawableLeft="@drawable/ic_subway"
-                android:gravity="center_vertical"
-               android:textColor="#9F9F9F"
-                android:textSize="18sp"
-                android:layout_margin="10dp"
-                android:text="地铁" />
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutWeather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_life_bg" >
 
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/ic_weather"
+                        android:gravity="center_vertical"
+                        android:text="天气"
+                        android:textColor="#9F9F9F"
+                        android:textSize="18sp" />
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayoutWeather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_life_bg"
-            android:layout_margin="1dp">
+                    <TextView
+                        android:id="@+id/textView51"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/textView5"
+                        android:layout_alignBottom="@+id/textView5"
+                        android:layout_toRightOf="@+id/textView5"
+                        android:text="票"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+                </RelativeLayout>
 
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutDelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_life_bg" >
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-				android:drawableLeft="@drawable/ic_weather"
-                android:gravity="center_vertical"
-                android:textColor="#9F9F9F"
-                android:textSize="18sp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="天气" />
-			<TextView
-                android:id="@+id/textView51"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView5"
-                android:layout_alignBottom="@+id/textView5"
-                android:layout_toRightOf="@+id/textView5"
-                android:text="票"
-                 android:textSize="18sp"
-                android:textColor="#FFFFFF" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/RelativeLayoutDelivery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_life_bg"
-           android:layout_margin="1dp" >
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-				android:drawableLeft="@drawable/ic_delivery"
-                android:gravity="center_vertical"
-                android:textColor="#9F9F9F"
-                android:textSize="18sp"
-                android:layout_margin="10dp"
-                android:text="快递" />
-
-        </RelativeLayout>
-    </LinearLayout>
-</LinearLayout>
-        <!--
-                 <ScrollView
-                android:id="@+id/scrollViewAllXX"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:fadingEdge="vertical"
-                android:scrollbars="vertical" >
-        -->
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:drawableLeft="@drawable/ic_delivery"
+                        android:gravity="center_vertical"
+                        android:text="快递"
+                        android:textColor="#9F9F9F"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -423,7 +404,6 @@
                     android:background="#EEEEEE" />
 
                 <TextView
-                    android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/orange_background" />
@@ -435,7 +415,7 @@
                     android:cacheColorHint="@android:color/white" >
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
@@ -446,7 +426,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -472,13 +451,11 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:background="#EEEEEE" />
 
                 <TextView
-                    android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/orange_background" />
