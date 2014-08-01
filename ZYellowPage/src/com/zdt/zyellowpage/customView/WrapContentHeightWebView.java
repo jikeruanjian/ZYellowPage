@@ -1,8 +1,6 @@
 package com.zdt.zyellowpage.customView;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.webkit.WebView;

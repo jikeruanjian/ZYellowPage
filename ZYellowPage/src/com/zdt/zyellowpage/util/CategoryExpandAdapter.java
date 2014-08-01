@@ -101,7 +101,7 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 
 		final FirstLevViewHolder viewHolder;
 		if (convertView == null) {
-			convertView = (LinearLayout) View.inflate(mActivity,
+			convertView = View.inflate(mActivity,
 					R.layout.expandgroup_item, null);
 			viewHolder = new FirstLevViewHolder();
 			viewHolder.itemsTitle = (TextView) convertView
@@ -128,7 +128,7 @@ public class CategoryExpandAdapter extends BaseExpandableListAdapter {
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		final SeclevViewHolder viewHolder;
 		if (convertView == null) {
-			convertView = (LinearLayout) View.inflate(mActivity,
+			convertView = View.inflate(mActivity,
 					R.layout.expandchild_item, null);
 			viewHolder = new SeclevViewHolder();
 			viewHolder.itemsTitle = (TextView) convertView

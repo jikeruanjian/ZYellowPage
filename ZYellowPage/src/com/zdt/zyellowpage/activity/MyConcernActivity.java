@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import com.ab.activity.AbActivity;
 import com.ab.view.listener.AbOnListViewListener;

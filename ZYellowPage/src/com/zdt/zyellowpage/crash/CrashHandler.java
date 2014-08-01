@@ -211,6 +211,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 	private String[] getCrashReportFiles(Context ctx) {
 		File filesDir = ctx.getFilesDir();
 		FilenameFilter filter = new FilenameFilter() {
+			@Override
 			public boolean accept(File dir, String name) {
 				return name.endsWith(CRASH_REPORTER_EXTENSION);
 			}

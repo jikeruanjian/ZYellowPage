@@ -5,7 +5,6 @@ import java.util.List;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.webkit.WebView;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.ab.activity.AbActivity;

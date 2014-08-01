@@ -22,7 +22,6 @@ import com.ab.view.pullview.AbPullListView;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.BuySellContentActivity;
 import com.zdt.zyellowpage.activity.EditSupplyDemandActivity;
-import com.zdt.zyellowpage.activity.MainActivity;
 import com.zdt.zyellowpage.bll.SupplyDemandBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.SupplyDemandReqEntity;
