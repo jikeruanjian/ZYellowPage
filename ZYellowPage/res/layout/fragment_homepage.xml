@@ -246,29 +246,21 @@
         <RelativeLayout
             android:id="@+id/RelativeLayoutBus"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_life_bg"
             android:layout_margin="1dp"
             >
-
-            <ImageView
-                android:id="@+id/imageViewBus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_bus" />
-
             <TextView
                 android:id="@+id/textView1"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageViewBus"
+                android:drawableLeft="@drawable/ic_bus"
+                android:gravity="center_vertical"
                 android:textColor="#9F9F9F"
                 android:textSize="18sp"
+                android:layout_margin="10dp"
                 android:text="公交" />
 
         </RelativeLayout>
@@ -276,28 +268,22 @@
         <RelativeLayout
              android:id="@+id/RelativeLayoutTrain"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
              android:background="@drawable/button_life_bg"
             android:layout_margin="1dp" >
 
-            <ImageView
-                android:id="@+id/imageViewTrain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_train" />
-
+       
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageViewTrain"
+                android:drawableLeft="@drawable/ic_train"
+                android:gravity="center_vertical"
                 android:textColor="#9F9F9F"
                 android:textSize="18sp"
+                android:layout_margin="10dp"
                 android:text="火车票" />
 
         </RelativeLayout>
@@ -305,28 +291,22 @@
         <RelativeLayout
             android:id="@+id/RelativeLayoutFlight"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_life_bg"
             android:layout_margin="1dp" >
 
-            <ImageView
-                android:id="@+id/imageViewFlight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_flight" />
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageViewFlight"
+                android:drawableLeft="@drawable/ic_flight"
+                android:gravity="center_vertical"
                 android:textColor="#9F9F9F"
                 android:textSize="18sp"
+                android:layout_margin="10dp"
                 android:text="机票" />
 
         </RelativeLayout>
@@ -338,28 +318,21 @@
         <RelativeLayout
             android:id="@+id/RelativeLayoutSubway"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_life_bg"
             android:layout_margin="1dp" >
 
-            <ImageView
-                android:id="@+id/imageViewSubway"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_subway" />
-
             <TextView
                 android:id="@+id/textView4"
-               android:layout_width="50dp"
+               android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageViewSubway"
+				android:drawableLeft="@drawable/ic_subway"
+                android:gravity="center_vertical"
                android:textColor="#9F9F9F"
                 android:textSize="18sp"
+                android:layout_margin="10dp"
                 android:text="地铁" />
 
         </RelativeLayout>
@@ -367,57 +340,55 @@
         <RelativeLayout
             android:id="@+id/RelativeLayoutWeather"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_life_bg"
-           android:layout_margin="1dp">
+            android:layout_margin="1dp">
 
-            <ImageView
-                android:id="@+id/imageViewWeather"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_weather" />
 
             <TextView
                 android:id="@+id/textView5"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageViewWeather"
+				android:drawableLeft="@drawable/ic_weather"
+                android:gravity="center_vertical"
                 android:textColor="#9F9F9F"
                 android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="天气" />
-
+			<TextView
+                android:id="@+id/textView51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView5"
+                android:layout_alignBottom="@+id/textView5"
+                android:layout_toRightOf="@+id/textView5"
+                android:text="票"
+                 android:textSize="18sp"
+                android:textColor="#FFFFFF" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/RelativeLayoutDelivery"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_life_bg"
            android:layout_margin="1dp" >
 
-            <ImageView
-                android:id="@+id/imageViewDelivery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_delivery" />
-
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageViewDelivery"
+				android:drawableLeft="@drawable/ic_delivery"
+                android:gravity="center_vertical"
                 android:textColor="#9F9F9F"
                 android:textSize="18sp"
+                android:layout_margin="10dp"
                 android:text="快递" />
 
         </RelativeLayout>
