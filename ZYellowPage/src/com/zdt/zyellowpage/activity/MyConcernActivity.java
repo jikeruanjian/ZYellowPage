@@ -5,9 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+
 import com.ab.activity.AbActivity;
 import com.ab.view.listener.AbOnListViewListener;
 import com.ab.view.pullview.AbPullListView;
@@ -71,17 +76,19 @@ public class MyConcernActivity extends AbActivity {
 						R.id.itemsTitle, R.id.itemsText, R.id.itemsBtnConcern });
 		mAbPullListView.setAdapter(myListViewAdapter);
 		// item被点击事件
-		/*mAbPullListView.setOnItemClickListener(new OnItemClickListener() {
+		mAbPullListView.setOnItemClickListener(new OnItemClickListener() {
+		
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				// TODO Auto-generated method stub
 				//PopBusinessListActivity.this.showToast(list.get(position).get("Member_id").toString());
-				Intent intent = new Intent(PopBusinessListActivity.this,
+				Intent intent = new Intent(MyConcernActivity.this,
 						 BusinessDetailActivity.class);
 				 intent.putExtra("MEMBER_ID", list.get(position-1).get("Member_id").toString());
 				 startActivity(intent);
 			}
-		});*/
+		});
 
 		currentPage= 0;
 
@@ -134,6 +141,10 @@ public class MyConcernActivity extends AbActivity {
 					map.put("itemsTitle", u.getFullname());
 					map.put("itemsText", u.getKeyword());
 					newList.add(map);
+					Log.e("----chun---1", u.getFullname());
+					if(u.getKeyword() != null){
+					Log.e("----chun---2", u.getKeyword());
+					}
 				}
 			}
 
