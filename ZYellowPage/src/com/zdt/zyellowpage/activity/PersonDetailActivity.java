@@ -15,11 +15,11 @@ import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -95,6 +95,8 @@ public class PersonDetailActivity extends AbActivity implements
 
 	private LinearLayout llyHotWord;
 
+	private LinearLayout layCer = null;// 资质证书的layout
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -119,10 +121,6 @@ public class PersonDetailActivity extends AbActivity implements
 						.setRequestCode(42).show();
 			} else {
 				getData();
-				// 姓名、性别、年龄、所在地、民族、电话、电子邮箱、编号、QQ、学校、专业、行业、
-				// 关键词、地址、个人资质、个人特长、个人简介、成功案例、个人二维码、附件地址
-				// imageLoader.init(ImageLoaderConfiguration
-				// .createDefault(PersonDetailActivity.this));
 			}
 		}
 	}
@@ -143,8 +141,8 @@ public class PersonDetailActivity extends AbActivity implements
 						}
 						userPerson = lis.get(0);
 						layMain.setVisibility(View.VISIBLE);
-						getDataCertificate();
 						getView();
+						getDataCertificate();
 						getDataCode();
 					}
 
@@ -206,7 +204,7 @@ public class PersonDetailActivity extends AbActivity implements
 					@Override
 					public void onStart() {
 						// 显示进度框
-						showProgressDialog();
+						// showProgressDialog();
 					}
 
 					// 失败，调用
@@ -220,7 +218,7 @@ public class PersonDetailActivity extends AbActivity implements
 					@Override
 					public void onFinish() {
 						// 移除进度框
-						removeProgressDialog();
+						// removeProgressDialog();
 					};
 				});
 	}
@@ -263,13 +261,17 @@ public class PersonDetailActivity extends AbActivity implements
 
 					@Override
 					public void onFinish() {
-						InitViewPager();
-						HotWordDao hotWordDao = new HotWordDao(
-								PersonDetailActivity.this);
-						hotWordDao.startReadableDatabase(false);
-						List<String> tempLis = new ArrayList<String>();
+						((WebView) layCer.getChildAt(0)).loadDataWithBaseURL(
+								null,
+								AbStrUtil.isEmpty(certificateStr) ? "用户暂时还未添加该项数据"
+										: certificateStr, "text/html", "utf-8",
+								null);
 						// 处理证书的热词
 						if (!AbStrUtil.isEmpty(certificateStr)) {
+							HotWordDao hotWordDao = new HotWordDao(
+									PersonDetailActivity.this);
+							hotWordDao.startReadableDatabase(false);
+							List<String> tempLis = new ArrayList<String>();
 							List<HotWord> hotwordOfNation = hotWordDao
 									.queryList("type=?", new String[] { "6" });
 							for (HotWord hotWord : hotwordOfNation) {
@@ -280,9 +282,10 @@ public class PersonDetailActivity extends AbActivity implements
 									tempLis.add(hotWord.getHotword());
 								}
 							}
+
+							hotWordDao.closeDatabase(false);
+							createHotWordButton(tempLis);
 						}
-						hotWordDao.closeDatabase(false);
-						createHotWordButton(tempLis);
 					}
 
 				});
@@ -342,6 +345,8 @@ public class PersonDetailActivity extends AbActivity implements
 		findHotWord();
 
 		InitTextView();
+
+		InitViewPager();
 	}
 
 	private void InitTitleView() {
@@ -554,7 +559,8 @@ public class PersonDetailActivity extends AbActivity implements
 		listViews = new ArrayList<View>();
 		// LayoutInflater mInflater = getLayoutInflater();
 		listViews.add(addTextByText(userPerson.getSummary()));
-		listViews.add(addTextByText(certificateStr));
+		layCer = (LinearLayout) addTextByText("获取数据中...");
+		listViews.add(layCer);
 		// listViews.add(addTextByText(userPerson.getProfessional()));
 		listViews.add(addTextByText(userPerson.getSpecialty()));
 		listViews.add(addTextByText(userPerson.getExperience()));
@@ -826,7 +832,6 @@ public class PersonDetailActivity extends AbActivity implements
 								PersonDetailActivity.this
 										.removeDialog(AbConstant.DIALOGCENTER);
 							}
-
 						});
 					}
 
@@ -838,12 +843,21 @@ public class PersonDetailActivity extends AbActivity implements
 					@Override
 					public void onClick(View v) {
 						PersonDetailActivity.this.removeDialog(1);
-						String imgUrl = MediaStore.Images.Media.insertImage(
-								getContentResolver(), codeBitmap, "", "");
-						//Log.e("save codeimage", imgUrl);
-						removeDialog(AbConstant.DIALOGCENTER);
-						showToast("二维码成功保存到相册！");
-
+						try {
+							String imgUrl = MediaStore.Images.Media
+									.insertImage(getContentResolver(),
+											codeBitmap,
+											userPerson.getFullname(),
+											userPerson.getFullname() + "二维码");
+							removeDialog(AbConstant.DIALOGCENTER);
+							if (imgUrl.startsWith("content")) {
+								showToast("二维码成功保存到相册！");
+							} else {
+								showToast("保存失败:" + imgUrl);
+							}
+						} catch (Exception e) {
+							showToast("保存失败");
+						}
 					}
 				});
 		// 取消

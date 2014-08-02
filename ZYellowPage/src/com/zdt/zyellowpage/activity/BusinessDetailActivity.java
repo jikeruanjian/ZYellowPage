@@ -18,15 +18,14 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -992,12 +991,21 @@ public class BusinessDetailActivity extends AbActivity implements
 					@Override
 					public void onClick(View v) {
 						BusinessDetailActivity.this.removeDialog(1);
-						String imgUrl = MediaStore.Images.Media.insertImage(
-								getContentResolver(), codeBitmap, "", "");
-						//Log.e("save codeimage", imgUrl);
-						removeDialog(AbConstant.DIALOGCENTER);
-						showToast("二维码成功保存到相册！");
-
+						try {
+							String imgUrl = MediaStore.Images.Media
+									.insertImage(getContentResolver(),
+											codeBitmap,
+											userCompany.getFullname(),
+											userCompany.getFullname() + "二维码");
+							removeDialog(AbConstant.DIALOGCENTER);
+							if (imgUrl.startsWith("content")) {
+								showToast("二维码成功保存到相册！");
+							} else {
+								showToast("保存失败:" + imgUrl);
+							}
+						} catch (Exception e) {
+							showToast("保存失败");
+						}
 					}
 				});
 		// 取消
