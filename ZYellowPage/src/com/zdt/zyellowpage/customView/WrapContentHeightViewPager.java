@@ -69,16 +69,22 @@ public class WrapContentHeightViewPager extends ViewPager {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-		int height = 0;
+		int height = 50;
 		for (int i = 0; i < getChildCount(); i++) {
 			View child = getChildAt(i);
 			child.measure(widthMeasureSpec,
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 			int h = child.getMeasuredHeight();
+			if (h < 50) {
+				child.getLayoutParams().height = 50;
+				h = 50;
+			}
 			if (h > height)
 				height = h;
 		}
 
+		if (height < 50)
+			height = 50;
 		heightMeasureSpec = MeasureSpec.makeMeasureSpec(height,
 				MeasureSpec.EXACTLY);
 

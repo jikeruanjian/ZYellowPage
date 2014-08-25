@@ -30,13 +30,15 @@ public class MyWebViewActivity extends Activity implements
 			this.finish();
 		}
 		// http://player.youku.com/player.php/sid/XNzI5MTk2OTYw/v.swf
-		String[] tempIDs = url.split("/");
-		if (tempIDs.length > 2) {
-			String tempID = tempIDs[tempIDs.length - 2];
-			url = "http://player.youku.com/embed/" + tempID;
-		} else {
-			Toast.makeText(this, "不能解析该视频地址", Toast.LENGTH_LONG).show();
-			this.finish();
+		if (url.endsWith("v.swf")) {
+			String[] tempIDs = url.split("/");
+			if (tempIDs.length > 2) {
+				String tempID = tempIDs[tempIDs.length - 2];
+				url = "http://player.youku.com/embed/" + tempID;
+			} else {
+				Toast.makeText(this, "不能解析该视频地址", Toast.LENGTH_LONG).show();
+				this.finish();
+			}
 		}
 		contentView.setVideoPlayerClient(this);
 		try {

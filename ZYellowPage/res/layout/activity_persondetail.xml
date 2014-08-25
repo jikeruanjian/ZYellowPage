@@ -350,14 +350,29 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvHotTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@color/main_menu_bg"
+                android:paddingTop="5dp"
+                android:text="热词:"
+                android:textColor="@color/propertyvalue"
+                android:textSize="@dimen/main_text_size_h3"
+                android:visibility="gone" />
+
             <com.zdt.zyellowpage.customView.PredicateLayout
                 android:id="@+id/llyHotWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/main_menu_bg" 
-                android:padding="10dp"
+                android:background="@color/main_menu_bg"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:visibility="gone" >
             </com.zdt.zyellowpage.customView.PredicateLayout>
 
             <LinearLayout
@@ -421,6 +436,7 @@
                     android:layout_margin="5dp"
                     android:background="@color/white"
                     android:flipInterval="30"
+                    android:minHeight="50dp"
                     android:persistentDrawingCache="animation" />
             </LinearLayout>
         </LinearLayout>

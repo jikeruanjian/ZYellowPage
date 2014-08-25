@@ -120,6 +120,7 @@ public class PersonDetailActivity extends AbActivity implements
 						.setPositiveButtonText("返回").setTag(TAG)
 						.setRequestCode(42).show();
 			} else {
+				showProgressDialog("请稍后...");
 				getData();
 			}
 		}
@@ -148,7 +149,6 @@ public class PersonDetailActivity extends AbActivity implements
 
 					@Override
 					public void onStart() {
-						showProgressDialog();
 					}
 
 					@Override
@@ -576,12 +576,14 @@ public class PersonDetailActivity extends AbActivity implements
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		lay.setOrientation(LinearLayout.VERTICAL);
+		lay.setMinimumHeight(50);
 		WrapContentHeightWebView webView = new WrapContentHeightWebView(this);
 		webView.setFocusable(false);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
 		webView.setLayoutParams(new LayoutParams(
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+		webView.setMinimumHeight(50);
 		if (AbStrUtil.isEmpty(text)) {
 			text = "用户暂时还未添加该项数据";
 		}
@@ -670,6 +672,7 @@ public class PersonDetailActivity extends AbActivity implements
 	private void createHotWordButton(List<String> lis) {
 		if (lis != null && lis.size() > 0) {
 			llyHotWord.setVisibility(View.VISIBLE);
+			this.findViewById(R.id.tvHotTitle).setVisibility(View.VISIBLE);
 			for (String hotWord : lis) {
 				Button hotWordBtn = new Button(this);
 				hotWordBtn
@@ -726,7 +729,7 @@ public class PersonDetailActivity extends AbActivity implements
 
 		@Override
 		public Object instantiateItem(View arg0, int arg1) {
-			((ViewPager) arg0).addView(mListViews.get(arg1), 0);
+			((ViewPager) arg0).addView(mListViews.get(arg1));
 			return mListViews.get(arg1);
 		}
 
@@ -850,7 +853,7 @@ public class PersonDetailActivity extends AbActivity implements
 											userPerson.getFullname(),
 											userPerson.getFullname() + "二维码");
 							removeDialog(AbConstant.DIALOGCENTER);
-							if (imgUrl.startsWith("content")) {
+							if (imgUrl != null) {
 								showToast("二维码成功保存到相册！");
 							} else {
 								showToast("保存失败:" + imgUrl);

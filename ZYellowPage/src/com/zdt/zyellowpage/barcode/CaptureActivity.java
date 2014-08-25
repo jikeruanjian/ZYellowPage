@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.activity.AbActivity;
+import com.ab.view.titlebar.AbTitleBar;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.zdt.zyellowpage.R;
@@ -44,11 +46,20 @@ public class CaptureActivity extends AbActivity implements Callback {
 	private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
 
+	private AbTitleBar mAbTitleBar = null;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.capturer);
+		setAbContentView(R.layout.capturer);
+
+		mAbTitleBar = this.getTitleBar();
+		mAbTitleBar.setTitleText("扫一扫");
+		mAbTitleBar.setLogo(R.drawable.button_selector_back);
+		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
+		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
 		CameraManager.init(getApplication());
 
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);

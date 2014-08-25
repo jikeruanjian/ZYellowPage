@@ -141,17 +141,6 @@ public class BusinessDetailActivity extends AbActivity implements
 
 				InitTitleView();
 				getData();
-
-				// options = new DisplayImageOptions.Builder()
-				// .showImageForEmptyUri(R.drawable.businessdetail)
-				// .showImageOnFail(R.drawable.businessdetail)
-				// .resetViewBeforeLoading(true).cacheOnDisc(true)
-				// .imageScaleType(ImageScaleType.EXACTLY)
-				// .bitmapConfig(Bitmap.Config.RGB_565)
-				// .considerExifParams(true)
-				// .displayer(new FadeInBitmapDisplayer(300)).build();
-				// imageLoader.init(ImageLoaderConfiguration
-				// .createDefault(BusinessDetailActivity.this));
 			}
 		}
 	}
@@ -740,11 +729,13 @@ public class BusinessDetailActivity extends AbActivity implements
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
 		lay.setOrientation(LinearLayout.VERTICAL);
+		lay.setMinimumHeight(50);
 		WrapContentHeightWebView webView = new WrapContentHeightWebView(this);
 		webView.getSettings().setDefaultTextEncodingName("UTF-8");
 		webView.setLayoutParams(new LayoutParams(
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+		webView.setMinimumHeight(50);
 		if (AbStrUtil.isEmpty(text)) {
 			text = "用户暂时还未添加该项数据";
 		}
@@ -792,6 +783,7 @@ public class BusinessDetailActivity extends AbActivity implements
 	private void createHotWordButton() {
 		if (lisHotWord != null && lisHotWord.size() > 0) {
 			llyHotWord.setVisibility(View.VISIBLE);
+			this.findViewById(R.id.tvHotTitle).setVisibility(View.VISIBLE);
 			for (String hotWord : lisHotWord) {
 				Button hotWordBtn = new Button(this);
 				hotWordBtn
@@ -849,7 +841,7 @@ public class BusinessDetailActivity extends AbActivity implements
 
 		@Override
 		public Object instantiateItem(View arg0, int arg1) {
-			((ViewPager) arg0).addView(mListViews.get(arg1), 0);
+			((ViewPager) arg0).addView(mListViews.get(arg1));
 			return mListViews.get(arg1);
 		}
 
@@ -998,7 +990,7 @@ public class BusinessDetailActivity extends AbActivity implements
 											userCompany.getFullname(),
 											userCompany.getFullname() + "二维码");
 							removeDialog(AbConstant.DIALOGCENTER);
-							if (imgUrl.startsWith("content")) {
+							if (imgUrl != null) {
 								showToast("二维码成功保存到相册！");
 							} else {
 								showToast("保存失败:" + imgUrl);
