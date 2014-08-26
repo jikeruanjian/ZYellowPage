@@ -166,6 +166,14 @@ public class MainActivity extends AbActivity implements
 				newFragmentHome.getData();
 			}
 		}
+		if (requestCode == 10001) {
+			if (resultCode == RESULT_OK) {
+				if (intent.getExtras() != null) {
+				String	typeid = intent.getExtras().get("TypeId").toString();
+				newFragmentNearMap.getNearCompanyDataByType(typeid);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -232,6 +240,16 @@ public class MainActivity extends AbActivity implements
 					public void onClick(View v) {
 						startActivity(new Intent(MainActivity.this,
 								CaptureActivity.class));
+					}
+				});
+		
+		this.findViewById(R.id.imageViewTypelist).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						startActivityForResult(new Intent(MainActivity.this,
+								CompanytypeActivity.class), 10001);
 					}
 				});
 		getCityNameByLoc();

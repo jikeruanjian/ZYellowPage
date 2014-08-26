@@ -521,7 +521,7 @@ public class BusinessDetailActivity extends AbActivity implements
 						} else {
 							Intent intent = new Intent(
 									BusinessDetailActivity.this,
-									CompanyMapActiviy.class);
+									CompanyMapActiviy1.class);
 							intent.putExtra("FUllNAME",
 									userCompany.getFullname());
 							intent.putExtra("LAT",

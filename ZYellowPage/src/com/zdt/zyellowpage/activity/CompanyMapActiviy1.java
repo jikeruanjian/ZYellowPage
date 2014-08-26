@@ -1,14 +1,35 @@
-package com.zdt.zyellowpage.activity.fragment;
+package com.zdt.zyellowpage.activity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
+import com.ab.view.titlebar.AbTitleBar;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.GraphicsOverlay;
 import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.LocationData;
@@ -39,39 +60,20 @@ import com.baidu.navisdk.BaiduNaviManager.OnStartNavigationListener;
 import com.baidu.navisdk.comapi.routeplan.RoutePlanParams.NE_RoutePlan_Mode;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.zdt.zyellowpage.R;
-import com.zdt.zyellowpage.activity.BNavigatorActivity;
-import com.zdt.zyellowpage.activity.BusinessDetailActivity;
-import com.zdt.zyellowpage.activity.MainActivity;
+import com.zdt.zyellowpage.activity.CompanyMapActiviy.OverlayTest;
 import com.zdt.zyellowpage.bll.UserBll;
 import com.zdt.zyellowpage.global.MyApplication;
 import com.zdt.zyellowpage.jsonEntity.NearCompanyReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-public class FragmentNearMap extends Fragment {
-
-	View view;
-
-	private AbActivity mActivity;
-	// 地图显示
+public class CompanyMapActiviy1 extends AbActivity {
+	private MyApplication application;
+	private AbTitleBar mAbTitleBar = null;
+	String userCompanyFullName;
+	String latitude;
+	String Longitude;// 地图显示
+		BMapManager mBMapManC = null;
 	MapView mMapView = null;
 	MapController mMapController = null;
 
@@ -118,51 +120,81 @@ public class FragmentNearMap extends Fragment {
 	TextView textViewDes = null;
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		mActivity = (AbActivity) getActivity();
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+		if (requestCode == 10000) {
+			if (resultCode == RESULT_OK) {
+				if (intent.getExtras() != null) {
+				String	typeid = intent.getExtras().get("TypeId").toString();
+				this.getNearCompanyDataByType(typeid);
+				}
+			}
+		}
+	}
 
-		view = inflater.inflate(R.layout.fragment_nearmap, container, false);
-		view.findViewById(R.id.Layout_PioAllLife).getBackground().setAlpha(150);
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) { 
+		super.onCreate(savedInstanceState);
+		// 地图RjlfVWfEcAecRGc5qG8xyLoX\E0vBVTjgP3IvuuZSOSqKmsZu
+		mBMapManC = new BMapManager(getApplication());
+		// E25ED402F8E85C1714F86CC9042EA1B32BE151B2
+		mBMapManC.init(getResources().getString(R.string.BaiDuMap_Key), null);
+		setAbContentView(R.layout.fragment_nearmap);
+		if (getIntent().getExtras() != null) {
+			userCompanyFullName = (String) getIntent().getExtras().get("FUllNAME");
+			latitude = (String) getIntent().getExtras().get("LAT");
+			Longitude = (String) getIntent().getExtras().get("LON");
+			poiPoint = new GeoPoint((int) (Double.valueOf(latitude) * 1e6),
+					(int) (Double.valueOf(Longitude) * 1e6));
+		}
+		application = (MyApplication) abApplication;
+		mAbTitleBar = this.getTitleBar();
+		mAbTitleBar.setTitleText(userCompanyFullName);
+		mAbTitleBar.setLogo(R.drawable.button_selector_back);
+		mAbTitleBar.setTitleLayoutBackground(R.color.orange_background);
+		mAbTitleBar.setTitleTextMargin(10, 0, 0, 0);
+		//mAbTitleBar.setLogoLine(R.drawable.line);
+		mAbTitleBar.setTitleLayoutGravity(Gravity.CENTER, Gravity.RIGHT);
+		mAbTitleBar.clearRightView();
+		ImageView imageView = new ImageView(this);
+		imageView.setImageResource(R.drawable.maptypelist); 
+		imageView.setOnClickListener(
+				new OnClickListener() {
 
+					@Override
+					public void onClick(View v) {
+						startActivityForResult(new Intent(CompanyMapActiviy1.this,
+								CompanytypeActivity.class), 10000);
+					}
+				});
+		mAbTitleBar.addRightView(imageView);
+		
+		mMapView = (MapView) this.findViewById(R.id.bmapsView);
+		mCityName = application.locateCityName;
+		this.findViewById(R.id.Layout_PioAllLife).getBackground().setAlpha(150);
+		
 		myListener = new MyLocationListener();
 		
-		mMapView = (MapView) view.findViewById(R.id.bmapsView);
-		mCityName = ((MyApplication)mActivity.abApplication).locateCityName;
+		mMapView = (MapView) this.findViewById(R.id.bmapsView);
+		mCityName = ((MyApplication)this.abApplication).locateCityName;
 		initPoiDistantsBtn();
 		initMapView();
 		initMapLoc();
 		initMKSearch();
-		
 		newList = new ArrayList<User>();
-		//getNearEnterpriseList();
-
-		return view;
 	}
 
 	@Override
 	public void onDestroy() {
-		mMapView.destroy();
-		if (MainActivity.mBMapMan != null) {
-			MainActivity.mBMapMan.destroy();
-			MainActivity.mBMapMan = null;
-		}
-		if (mLocationClient != null) {
-			if (mLocationClient.isStarted()) {
-				mLocationClient.stop();
-			}
-			mLocationClient = null;
-		}
-		if (mMKSearch != null) {
-			mMKSearch = null;
-		}
 		super.onDestroy();
 	}
 
 
 	void initPoiDistantsBtn() {
-		view.findViewById(R.id.Layout_PioAllLife).getBackground().setAlpha(150);
-		view.findViewById(R.id.btn_PioAllDistance).setOnClickListener(
+		this.findViewById(R.id.Layout_PioAllLife).getBackground().setAlpha(150);
+		this.findViewById(R.id.btn_PioAllDistance).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -172,7 +204,7 @@ public class FragmentNearMap extends Fragment {
 					}
 
 				});
-		view.findViewById(R.id.btn_Pio500).setOnClickListener(
+		this.findViewById(R.id.btn_Pio500).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -181,7 +213,7 @@ public class FragmentNearMap extends Fragment {
 					}
 
 				});
-		view.findViewById(R.id.btn_Pio1000).setOnClickListener(
+		this.findViewById(R.id.btn_Pio1000).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -190,7 +222,7 @@ public class FragmentNearMap extends Fragment {
 					}
 
 				});
-		view.findViewById(R.id.btn_Pio1500).setOnClickListener(
+		this.findViewById(R.id.btn_Pio1500).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -200,7 +232,7 @@ public class FragmentNearMap extends Fragment {
 
 				});
 
-		view.findViewById(R.id.btnLocStartNear).setOnClickListener(
+		this.findViewById(R.id.btnLocStartNear).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -208,7 +240,7 @@ public class FragmentNearMap extends Fragment {
 						mLocationClient.start();
 						isRequest = true;
 						mLocationClient.requestLocation();
-						Toast.makeText(getActivity(), "正在定位…",
+						Toast.makeText(CompanyMapActiviy1.this, "正在定位…",
 								Toast.LENGTH_SHORT).show();
 					}
 
@@ -222,11 +254,12 @@ public class FragmentNearMap extends Fragment {
 		mMapView.setBuiltInZoomControls(true);
 		// 设置启用内置的缩放控件
 		mMapController = mMapView.getController();
-		// 得到mMapView的控制权,可以用它控制和驱动平移和缩放
-		GeoPoint point = new GeoPoint((int) (25.05177 * 1E6),
-				(int) (102.71607 * 1E6));
+		OverlayTest itemOverlay = new OverlayTest(getResources()
+				.getDrawable(R.drawable.companymap_mark_min), mMapView);
+		itemOverlay.addItem(new OverlayItem(poiPoint,userCompanyFullName,userCompanyFullName));
+		mMapView.getOverlays().add(itemOverlay);
 		// 用给定的经纬度构造一个GeoPoint，单位是微度 (度 * 1E6)
-		mMapController.setCenter(point);// 设置地图中心点
+		mMapController.setCenter(poiPoint);// 设置地图中心点
 		mMapView.getController().enableClick(true);
 		mMapController.setZoom(14);// 设置地图zoom级别
 	}
@@ -242,7 +275,7 @@ public class FragmentNearMap extends Fragment {
 		locData.longitude = 102.732342;
 		locData.direction = 2.0f;
 
-		mLocationClient = new LocationClient(getActivity()); // 声明LocationClient类
+		mLocationClient = new LocationClient(CompanyMapActiviy1.this); // 声明LocationClient类
 		graphicsOverlay = new GraphicsOverlay(mMapView);
 		mLocationClient.registerLocationListener(myListener); // 注册监听函数
 
@@ -275,36 +308,36 @@ public class FragmentNearMap extends Fragment {
 	 * @param view
 	 */
 	public void poiDistanceOnClick(View v) {
-		view.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
+		this.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
 				getResources().getColor(R.color.transparent));// 用于改变选中的背景颜色
-		view.findViewById(R.id.btn_Pio500).setBackgroundColor(
+		this.findViewById(R.id.btn_Pio500).setBackgroundColor(
 				getResources().getColor(R.color.transparent));
-		view.findViewById(R.id.btn_Pio1000).setBackgroundColor(
+		this.findViewById(R.id.btn_Pio1000).setBackgroundColor(
 				getResources().getColor(R.color.transparent));
-		view.findViewById(R.id.btn_Pio1500).setBackgroundColor(
+		this.findViewById(R.id.btn_Pio1500).setBackgroundColor(
 				getResources().getColor(R.color.transparent));
 		switch (v.getId()) {
 		case R.id.btn_PioAllDistance: {
 			poiDistance = 3000; // 6km范围内
-			view.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
+			this.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
 					Color.rgb(255, 127, 0));
 			break;
 		}
 		case R.id.btn_Pio500: {
 			poiDistance = 500;// 1km范围内
-			view.findViewById(R.id.btn_Pio500).setBackgroundColor(
+			this.findViewById(R.id.btn_Pio500).setBackgroundColor(
 					Color.rgb(255, 127, 0));
 			break;
 		}
 		case R.id.btn_Pio1000: {
 			poiDistance = 1000;// 3km范围内
-			view.findViewById(R.id.btn_Pio1000).setBackgroundColor(
+			this.findViewById(R.id.btn_Pio1000).setBackgroundColor(
 					Color.rgb(255, 127, 0));
 			break;
 		}
 		case R.id.btn_Pio1500: {
 			poiDistance = 1500; // 6km范围内
-			view.findViewById(R.id.btn_Pio1500).setBackgroundColor(
+			this.findViewById(R.id.btn_Pio1500).setBackgroundColor(
 					Color.rgb(255, 127, 0));
 			break;
 		}
@@ -377,7 +410,7 @@ public class FragmentNearMap extends Fragment {
 		NearCompanyReqEntity nearCompanyReqEntity = new NearCompanyReqEntity(
 				max, locData.latitude, locData.longitude, distance);
 		Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
-		bll.getNearCompany(mActivity, nearCompanyReqEntity,
+		bll.getNearCompany(this, nearCompanyReqEntity,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
@@ -397,27 +430,27 @@ public class FragmentNearMap extends Fragment {
 					@Override
 					public void onStart() {
 						// TODO Auto-generated method stub
-						mActivity.showProgressDialog("同步信息...");
+						CompanyMapActiviy1.this.showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
 						// TODO Auto-generated method stub
-						mActivity.showToast(error.getMessage());
+						CompanyMapActiviy1.this.showToast(error.getMessage());
 					}
 
 					@Override
 					public void onErrorData(String status_description) {
 						// TODO Auto-generated method stub
-						mActivity.showToast(status_description);
+						CompanyMapActiviy1.this.showToast(status_description);
 					}
 
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub
 						
-						mActivity.removeProgressDialog();
+						CompanyMapActiviy1.this.removeProgressDialog();
 						popView.setVisibility(View.GONE);
 						CleanRouteOverlay();
 						mMapView.getOverlays().remove(poiOverlayx);
@@ -442,7 +475,7 @@ public class FragmentNearMap extends Fragment {
 		NearCompanyReqEntity nearCompanyReqEntity = new NearCompanyReqEntity(
 				20, locData.latitude, locData.longitude, poiDistance,typeid);
 		Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
-		bll.getNearCompany(mActivity, nearCompanyReqEntity,
+		bll.getNearCompany(CompanyMapActiviy1.this, nearCompanyReqEntity,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
@@ -462,27 +495,27 @@ public class FragmentNearMap extends Fragment {
 					@Override
 					public void onStart() {
 						// TODO Auto-generated method stub
-						mActivity.showProgressDialog("同步信息...");
+						CompanyMapActiviy1.this.showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
 						// TODO Auto-generated method stub
-						mActivity.showToast(error.getMessage());
+						CompanyMapActiviy1.this.showToast(error.getMessage());
 					}
 
 					@Override
 					public void onErrorData(String status_description) {
 						// TODO Auto-generated method stub
-						mActivity.showToast(status_description);
+						CompanyMapActiviy1.this.showToast(status_description);
 					}
 
 					@Override
 					public void onFinish() {
 						// TODO Auto-generated method stub
 						
-						mActivity.removeProgressDialog();
+						CompanyMapActiviy1.this.removeProgressDialog();
 						popView.setVisibility(View.GONE);
 						CleanRouteOverlay();
 						mMapView.getOverlays().remove(poiOverlayx);
@@ -502,12 +535,12 @@ public class FragmentNearMap extends Fragment {
 	 */
 	@SuppressLint("NewApi")
 	void initMKSearch() {
-		view.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
+		CompanyMapActiviy1.this.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
 				Color.rgb(255, 127, 0));
 		mMKSearch = new MKSearch();  
     	mMKSearch.init(MainActivity.mBMapMan, new  MapMySearchListener());
 		// 泡泡初始化
-		popView = getActivity().getLayoutInflater().inflate(
+		popView = CompanyMapActiviy1.this.getLayoutInflater().inflate(
 				R.layout.overlay_pop, null);
 		popImage = (ImageView) popView.findViewById(R.id.imageViewPop);
 		//关闭泡泡
@@ -572,7 +605,7 @@ public class FragmentNearMap extends Fragment {
 				}
 				CleanRouteOverlay();
 				if(userMumber != null){
-					Intent intent = new Intent(mActivity,
+					Intent intent = new Intent(CompanyMapActiviy1.this,
 							BusinessDetailActivity.class);
 					intent.putExtra("MEMBER_ID",  userMumber);
 					startActivity(intent);
@@ -597,7 +630,7 @@ public class FragmentNearMap extends Fragment {
 					//mMKSearch.walkingSearch("昆明", start, "昆明", end);  
 					}
 					else{
-						Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
+						Toast.makeText(CompanyMapActiviy1.this, "请选择目的地！",Toast.LENGTH_LONG).show();  
 					}
 				}
 			}
@@ -619,7 +652,7 @@ public class FragmentNearMap extends Fragment {
 					//mMKSearch.transitSearch("昆明", start, end);
 					}
 					else{
-						Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
+						Toast.makeText(CompanyMapActiviy1.this, "请选择目的地！",Toast.LENGTH_LONG).show();  
 					}
 				}
 			}
@@ -641,7 +674,7 @@ public class FragmentNearMap extends Fragment {
 							//mMKSearch.walkingSearch("昆明", start, "昆明", end);  
 							}
 							else{
-								Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
+								Toast.makeText(CompanyMapActiviy1.this, "请选择目的地！",Toast.LENGTH_LONG).show();  
 							}
 						}
 					}
@@ -657,12 +690,12 @@ public class FragmentNearMap extends Fragment {
 		
 		
 		//初始化驾车路线覆盖物
-    	routeOverlay = new RouteOverlay(mActivity, mMapView);
+    	routeOverlay = new RouteOverlay(CompanyMapActiviy1.this, mMapView);
     	TransitRouteInfo = new MKTransitRouteResult();
     	//btnShowPlan =  (Button)this.findViewById(R.id.btnShowBusPlan);
     	//btnShowPlan.getBackground().setAlpha(200);
     	//初始化公交线路覆盖物
-    	TransitrouteOverlay  = new TransitOverlay (mActivity, mMapView);
+    	TransitrouteOverlay  = new TransitOverlay (CompanyMapActiviy1.this, mMapView);
     	start =  new MKPlanNode(); 
     	end = new MKPlanNode();
     	busStationOverlay = new TextOverlay(mMapView);
@@ -698,7 +731,7 @@ public class FragmentNearMap extends Fragment {
 			//初始化泡泡
 			popView.setVisibility(View.GONE);
 			if (info.getLogo() != null) {
-				new AbImageDownloader(mActivity).display(popImage,
+				new AbImageDownloader(CompanyMapActiviy1.this).display(popImage,
 						info.getLogo());
 			}
 			//popImage.setImageResource(R.drawable.ic_launcher);
@@ -748,10 +781,10 @@ public class FragmentNearMap extends Fragment {
         public void onClick(View v) {  
             // TODO Auto-generated method stub   
             //Toast.makeText(mContext, mPosition+"", Toast.LENGTH_SHORT).show(); 
-            Intent intent = new Intent(mActivity,
+            Intent intent = new Intent(CompanyMapActiviy1.this,
 					 BusinessDetailActivity.class);
 			 intent.putExtra("MEMBER_ID", mMemberId);
-			 mActivity.startActivity(intent);
+			 CompanyMapActiviy1.this.startActivity(intent);
         }  
           
     } 
@@ -783,7 +816,7 @@ public class FragmentNearMap extends Fragment {
         }  
           //重新初始化导航线路 
         routeOverlay = null;
-        routeOverlay = new RouteOverlay(mActivity, mMapView);
+        routeOverlay = new RouteOverlay(CompanyMapActiviy1.this, mMapView);
         routeOverlay.setData(result.getPlan(0).getRoute(0));  
         mMapView.getOverlays().add(routeOverlay);  
         if(popView.getVisibility() == View.VISIBLE){
@@ -828,7 +861,7 @@ public class FragmentNearMap extends Fragment {
 					return;
 				}
 				if (error != 0 || res == null) {
-					Toast.makeText(mActivity, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+					Toast.makeText(CompanyMapActiviy1.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
 					return;
 				}
 				TransitRouteInfo = res;
@@ -868,7 +901,7 @@ public class FragmentNearMap extends Fragment {
          }  
            //重新初始化导航线路 
          routeOverlay = null;
-         routeOverlay = new RouteOverlay(mActivity, mMapView);
+         routeOverlay = new RouteOverlay(CompanyMapActiviy1.this, mMapView);
          routeOverlay.setData(result.getPlan(0).getRoute(0));  
          mMapView.getOverlays().add(routeOverlay);  
          if(popView.getVisibility() == View.VISIBLE){
@@ -916,7 +949,7 @@ public void DrawTransitRoute( int n ){
 	MKTransitRoutePlan busInfo = new MKTransitRoutePlan();
 	busInfo = 	TransitRouteInfo.getPlan(n);
     TransitrouteOverlay = null;
-	TransitrouteOverlay  = new TransitOverlay (mActivity, mMapView);
+	TransitrouteOverlay  = new TransitOverlay (CompanyMapActiviy1.this, mMapView);
     // 此处仅展示一个方案作为示例
 	TransitrouteOverlay.setData(busInfo);
 	//添加路线图层
@@ -977,7 +1010,7 @@ public void DrawTransitRoute( int n ){
  */
   private void launchNavigator(){
 	//这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
-	BaiduNaviManager.getInstance().launchNavigator(mActivity, 
+	BaiduNaviManager.getInstance().launchNavigator(CompanyMapActiviy1.this, 
 			locData.latitude,locData.longitude,"起点", 
 			poiPoint.getLatitudeE6()/1E6, poiPoint.getLongitudeE6()/1E6,"终点",
 			NE_RoutePlan_Mode.ROUTE_PLAN_MOD_MIN_TIME, 		 //算路方式
@@ -987,7 +1020,7 @@ public void DrawTransitRoute( int n ){
 				
 				@Override
 				public void onJumpToNavigator(Bundle configParams) {
-					Intent intent = new Intent(mActivity, BNavigatorActivity.class);
+					Intent intent = new Intent(CompanyMapActiviy1.this, BNavigatorActivity.class);
 					intent.putExtras(configParams);
 			        startActivity(intent);
 				}
@@ -997,4 +1030,22 @@ public void DrawTransitRoute( int n ){
 				}
 			});
   }
+  class OverlayTest extends ItemizedOverlay<OverlayItem> {  
+	    //用MapView构造ItemizedOverlay  
+	    public OverlayTest(Drawable mark,MapView mapView){  
+	            super(mark,mapView);  
+	    }  
+	    @Override
+		protected boolean onTap(int index) {  
+	        //在此处理item点击事件  
+	        System.out.println("item onTap: "+index);  
+	        return true;  
+	    }  
+	        @Override
+			public boolean onTap(GeoPoint pt, MapView mapView){  
+	                //在此处理MapView的点击事件，当返回 true时  
+	                super.onTap(pt,mapView);  
+	                return false;  
+	        }  
+	}          
 }

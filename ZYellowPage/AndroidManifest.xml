@@ -229,7 +229,12 @@
             android:name="com.zdt.zyellowpage.activity.BNavigatorActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
         <activity android:name="com.zdt.zyellowpage.activity.AllTypeActivity" />
-
+        <activity android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy1" 
+ 			android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
+		<activity
+            android:name="com.zdt.zyellowpage.activity.CompanytypeActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
+        
         <!-- ###################注册SDK使用的Activity###################### -->
         <!-- 分享编辑页 -->
         <activity
@@ -256,12 +261,13 @@
             </intent-filter>
         </activity>
         <activity android:name="com.tencent.plus.ImageActivity" />
+        
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
-
+		
         <!-- ###################添加UmengAppkey###################### -->
         <meta-data
             android:name="UMENG_APPKEY"
