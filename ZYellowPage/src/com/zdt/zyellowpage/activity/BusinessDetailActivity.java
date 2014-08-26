@@ -751,27 +751,31 @@ public class BusinessDetailActivity extends AbActivity implements
 			HotWordDao hotWordDao = new HotWordDao(this);
 			hotWordDao.startReadableDatabase(false);
 			// 处理姓名的热词
-			List<HotWord> hotwordOfName = hotWordDao.queryList("type=?",
-					new String[] { "1" });
-			for (HotWord hotWord : hotwordOfName) {
-				Pattern p = Pattern.compile(hotWord.getHotword());
+			if (!AbStrUtil.isEmpty(userCompany.getContact())) {
+				List<HotWord> hotwordOfName = hotWordDao.queryList("type=?",
+						new String[] { "1" });
+				for (HotWord hotWord : hotwordOfName) {
+					Pattern p = Pattern.compile(hotWord.getHotword());
 
-				Matcher m1 = p.matcher(userCompany.getContact()); // 用户名称
-				if (m1.find()) {
-					lisHotWord.add(hotWord.getHotword());
+					Matcher m1 = p.matcher(userCompany.getContact()); // 用户名称
+					if (m1.find()) {
+						lisHotWord.add(hotWord.getHotword());
+					}
+
 				}
-
+				hotwordOfName = null;
 			}
-			hotwordOfName = null;
 
 			// 处理地址的热词
-			List<HotWord> hotwordOfAddress = hotWordDao.queryList("type=?",
-					new String[] { "5" });
-			for (HotWord hotWord : hotwordOfAddress) {
-				Pattern p = Pattern.compile(hotWord.getHotword());
-				Matcher m = p.matcher(userCompany.getAddress()); // 地址
-				if (m.find()) {
-					lisHotWord.add(hotWord.getHotword());
+			if (!AbStrUtil.isEmpty(userCompany.getAddress())) {
+				List<HotWord> hotwordOfAddress = hotWordDao.queryList("type=?",
+						new String[] { "5" });
+				for (HotWord hotWord : hotwordOfAddress) {
+					Pattern p = Pattern.compile(hotWord.getHotword());
+					Matcher m = p.matcher(userCompany.getAddress()); // 地址
+					if (m.find()) {
+						lisHotWord.add(hotWord.getHotword());
+					}
 				}
 			}
 			hotWordDao.closeDatabase(false);

@@ -103,7 +103,6 @@ public class PopBusinessListActivity extends AbActivity {
 		typeTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
 				int x = typeTextView.getLeft() + 10;
 				// words = MainActivity.listCategoryName.toArray(new String[0]);
@@ -118,7 +117,6 @@ public class PopBusinessListActivity extends AbActivity {
 		areaTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
 				int x = typeTextView.getLeft() - 10;
 				// words = MainActivity.listAreaName.toArray(new String[0]);
@@ -133,7 +131,6 @@ public class PopBusinessListActivity extends AbActivity {
 		newOrPoTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				int y = typeTextView.getBottom() * 3 / 2;
 				int x = typeTextView.getLeft() - 10;
 				words = NewOrPops;
@@ -162,7 +159,6 @@ public class PopBusinessListActivity extends AbActivity {
 
 					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
-						// TODO Auto-generated method stub
 						if (lis == null || lis.size() == 0) {
 							showToast("没有更多数据！");
 							return;
@@ -179,32 +175,26 @@ public class PopBusinessListActivity extends AbActivity {
 							map.put("itemsText", u.getKeyword());
 							newList.add(map);
 						}
-
-						Log.e("xxxx11", "-----" + newList.size());
 					}
 
 					@Override
 					public void onStart() {
-						// TODO Auto-generated method stub
 						showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						// TODO Auto-generated method stub
 						showToast(error.getMessage());
 					}
 
 					@Override
 					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
 						showToast(status_description);
 					}
 
 					@Override
 					public void onFinish() {
-						// TODO Auto-generated method stub
 						list.addAll(newList);
 						myListViewAdapter.notifyDataSetChanged();
 						int len = newList.size();
@@ -358,7 +348,6 @@ public class PopBusinessListActivity extends AbActivity {
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
-						// TODO Auto-generated method stub
 						keyId = "list-"
 								+ myPopupWindow.listLowerCategory.get(arg2)
 										.getId();
