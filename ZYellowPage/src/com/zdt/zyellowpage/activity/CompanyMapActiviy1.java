@@ -160,6 +160,8 @@ public class CompanyMapActiviy1 extends AbActivity {
 		mAbTitleBar.clearRightView();
 		ImageView imageView = new ImageView(this);
 		imageView.setImageResource(R.drawable.maptypelist); 
+		
+		imageView.setPadding(0, 0, 20, 0);
 		imageView.setOnClickListener(
 				new OnClickListener() {
 
@@ -408,7 +410,7 @@ public class CompanyMapActiviy1 extends AbActivity {
 		UserBll bll = new UserBll();
 
 		NearCompanyReqEntity nearCompanyReqEntity = new NearCompanyReqEntity(
-				max, locData.latitude, locData.longitude, distance);
+				max,  Double.valueOf(latitude),Double.valueOf(Longitude), distance);
 		Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
 		bll.getNearCompany(this, nearCompanyReqEntity,
 				new ZzObjectHttpResponseListener<User>() {
@@ -473,7 +475,7 @@ public class CompanyMapActiviy1 extends AbActivity {
 	public void getNearCompanyDataByType(String typeid) {
 		UserBll bll = new UserBll();
 		NearCompanyReqEntity nearCompanyReqEntity = new NearCompanyReqEntity(
-				20, locData.latitude, locData.longitude, poiDistance,typeid);
+				20, Double.valueOf(latitude),Double.valueOf(Longitude), poiDistance,typeid);
 		Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
 		bll.getNearCompany(CompanyMapActiviy1.this, nearCompanyReqEntity,
 				new ZzObjectHttpResponseListener<User>() {
