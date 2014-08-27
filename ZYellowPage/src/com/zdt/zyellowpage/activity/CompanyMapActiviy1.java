@@ -127,7 +127,12 @@ public class CompanyMapActiviy1 extends AbActivity {
 			if (resultCode == RESULT_OK) {
 				if (intent.getExtras() != null) {
 				String	typeid = intent.getExtras().get("TypeId").toString();
-				this.getNearCompanyDataByType(typeid);
+				if(typeid.equalsIgnoreCase("all")){
+					this.getNearCompanyData(20,3000);
+				}
+				else{
+					this.getNearCompanyDataByType(typeid);
+				}
 				}
 			}
 		}

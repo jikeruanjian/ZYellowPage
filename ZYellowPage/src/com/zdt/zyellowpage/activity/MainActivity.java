@@ -170,7 +170,13 @@ public class MainActivity extends AbActivity implements
 			if (resultCode == RESULT_OK) {
 				if (intent.getExtras() != null) {
 				String	typeid = intent.getExtras().get("TypeId").toString();
-				newFragmentNearMap.getNearCompanyDataByType(typeid);
+				if(typeid.equalsIgnoreCase("all")){
+					newFragmentNearMap.getNearCompanyData(20,3000);
+				}
+				else{
+					newFragmentNearMap.getNearCompanyDataByType(typeid);
+				}
+				
 				}
 			}
 		}

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -96,6 +97,20 @@ public class CompanytypeActivity extends AbActivity {
 		tvSave.setText("全部 ");
 		tvSave.setTextColor(Color.WHITE);
 		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+		tvSave.setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent data = new Intent();
+						Bundle bundle = new Bundle();
+						bundle.putSerializable("TypeId",  "all");
+						data.putExtras(bundle);
+						setResult(RESULT_OK, data);
+						CompanytypeActivity.this.finish();
+					}}
+	);
 		mAbTitleBar.addRightView(tvSave);
 	}
 }

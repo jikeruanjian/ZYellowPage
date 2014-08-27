@@ -371,7 +371,7 @@ public class FragmentNearMap extends Fragment {
 	 * 从接口获取信息
 	 */
 
-	void getNearCompanyData(int max,int distance) {
+	public void getNearCompanyData(int max,int distance) {
 		UserBll bll = new UserBll();
 
 		NearCompanyReqEntity nearCompanyReqEntity = new NearCompanyReqEntity(
