@@ -383,9 +383,7 @@ public class CompanyMapActiviy1 extends AbActivity {
 				myLocationOverlay.setData(locData);
 				mMapView.getOverlays().add(myLocationOverlay);
 				myLocationOverlay.enableCompass();
-				mMapController.animateTo(new GeoPoint(
-						(int) (locData.latitude * 1e6),
-						(int) (locData.longitude * 1e6)));
+				//mMapController.animateTo(new GeoPoint((int) (locData.latitude * 1e6),(int) (locData.longitude * 1e6)));
 				popView.setVisibility(View.GONE);
 				// 将搜索附近点放到定位里，定位根据现有经纬度和选择的范围值进行检索兴趣点，以下是百度接口
 				// mMKSearch.poiSearchNearBy("民生银行",new
