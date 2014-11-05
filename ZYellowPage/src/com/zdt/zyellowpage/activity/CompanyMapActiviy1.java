@@ -58,6 +58,7 @@ import com.baidu.mapapi.search.MKWalkingRouteResult;
 import com.baidu.navisdk.BaiduNaviManager;
 import com.baidu.navisdk.BaiduNaviManager.OnStartNavigationListener;
 import com.baidu.navisdk.comapi.routeplan.RoutePlanParams.NE_RoutePlan_Mode;
+import com.baidu.navisdk.util.common.CoordinateTransformUtil;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.zdt.zyellowpage.R;
 import com.zdt.zyellowpage.activity.CompanyMapActiviy.OverlayTest;
@@ -1017,9 +1018,15 @@ public void DrawTransitRoute( int n ){
  */
   private void launchNavigator(){
 	//这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
+	  com.baidu.nplatform.comapi.basestruct.GeoPoint startP =  
+			  CoordinateTransformUtil.transferBD09ToGCJ02(locData.latitude,locData.longitude);
+	  com.baidu.nplatform.comapi.basestruct.GeoPoint endP = 
+			  CoordinateTransformUtil.transferBD09ToGCJ02(poiPoint.getLatitudeE6()/1E6, poiPoint.getLongitudeE6()/1E6);
 	BaiduNaviManager.getInstance().launchNavigator(CompanyMapActiviy1.this, 
-			locData.latitude,locData.longitude,"起点", 
-			poiPoint.getLatitudeE6()/1E6, poiPoint.getLongitudeE6()/1E6,"终点",
+			startP.getLatitudeE6()/1E6, startP.getLongitudeE6()/1E6,"起点", 
+			endP.getLatitudeE6()/1E6, endP.getLongitudeE6()/1E6,"终点",
+			//locData.latitude,locData.longitude,"起点", 
+			//poiPoint.getLatitudeE6()/1E6, poiPoint.getLongitudeE6()/1E6,"终点",
 			NE_RoutePlan_Mode.ROUTE_PLAN_MOD_MIN_TIME, 		 //算路方式
 			true, 									   		 //真实导航
 			BaiduNaviManager.STRATEGY_FORCE_ONLINE_PRIORITY, //在离线策略
