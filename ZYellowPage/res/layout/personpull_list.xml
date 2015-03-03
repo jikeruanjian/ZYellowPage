@@ -4,11 +4,11 @@
     android:layout_height="fill_parent"
     android:background="@color/gray_white"
     android:orientation="vertical" >
-<LinearLayout
-        android:layout_width="match_parent" 
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-         >
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/spinnerKeyWordP"
@@ -39,17 +39,17 @@
             android:text="默认"
             android:textColor="@color/black"
             android:textSize="15sp" />
-        
     </LinearLayout>
-    <com.ab.view.pullview.AbPullListView 
+
+    <com.ab.view.pullview.AbPullListView
         android:id="@+id/mListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:cacheColorHint="#00000000"
         android:background="@color/white"
+        android:cacheColorHint="#00000000"
         android:divider="@drawable/list_divider"
-        android:dividerHeight="1dip" 
-        android:fastScrollEnabled="true">
+        android:dividerHeight="1dip"
+        android:fastScrollEnabled="true" >
     </com.ab.view.pullview.AbPullListView>
 
 </LinearLayout>

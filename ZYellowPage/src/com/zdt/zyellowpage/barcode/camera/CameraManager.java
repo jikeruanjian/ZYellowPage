@@ -255,7 +255,7 @@ public final class CameraManager {
 			// if (height < MIN_FRAME_HEIGHT) {
 			// height = MIN_FRAME_HEIGHT;
 			// }
-			int height = width * 4 / 5;
+			int height = width ;
 			// else if (height > MAX_FRAME_HEIGHT) {
 			// height = MAX_FRAME_HEIGHT;
 			// }

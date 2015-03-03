@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zdt.zyellowpage"
-    android:versionCode="12"
-    android:versionName="2.2.2" >
+    android:versionCode="14"
+    android:versionName="2.2.4" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -144,6 +144,9 @@
             android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy1"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.zdt.zyellowpage.activity.CompanyBuySellActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -229,8 +232,6 @@
             android:name="com.zdt.zyellowpage.activity.BNavigatorActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
         <activity android:name="com.zdt.zyellowpage.activity.AllTypeActivity" />
-        <activity android:name="com.zdt.zyellowpage.activity.CompanyMapActiviy1" 
- 			android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />
 		<activity
             android:name="com.zdt.zyellowpage.activity.CompanytypeActivity"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden" />

@@ -22,7 +22,7 @@ import com.zdt.zyellowpage.model.Category;
 import com.zdt.zyellowpage.util.CategoryExpandAdapter;
 
 public class CompanytypeActivity extends AbActivity {
-	
+
 	View view;
 	private AbTitleBar mAbTitleBar = null;
 	// 子视图显示文字
@@ -37,6 +37,7 @@ public class CompanytypeActivity extends AbActivity {
 		InitTitleView();
 		initTypeView();
 	}
+
 	/**
 	 * 初始化界面
 	 */
@@ -64,7 +65,7 @@ public class CompanytypeActivity extends AbActivity {
 						groupPosition, childPosition);
 				Intent data = new Intent();
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("TypeId",  selectedChild.getId());
+				bundle.putSerializable("TypeId", selectedChild.getId());
 				data.putExtras(bundle);
 				setResult(RESULT_OK, data);
 				CompanytypeActivity.this.finish();
@@ -84,8 +85,7 @@ public class CompanytypeActivity extends AbActivity {
 					}
 				});
 	}
-	
-	
+
 	private void InitTitleView() {
 		mAbTitleBar = this.getTitleBar();
 		mAbTitleBar.setTitleText("选择分类");
@@ -97,20 +97,19 @@ public class CompanytypeActivity extends AbActivity {
 		tvSave.setText("全部 ");
 		tvSave.setTextColor(Color.WHITE);
 		tvSave.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-		tvSave.setOnClickListener(
-				new OnClickListener() {
+		tvSave.setOnClickListener(new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						Intent data = new Intent();
-						Bundle bundle = new Bundle();
-						bundle.putSerializable("TypeId",  "all");
-						data.putExtras(bundle);
-						setResult(RESULT_OK, data);
-						CompanytypeActivity.this.finish();
-					}}
-	);
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent data = new Intent();
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("TypeId", "all");
+				data.putExtras(bundle);
+				setResult(RESULT_OK, data);
+				CompanytypeActivity.this.finish();
+			}
+		});
 		mAbTitleBar.addRightView(tvSave);
 	}
 }

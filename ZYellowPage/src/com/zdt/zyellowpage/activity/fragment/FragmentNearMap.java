@@ -3,6 +3,24 @@ package com.zdt.zyellowpage.activity.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.ab.activity.AbActivity;
 import com.ab.bitmap.AbImageDownloader;
 import com.baidu.location.BDLocation;
@@ -49,24 +67,6 @@ import com.zdt.zyellowpage.jsonEntity.NearCompanyReqEntity;
 import com.zdt.zyellowpage.listenser.ZzObjectHttpResponseListener;
 import com.zdt.zyellowpage.model.User;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 public class FragmentNearMap extends Fragment {
 
 	View view;
@@ -101,23 +101,23 @@ public class FragmentNearMap extends Fragment {
 	List<User> tempUser;
 	MyPoiOverlayX poiOverlayx = null;// 自定义
 	String userMumber = null;
-	
-	//驾车线路 
-	MKPlanNode start = null;//起始点
-	MKPlanNode end = null;//结束点
-	
-	RouteOverlay routeOverlay = null;//驾车路线覆盖物
-	TransitOverlay TransitrouteOverlay=null;//公交线路覆盖物
 
-	//上车下车点提示
+	// 驾车线路
+	MKPlanNode start = null;// 起始点
+	MKPlanNode end = null;// 结束点
+
+	RouteOverlay routeOverlay = null;// 驾车路线覆盖物
+	TransitOverlay TransitrouteOverlay = null;// 公交线路覆盖物
+
+	// 上车下车点提示
 	TextOverlay busStationOverlay = null;
 	ExpandableListView expandableListView = null;
-	//PlanGroupAdapter  mAdapter = null;
-	MKTransitRouteResult TransitRouteInfo  = null;
+	// PlanGroupAdapter mAdapter = null;
+	MKTransitRouteResult TransitRouteInfo = null;
 	Button btnShowPlan;
 	boolean expandVisable = true;
 	TextView textViewDes = null;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -127,16 +127,16 @@ public class FragmentNearMap extends Fragment {
 		view.findViewById(R.id.Layout_PioAllLife).getBackground().setAlpha(150);
 
 		myListener = new MyLocationListener();
-		
+
 		mMapView = (MapView) view.findViewById(R.id.bmapsView);
-		mCityName = ((MyApplication)mActivity.abApplication).locateCityName;
+		mCityName = ((MyApplication) mActivity.abApplication).locateCityName;
 		initPoiDistantsBtn();
 		initMapView();
 		initMapLoc();
 		initMKSearch();
-		
+
 		newList = new ArrayList<User>();
-		//getNearEnterpriseList();
+		// getNearEnterpriseList();
 
 		return view;
 	}
@@ -160,15 +160,12 @@ public class FragmentNearMap extends Fragment {
 		super.onDestroy();
 	}
 
-
 	void initPoiDistantsBtn() {
 		view.findViewById(R.id.Layout_PioAllLife).getBackground().setAlpha(150);
 		view.findViewById(R.id.btn_PioAllDistance).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						
 						poiDistanceOnClick(v);
 					}
 
@@ -177,7 +174,6 @@ public class FragmentNearMap extends Fragment {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						poiDistanceOnClick(v);
 					}
 
@@ -186,7 +182,6 @@ public class FragmentNearMap extends Fragment {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						poiDistanceOnClick(v);
 					}
 
@@ -195,7 +190,6 @@ public class FragmentNearMap extends Fragment {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						poiDistanceOnClick(v);
 					}
 
@@ -205,7 +199,6 @@ public class FragmentNearMap extends Fragment {
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						mLocationClient.start();
 						isRequest = true;
 						mLocationClient.requestLocation();
@@ -312,7 +305,7 @@ public class FragmentNearMap extends Fragment {
 		default:
 			break;
 		}
-		getNearCompanyData(20,poiDistance);
+		getNearCompanyData(20, poiDistance);
 	}
 
 	// 民生网点的定位牵涉到定位后选择范围，所以定位之后会根据所选择的范围来显示覆盖物（定位接口）
@@ -320,18 +313,17 @@ public class FragmentNearMap extends Fragment {
 		@Override
 		// 定位获取经纬度
 		public void onReceiveLocation(BDLocation location) {
-			Log.e("xxxx", "-------------------开始定位");
+			// Log.e("xxxx", "-------------------开始定位");
 			if (location == null)
 				return;
-
 			// -------虚拟机测试时注释
-			
-			  locData.latitude = location.getLatitude(); 
-			//如果不显示定位精度圈，将accuracy赋值为0即可
-			  locData.longitude = location.getLongitude(); 
-			  locData.accuracy = location.getRadius(); 
-			  locData.direction = location.getDerect();
-			  Log.e("fragmentmap", "-------------------所在城市："+location.getCity());  
+			locData.latitude = location.getLatitude();
+			// 如果不显示定位精度圈，将accuracy赋值为0即可
+			locData.longitude = location.getLongitude();
+			locData.accuracy = location.getRadius();
+			locData.direction = location.getDerect();
+			// Log.e("fragmentmap",
+			// "-------------------所在城市：" + location.getCity());
 			// 更新定位数据
 			myLocationOverlay.setData(locData);
 			// 更新图层数据执行刷新后生效
@@ -356,7 +348,7 @@ public class FragmentNearMap extends Fragment {
 				mLocationClient.stop();
 			}
 			// 首次定位完成
-			getNearCompanyData(20,3000);
+			getNearCompanyData(20, 3000);
 			isFirstLoc = false;
 		}
 
@@ -372,24 +364,22 @@ public class FragmentNearMap extends Fragment {
 	 * 从接口获取信息
 	 */
 
-	public void getNearCompanyData(int max,int distance) {
+	public void getNearCompanyData(int max, int distance) {
 		UserBll bll = new UserBll();
 
 		NearCompanyReqEntity nearCompanyReqEntity = new NearCompanyReqEntity(
 				max, locData.latitude, locData.longitude, distance);
-		Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
+		// Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
 		bll.getNearCompany(mActivity, nearCompanyReqEntity,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
-						// TODO Auto-generated method stub
-						
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
 						newList.clear();
-						Log.e("xxxx", "------" + lis.size());
+						// Log.e("xxxx", "------" + lis.size());
 						for (int i = 0; i < lis.size(); i++) {
 							newList.add(lis.get(i));
 						}
@@ -397,27 +387,22 @@ public class FragmentNearMap extends Fragment {
 
 					@Override
 					public void onStart() {
-						// TODO Auto-generated method stub
 						mActivity.showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						// TODO Auto-generated method stub
 						mActivity.showToast(error.getMessage());
 					}
 
 					@Override
 					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
 						mActivity.showToast(status_description);
 					}
 
 					@Override
 					public void onFinish() {
-						// TODO Auto-generated method stub
-						
 						mActivity.removeProgressDialog();
 						popView.setVisibility(View.GONE);
 						CleanRouteOverlay();
@@ -428,12 +413,11 @@ public class FragmentNearMap extends Fragment {
 						mMapView.getOverlays().add(poiOverlayx);
 						mMapView.refresh();
 					}
-			
+
 				});
 
 	}
 
-	
 	/**
 	 * 从接口获取信息
 	 */
@@ -441,20 +425,18 @@ public class FragmentNearMap extends Fragment {
 	public void getNearCompanyDataByType(String typeid) {
 		UserBll bll = new UserBll();
 		NearCompanyReqEntity nearCompanyReqEntity = new NearCompanyReqEntity(
-				20, locData.latitude, locData.longitude, poiDistance,typeid);
-		Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
+				20, locData.latitude, locData.longitude, poiDistance, typeid);
+		// Log.e("xxxx", "-------" + locData.latitude + locData.longitude);
 		bll.getNearCompany(mActivity, nearCompanyReqEntity,
 				new ZzObjectHttpResponseListener<User>() {
 
 					@Override
 					public void onSuccess(int statusCode, List<User> lis) {
-						// TODO Auto-generated method stub
-						
 						if (lis == null || lis.size() == 0) {
 							return;
 						}
 						newList.clear();
-						Log.e("xxxx", "------" + lis.size());
+						// Log.e("xxxx", "------" + lis.size());
 						for (int i = 0; i < lis.size(); i++) {
 							newList.add(lis.get(i));
 						}
@@ -462,27 +444,22 @@ public class FragmentNearMap extends Fragment {
 
 					@Override
 					public void onStart() {
-						// TODO Auto-generated method stub
 						mActivity.showProgressDialog("同步信息...");
 					}
 
 					@Override
 					public void onFailure(int statusCode, String content,
 							Throwable error, List<User> localList) {
-						// TODO Auto-generated method stub
 						mActivity.showToast(error.getMessage());
 					}
 
 					@Override
 					public void onErrorData(String status_description) {
-						// TODO Auto-generated method stub
 						mActivity.showToast(status_description);
 					}
 
 					@Override
 					public void onFinish() {
-						// TODO Auto-generated method stub
-						
 						mActivity.removeProgressDialog();
 						popView.setVisibility(View.GONE);
 						CleanRouteOverlay();
@@ -493,11 +470,11 @@ public class FragmentNearMap extends Fragment {
 						mMapView.getOverlays().add(poiOverlayx);
 						mMapView.refresh();
 					}
-			
+
 				});
 
 	}
-	
+
 	/**
 	 * 范围内搜索显示
 	 */
@@ -505,149 +482,157 @@ public class FragmentNearMap extends Fragment {
 	void initMKSearch() {
 		view.findViewById(R.id.btn_PioAllDistance).setBackgroundColor(
 				Color.rgb(255, 127, 0));
-		mMKSearch = new MKSearch();  
-    	mMKSearch.init(MainActivity.mBMapMan, new  MapMySearchListener());
+		mMKSearch = new MKSearch();
+		mMKSearch.init(MainActivity.mBMapMan, new MapMySearchListener());
 		// 泡泡初始化
 		popView = getActivity().getLayoutInflater().inflate(
 				R.layout.overlay_pop, null);
 		popImage = (ImageView) popView.findViewById(R.id.imageViewPop);
-		//关闭泡泡
+		// 关闭泡泡
 		closePop = (TextView) popView.findViewById(R.id.textViewClosePop);
 		closePop.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if (popView.getVisibility() == View.VISIBLE) {
 					popView.setVisibility(View.GONE);
 				}
 			}
 
 		});
-		//导航
-		popView.findViewById(R.id.mapPopTextCotent).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				launchNavigator();
-		//点击公交
-				/*公交
-				 * start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
-				MKPlanNode end = new MKPlanNode();
-				if(poiPoint != null){
-				end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
-				mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
-				mMKSearch.transitSearch("昆明", start, end);
-			}
-				//驾车
-				start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
-				MKPlanNode end = new MKPlanNode();
-				if(poiPoint != null){
-				end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
-				mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
-				mMKSearch.drivingSearch("昆明", start, "昆明", end);  
-				}
-				else{
-					Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
-				}
-				//步行
-				start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
-				MKPlanNode end = new MKPlanNode();
-				if(poiPoint != null){
-				end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
-				mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
-				mMKSearch.walkingSearch("昆明", start, "昆明", end);  
-				}
-				else{
-					Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
-				}
-				*/
-			}
+		// 导航
+		popView.findViewById(R.id.mapPopTextCotent).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						launchNavigator();
+						// 点击公交
+						/*
+						 * 公交 start.pt = new GeoPoint((int) (locData.latitude *
+						 * 1E6), (int) (locData.longitude * 1E6)); MKPlanNode
+						 * end = new MKPlanNode(); if(poiPoint != null){ end.pt
+						 * = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
+						 * mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
+						 * mMKSearch.transitSearch("昆明", start, end); } //驾车
+						 * start.pt = new GeoPoint((int) (locData.latitude *
+						 * 1E6), (int) (locData.longitude * 1E6)); MKPlanNode
+						 * end = new MKPlanNode(); if(poiPoint != null){ end.pt
+						 * = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
+						 * mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
+						 * mMKSearch.drivingSearch("昆明", start, "昆明", end); }
+						 * else{ Toast.makeText(mActivity,
+						 * "请选择目的地！",Toast.LENGTH_LONG).show(); } //步行 start.pt
+						 * = new GeoPoint((int) (locData.latitude * 1E6), (int)
+						 * (locData.longitude * 1E6)); MKPlanNode end = new
+						 * MKPlanNode(); if(poiPoint != null){ end.pt =
+						 * poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
+						 * mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
+						 * mMKSearch.walkingSearch("昆明", start, "昆明", end); }
+						 * else{ Toast.makeText(mActivity,
+						 * "请选择目的地！",Toast.LENGTH_LONG).show(); }
+						 */
+					}
 
-		});
-		//查看详细
+				});
+		// 查看详细
 		popImage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if (popView.getVisibility() == View.VISIBLE) {
 					popView.setVisibility(View.GONE);
 				}
 				CleanRouteOverlay();
-				if(userMumber != null){
+				if (userMumber != null) {
 					Intent intent = new Intent(mActivity,
 							BusinessDetailActivity.class);
-					intent.putExtra("MEMBER_ID",  userMumber);
+					intent.putExtra("MEMBER_ID", userMumber);
 					startActivity(intent);
 				}
 			}
 
-	});
-		
-		//步行
-		popView.findViewById(R.id.mapPopTextWalk).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Log.i("FragementNearMap", "-----步行");
-				CleanRouteOverlay();
-				if(poiPoint != null){
-					start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
-					MKPlanNode end = new MKPlanNode();
-					if(poiPoint != null){
-					end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
-					mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST); 
-					mMKSearch.walkingSearch(mCityName, start,mCityName, end);
-					//mMKSearch.walkingSearch("昆明", start, "昆明", end);  
-					}
-					else{
-						Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
-					}
-				}
-			}
 		});
-		
-		//公交
-		popView.findViewById(R.id.mapPopTextBus).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Log.i("FragementNearMap", "-----公交");
-				CleanRouteOverlay();
-				if(poiPoint != null){
-					 start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
-					MKPlanNode end = new MKPlanNode();
-					if(poiPoint != null){
-					end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
-					mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
-					mMKSearch.transitSearch(mCityName, start, end);
-					//mMKSearch.transitSearch("昆明", start, end);
-					}
-					else{
-						Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
-					}
-				}
-			}
-		});
-		
-		//驾车
-		popView.findViewById(R.id.mapPopTextDrive).setOnClickListener(new OnClickListener() {
+
+		// 步行
+		popView.findViewById(R.id.mapPopTextWalk).setOnClickListener(
+				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Log.i("FragementNearMap", "-----驾车");
+						// Log.i("FragementNearMap", "-----步行");
 						CleanRouteOverlay();
-						if(poiPoint != null){
-							start.pt = new GeoPoint((int) (locData.latitude * 1E6), (int) (locData.longitude * 1E6));  
+						if (poiPoint != null) {
+							start.pt = new GeoPoint(
+									(int) (locData.latitude * 1E6),
+									(int) (locData.longitude * 1E6));
 							MKPlanNode end = new MKPlanNode();
-							if(poiPoint != null){
-							end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短  
-							mMKSearch.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);  
-							mMKSearch.drivingSearch( mCityName,start,  mCityName, end);
-							//mMKSearch.walkingSearch("昆明", start, "昆明", end);  
-							}
-							else{
-								Toast.makeText(mActivity, "请选择目的地！",Toast.LENGTH_LONG).show();  
+							if (poiPoint != null) {
+								end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
+								mMKSearch
+										.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
+								mMKSearch.walkingSearch(mCityName, start,
+										mCityName, end);
+								// mMKSearch.walkingSearch("昆明", start, "昆明",
+								// end);
+							} else {
+								Toast.makeText(mActivity, "请选择目的地！",
+										Toast.LENGTH_LONG).show();
 							}
 						}
 					}
 				});
-			
+
+		// 公交
+		popView.findViewById(R.id.mapPopTextBus).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Log.i("FragementNearMap", "-----公交");
+						CleanRouteOverlay();
+						if (poiPoint != null) {
+							start.pt = new GeoPoint(
+									(int) (locData.latitude * 1E6),
+									(int) (locData.longitude * 1E6));
+							MKPlanNode end = new MKPlanNode();
+							if (poiPoint != null) {
+								end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
+								mMKSearch
+										.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
+								mMKSearch.transitSearch(mCityName, start, end);
+								// mMKSearch.transitSearch("昆明", start, end);
+							} else {
+								Toast.makeText(mActivity, "请选择目的地！",
+										Toast.LENGTH_LONG).show();
+							}
+						}
+					}
+				});
+
+		// 驾车
+		popView.findViewById(R.id.mapPopTextDrive).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Log.i("FragementNearMap", "-----驾车");
+						CleanRouteOverlay();
+						if (poiPoint != null) {
+							start.pt = new GeoPoint(
+									(int) (locData.latitude * 1E6),
+									(int) (locData.longitude * 1E6));
+							MKPlanNode end = new MKPlanNode();
+							if (poiPoint != null) {
+								end.pt = poiPoint;// 设置驾车路线搜索策略，时间优先、费用最少或距离最短
+								mMKSearch
+										.setDrivingPolicy(MKSearch.ECAR_TIME_FIRST);
+								mMKSearch.drivingSearch(mCityName, start,
+										mCityName, end);
+								// mMKSearch.walkingSearch("昆明", start, "昆明",
+								// end);
+							} else {
+								Toast.makeText(mActivity, "请选择目的地！",
+										Toast.LENGTH_LONG).show();
+							}
+						}
+					}
+				});
+
 		popView.getBackground().setAlpha(200);
 		mMapView.addView(popView, new MapView.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, null,
@@ -655,18 +640,17 @@ public class FragmentNearMap extends Fragment {
 		// 由于我的气泡的尾巴是在下边居中的,因此要设置成MapView.LayoutParams.BOTTOM_CENTER.
 		// 这里没有给GeoPoint,在onFocusChangeListener中设置
 		popView.setVisibility(View.GONE);// 隐藏泡泡
-		
-		
-		//初始化驾车路线覆盖物
-    	routeOverlay = new RouteOverlay(mActivity, mMapView);
-    	TransitRouteInfo = new MKTransitRouteResult();
-    	//btnShowPlan =  (Button)this.findViewById(R.id.btnShowBusPlan);
-    	//btnShowPlan.getBackground().setAlpha(200);
-    	//初始化公交线路覆盖物
-    	TransitrouteOverlay  = new TransitOverlay (mActivity, mMapView);
-    	start =  new MKPlanNode(); 
-    	end = new MKPlanNode();
-    	busStationOverlay = new TextOverlay(mMapView);
+
+		// 初始化驾车路线覆盖物
+		routeOverlay = new RouteOverlay(mActivity, mMapView);
+		TransitRouteInfo = new MKTransitRouteResult();
+		// btnShowPlan = (Button)this.findViewById(R.id.btnShowBusPlan);
+		// btnShowPlan.getBackground().setAlpha(200);
+		// 初始化公交线路覆盖物
+		TransitrouteOverlay = new TransitOverlay(mActivity, mMapView);
+		start = new MKPlanNode();
+		end = new MKPlanNode();
+		busStationOverlay = new TextOverlay(mMapView);
 	}
 
 	/**
@@ -675,10 +659,10 @@ public class FragmentNearMap extends Fragment {
 	@SuppressWarnings("rawtypes")
 	class MyPoiOverlayX extends ItemizedOverlay {
 		List<User> mSearch;
+
 		public MyPoiOverlayX(Drawable defaultMarker, MapView mapView,
 				List<User> search) {
 			super(defaultMarker, mapView);
-			Log.e("xxx", "数据库资源有-------" + search.size());
 			mSearch = new ArrayList<User>();
 			mSearch.addAll(search);
 			for (int i = 0; i < mSearch.size(); i++) {
@@ -690,19 +674,19 @@ public class FragmentNearMap extends Fragment {
 			}
 		}
 
-		//点击后将地图中心移动至点击点，并显示泡泡
+		// 点击后将地图中心移动至点击点，并显示泡泡
 		@Override
 		protected boolean onTap(int i) {
 			// super.onTap(i);
 			CleanRouteOverlay();
 			User info = mSearch.get(i);
-			//初始化泡泡
+			// 初始化泡泡
 			popView.setVisibility(View.GONE);
 			if (info.getLogo() != null) {
 				new AbImageDownloader(mActivity).display(popImage,
 						info.getLogo());
 			}
-			//popImage.setImageResource(R.drawable.ic_launcher);
+			// popImage.setImageResource(R.drawable.ic_launcher);
 			MapView.LayoutParams geoLP = (MapView.LayoutParams) popView
 					.getLayoutParams();
 			geoLP.point = new GeoPoint(
@@ -714,19 +698,17 @@ public class FragmentNearMap extends Fragment {
 					.findViewById(R.id.map_bubbleTitle);
 			poiPoint = geoLP.point;
 			title.setText(info.getFullname());
-			/*TextView desc = (TextView) popView
-					.findViewById(R.id.map_bubbleText);
-			if (info.getAddress() == null) {
-				desc.setVisibility(View.GONE);
-			} else {
-				desc.setVisibility(View.VISIBLE);
-				desc.setText(info.getAddress());
-			}*/
+			/*
+			 * TextView desc = (TextView) popView
+			 * .findViewById(R.id.map_bubbleText); if (info.getAddress() ==
+			 * null) { desc.setVisibility(View.GONE); } else {
+			 * desc.setVisibility(View.VISIBLE);
+			 * desc.setText(info.getAddress()); }
+			 */
 			TextView phone = (TextView) popView
 					.findViewById(R.id.map_bubblePhone);
 			phone.setText(info.getAddress());
-			
-			
+
 			mMapView.updateViewLayout(popView, geoLP);
 			popView.setVisibility(View.VISIBLE);
 			return true;
@@ -737,271 +719,253 @@ public class FragmentNearMap extends Fragment {
 			return false;
 		}
 
-		
 	}
-	
-	private class MapDetailListener implements OnClickListener{  
-        String mMemberId;  
-        public MapDetailListener(String memberId){  
-        	mMemberId= memberId;  
-        }  
-        @Override  
-        public void onClick(View v) {  
-            // TODO Auto-generated method stub   
-            //Toast.makeText(mContext, mPosition+"", Toast.LENGTH_SHORT).show(); 
-            Intent intent = new Intent(mActivity,
-					 BusinessDetailActivity.class);
-			 intent.putExtra("MEMBER_ID", mMemberId);
-			 mActivity.startActivity(intent);
-        }  
-          
-    } 
-	
-	
-	
+
 	public class MapMySearchListener implements MKSearchListener {
 
-    	@Override
-    	public void onGetAddrResult(MKAddrInfo arg0, int arg1) {
-    		// TODO Auto-generated method stub
-    		
-    	}
+		@Override
+		public void onGetAddrResult(MKAddrInfo arg0, int arg1) {
 
-    	@Override
-    	public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
-    		// TODO Auto-generated method stub
-    		
-    	}
+		}
 
-    	/**
-    	 * 驾车路线搜索
-    	 */
-    	@Override
-    	public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
-    		// TODO Auto-generated method stub
-        if (result == null) {  
-                return;  
-        }  
-          //重新初始化导航线路 
-        routeOverlay = null;
-        routeOverlay = new RouteOverlay(mActivity, mMapView);
-        routeOverlay.setData(result.getPlan(0).getRoute(0));  
-        mMapView.getOverlays().add(routeOverlay);  
-        if(popView.getVisibility() == View.VISIBLE){
-        	  popView.setVisibility(View.GONE);
-        	}
-        mMapView.refresh();  
-    	}
+		@Override
+		public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
+		}
 
-    	@Override
-    	public void onGetPoiDetailSearchResult(int arg0, int arg1) {
-    		// TODO Auto-generated method stub
-    		
-    	}
+		/**
+		 * 驾车路线搜索
+		 */
+		@Override
+		public void onGetDrivingRouteResult(MKDrivingRouteResult result,
+				int iError) {
+			if (result == null) {
+				return;
+			}
+			// 重新初始化导航线路
+			routeOverlay = null;
+			routeOverlay = new RouteOverlay(mActivity, mMapView);
+			routeOverlay.setData(result.getPlan(0).getRoute(0));
+			mMapView.getOverlays().add(routeOverlay);
+			if (popView.getVisibility() == View.VISIBLE) {
+				popView.setVisibility(View.GONE);
+			}
+			mMapView.refresh();
+		}
 
-    	@Override
-    	/**
-    	 * 百度兴趣点搜索，在使用百度数据的时候才调用
-    	 */
-    	public void onGetPoiResult(MKPoiResult res, int type, int error) {    
-    		
-    	}
+		@Override
+		public void onGetPoiDetailSearchResult(int arg0, int arg1) {
+		}
 
-    	@Override
-    	public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
-    		// TODO Auto-generated method stub
-    		
-    	}
+		@Override
+		/**
+		 * 百度兴趣点搜索，在使用百度数据的时候才调用
+		 */
+		public void onGetPoiResult(MKPoiResult res, int type, int error) {
 
-    	@Override
-    	/**
-    	 * 公交路线 
-    	 */
-    	public void onGetTransitRouteResult(MKTransitRouteResult res,
-					int error) {
-				//起点或终点有歧义，需要选择具体的城市列表或地址列表
-				if (error == MKEvent.ERROR_ROUTE_ADDR){
-					//遍历所有地址
-//					ArrayList<MKPoiInfo> stPois = res.getAddrResult().mStartPoiList;
-//					ArrayList<MKPoiInfo> enPois = res.getAddrResult().mEndPoiList;
-//					ArrayList<MKCityListInfo> stCities = res.getAddrResult().mStartCityList;
-//					ArrayList<MKCityListInfo> enCities = res.getAddrResult().mEndCityList;
-					return;
+		}
+
+		@Override
+		public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
+		}
+
+		@Override
+		/**
+		 * 公交路线 
+		 */
+		public void onGetTransitRouteResult(MKTransitRouteResult res, int error) {
+			// 起点或终点有歧义，需要选择具体的城市列表或地址列表
+			if (error == MKEvent.ERROR_ROUTE_ADDR) {
+				// 遍历所有地址
+				// ArrayList<MKPoiInfo> stPois =
+				// res.getAddrResult().mStartPoiList;
+				// ArrayList<MKPoiInfo> enPois =
+				// res.getAddrResult().mEndPoiList;
+				// ArrayList<MKCityListInfo> stCities =
+				// res.getAddrResult().mStartCityList;
+				// ArrayList<MKCityListInfo> enCities =
+				// res.getAddrResult().mEndCityList;
+				return;
+			}
+			if (error != 0 || res == null) {
+				Toast.makeText(mActivity, "抱歉，未找到结果", Toast.LENGTH_SHORT)
+						.show();
+				return;
+			}
+			TransitRouteInfo = res;
+			// 此处生成所有方案的信息加入list
+			String[] strPlans = new String[res.getNumPlan()];
+			String[][] strPlanConents = new String[res.getNumPlan()][];
+			for (int i = 0; i < res.getNumPlan(); i++) {
+				// 循环获取方案
+				MKTransitRoutePlan planinfo = new MKTransitRoutePlan();
+				planinfo = res.getPlan(i);
+				// 将方案名称加入方案数组
+				strPlans[i] = planinfo.getContent();
+				// 将方案详细内容加入对应的详细数组
+				strPlanConents[i] = new String[planinfo.getNumLines()];
+				// 循环获取方案的乘车线路
+				for (int j = 0; j < planinfo.getNumLines(); j++) {
+					strPlanConents[i][j] = planinfo.getLine(j).getTitle()
+							+ planinfo.getLine(j).getGetOnStop().name + "上车---"
+							+ planinfo.getLine(j).getGetOffStop().name + "下车";
 				}
-				if (error != 0 || res == null) {
-					Toast.makeText(mActivity, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
-					return;
-				}
-				TransitRouteInfo = res;
-				//此处生成所有方案的信息加入list
-				String[] strPlans = new String[res.getNumPlan()];
-				String[][] strPlanConents = new String[res.getNumPlan()][];
-				for(int i = 0 ;i<res.getNumPlan();i++){
-					//循环获取方案
-					MKTransitRoutePlan planinfo = new MKTransitRoutePlan();
-					planinfo = res.getPlan(i);
-					//将方案名称加入方案数组
-					strPlans[i]=planinfo.getContent();
-					//将方案详细内容加入对应的详细数组
-					strPlanConents[i] = new String[planinfo.getNumLines()];
-					//循环获取方案的乘车线路
-					for(int j = 0;j<planinfo.getNumLines();j++){
-						strPlanConents[i][j]= planinfo.getLine(j).getTitle()+planinfo.getLine(j).getGetOnStop().name+"上车---"+
-								planinfo.getLine(j).getGetOffStop().name + "下车";
-					}
-				}
-				//将数据加入expandablelistview
-			/*	mAdapter = 
-						new PlanGroupAdapter (LifeCmbcBMapActivity.this ,strPlans , strPlanConents);
-			    expandableListView.setAdapter(mAdapter);
-			    textViewDes.setText("目的地:"+PioName.getText().toString());
-			    LifeCmbcBMapActivity.this.findViewById(R.id.layoutLines).setVisibility(View.VISIBLE);
-			    LifeCmbcBMapActivity.this.findViewById(R.id.layoutViewPlans).setVisibility(View.VISIBLE);
-			    //expandableListView.setVisibility(View.VISIBLE);*/
-			    DrawTransitRoute(0);	  
-    	}
-    	
-    	@Override
-    	public void onGetWalkingRouteResult(MKWalkingRouteResult result, int arg1) {
-    		// TODO Auto-generated method stub
-    		 if (result == null) {  
-                 return;  
-         }  
-           //重新初始化导航线路 
-         routeOverlay = null;
-         routeOverlay = new RouteOverlay(mActivity, mMapView);
-         routeOverlay.setData(result.getPlan(0).getRoute(0));  
-         mMapView.getOverlays().add(routeOverlay);  
-         if(popView.getVisibility() == View.VISIBLE){
-         	  popView.setVisibility(View.GONE);
-         	}
-         mMapView.refresh();  
-    	}
+			}
+			// 将数据加入expandablelistview
+			/*
+			 * mAdapter = new PlanGroupAdapter (LifeCmbcBMapActivity.this
+			 * ,strPlans , strPlanConents);
+			 * expandableListView.setAdapter(mAdapter);
+			 * textViewDes.setText("目的地:"+PioName.getText().toString());
+			 * LifeCmbcBMapActivity
+			 * .this.findViewById(R.id.layoutLines).setVisibility(View.VISIBLE);
+			 * LifeCmbcBMapActivity
+			 * .this.findViewById(R.id.layoutViewPlans).setVisibility
+			 * (View.VISIBLE); //expandableListView.setVisibility(View.VISIBLE);
+			 */
+			DrawTransitRoute(0);
+		}
+
+		@Override
+		public void onGetWalkingRouteResult(MKWalkingRouteResult result,
+				int arg1) {
+			if (result == null) {
+				return;
+			}
+			// 重新初始化导航线路
+			routeOverlay = null;
+			routeOverlay = new RouteOverlay(mActivity, mMapView);
+			routeOverlay.setData(result.getPlan(0).getRoute(0));
+			mMapView.getOverlays().add(routeOverlay);
+			if (popView.getVisibility() == View.VISIBLE) {
+				popView.setVisibility(View.GONE);
+			}
+			mMapView.refresh();
+		}
 
 		@Override
 		public void onGetShareUrlResult(MKShareUrlResult arg0, int arg1,
 				int arg2) {
-			// TODO Auto-generated method stub
-			
-		}        
-       
-		
-		
-		
-		
-}
-/**
- * 清除驾车、公交线路覆盖物
- */
-void CleanRouteOverlay(){
-	if(routeOverlay != null && routeOverlay.size() > 0){
-    	mMapView.getOverlays().remove(routeOverlay);
-    	//routeOverlay=null;
-    	mMapView.refresh();
-    }
-    if(TransitrouteOverlay != null && TransitrouteOverlay.size() > 0){
-    	mMapView.getOverlays().remove(TransitrouteOverlay);
-    	busStationOverlay.removeAll();
-    	mMapView.getOverlays().remove(busStationOverlay);
-    	//routeOverlay=null;
-    	mMapView.refresh();
-    }
-}
-
-/**
- * 在地图上画出第i条公交线方案
- * @param 
- */
-public void DrawTransitRoute( int n ){
-	CleanRouteOverlay();
-	MKTransitRoutePlan busInfo = new MKTransitRoutePlan();
-	busInfo = 	TransitRouteInfo.getPlan(n);
-    TransitrouteOverlay = null;
-	TransitrouteOverlay  = new TransitOverlay (mActivity, mMapView);
-    // 此处仅展示一个方案作为示例
-	TransitrouteOverlay.setData(busInfo);
-	//添加路线图层
-    mMapView.getOverlays().add(TransitrouteOverlay);
-    if(popView.getVisibility() == View.VISIBLE){
-  	  popView.setVisibility(View.GONE);
-  	}
-	int len = busInfo.getNumLines();
-	Symbol symbol = new Symbol();
-	Symbol.Color fontColor = symbol.new Color();
-	//设置文字着色
-	fontColor.alpha = 255;
-	fontColor.red = 255;
-	fontColor.green = 0;
-	fontColor.blue  = 0;
-	Symbol.Color bgColor = symbol.new Color();
-	//设置文字背景色
-	bgColor.red = 0;
-	bgColor.blue = 0;
-	bgColor.green = 255;
-	bgColor.alpha = 150;
-	for(int i = 0;i<len;i++){
-		TextItem textItemStart = new TextItem();
-		TextItem textItemEnd = new TextItem();
-		textItemStart.pt=busInfo.getLine(i).getGetOnStop().pt;
-		textItemStart.fontSize = 15;
-		textItemStart.bgColor = bgColor;
-		textItemStart.text = busInfo.getLine(i).getTitle()+":"+busInfo.getLine(i).getGetOnStop().name+"上车";
-		textItemStart.align = TextItem.ALIGN_BOTTOM;
-		textItemStart.fontColor = fontColor;
-		Log.e("xxx", busInfo.getLine(i).getGetOnStop().pt.getLatitudeE6()+"");
-		
-		textItemEnd.pt = busInfo.getLine(i).getGetOffStop().pt;
-		textItemEnd.fontSize =15;
-		textItemEnd.bgColor = bgColor;
-		textItemEnd.text=busInfo.getLine(i).getGetOffStop().name+"下车";
-		textItemEnd.align  = TextItem.ALIGN_TOP;
-		textItemEnd.fontColor = fontColor;
-		
-		busStationOverlay.addText(textItemStart);
-		busStationOverlay.addText(textItemEnd);
-		/*str.append(info.getLine(i).getTitle()+":"+info.getLine(i).getGetOnStop().name+"上车----"
-		+info.getLine(i).getGetOffStop().name+"下车");
-		str.append("\n");*/
-		
+		}
 	}
-	mMapView.getOverlays().add(busStationOverlay);
-	
 
-  //执行刷新使生效
-    mMapView.refresh();
-    }
+	/**
+	 * 清除驾车、公交线路覆盖物
+	 */
+	void CleanRouteOverlay() {
+		if (routeOverlay != null && routeOverlay.size() > 0) {
+			mMapView.getOverlays().remove(routeOverlay);
+			// routeOverlay=null;
+			mMapView.refresh();
+		}
+		if (TransitrouteOverlay != null && TransitrouteOverlay.size() > 0) {
+			mMapView.getOverlays().remove(TransitrouteOverlay);
+			busStationOverlay.removeAll();
+			mMapView.getOverlays().remove(busStationOverlay);
+			// routeOverlay=null;
+			mMapView.refresh();
+		}
+	}
 
+	/**
+	 * 在地图上画出第i条公交线方案
+	 * 
+	 * @param
+	 */
+	public void DrawTransitRoute(int n) {
+		CleanRouteOverlay();
+		MKTransitRoutePlan busInfo = new MKTransitRoutePlan();
+		busInfo = TransitRouteInfo.getPlan(n);
+		TransitrouteOverlay = null;
+		TransitrouteOverlay = new TransitOverlay(mActivity, mMapView);
+		// 此处仅展示一个方案作为示例
+		TransitrouteOverlay.setData(busInfo);
+		// 添加路线图层
+		mMapView.getOverlays().add(TransitrouteOverlay);
+		if (popView.getVisibility() == View.VISIBLE) {
+			popView.setVisibility(View.GONE);
+		}
+		int len = busInfo.getNumLines();
+		Symbol symbol = new Symbol();
+		Symbol.Color fontColor = symbol.new Color();
+		// 设置文字着色
+		fontColor.alpha = 255;
+		fontColor.red = 255;
+		fontColor.green = 0;
+		fontColor.blue = 0;
+		Symbol.Color bgColor = symbol.new Color();
+		// 设置文字背景色
+		bgColor.red = 0;
+		bgColor.blue = 0;
+		bgColor.green = 255;
+		bgColor.alpha = 150;
+		for (int i = 0; i < len; i++) {
+			TextItem textItemStart = new TextItem();
+			TextItem textItemEnd = new TextItem();
+			textItemStart.pt = busInfo.getLine(i).getGetOnStop().pt;
+			textItemStart.fontSize = 15;
+			textItemStart.bgColor = bgColor;
+			textItemStart.text = busInfo.getLine(i).getTitle() + ":"
+					+ busInfo.getLine(i).getGetOnStop().name + "上车";
+			textItemStart.align = TextItem.ALIGN_BOTTOM;
+			textItemStart.fontColor = fontColor;
+			Log.e("xxx", busInfo.getLine(i).getGetOnStop().pt.getLatitudeE6()
+					+ "");
 
+			textItemEnd.pt = busInfo.getLine(i).getGetOffStop().pt;
+			textItemEnd.fontSize = 15;
+			textItemEnd.bgColor = bgColor;
+			textItemEnd.text = busInfo.getLine(i).getGetOffStop().name + "下车";
+			textItemEnd.align = TextItem.ALIGN_TOP;
+			textItemEnd.fontColor = fontColor;
 
-/**
- * 启动GPS导航. 前置条件：导航引擎初始化成功
- */
-  private void launchNavigator(){
-	//这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
-	  com.baidu.nplatform.comapi.basestruct.GeoPoint startP =  
-			  CoordinateTransformUtil.transferBD09ToGCJ02(locData.latitude,locData.longitude);
-	  com.baidu.nplatform.comapi.basestruct.GeoPoint endP = 
-			  CoordinateTransformUtil.transferBD09ToGCJ02(poiPoint.getLatitudeE6()/1E6, poiPoint.getLongitudeE6()/1E6);
-	BaiduNaviManager.getInstance().launchNavigator(mActivity, 
-			startP.getLatitudeE6()/1E6, startP.getLongitudeE6()/1E6,"起点", 
-			endP.getLatitudeE6()/1E6, endP.getLongitudeE6()/1E6,"终点",
-			//locData.latitude,locData.longitude,"起点", 
-			//poiPoint.getLatitudeE6()/1E6, poiPoint.getLongitudeE6()/1E6,"终点",
-			NE_RoutePlan_Mode.ROUTE_PLAN_MOD_MIN_TIME, 		 //算路方式
-			true, 									   		 //真实导航
-			BaiduNaviManager.STRATEGY_FORCE_ONLINE_PRIORITY, //在离线策略
-			new OnStartNavigationListener() {				 //跳转监听
-				
-				@Override
-				public void onJumpToNavigator(Bundle configParams) {
-					Intent intent = new Intent(mActivity, BNavigatorActivity.class);
-					intent.putExtras(configParams);
-			        startActivity(intent);
-				}
-				
-				@Override
-				public void onJumpToDownloader() {
-				}
-			});
-  }
+			busStationOverlay.addText(textItemStart);
+			busStationOverlay.addText(textItemEnd);
+			/*
+			 * str.append(info.getLine(i).getTitle()+":"+info.getLine(i).
+			 * getGetOnStop().name+"上车----"
+			 * +info.getLine(i).getGetOffStop().name+"下车"); str.append("\n");
+			 */
+
+		}
+		mMapView.getOverlays().add(busStationOverlay);
+
+		// 执行刷新使生效
+		mMapView.refresh();
+	}
+
+	/**
+	 * 启动GPS导航. 前置条件：导航引擎初始化成功
+	 */
+	private void launchNavigator() {
+		// 这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
+		com.baidu.nplatform.comapi.basestruct.GeoPoint startP = CoordinateTransformUtil
+				.transferBD09ToGCJ02(locData.longitude, locData.latitude);
+		com.baidu.nplatform.comapi.basestruct.GeoPoint endP = CoordinateTransformUtil
+				.transferBD09ToGCJ02(poiPoint.getLongitudeE6() / 1E6,
+						poiPoint.getLatitudeE6() / 1E6);
+		BaiduNaviManager.getInstance().launchNavigator(mActivity,
+				startP.getLatitudeE6() / 1E5, startP.getLongitudeE6() / 1E5,
+				"起点", endP.getLatitudeE6() / 1E5, endP.getLongitudeE6() / 1E5,
+				"终点",
+				// locData.latitude,locData.longitude,"起点",
+				// poiPoint.getLatitudeE6()/1E6,
+				// poiPoint.getLongitudeE6()/1E6,"终点",
+				NE_RoutePlan_Mode.ROUTE_PLAN_MOD_MIN_TIME, // 算路方式
+				true, // 真实导航
+				BaiduNaviManager.STRATEGY_FORCE_ONLINE_PRIORITY, // 在离线策略
+				new OnStartNavigationListener() { // 跳转监听
+
+					@Override
+					public void onJumpToNavigator(Bundle configParams) {
+						Intent intent = new Intent(mActivity,
+								BNavigatorActivity.class);
+						intent.putExtras(configParams);
+						startActivity(intent);
+					}
+
+					@Override
+					public void onJumpToDownloader() {
+					}
+				});
+	}
 }

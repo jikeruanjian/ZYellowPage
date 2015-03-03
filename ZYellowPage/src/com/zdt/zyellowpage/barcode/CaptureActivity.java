@@ -189,7 +189,10 @@ public class CaptureActivity extends AbActivity implements Callback {
 			this.finish();
 		} else {
 			try {
-				Uri uri = Uri.parse("http://" + obj.getText());
+				String temp = obj.getText();
+				if (!obj.getText().startsWith("http://"))
+					temp = "http://" + obj.getText();
+				Uri uri = Uri.parse(temp);
 				Intent data = new Intent();
 				data.setAction("android.intent.action.VIEW");
 				data.setData(uri);

@@ -21,7 +21,6 @@
     <color name="orange_background">#FF720B</color>
     <color name="splash_bg">#FB7A02</color>
     <color name="main_menu_bg">#F7F7F7</color>
-    <color name="white">#ffffffff</color>
     <color name="unfocused">#cccccccc</color>
     <color name="pressed">#fff22fff</color>
     <color name="selected">#fff33fff</color>

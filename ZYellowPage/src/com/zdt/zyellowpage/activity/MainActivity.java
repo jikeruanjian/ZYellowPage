@@ -36,6 +36,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -169,14 +170,13 @@ public class MainActivity extends AbActivity implements
 		if (requestCode == 10001) {
 			if (resultCode == RESULT_OK) {
 				if (intent.getExtras() != null) {
-				String	typeid = intent.getExtras().get("TypeId").toString();
-				if(typeid.equalsIgnoreCase("all")){
-					newFragmentNearMap.getNearCompanyData(20,3000);
-				}
-				else{
-					newFragmentNearMap.getNearCompanyDataByType(typeid);
-				}
-				
+					String typeid = intent.getExtras().get("TypeId").toString();
+					if (typeid.equalsIgnoreCase("all")) {
+						newFragmentNearMap.getNearCompanyData(20, 3000);
+					} else {
+						newFragmentNearMap.getNearCompanyDataByType(typeid);
+					}
+
 				}
 			}
 		}
@@ -248,16 +248,20 @@ public class MainActivity extends AbActivity implements
 								CaptureActivity.class));
 					}
 				});
-		
-		this.findViewById(R.id.imageViewTypelist).setOnClickListener(
-				new OnClickListener() {
 
-					@Override
-					public void onClick(View v) {
-						startActivityForResult(new Intent(MainActivity.this,
-								CompanytypeActivity.class), 10001);
-					}
-				});
+		// TODO 按钮隐藏
+		ImageView ivType = (ImageView) this
+				.findViewById(R.id.imageViewTypelist);
+		ivType.setVisibility(View.GONE);
+
+		ivType.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivityForResult(new Intent(MainActivity.this,
+						CompanytypeActivity.class), 10001);
+			}
+		});
 		getCityNameByLoc();
 		checkUpdate();
 	}

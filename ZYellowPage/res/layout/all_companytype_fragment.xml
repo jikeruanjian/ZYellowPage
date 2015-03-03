@@ -1,17 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_white" >
 
-    <com.zdt.zyellowpage.customView.CustomExpandableListView
-        android:id="@+id/companyListExpand"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:cacheColorHint="#00000000"
-        android:childDivider="@drawable/divider_horizontal_dark_opaque"
-        android:groupIndicator="@null"
-        android:listSelector="#00000000" >
-    </com.zdt.zyellowpage.customView.CustomExpandableListView>
+        android:orientation="vertical" >
 
-</LinearLayout>
+        <com.zdt.zyellowpage.customView.CustomExpandableListView
+            android:id="@+id/companyListExpand"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:cacheColorHint="#00000000"
+            android:childDivider="@drawable/divider_horizontal_dark_opaque"
+            android:groupIndicator="@null"
+            android:listSelector="#00000000" >
+        </com.zdt.zyellowpage.customView.CustomExpandableListView>
+    </LinearLayout>
+
+</ScrollView>
